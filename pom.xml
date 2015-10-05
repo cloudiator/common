@@ -29,6 +29,14 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <name>common</name>
+    <description>Common utils used for the cloudiator components.</description>
+    <url>https://github.com/cloudiator</url>
+
+    <scm>
+        <connection>scm:git@github.com:cloudiator/common.git</connection>
+        <developerConnection>scm:git@github.com:cloudiator/common.git</developerConnection>
+        <url>git@github.com:cloudiator/common.git</url>
+    </scm>
 
     <dependencies>
         <dependency>
