@@ -18,16 +18,16 @@
 
 package de.uniulm.omi.cloudiator.common;
 
-import com.google.common.base.Function;
+import java.util.function.Function;
 
 /**
  * A one-way converter for converting one type to another type.
- *
- * Extends {@link com.google.common.base.Function} so it can be used
- * with guava's functional programming methods.
+ * <p>
+ * Extends {@link Function} so it can be used
+ * with functional programming methods.
  *
  * @param <T> the type to be converted.
  * @param <S> the resulting type.
  */
-public interface OneWayConverter<T,S> extends Function<T,S> {
+public interface OneWayConverter<T, S> extends Function<T, S> {
 }
