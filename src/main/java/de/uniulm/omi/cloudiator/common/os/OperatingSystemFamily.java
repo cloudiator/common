@@ -21,7 +21,7 @@ package de.uniulm.omi.cloudiator.common.os;
  */
 public enum OperatingSystemFamily {
 
-    OTHER,
+    UNKNOWN,
 
     /**
      * IBM AIX
@@ -74,9 +74,21 @@ public enum OperatingSystemFamily {
     SUSE,
     TURBOLINUX,
     CLOUD_LINUX,
-    UBUNTU,
-    WINDOWS;
+    UBUNTU(OperatingSystemType.LINUX, OperatingSystemVersionFormats.unknown()),
+    WINDOWS(OperatingSystemType.WINDOWS, OperatingSystemVersionFormats.unknown());
 
-    private static final OperatingSystemFamily DEFAULT = OTHER;
+    private static final OperatingSystemFamily DEFAULT = UNKNOWN;
+    private final OperatingSystemType operatingSystemType;
+    private final OperatingSystemVersionFormat operatingSystemVersionFormat;
 
+    OperatingSystemFamily(OperatingSystemType operatingSystemType,
+        OperatingSystemVersionFormat operatingSystemVersionFormat) {
+        this.operatingSystemType = operatingSystemType;
+        this.operatingSystemVersionFormat = operatingSystemVersionFormat;
+    }
+
+    OperatingSystemFamily() {
+        this.operatingSystemType = OperatingSystemType.DEFAULT;
+        this.operatingSystemVersionFormat = OperatingSystemVersionFormats.unknown();
+    }
 }

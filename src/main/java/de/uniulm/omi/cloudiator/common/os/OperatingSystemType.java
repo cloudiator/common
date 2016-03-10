@@ -21,13 +21,13 @@ package de.uniulm.omi.cloudiator.common.os;
  */
 public enum OperatingSystemType {
 
-    OTHER,
+    UNKNOWN,
     UNIX,
     LINUX,
     WINDOWS,
     BSD,
     MAC;
 
-    private static final OperatingSystemType DEFAULT = OTHER;
+    public static final OperatingSystemType DEFAULT = UNKNOWN;
 
 }
