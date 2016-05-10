@@ -16,6 +16,10 @@
 
 package de.uniulm.omi.cloudiator.common.os;
 
+import com.google.common.base.CaseFormat;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Created by daniel on 08.03.16.
  */
@@ -90,5 +94,19 @@ public enum OperatingSystemFamily {
     OperatingSystemFamily() {
         this.operatingSystemType = OperatingSystemType.DEFAULT;
         this.operatingSystemVersionFormat = OperatingSystemVersionFormats.unknown();
+    }
+
+    public String value() {
+        return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_HYPHEN, this.name());
+    }
+
+    public static OperatingSystemFamily fromValue(String operatingSystemFamily) {
+        checkNotNull(operatingSystemFamily);
+        try {
+            return valueOf(
+                CaseFormat.LOWER_HYPHEN.to(CaseFormat.UPPER_UNDERSCORE, operatingSystemFamily));
+        } catch (IllegalArgumentException e) {
+            return DEFAULT;
+        }
     }
 }

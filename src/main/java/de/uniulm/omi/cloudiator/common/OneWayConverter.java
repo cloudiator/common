@@ -18,6 +18,7 @@
 
 package de.uniulm.omi.cloudiator.common;
 
+import javax.annotation.Nullable;
 import java.util.function.Function;
 
 /**
@@ -30,4 +31,6 @@ import java.util.function.Function;
  * @param <S> the resulting type.
  */
 public interface OneWayConverter<T, S> extends Function<T, S> {
+
+    @Override @Nullable S apply(@Nullable T t);
 }

@@ -18,9 +18,6 @@ package de.uniulm.omi.cloudiator.common.os;
 
 import javax.annotation.Nullable;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Created by daniel on 08.03.16.
  */
@@ -32,9 +29,10 @@ public class OperatingSystemVersion {
         this.version = version;
     }
 
-    public static OperatingSystemVersion of(String version) {
-        checkNotNull(version);
-        checkArgument(!version.isEmpty());
+    public static OperatingSystemVersion of(@Nullable String version) {
+        if (version == null || version.isEmpty()) {
+            return unknown();
+        }
         return new OperatingSystemVersion(version);
     }
 

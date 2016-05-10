@@ -16,6 +16,8 @@
 
 package de.uniulm.omi.cloudiator.common.os;
 
+import com.google.common.base.MoreObjects;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -73,5 +75,10 @@ public class OperatingSystemImpl implements OperatingSystem {
         result = 31 * result + operatingSystemArchitecture.hashCode();
         result = 31 * result + version.hashCode();
         return result;
+    }
+
+    @Override public String toString() {
+        return MoreObjects.toStringHelper(this).add("family", operatingSystemFamily)
+            .add("arch", operatingSystemArchitecture).add("version", version).toString();
     }
 }
