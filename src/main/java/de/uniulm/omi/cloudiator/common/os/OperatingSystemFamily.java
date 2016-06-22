@@ -23,7 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Created by daniel on 08.03.16.
  */
-public enum OperatingSystemFamily {
+public enum OperatingSystemFamily implements RemotePortProvider {
 
     UNKNOWN,
 
@@ -98,6 +98,10 @@ public enum OperatingSystemFamily {
 
     public String value() {
         return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_HYPHEN, this.name());
+    }
+
+    @Override public int remotePort() {
+        return operatingSystemType.remotePort();
     }
 
     public static OperatingSystemFamily fromValue(String operatingSystemFamily) {
