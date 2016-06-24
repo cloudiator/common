@@ -23,7 +23,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Created by daniel on 08.03.16.
  */
-public enum OperatingSystemFamily implements RemotePortProvider {
+public enum OperatingSystemFamily implements RemotePortProvider, LoginNameSupplier {
 
     UNKNOWN,
 
@@ -78,22 +78,28 @@ public enum OperatingSystemFamily implements RemotePortProvider {
     SUSE,
     TURBOLINUX,
     CLOUD_LINUX,
-    UBUNTU(OperatingSystemType.LINUX, OperatingSystemVersionFormats.unknown()),
-    WINDOWS(OperatingSystemType.WINDOWS, OperatingSystemVersionFormats.unknown());
+    UBUNTU(OperatingSystemType.LINUX, OperatingSystemVersionFormats.unknown(),
+        LoginNameSuppliers.staticSupplier("ubuntu")),
+    WINDOWS(OperatingSystemType.WINDOWS, OperatingSystemVersionFormats.unknown(),
+        LoginNameSuppliers.staticSupplier("administrator"));
 
     private static final OperatingSystemFamily DEFAULT = UNKNOWN;
     private final OperatingSystemType operatingSystemType;
     private final OperatingSystemVersionFormat operatingSystemVersionFormat;
+    private final LoginNameSupplier loginNameSupplier;
 
     OperatingSystemFamily(OperatingSystemType operatingSystemType,
-        OperatingSystemVersionFormat operatingSystemVersionFormat) {
+        OperatingSystemVersionFormat operatingSystemVersionFormat,
+        LoginNameSupplier loginNameSupplier) {
         this.operatingSystemType = operatingSystemType;
         this.operatingSystemVersionFormat = operatingSystemVersionFormat;
+        this.loginNameSupplier = loginNameSupplier;
     }
 
     OperatingSystemFamily() {
         this.operatingSystemType = OperatingSystemType.DEFAULT;
         this.operatingSystemVersionFormat = OperatingSystemVersionFormats.unknown();
+        this.loginNameSupplier = LoginNameSuppliers.nullSupplier();
     }
 
     public String value() {
@@ -104,6 +110,8 @@ public enum OperatingSystemFamily implements RemotePortProvider {
         return operatingSystemType.remotePort();
     }
 
+
+
     public static OperatingSystemFamily fromValue(String operatingSystemFamily) {
         checkNotNull(operatingSystemFamily);
         try {
@@ -112,5 +120,9 @@ public enum OperatingSystemFamily implements RemotePortProvider {
         } catch (IllegalArgumentException e) {
             return DEFAULT;
         }
+    }
+
+    @Override public String loginName() {
+        return loginNameSupplier.loginName();
     }
 }
