@@ -16,25 +16,18 @@
 
 package de.uniulm.omi.cloudiator.common.os;
 
-import java.util.function.Function;
+import org.junit.Test;
 
 /**
- * Created by daniel on 22.06.16.
+ * Created by daniel on 25.07.16.
  */
-public interface HomeDirFunctionProvider {
+public class UbuntuOperatingSystemVersionSupplierTest {
 
-    interface HomeDirFunction extends Function<String, String> {
-
-        /**
-         * Function to derive the home directory of the given username.
-         *
-         * @param userName the name of the user.
-         * @return the directory
-         * @throws NullPointerException if the username is null.
-         */
-        @Override String apply(String userName);
+    public static void main(String[] args) {
+        System.out.println(new UbuntuOperatingSystemVersionSupplier().get());
     }
 
-    HomeDirFunction homeDirFunction();
+    @Test public void test() {
 
+    }
 }

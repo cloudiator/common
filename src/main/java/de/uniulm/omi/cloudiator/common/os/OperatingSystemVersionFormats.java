@@ -16,7 +16,8 @@
 
 package de.uniulm.omi.cloudiator.common.os;
 
-import java.util.SortedSet;
+import java.util.Set;
+import java.util.function.Supplier;
 
 /**
  * Created by daniel on 09.03.16.
@@ -27,13 +28,13 @@ public class OperatingSystemVersionFormats {
         throw new AssertionError();
     }
 
-    public static OperatingSystemVersionFormat set(
-        SortedSet<OperatingSystemVersion> possibleValues) {
-        return new SetBasedOperatingSystemFormat(possibleValues);
-    }
-
     public static OperatingSystemVersionFormat unknown() {
         return new UnknownOperatingSystemFormat();
+    }
+
+    public static OperatingSystemVersionFormat supplier(
+        Supplier<Set<OperatingSystemVersion>> supplier) {
+        return new SupplierBasedOperatingSystemFormat(supplier);
     }
 
 }

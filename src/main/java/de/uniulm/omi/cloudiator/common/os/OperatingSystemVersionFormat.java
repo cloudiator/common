@@ -16,6 +16,8 @@
 
 package de.uniulm.omi.cloudiator.common.os;
 
+import java.util.Set;
+
 /**
  * Created by daniel on 09.03.16.
  */
@@ -24,5 +26,9 @@ public interface OperatingSystemVersionFormat {
     boolean isValid(OperatingSystemVersion operatingSystemVersion);
 
     OperatingSystemVersion newest();
+
+    Set<OperatingSystemVersion> allVersions();
+
+    OperatingSystemVersion parse(String version);
 
 }

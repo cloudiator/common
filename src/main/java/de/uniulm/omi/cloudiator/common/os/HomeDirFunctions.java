@@ -29,6 +29,36 @@ public class HomeDirFunctions {
         throw new AssertionError("static class");
     }
 
+    public static class UnknownHomeDirException extends RuntimeException {
+        public UnknownHomeDirException() {
+        }
+
+        public UnknownHomeDirException(String s) {
+            super(s);
+        }
+
+        public UnknownHomeDirException(String s, Throwable throwable) {
+            super(s, throwable);
+        }
+
+        public UnknownHomeDirException(Throwable throwable) {
+            super(throwable);
+        }
+
+        public UnknownHomeDirException(String s, Throwable throwable, boolean b, boolean b1) {
+            super(s, throwable, b, b1);
+        }
+    }
+
+
+    private static class UnknownHomeDirFunction implements HomeDirFunctionProvider.HomeDirFunction {
+
+        @Override public String apply(String userName) {
+            throw new UnknownHomeDirException("HomeDir is unknown.");
+        }
+    }
+
+
     private static class UnixHomeDirFunction implements HomeDirFunctionProvider.HomeDirFunction {
         @Override public String apply(String userName) {
             checkNotNull(userName);
@@ -62,6 +92,10 @@ public class HomeDirFunctions {
 
     public static HomeDirFunctionProvider.HomeDirFunction windows() {
         return new WindowsHomeDirFunction();
+    }
+
+    public static HomeDirFunctionProvider.HomeDirFunction unknown() {
+        return new UnknownHomeDirFunction();
     }
 
 }

@@ -27,23 +27,24 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public enum OperatingSystemType implements RemotePortProvider, HomeDirFunctionProvider {
 
-    UNKNOWN(null, null),
-    UNIX(22, HomeDirFunctions.unix()),
-    LINUX(22, HomeDirFunctions.unix()),
-    WINDOWS(5985, HomeDirFunctions.windows()),
-    BSD(null, null),
-    MAC(null, null);
+    UNKNOWN(null, HomeDirFunctions.unknown(), RemoteType.UNKNOWN), UNIX(22, HomeDirFunctions.unix(),
+        RemoteType.SSH), LINUX(22, HomeDirFunctions.unix(), RemoteType.SSH), WINDOWS(5985,
+        HomeDirFunctions.windows(), RemoteType.WINRM), BSD(null, HomeDirFunctions.unknown(),
+        RemoteType.SSH), MAC(null, HomeDirFunctions.unknown(), RemoteType.SSH);
 
     public static final OperatingSystemType DEFAULT = UNKNOWN;
 
     @Nullable private final Integer defaultRemotePort;
-    @Nullable private final HomeDirFunction homeDirFunction;
+    private final HomeDirFunction homeDirFunction;
+    private final RemoteType remoteType;
 
-    OperatingSystemType(@Nullable Integer defaultRemotePort,
-        @Nullable HomeDirFunction homeDirFunction) {
+    OperatingSystemType(@Nullable Integer defaultRemotePort, HomeDirFunction homeDirFunction,
+        RemoteType remoteType) {
         this.defaultRemotePort = defaultRemotePort;
         checkNotNull(homeDirFunction);
         this.homeDirFunction = homeDirFunction;
+        checkNotNull(remoteType);
+        this.remoteType = remoteType;
     }
 
     @Override public int remotePort() {
@@ -55,15 +56,15 @@ public enum OperatingSystemType implements RemotePortProvider, HomeDirFunctionPr
     }
 
     @Override public HomeDirFunction homeDirFunction() {
-        if (homeDirFunction == null) {
-            throw new UnknownHomeDirFunctionException(
-                "Home directory function is unknown for operating system type " + this);
-        }
         return homeDirFunction;
     }
 
     @Override public String toString() {
         return MoreObjects.toStringHelper(this).add("defaultRemotePort", defaultRemotePort)
             .add("homeDirFunction", homeDirFunction).toString();
+    }
+
+    public RemoteType remoteType() {
+        return remoteType;
     }
 }

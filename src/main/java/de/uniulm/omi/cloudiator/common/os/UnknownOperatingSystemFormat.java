@@ -16,6 +16,9 @@
 
 package de.uniulm.omi.cloudiator.common.os;
 
+import java.util.Collections;
+import java.util.Set;
+
 /**
  * Created by daniel on 09.03.16.
  */
@@ -26,7 +29,14 @@ public class UnknownOperatingSystemFormat implements OperatingSystemVersionForma
     }
 
     @Deprecated @Override public OperatingSystemVersion newest() {
-        throw new UnsupportedOperationException(
-            String.format("newest() not supported for %s.", this));
+        return OperatingSystemVersion.unknown();
+    }
+
+    @Override public Set<OperatingSystemVersion> allVersions() {
+        return Collections.emptySet();
+    }
+
+    @Deprecated @Override public OperatingSystemVersion parse(String version) {
+        return OperatingSystemVersion.unknown();
     }
 }

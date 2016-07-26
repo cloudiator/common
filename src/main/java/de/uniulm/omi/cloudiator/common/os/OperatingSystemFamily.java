@@ -30,57 +30,35 @@ public enum OperatingSystemFamily implements RemotePortProvider, LoginNameSuppli
     /**
      * IBM AIX
      */
-    AIX,
-    /**
+    AIX, /**
      * Arch Linux
      */
-    ARCH,
-    /**
+    ARCH, /**
      * Centos
      */
-    CENTOS,
-    /**
+    CENTOS, /**
      * Darwin OS
      */
-    DARWIN,
-    DEBIAN,
-    /**
+    DARWIN, DEBIAN, /**
      * VMWare ESX
      */
-    ESX,
-    FEDORA,
-    FREEBSD,
-    GENTOO,
-    /**
+    ESX, FEDORA, FREEBSD, GENTOO, /**
      * Hewlett Packard Unix
      */
-    HPUX,
-    COREOS,
-    /**
+    HPUX, COREOS, /**
      * Amazon Linux
      */
-    AMZN_LINUX,
-    MANDRIVA,
-    NETBSD,
-    /**
+    AMZN_LINUX, MANDRIVA, NETBSD, /**
      * Oracle Linux OS
      */
-    OEL,
-    OPENBSD,
-    /**
+    OEL, OPENBSD, /**
      * Red Hat Enterprise Linux
      */
-    RHEL,
-    SCIENTIFIC,
-    CEL,
-    SLACKWARE,
-    SOLARIS,
-    SUSE,
-    TURBOLINUX,
-    CLOUD_LINUX,
-    UBUNTU(OperatingSystemType.LINUX, OperatingSystemVersionFormats.unknown(),
-        LoginNameSuppliers.staticSupplier("ubuntu")),
-    WINDOWS(OperatingSystemType.WINDOWS, OperatingSystemVersionFormats.unknown(),
+    RHEL, SCIENTIFIC, CEL, SLACKWARE, SOLARIS, SUSE, TURBOLINUX, CLOUD_LINUX, UBUNTU(
+        OperatingSystemType.LINUX,
+        OperatingSystemVersionFormats.supplier(new UbuntuOperatingSystemVersionSupplier()),
+        LoginNameSuppliers.staticSupplier("ubuntu")), WINDOWS(OperatingSystemType.WINDOWS,
+        OperatingSystemVersionFormats.unknown(),
         LoginNameSuppliers.staticSupplier("administrator"));
 
     private static final OperatingSystemFamily DEFAULT = UNKNOWN;
@@ -110,7 +88,9 @@ public enum OperatingSystemFamily implements RemotePortProvider, LoginNameSuppli
         return operatingSystemType.remotePort();
     }
 
-
+    public OperatingSystemVersionFormat operatingSystemVersionFormat() {
+        return operatingSystemVersionFormat;
+    }
 
     public static OperatingSystemFamily fromValue(String operatingSystemFamily) {
         checkNotNull(operatingSystemFamily);
@@ -120,6 +100,10 @@ public enum OperatingSystemFamily implements RemotePortProvider, LoginNameSuppli
         } catch (IllegalArgumentException e) {
             return DEFAULT;
         }
+    }
+
+    public OperatingSystemType operatingSystemType() {
+        return operatingSystemType;
     }
 
     @Override public String loginName() {

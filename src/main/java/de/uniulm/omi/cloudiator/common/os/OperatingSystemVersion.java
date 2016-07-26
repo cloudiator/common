@@ -16,47 +16,78 @@
 
 package de.uniulm.omi.cloudiator.common.os;
 
+import com.google.common.base.MoreObjects;
+
 import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.Set;
+
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by daniel on 08.03.16.
  */
-public class OperatingSystemVersion {
+public class OperatingSystemVersion implements Comparable<OperatingSystemVersion> {
 
-    @Nullable private final String version;
+    public static final int UNKNOWN_VERSION = -1;
+    private final int version;
+    @Nullable private final String name;
+    private final Set<String> alternativeNames;
 
-    private OperatingSystemVersion(@Nullable String version) {
+    private OperatingSystemVersion(int version, @Nullable String name,
+        Set<String> alternativeNames) {
+        checkArgument((version > 0) || (version == UNKNOWN_VERSION),
+            "Version must be greater than 0 or equal UNKNOWN_VERSION");
         this.version = version;
+        this.name = name;
+        checkNotNull(alternativeNames);
+        this.alternativeNames = alternativeNames;
     }
 
-    public static OperatingSystemVersion of(@Nullable String version) {
-        if (version == null || version.isEmpty()) {
-            return unknown();
-        }
-        return new OperatingSystemVersion(version);
+    public static OperatingSystemVersion of(int version, String name) {
+        return new OperatingSystemVersion(version, name, Collections.emptySet());
+    }
+
+    public static OperatingSystemVersion of(String name,
+        OperatingSystemVersionFormat operatingSystemVersionFormat) {
+        return operatingSystemVersionFormat.parse(name);
     }
 
     public static OperatingSystemVersion unknown() {
-        return new OperatingSystemVersion(null);
+        return new OperatingSystemVersion(UNKNOWN_VERSION, null, Collections.emptySet());
     }
 
     @Override public boolean equals(Object o) {
         if (this == o)
             return true;
-        if (!(o instanceof OperatingSystemVersion))
+        if (o == null || getClass() != o.getClass())
             return false;
 
         OperatingSystemVersion that = (OperatingSystemVersion) o;
 
-        return version != null ? version.equals(that.version) : that.version == null;
-
+        return version == that.version;
     }
 
     @Override public int hashCode() {
-        return version != null ? version.hashCode() : 0;
+        return version;
     }
 
     @Override public String toString() {
-        return version;
+        return MoreObjects.toStringHelper(this).add("version", version).add("name", name)
+            .toString();
     }
+
+    @Override public int compareTo(OperatingSystemVersion operatingSystemVersion) {
+        checkNotNull(operatingSystemVersion);
+        return Integer.valueOf(version).compareTo(operatingSystemVersion.version);
+    }
+
+    public Optional<String> name() {
+        return Optional.ofNullable(name);
+    }
+
+
+
 }
