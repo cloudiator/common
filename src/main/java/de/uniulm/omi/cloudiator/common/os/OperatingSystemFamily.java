@@ -18,6 +18,9 @@ package de.uniulm.omi.cloudiator.common.os;
 
 import com.google.common.base.CaseFormat;
 
+import javax.annotation.Nullable;
+import java.util.Optional;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -57,27 +60,30 @@ public enum OperatingSystemFamily implements RemotePortProvider, LoginNameSuppli
     RHEL, SCIENTIFIC, CEL, SLACKWARE, SOLARIS, SUSE, TURBOLINUX, CLOUD_LINUX, UBUNTU(
         OperatingSystemType.LINUX,
         OperatingSystemVersionFormats.supplier(new UbuntuOperatingSystemVersionSupplier()),
-        LoginNameSuppliers.staticSupplier("ubuntu")), WINDOWS(OperatingSystemType.WINDOWS,
-        OperatingSystemVersionFormats.unknown(),
-        LoginNameSuppliers.staticSupplier("administrator"));
+        LoginNameSuppliers.staticSupplier("ubuntu"), new UbuntuUrlDownloadFunction()), WINDOWS(
+        OperatingSystemType.WINDOWS, OperatingSystemVersionFormats.unknown(),
+        LoginNameSuppliers.staticSupplier("administrator"), null);
 
     private static final OperatingSystemFamily DEFAULT = UNKNOWN;
     private final OperatingSystemType operatingSystemType;
     private final OperatingSystemVersionFormat operatingSystemVersionFormat;
     private final LoginNameSupplier loginNameSupplier;
+    @Nullable private final DownloadUrlFunction downloadUrlFunction;
 
     OperatingSystemFamily(OperatingSystemType operatingSystemType,
         OperatingSystemVersionFormat operatingSystemVersionFormat,
-        LoginNameSupplier loginNameSupplier) {
+        LoginNameSupplier loginNameSupplier, @Nullable DownloadUrlFunction downloadUrlFunction) {
         this.operatingSystemType = operatingSystemType;
         this.operatingSystemVersionFormat = operatingSystemVersionFormat;
         this.loginNameSupplier = loginNameSupplier;
+        this.downloadUrlFunction = downloadUrlFunction;
     }
 
     OperatingSystemFamily() {
         this.operatingSystemType = OperatingSystemType.DEFAULT;
         this.operatingSystemVersionFormat = OperatingSystemVersionFormats.unknown();
         this.loginNameSupplier = LoginNameSuppliers.nullSupplier();
+        this.downloadUrlFunction = null;
     }
 
     public String value() {
@@ -104,6 +110,10 @@ public enum OperatingSystemFamily implements RemotePortProvider, LoginNameSuppli
 
     public OperatingSystemType operatingSystemType() {
         return operatingSystemType;
+    }
+
+    public Optional<DownloadUrlFunction> downloadUrlFunction() {
+        return Optional.ofNullable(downloadUrlFunction);
     }
 
     @Override public String loginName() {
