@@ -39,7 +39,8 @@ public enum OperatingSystemFamily implements RemotePortProvider, LoginNameSuppli
     ARCH, /**
      * Centos
      */
-    CENTOS, /**
+    CENTOS(OperatingSystemType.LINUX, OperatingSystemVersionFormats.set(2,3,4,5,6,7),
+            LoginNameSuppliers.staticSupplier("centos"), null), /**
      * Darwin OS
      */
     DARWIN, DEBIAN, /**

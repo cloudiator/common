@@ -16,8 +16,10 @@
 
 package de.uniulm.omi.cloudiator.common.os;
 
+import java.util.Arrays;
 import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * Created by daniel on 09.03.16.
@@ -30,6 +32,16 @@ public class OperatingSystemVersionFormats {
 
     public static OperatingSystemVersionFormat unknown() {
         return new UnknownOperatingSystemFormat();
+    }
+
+    public static OperatingSystemVersionFormat set(Set<OperatingSystemVersion> set) {
+        return new SupplierBasedOperatingSystemFormat(() -> set);
+    }
+
+    public static OperatingSystemVersionFormat set(int... versions) {
+        return new SupplierBasedOperatingSystemFormat(() -> Arrays.stream(versions)
+            .mapToObj(i -> OperatingSystemVersion.of(i, String.valueOf(i)))
+            .collect(Collectors.toSet()));
     }
 
     public static OperatingSystemVersionFormat supplier(
