@@ -16,6 +16,7 @@
 
 package de.uniulm.omi.cloudiator.common.os;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 
 import javax.annotation.Nullable;
@@ -84,8 +85,12 @@ public class OperatingSystemVersion implements Comparable<OperatingSystemVersion
         return Integer.valueOf(version).compareTo(operatingSystemVersion.version);
     }
 
-    public Optional<String> name() {
+    @JsonProperty public Optional<String> name() {
         return Optional.ofNullable(name);
+    }
+
+    @JsonProperty public int version() {
+        return version;
     }
 
 
