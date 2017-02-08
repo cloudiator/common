@@ -16,6 +16,10 @@
 
 package de.uniulm.omi.cloudiator.common.os;
 
+import de.uniulm.omi.cloudiator.domain.OperatingSystem;
+import de.uniulm.omi.cloudiator.domain.OperatingSystemArchitecture;
+import de.uniulm.omi.cloudiator.domain.OperatingSystemFamily;
+
 /**
  * Created by daniel on 29.07.16.
  */
@@ -27,7 +31,7 @@ public class OperatingSystems {
 
     public static OperatingSystem unknown() {
         return OperatingSystemBuilder.newBuilder().architecture(OperatingSystemArchitecture.UNKNOWN)
-            .family(OperatingSystemFamily.UNKNOWN).version(OperatingSystemVersion.unknown())
+            .family(OperatingSystemFamily.UNKNOWN).version(OperatingSystemVersionImpl.unknown())
             .build();
     }
 

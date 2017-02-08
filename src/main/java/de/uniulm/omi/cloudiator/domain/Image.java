@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 University of Ulm
+ * Copyright 2017 University of Ulm
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,12 @@
  * limitations under the License.
  */
 
-package de.uniulm.omi.cloudiator.common.os;
+package de.uniulm.omi.cloudiator.domain;
 
 /**
- * Created by daniel on 08.03.16.
+ * An image offered by the provider.
  */
-public enum OperatingSystemArchitecture {
-
-    UNKNOWN,
-    AMD64,
-    I368
+public interface Image extends Resource, ImageProperties {
 
 
 

@@ -18,6 +18,7 @@ package de.uniulm.omi.cloudiator.common.os;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
+import de.uniulm.omi.cloudiator.domain.OperatingSystemVersion;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
@@ -30,14 +31,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Created by daniel on 08.03.16.
  */
-public class OperatingSystemVersion implements Comparable<OperatingSystemVersion> {
+public class OperatingSystemVersionImpl
+    implements Comparable<OperatingSystemVersion>, OperatingSystemVersion {
 
     public static final int UNKNOWN_VERSION = -1;
     private final int version;
     @Nullable private final String name;
     private final Set<String> alternativeNames;
 
-    private OperatingSystemVersion(int version, @Nullable String name,
+    private OperatingSystemVersionImpl(int version, @Nullable String name,
         Set<String> alternativeNames) {
         checkArgument((version > 0) || (version == UNKNOWN_VERSION),
             "Version must be greater than 0 or equal UNKNOWN_VERSION");
@@ -48,7 +50,7 @@ public class OperatingSystemVersion implements Comparable<OperatingSystemVersion
     }
 
     public static OperatingSystemVersion of(int version, String name) {
-        return new OperatingSystemVersion(version, name, Collections.emptySet());
+        return new OperatingSystemVersionImpl(version, name, Collections.emptySet());
     }
 
     public static OperatingSystemVersion of(String name,
@@ -57,7 +59,7 @@ public class OperatingSystemVersion implements Comparable<OperatingSystemVersion
     }
 
     public static OperatingSystemVersion unknown() {
-        return new OperatingSystemVersion(UNKNOWN_VERSION, null, Collections.emptySet());
+        return new OperatingSystemVersionImpl(UNKNOWN_VERSION, null, Collections.emptySet());
     }
 
     @Override public boolean equals(Object o) {
@@ -66,7 +68,7 @@ public class OperatingSystemVersion implements Comparable<OperatingSystemVersion
         if (o == null || getClass() != o.getClass())
             return false;
 
-        OperatingSystemVersion that = (OperatingSystemVersion) o;
+        OperatingSystemVersionImpl that = (OperatingSystemVersionImpl) o;
 
         return version == that.version;
     }
@@ -82,14 +84,14 @@ public class OperatingSystemVersion implements Comparable<OperatingSystemVersion
 
     @Override public int compareTo(OperatingSystemVersion operatingSystemVersion) {
         checkNotNull(operatingSystemVersion);
-        return Integer.valueOf(version).compareTo(operatingSystemVersion.version);
+        return Integer.valueOf(version).compareTo(operatingSystemVersion.version());
     }
 
-    @JsonProperty public Optional<String> name() {
+    @Override @JsonProperty public Optional<String> name() {
         return Optional.ofNullable(name);
     }
 
-    @JsonProperty public int version() {
+    @Override @JsonProperty public int version() {
         return version;
     }
 

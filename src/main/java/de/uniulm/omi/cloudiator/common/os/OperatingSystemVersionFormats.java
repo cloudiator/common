@@ -16,6 +16,8 @@
 
 package de.uniulm.omi.cloudiator.common.os;
 
+import de.uniulm.omi.cloudiator.domain.OperatingSystemVersion;
+
 import java.util.Arrays;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -40,7 +42,7 @@ public class OperatingSystemVersionFormats {
 
     public static OperatingSystemVersionFormat set(int... versions) {
         return new SupplierBasedOperatingSystemFormat(() -> Arrays.stream(versions)
-            .mapToObj(i -> OperatingSystemVersion.of(i, String.valueOf(i)))
+            .mapToObj(i -> OperatingSystemVersionImpl.of(i, String.valueOf(i)))
             .collect(Collectors.toSet()));
     }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 University of Ulm
+ * Copyright 2017 University of Ulm
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,27 @@
  * limitations under the License.
  */
 
-package de.uniulm.omi.cloudiator.common.os;
+package de.uniulm.omi.cloudiator.domain;
 
-import de.uniulm.omi.cloudiator.domain.OperatingSystemArchitecture;
-import de.uniulm.omi.cloudiator.domain.OperatingSystemVersion;
-
-import java.net.URL;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
- * Created by daniel on 01.08.16.
+ * Created by daniel on 30.10.15.
  */
-public interface DownloadUrlFunction {
+public interface Identifiable {
 
-    public URL generateURL(OperatingSystemArchitecture operatingSystemArchitecture,
-        OperatingSystemVersion operatingSystemVersion, ImageFormat imageFormat);
+    /**
+     * @return a unique identifier for the resource.
+     */
+    @JsonProperty
+    String id();
 
+    /**
+     * The original identifier as issued by the cloud provider.
+     * May not be unique. May be equal to id().
+     *
+     * @return the original identifier of the resource.
+     */
+    @JsonProperty
+    String providerId();
 }

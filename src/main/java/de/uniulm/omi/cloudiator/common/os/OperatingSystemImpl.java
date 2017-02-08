@@ -17,6 +17,10 @@
 package de.uniulm.omi.cloudiator.common.os;
 
 import com.google.common.base.MoreObjects;
+import de.uniulm.omi.cloudiator.domain.OperatingSystem;
+import de.uniulm.omi.cloudiator.domain.OperatingSystemArchitecture;
+import de.uniulm.omi.cloudiator.domain.OperatingSystemFamily;
+import de.uniulm.omi.cloudiator.domain.OperatingSystemVersion;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

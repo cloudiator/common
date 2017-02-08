@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 University of Ulm
+ * Copyright 2017 University of Ulm
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,20 @@
  * limitations under the License.
  */
 
-package de.uniulm.omi.cloudiator.common.os;
-
-import de.uniulm.omi.cloudiator.domain.OperatingSystemArchitecture;
-import de.uniulm.omi.cloudiator.domain.OperatingSystemVersion;
-
-import java.net.URL;
+package de.uniulm.omi.cloudiator.domain;
 
 /**
- * Created by daniel on 01.08.16.
+ * Enumeration for the operating system family
+ * the OS belongs to.
  */
-public interface DownloadUrlFunction {
+@Deprecated public enum OSFamily {
 
-    public URL generateURL(OperatingSystemArchitecture operatingSystemArchitecture,
-        OperatingSystemVersion operatingSystemVersion, ImageFormat imageFormat);
+    /**
+     * A windows operating system.
+     */
+    WINDOWS, /**
+     * A unix operating system.
+     */
+    UNIX
 
 }

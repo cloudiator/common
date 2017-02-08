@@ -16,6 +16,11 @@
 
 package de.uniulm.omi.cloudiator.common.os;
 
+import de.uniulm.omi.cloudiator.domain.OperatingSystem;
+import de.uniulm.omi.cloudiator.domain.OperatingSystemArchitecture;
+import de.uniulm.omi.cloudiator.domain.OperatingSystemFamily;
+import de.uniulm.omi.cloudiator.domain.OperatingSystemVersion;
+
 /**
  * Created by daniel on 08.03.16.
  */

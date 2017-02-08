@@ -16,6 +16,9 @@
 
 package de.uniulm.omi.cloudiator.common.os;
 
+import de.uniulm.omi.cloudiator.domain.OperatingSystemArchitecture;
+import de.uniulm.omi.cloudiator.domain.OperatingSystemVersion;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.function.Function;

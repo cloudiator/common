@@ -17,6 +17,7 @@
 package de.uniulm.omi.cloudiator.common.os;
 
 import com.google.common.collect.ImmutableSet;
+import de.uniulm.omi.cloudiator.domain.OperatingSystemVersion;
 
 import java.util.List;
 import java.util.Set;

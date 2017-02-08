@@ -16,6 +16,8 @@
 
 package de.uniulm.omi.cloudiator.common.os;
 
+import de.uniulm.omi.cloudiator.domain.OperatingSystemVersion;
+
 import java.util.Set;
 
 /**

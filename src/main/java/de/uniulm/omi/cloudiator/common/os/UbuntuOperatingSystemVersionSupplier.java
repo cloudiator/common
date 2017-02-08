@@ -17,6 +17,7 @@
 package de.uniulm.omi.cloudiator.common.os;
 
 import com.google.common.collect.Lists;
+import de.uniulm.omi.cloudiator.domain.OperatingSystemVersion;
 
 import java.time.Month;
 import java.time.Year;
@@ -67,6 +68,6 @@ public class UbuntuOperatingSystemVersionSupplier implements Supplier<Set<Operat
             Integer.parseInt(String.format("%s%02d", year.getValue() - 2000, month.getValue()));
         String parseString = String.format("%s.%02d", year.getValue() - 2000, month.getValue());
 
-        return OperatingSystemVersion.of(parseInt, parseString);
+        return OperatingSystemVersionImpl.of(parseInt, parseString);
     }
 }

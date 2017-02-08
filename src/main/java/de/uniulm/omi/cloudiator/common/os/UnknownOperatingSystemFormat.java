@@ -16,6 +16,8 @@
 
 package de.uniulm.omi.cloudiator.common.os;
 
+import de.uniulm.omi.cloudiator.domain.OperatingSystemVersion;
+
 import java.util.Collections;
 import java.util.Set;
 
@@ -29,7 +31,7 @@ public class UnknownOperatingSystemFormat implements OperatingSystemVersionForma
     }
 
     @Deprecated @Override public OperatingSystemVersion newest() {
-        return OperatingSystemVersion.unknown();
+        return OperatingSystemVersionImpl.unknown();
     }
 
     @Override public Set<OperatingSystemVersion> allVersions() {
@@ -37,6 +39,6 @@ public class UnknownOperatingSystemFormat implements OperatingSystemVersionForma
     }
 
     @Deprecated @Override public OperatingSystemVersion parse(String version) {
-        return OperatingSystemVersion.unknown();
+        return OperatingSystemVersionImpl.unknown();
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 University of Ulm
+ * Copyright 2017 University of Ulm
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package de.uniulm.omi.cloudiator.common.os;
+package de.uniulm.omi.cloudiator.domain;
 
 import com.google.common.base.CaseFormat;
+import de.uniulm.omi.cloudiator.common.os.*;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
