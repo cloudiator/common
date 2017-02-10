@@ -37,6 +37,8 @@ public class VirtualMachineBuilder {
     @Nullable private String name;
     @Nullable private Location location;
     @Nullable private LoginCredential loginCredential;
+    @Nullable private Image image;
+    @Nullable private HardwareFlavor hardwareFlavor;
 
     private VirtualMachineBuilder() {
 
@@ -106,8 +108,18 @@ public class VirtualMachineBuilder {
         return this;
     }
 
+    public VirtualMachineBuilder image(final Image image) {
+        this.image = image;
+        return this;
+    }
+
+    public VirtualMachineBuilder hardware(final HardwareFlavor hardwareFlavor) {
+        this.hardwareFlavor = hardwareFlavor;
+        return this;
+    }
+
     public VirtualMachine build() {
         return new VirtualMachineImpl(id, providerId, name, location, publicIpAddresses,
-            privateIpAddresses, loginCredential);
+            privateIpAddresses, loginCredential, image, hardwareFlavor);
     }
 }

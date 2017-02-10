@@ -29,7 +29,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by daniel on 18.01.17.
  */
-public class ApiImplTest {
+public class ApiModelImplTest {
 
     @Test public void testProviderName() {
         final Api api = ApiBuilder.newBuilder().providerName("providerName").build();

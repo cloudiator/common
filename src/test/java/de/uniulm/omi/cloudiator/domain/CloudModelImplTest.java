@@ -28,7 +28,7 @@ import static org.hamcrest.core.Is.is;
 /**
  * Created by daniel on 18.01.17.
  */
-public class CloudImplTest {
+public class CloudModelImplTest {
 
     private final Api testApi = ApiBuilder.newBuilder().providerName("providerName").build();
     private final Credentials testCredentials =
