@@ -68,6 +68,6 @@ public class UbuntuOperatingSystemVersionSupplier implements Supplier<Set<Operat
             Integer.parseInt(String.format("%s%02d", year.getValue() - 2000, month.getValue()));
         String parseString = String.format("%s.%02d", year.getValue() - 2000, month.getValue());
 
-        return OperatingSystemVersionImpl.of(parseInt, parseString);
+        return OperatingSystemVersions.of(parseInt, parseString);
     }
 }

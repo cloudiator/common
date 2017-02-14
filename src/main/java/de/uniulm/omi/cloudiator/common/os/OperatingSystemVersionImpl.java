@@ -39,27 +39,13 @@ public class OperatingSystemVersionImpl
     @Nullable private final String name;
     private final Set<String> alternativeNames;
 
-    private OperatingSystemVersionImpl(int version, @Nullable String name,
-        Set<String> alternativeNames) {
+    OperatingSystemVersionImpl(int version, @Nullable String name, Set<String> alternativeNames) {
         checkArgument((version > 0) || (version == UNKNOWN_VERSION),
             "Version must be greater than 0 or equal UNKNOWN_VERSION");
         this.version = version;
         this.name = name;
         checkNotNull(alternativeNames);
         this.alternativeNames = alternativeNames;
-    }
-
-    public static OperatingSystemVersion of(int version, String name) {
-        return new OperatingSystemVersionImpl(version, name, Collections.emptySet());
-    }
-
-    public static OperatingSystemVersion of(String name,
-        OperatingSystemVersionFormat operatingSystemVersionFormat) {
-        return operatingSystemVersionFormat.parse(name);
-    }
-
-    public static OperatingSystemVersion unknown() {
-        return new OperatingSystemVersionImpl(UNKNOWN_VERSION, null, Collections.emptySet());
     }
 
     @Override public boolean equals(Object o) {

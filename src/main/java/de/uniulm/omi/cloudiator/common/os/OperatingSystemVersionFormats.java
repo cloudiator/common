@@ -42,7 +42,7 @@ public class OperatingSystemVersionFormats {
 
     public static OperatingSystemVersionFormat set(int... versions) {
         return new SupplierBasedOperatingSystemFormat(() -> Arrays.stream(versions)
-            .mapToObj(i -> OperatingSystemVersionImpl.of(i, String.valueOf(i)))
+            .mapToObj(i -> OperatingSystemVersions.of(i, String.valueOf(i)))
             .collect(Collectors.toSet()));
     }
 

@@ -17,7 +17,7 @@
 package de.uniulm.omi.cloudiator.domain;
 
 import de.uniulm.omi.cloudiator.common.os.OperatingSystemBuilder;
-import de.uniulm.omi.cloudiator.common.os.OperatingSystemVersionImpl;
+import de.uniulm.omi.cloudiator.common.os.OperatingSystemVersions;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,8 +37,7 @@ public class ImageImplTest {
             .scope(LocationScope.REGION).build();
     private final OperatingSystem testOs =
         OperatingSystemBuilder.newBuilder().architecture(OperatingSystemArchitecture.AMD64)
-            .family(OperatingSystemFamily.UBUNTU).version(
-            OperatingSystemVersionImpl.of(1404, "14.04"))
+            .family(OperatingSystemFamily.UBUNTU).version(OperatingSystemVersions.of(1404, "14.04"))
             .build();
     private Image validImage;
     private ImageBuilder validImageBuilder;

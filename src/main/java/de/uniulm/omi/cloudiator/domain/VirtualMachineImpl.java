@@ -80,4 +80,9 @@ public class VirtualMachineImpl extends ResourceImpl implements VirtualMachine {
     @Override public Optional<LoginCredential> loginCredential() {
         return Optional.ofNullable(loginCredential);
     }
+
+    @Override public State state() {
+        //todo implement state
+        throw new UnsupportedOperationException("VirtualMachine state not implemented yet.");
+    }
 }

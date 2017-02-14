@@ -18,11 +18,58 @@ package de.uniulm.omi.cloudiator.domain;
 
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.Optional;
+import java.util.Set;
+
 /**
  * Represents a virtual machine.
  */
-public interface VirtualMachine extends Resource, VirtualMachineProperties {
+public interface VirtualMachine extends Resource {
 
+    enum State {
 
+    }
+
+    /**
+     * The public ip addresses under which this virtual machine is reachable.
+     *
+     * @return an immutable set of ip addresses.
+     */
+    @JsonProperty Set<String> publicAddresses();
+
+    /**
+     * The private up addresses assigned to the virtual machine.
+     *
+     * @return an immutable set of up addresses.
+     */
+    @JsonProperty Set<String> privateAddresses();
+
+    /**
+     * The {@link Image} used for creating the virtual machine.
+     *
+     * @return {@link Optional} image
+     */
+    Optional<Image> image();
+
+    /**
+     * The {@link HardwareFlavor} used for creating the virtual machine.
+     *
+     * @return {@link Optional} hardware.
+     */
+    Optional<HardwareFlavor> hardware();
+
+    /**
+     * {@link Optional} login credentials.
+     * <p/>
+     * The login credentials are normally only available
+     * if the machine was just created.
+     *
+     * @return optional login credentials.
+     */
+    @JsonProperty Optional<LoginCredential> loginCredential();
+
+    State state();
 
 }

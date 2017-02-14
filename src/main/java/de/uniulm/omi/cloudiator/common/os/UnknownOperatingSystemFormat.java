@@ -31,7 +31,7 @@ public class UnknownOperatingSystemFormat implements OperatingSystemVersionForma
     }
 
     @Deprecated @Override public OperatingSystemVersion newest() {
-        return OperatingSystemVersionImpl.unknown();
+        return OperatingSystemVersions.unknown();
     }
 
     @Override public Set<OperatingSystemVersion> allVersions() {
@@ -39,6 +39,6 @@ public class UnknownOperatingSystemFormat implements OperatingSystemVersionForma
     }
 
     @Deprecated @Override public OperatingSystemVersion parse(String version) {
-        return OperatingSystemVersionImpl.unknown();
+        return OperatingSystemVersions.unknown();
     }
 }

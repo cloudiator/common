@@ -31,7 +31,7 @@ public class OperatingSystems {
 
     public static OperatingSystem unknown() {
         return OperatingSystemBuilder.newBuilder().architecture(OperatingSystemArchitecture.UNKNOWN)
-            .family(OperatingSystemFamily.UNKNOWN).version(OperatingSystemVersionImpl.unknown())
+            .family(OperatingSystemFamily.UNKNOWN).version(OperatingSystemVersions.unknown())
             .build();
     }
 
