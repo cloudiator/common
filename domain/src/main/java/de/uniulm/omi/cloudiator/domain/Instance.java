@@ -27,9 +27,5 @@ public interface Instance extends Identifiable {
 
     ApplicationComponent applicationComponent();
 
-    VirtualMachine virtualMachine();
-
     State state();
-
-
 }

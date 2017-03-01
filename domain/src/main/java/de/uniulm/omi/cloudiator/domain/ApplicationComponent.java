@@ -27,6 +27,4 @@ public interface ApplicationComponent extends Identifiable {
 
     Set<Port> ports();
 
-    VirtualMachineTemplate virtualMachineTemplate();
-
 }
