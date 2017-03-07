@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package iaas;
+
+option java_package = "org.cloudiator.messages";
+
+import "common.proto";
+
+message HardwareFlavor {
+    string id = 1;
+    string name = 2;
+    string providerId = 3;
+    int32 cores = 4;
+    int64 ram = 5;
+    float disk = 6;
+    Location location = 7;
+}
+
+message Image {
+    string id = 1;
+    string name = 2;
+    string providerId = 3;
+    common.OperatingSystem operationSystem = 4;
+    Location location = 5;
+}
+
+message Location {
+    string id = 1;
+    string name = 2;
+    string providerId = 3;
+    common.LocationScope locationScope = 4;
+    bool isAssignable = 5;
+    Location parent = 6;
+}

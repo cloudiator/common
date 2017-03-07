@@ -25,27 +25,37 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>all</artifactId>
+    <artifactId>messaging</artifactId>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.xolstice.maven.plugins</groupId>
+                <artifactId>protobuf-maven-plugin</artifactId>
+                <version>0.5.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>
-            <groupId>io.github.cloudiator.common</groupId>
-            <artifactId>domain</artifactId>
+            <groupId>com.google.protobuf</groupId>
+            <artifactId>protobuf-java</artifactId>
+            <version>3.2.0</version>
         </dependency>
         <dependency>
-            <groupId>io.github.cloudiator.common</groupId>
-            <artifactId>persistence</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.github.cloudiator.common</groupId>
-            <artifactId>util</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.github.cloudiator.common</groupId>
-            <artifactId>messaging</artifactId>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>0.10.1.0</version>
         </dependency>
     </dependencies>
-
 
 </project>

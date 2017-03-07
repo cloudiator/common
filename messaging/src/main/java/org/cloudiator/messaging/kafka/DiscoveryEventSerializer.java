@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
-package de.uniulm.omi.cloudiator.domain;
+package org.cloudiator.messaging.kafka;
+
+import org.cloudiator.messages.Discovery;
 
 /**
- * Created by daniel on 30.10.15.
+ * Created by daniel on 02.03.17.
  */
-public interface Identifiable {
+public class DiscoveryEventSerializer extends Adapter
+    implements Serializer<Discovery.DiscoveryEvent> {
 
-    /**
-     * @return a unique identifier for the resource.
-     */
-    String id();
+    @Override public byte[] serialize(String topic, Discovery.DiscoveryEvent data) {
+        return data.toByteArray();
+    }
+
 }

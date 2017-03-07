@@ -25,6 +25,7 @@
         <module>persistence</module>
         <module>domain</module>
         <module>all</module>
+        <module>messaging</module>
     </modules>
 
     <repositories>
@@ -81,6 +82,11 @@
             <dependency>
                 <groupId>io.github.cloudiator.common</groupId>
                 <artifactId>util</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.cloudiator.common</groupId>
+                <artifactId>messaging</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

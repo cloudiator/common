@@ -14,15 +14,11 @@
  * limitations under the License.
  */
 
-package de.uniulm.omi.cloudiator.domain;
+package org.cloudiator.messaging.kafka;
 
 /**
- * Created by daniel on 30.10.15.
+ * Created by daniel on 02.03.17.
  */
-public interface Identifiable {
+public interface Serializer<T> extends org.apache.kafka.common.serialization.Serializer<T> {
 
-    /**
-     * @return a unique identifier for the resource.
-     */
-    String id();
 }
