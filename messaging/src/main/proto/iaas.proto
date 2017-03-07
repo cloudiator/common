@@ -6,6 +6,38 @@ option java_package = "org.cloudiator.messages";
 
 import "common.proto";
 
+message Cloud {
+    string id = 1;
+    string name = 2;
+    Api api = 3;
+    Credential credential = 4;
+    Configuration configuration = 5;
+    CloudType cloudType = 6;
+}
+
+enum CloudType {
+    PUBLIC = 0;
+    PRIVATE = 1;
+}
+
+message Api {
+    string providerName = 1;
+}
+
+message Credential {
+    string user = 1;
+    string secret = 2;
+}
+
+message Configuration {
+    repeated Property property = 1;
+}
+
+message Property {
+    string key = 1;
+    string value = 2;
+}
+
 message HardwareFlavor {
     string id = 1;
     string name = 2;
