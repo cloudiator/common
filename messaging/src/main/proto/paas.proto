@@ -4,8 +4,6 @@ package paas;
 
 option java_package = "org.cloudiator.messages";
 
-import "common.proto";
-
 message Platform {
     string id = 1;
     string name = 2;
@@ -17,9 +15,9 @@ message Platform {
 }
 
 enum PlatformType {
-    HEROKU = 1;
-    OPENSHIFT = 2;
-    CLOUDFOUNDRY = 3;
+    HEROKU = 0;
+    OPENSHIFT = 1;
+    CLOUDFOUNDRY = 2;
 
 }
 
