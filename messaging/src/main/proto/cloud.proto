@@ -6,6 +6,6 @@ option java_package = "org.cloudiator.messages";
 
 import "iaas.proto";
 
-message NewCloudEvent {
+message CloudAdded {
     Cloud cloud = 1;
 }

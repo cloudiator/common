@@ -14,18 +14,22 @@
  * limitations under the License.
  */
 
-package org.cloudiator.messaging.kafka;
+package org.cloudiator.messaging;
 
-import org.cloudiator.messages.Discovery;
+import com.google.protobuf.Message;
+import com.google.protobuf.Parser;
+
+import java.util.function.Consumer;
 
 /**
- * Created by daniel on 02.03.17.
+ * Created by daniel on 17.03.17.
  */
-public class DiscoveryEventSerializer extends Adapter
-    implements Serializer<Discovery.DiscoveryEvent> {
+public interface MessageInterface {
 
-    @Override public byte[] serialize(String topic, Discovery.DiscoveryEvent data) {
-        return data.toByteArray();
-    }
+    <T extends Message> Subscription subscribe(String topic, Parser<T> parser,
+        Consumer<T> callback);
+
+    void publish(String topic, Message message);
+
 
 }

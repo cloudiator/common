@@ -16,11 +16,16 @@
 
 package org.cloudiator.messaging.kafka;
 
+import com.google.protobuf.Message;
+import org.apache.kafka.clients.consumer.Consumer;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.cloudiator.messages.Discovery;
+import org.cloudiator.messages.Cloud;
 
+import java.util.Collections;
 import java.util.Properties;
 
 import static com.google.common.base.Preconditions.checkArgument;
@@ -32,7 +37,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class Kafka {
 
     public enum Queue {
-        DISOVERY("discovery");
+        DISCOVERY("discovery"), CLOUD("cloud");
 
         private final String queueName;
 
@@ -57,6 +62,7 @@ public class Kafka {
         props.put("buffer.memory", 33554432);
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        props.put("group.id", "myUniqueGroup");
         return props;
     }
 
@@ -65,9 +71,9 @@ public class Kafka {
 
         }
 
-        public static Producer<String, Discovery.DiscoveryEvent> discoveryEventProducer() {
+        public static Producer<String, Message> kafkaProducer() {
             return new KafkaProducer<>(properties(), new StringSerializer(),
-                new DiscoveryEventSerializer());
+                new ProtobufSerializer());
         }
 
     }

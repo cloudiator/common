@@ -19,6 +19,7 @@
     <orderEntry type="library" name="Maven: org.apache.kafka:kafka-clients:0.10.1.0" level="project" />
     <orderEntry type="library" name="Maven: net.jpountz.lz4:lz4:1.3.0" level="project" />
     <orderEntry type="library" name="Maven: org.xerial.snappy:snappy-java:1.1.2.6" level="project" />
+    <orderEntry type="module" module-name="util" />
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-core:5.2.7.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.logging:jboss-logging:3.3.0.Final" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final" level="project" />

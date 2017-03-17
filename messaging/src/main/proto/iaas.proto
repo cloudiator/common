@@ -9,10 +9,11 @@ import "common.proto";
 message Cloud {
     string id = 1;
     string name = 2;
-    Api api = 3;
-    Credential credential = 4;
-    Configuration configuration = 5;
-    CloudType cloudType = 6;
+    string endpoint = 3;
+    Api api = 4;
+    Credential credential = 5;
+    Configuration configuration = 6;
+    CloudType cloudType = 7;
 }
 
 enum CloudType {
@@ -31,6 +32,7 @@ message Credential {
 
 message Configuration {
     repeated Property property = 1;
+    string nodeGroup = 2;
 }
 
 message Property {
