@@ -24,7 +24,7 @@ import java.util.Optional;
  * Created by daniel on 08.02.17.
  */
 public interface OperatingSystemVersion {
-    @JsonProperty Optional<String> name();
+    Optional<String> name();
 
-    @JsonProperty int version();
+    int version();
 }

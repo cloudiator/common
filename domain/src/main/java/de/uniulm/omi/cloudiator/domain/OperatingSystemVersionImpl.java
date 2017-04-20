@@ -71,11 +71,11 @@ public class OperatingSystemVersionImpl
         return Integer.valueOf(version).compareTo(operatingSystemVersion.version());
     }
 
-    @Override @JsonProperty public Optional<String> name() {
+    @Override public Optional<String> name() {
         return Optional.ofNullable(name);
     }
 
-    @Override @JsonProperty public int version() {
+    @Override public int version() {
         return version;
     }
 
