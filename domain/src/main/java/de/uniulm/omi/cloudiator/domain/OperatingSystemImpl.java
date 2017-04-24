@@ -33,9 +33,9 @@ public class OperatingSystemImpl implements OperatingSystem {
     public OperatingSystemImpl(OperatingSystemFamily operatingSystemFamily,
         OperatingSystemArchitecture operatingSystemArchitecture, OperatingSystemVersion version) {
 
-        checkNotNull(operatingSystemFamily);
-        checkNotNull(operatingSystemArchitecture);
-        checkNotNull(version);
+        checkNotNull(operatingSystemFamily, "operatingSystemFamily is null");
+        checkNotNull(operatingSystemArchitecture, "operatingSystemArchitecture is null");
+        checkNotNull(version, "version is null");
 
         this.operatingSystemFamily = operatingSystemFamily;
         this.operatingSystemArchitecture = operatingSystemArchitecture;
