@@ -16,6 +16,8 @@
 
 package de.uniulm.omi.cloudiator.domain;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Created by daniel on 08.03.16.
  */
@@ -25,11 +27,38 @@ public class OperatingSystemBuilder {
     private OperatingSystemVersion operatingSystemVersion;
     private OperatingSystemFamily operatingSystemFamily;
 
+    private OperatingSystemBuilder(OperatingSystem operatingSystem) {
+        this.operatingSystemArchitecture = operatingSystem.operatingSystemArchitecture();
+        this.operatingSystemVersion = operatingSystem.operatingSystemVersion();
+        this.operatingSystemFamily = operatingSystem.operatingSystemFamily();
+    }
+
     private OperatingSystemBuilder() {
     }
 
     public static OperatingSystemBuilder newBuilder() {
         return new OperatingSystemBuilder();
+    }
+
+    public static OperatingSystemBuilder of(OperatingSystem operatingSystem) {
+        checkNotNull(operatingSystem, "operatingSystem is null");
+        return new OperatingSystemBuilder(operatingSystem);
+    }
+
+    public OperatingSystemBuilder merge(OperatingSystem operatingSystem) {
+        if (operatingSystemArchitecture == null || operatingSystemArchitecture
+            .equals(OperatingSystemArchitecture.UNKNOWN)) {
+            operatingSystemArchitecture = operatingSystem.operatingSystemArchitecture();
+        }
+        if (operatingSystemFamily == null || operatingSystemFamily
+            .equals(OperatingSystemFamily.UNKNOWN)) {
+            operatingSystemFamily = operatingSystem.operatingSystemFamily();
+        }
+        if (operatingSystemVersion == null || operatingSystemVersion
+            .equals(OperatingSystemVersions.unknown())) {
+            operatingSystemVersion = operatingSystem.operatingSystemVersion();
+        }
+        return this;
     }
 
     public OperatingSystemBuilder architecture(
