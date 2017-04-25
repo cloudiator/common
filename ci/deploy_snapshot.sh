@@ -11,7 +11,7 @@ if [ "$TRAVIS_REPO_SLUG" == "cloudiator/common" ] && \
    [ "$TRAVIS_BRANCH" == "master" ]; then
   echo "Publishing Maven snapshot..."
 
-  mvn clean deploy --settings="util/settings.xml" -DskipTests=true
+  mvn clean deploy --settings="ci/settings.xml" -DskipTests=true
 
   echo "Maven snapshot published."
 
