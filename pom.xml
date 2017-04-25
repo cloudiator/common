@@ -15,9 +15,7 @@
   ~  limitations under the License.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <repositories>
@@ -37,10 +35,10 @@
     <parent>
         <groupId>io.github.cloudiator</groupId>
         <artifactId>project</artifactId>
-        <version>0.2.0-SNAPSHOT</version>
+        <version>0.2.0</version>
     </parent>
     <artifactId>common</artifactId>
-    <version>0.2.0-SNAPSHOT</version>
+    <version>0.2.0</version>
 
     <name>common</name>
     <description>Common utils used for the cloudiator components.</description>
@@ -50,7 +48,7 @@
         <connection>scm:git:https://github.com/cloudiator/common.git</connection>
         <developerConnection>scm:git:git@github.com:cloudiator/common.git</developerConnection>
         <url>https://github.com/cloudiator/common/</url>
-        <tag>HEAD</tag>
+        <tag>common-0.2.0</tag>
     </scm>
 
     <dependencies>
