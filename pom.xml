@@ -66,27 +66,27 @@
         <dependencies>
             <dependency>
                 <groupId>io.github.cloudiator.common</groupId>
-                <artifactId>all</artifactId>
+                <artifactId>common-all</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.cloudiator.common</groupId>
-                <artifactId>domain</artifactId>
+                <artifactId>common-domain</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.cloudiator.common</groupId>
-                <artifactId>persistence</artifactId>
+                <artifactId>common-persistence</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.cloudiator.common</groupId>
-                <artifactId>util</artifactId>
+                <artifactId>common-util</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.cloudiator.common</groupId>
-                <artifactId>messaging</artifactId>
+                <artifactId>common-messaging</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
