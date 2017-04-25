@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package discovery;
+
+import "iaas.proto";
+
+option java_package = "org.cloudiator.messages";
+
+message DiscoveryEvent {
+    string cloudId = 1;
+    oneof resource {
+        iaas.HardwareFlavor hardware = 2;
+        iaas.Image image = 3;
+        iaas.Location location = 4;
+    }
+}

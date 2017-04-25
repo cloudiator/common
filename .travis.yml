@@ -16,8 +16,8 @@ env:
     - secure: GscLEZK/ln7uMzEQep0Ox6C4GwC9X/agLeSc48iZoYISj2pUPQsQK8uqoZtfDl7g0xGx22yJR4ds7tSrAHl0DqhxNqVj+Nxs4/AtD/oTsl1HtQbpJsN4RwyD7G21/lmUAWWt3g+cVaOYtQdSbHMpZpQVZRNxGdLs8qnpYoGJKHlFR5+8dsftqWDOApEyE3BXUqDkNgC3Z6ipRy23EpuGzWEwZb6JWVsQ6brrWZQGgonhzZXJjsdXKx4hcHMiMZqXWE6y9PIPOFppHYNUzxj039aRpjaa6sufx8d3Y6yTxshivudxJZS4A0EBBDY3zYE98NLx5qa/mfVloRir7SWTvwV0UQfemwbEtFV1S8bfMgUxY3+terI7mO4XNugaq5nGprJAENrMNpUWhHWwoapeGrlS3CXr3L0t/Kt8Mwtrblajyphpx6O9kquQXiotIPIfTskAtS2OZ3R2J3g5g2ztsdjPr5GoTXA7HOrmlGTlYlacv0DPFFeYm/9OQ39ndm+qAqiIrAosc6oGedNp/F3yaP9iEx6W1AP168ENr13w4mGBfonnvnkre3MHlrlytCn+OrheSNUJ5pw7SeHiRTXKxKVAicbprEWPgDEgMiFEq9iJ9LG6grVV5T/mTMI4GhQZmiGSoywvmrGfvnvy5DpL5w3sR8kLqIZWcXwiZ4p/UeY=
 
 after_success:
-  - util/deploy_snapshot.sh
-  - util/publish-javadoc-to-gh-pages.sh
+  - ci/deploy_snapshot.sh
+  - ci/publish-javadoc-to-gh-pages.sh
 
 branches:
   except:
