@@ -5,6 +5,9 @@ jdk:
 
 language: java
 
+before_install:
+  - ci/install_protobuf.sh
+
 install: mvn install -U -DskipTests=true
 
 script: mvn install -U -Dmaven.javadoc.skip=true
