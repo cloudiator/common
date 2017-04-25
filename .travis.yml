@@ -15,7 +15,7 @@ install: mvn install -U -DskipTests=true
 before_script:
   - export PATH=$PATH:$PWD/bin/
 
-script: mvn install -U -Dmaven.javadoc.skip=true
+script: mvn install -Dmaven.javadoc.skip=true
 
 env:
   global:
