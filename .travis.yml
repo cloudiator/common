@@ -6,9 +6,14 @@ jdk:
 language: java
 
 before_install:
-  - ci/install_protobuf.sh
+  - wget https://github.com/google/protobuf/releases/download/v3.2.0/protoc-3.2.0-linux-x86_64.zip
+  - unzip protoc-3.2.0-linux-x86_64.zip
+  - export PATH=$PATH:$PWD/bin/
 
 install: mvn install -U -DskipTests=true
+
+before_script:
+  - export PATH=$PATH:$PWD/bin/
 
 script: mvn install -U -Dmaven.javadoc.skip=true
 
