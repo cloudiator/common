@@ -18,6 +18,8 @@ package org.cloudiator.messaging;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.Parser;
+import org.cloudiator.messages.General;
+
 import java.util.function.Consumer;
 
 /**
@@ -31,4 +33,16 @@ public interface MessageInterface {
   void publish(String topic, Message message);
 
   void publish(String topic, String id, Message message);
+
+  <T extends Message, S extends Message> void callAsync(String requestTopic, T request,
+      String responseTopic,
+      Class<S> responseClass, ResponseCallback<S> responseConsumer);
+
+  <T extends Message, S extends Message> S call(String requestTopic, T request,
+      String responseTopic,
+      Class<S> responseClass) throws ResponseException;
+
+  void reply(String topic, String originId, Message message);
+
+  void reply(String topic, String originId, General.Error error);
 }
