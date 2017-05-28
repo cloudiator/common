@@ -50,11 +50,11 @@ public class KafkaMessageInterface implements MessageInterface {
 
   private static final ExecutorService EXECUTOR_SERVICE =
       new LoggingScheduledThreadPoolExecutor(5);
-  private final RequestResponseHandler requestResponseHandler = new RequestResponseHandler();
+  private final KafkaRequestResponseHandler kafkaRequestResponseHandler = new KafkaRequestResponseHandler();
   private static final Logger LOGGER =
       LoggerFactory.getLogger(KafkaMessageInterface.class);
 
-  public KafkaMessageInterface() {
+  KafkaMessageInterface() {
 
   }
 
@@ -94,14 +94,14 @@ public class KafkaMessageInterface implements MessageInterface {
   @Override
   public <T extends Message, S extends Message> void callAsync(String requestTopic, T request,
       String responseTopic, Class<S> responseClass, ResponseCallback<S> responseConsumer) {
-    requestResponseHandler
+    kafkaRequestResponseHandler
         .callAsync(requestTopic, request, responseTopic, responseClass, responseConsumer);
   }
 
   @Override
   public <T extends Message, S extends Message> S call(String requestTopic, T request,
       String responseTopic, Class<S> responseClass) throws ResponseException {
-    return requestResponseHandler.call(requestTopic, request, responseTopic, responseClass);
+    return kafkaRequestResponseHandler.call(requestTopic, request, responseTopic, responseClass);
   }
 
   @Override
@@ -118,7 +118,7 @@ public class KafkaMessageInterface implements MessageInterface {
 
   }
 
-  private class RequestResponseHandler {
+  private class KafkaRequestResponseHandler {
 
     private Map<String, ResponseCallback> waitingCallbacks = new ConcurrentHashMap<>();
     private Map<String, Subscription> activeSubscriptions = new ConcurrentHashMap<>();
