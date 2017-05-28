@@ -16,66 +16,69 @@
 
 package org.cloudiator.messaging.kafka;
 
-import com.google.protobuf.Message;
-import org.apache.kafka.clients.consumer.Consumer;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.Producer;
-import org.apache.kafka.common.serialization.StringDeserializer;
-import org.apache.kafka.common.serialization.StringSerializer;
-import org.cloudiator.messages.Cloud;
-
-import java.util.Collections;
-import java.util.Properties;
-
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+
+import com.google.protobuf.Message;
+import java.util.Properties;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.common.serialization.StringSerializer;
+import org.cloudiator.messaging.MessageInterface;
 
 /**
  * Created by daniel on 02.03.17.
  */
 public class Kafka {
 
-    public enum Queue {
-        DISCOVERY("discovery"), CLOUD("cloud");
+  private final static MessageInterface MESSAGE_INTERFACE = new KafkaMessageInterface();
 
-        private final String queueName;
+  public static MessageInterface messageInterface() {
+    return MESSAGE_INTERFACE;
+  }
 
-        Queue(final String queueName) {
-            checkNotNull(queueName, "queueName is null");
-            checkArgument(!queueName.isEmpty(), "queueName is empty");
-            this.queueName = queueName;
-        }
+  protected static Properties properties() {
+    java.util.Properties props = new Properties();
+    props.put("bootstrap.servers", "134.60.47.167:9092");
+    props.put("acks", "all");
+    props.put("retries", 0);
+    props.put("batch.size", 16384);
+    props.put("linger.ms", 1);
+    props.put("buffer.memory", 33554432);
+    props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+    props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+    props.put("group.id", "myUniqueGroup");
+    return props;
+  }
 
-        public String queueName() {
-            return queueName;
-        }
+  public enum Queue {
+    DISCOVERY("discovery"), CLOUD("cloud");
+
+    private final String queueName;
+
+
+    Queue(final String queueName) {
+      checkNotNull(queueName, "queueName is null");
+      checkArgument(!queueName.isEmpty(), "queueName is empty");
+      this.queueName = queueName;
     }
 
-    public static Properties properties() {
-        java.util.Properties props = new Properties();
-        props.put("bootstrap.servers", "134.60.47.167:9092");
-        props.put("acks", "all");
-        props.put("retries", 0);
-        props.put("batch.size", 16384);
-        props.put("linger.ms", 1);
-        props.put("buffer.memory", 33554432);
-        props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-        props.put("group.id", "myUniqueGroup");
-        return props;
+    public String queueName() {
+      return queueName;
+    }
+  }
+
+  protected static class Producers {
+
+    private Producers() {
+
     }
 
-    public static class Producers {
-        private Producers() {
-
-        }
-
-        public static Producer<String, Message> kafkaProducer() {
-            return new KafkaProducer<>(properties(), new StringSerializer(),
-                new ProtobufSerializer());
-        }
-
+    protected static Producer<String, Message> kafkaProducer() {
+      return new KafkaProducer<>(properties(), new StringSerializer(),
+          new ProtobufSerializer());
     }
+
+  }
 
 }

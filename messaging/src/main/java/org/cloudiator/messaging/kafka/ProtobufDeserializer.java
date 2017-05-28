@@ -25,17 +25,18 @@ import com.google.protobuf.Parser;
  */
 public class ProtobufDeserializer<T extends Message> extends Adapter implements Deserializer<T> {
 
-    private final Parser<T> parser;
+  private final Parser<T> parser;
 
-    public ProtobufDeserializer(Parser<T> parser) {
-        this.parser = parser;
-    }
+  public ProtobufDeserializer(Parser<T> parser) {
+    this.parser = parser;
+  }
 
-    @Override public T deserialize(String topic, byte[] data) {
-        try {
-            return parser.parseFrom(data);
-        } catch (InvalidProtocolBufferException e) {
-            throw new IllegalStateException("Could not parse protocol buffer.", e);
-        }
+  @Override
+  public T deserialize(String topic, byte[] data) {
+    try {
+      return parser.parseFrom(data);
+    } catch (InvalidProtocolBufferException e) {
+      throw new IllegalStateException("Could not parse protocol buffer.", e);
     }
+  }
 }

@@ -16,23 +16,14 @@
 
 package org.cloudiator.messaging;
 
+import javax.annotation.Nullable;
+import org.cloudiator.messages.General.Error;
+
 /**
- * Created by daniel on 17.03.17.
+ * Created by daniel on 24.05.17.
  */
-public class SubscriptionImpl implements Subscription {
+public interface ResponseCallback<T> {
 
-  private final Runnable cancelHook;
+  public void accept(@Nullable T content, @Nullable Error error);
 
-  private SubscriptionImpl(Runnable cancelHook) {
-    this.cancelHook = cancelHook;
-  }
-
-  public static Subscription of(Runnable cancelHook) {
-    return new SubscriptionImpl(cancelHook);
-  }
-
-  @Override
-  public void cancel() {
-    cancelHook.run();
-  }
 }

@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package iaas;
+
+option java_package = "org.cloudiator.messages";
+
+import "google/protobuf/any.proto";
+
+message Response {
+  string correlation = 1;
+  oneof response {
+    google.protobuf.Any content = 2;
+    Error error = 3;
+  }
+}
+
+message Error {
+  string message = 1;
+}

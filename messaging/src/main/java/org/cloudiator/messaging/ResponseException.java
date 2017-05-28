@@ -17,22 +17,26 @@
 package org.cloudiator.messaging;
 
 /**
- * Created by daniel on 17.03.17.
+ * Created by daniel on 24.05.17.
  */
-public class SubscriptionImpl implements Subscription {
+public class ResponseException extends Exception {
 
-  private final Runnable cancelHook;
-
-  private SubscriptionImpl(Runnable cancelHook) {
-    this.cancelHook = cancelHook;
+  public ResponseException() {
   }
 
-  public static Subscription of(Runnable cancelHook) {
-    return new SubscriptionImpl(cancelHook);
+  public ResponseException(String s) {
+    super(s);
   }
 
-  @Override
-  public void cancel() {
-    cancelHook.run();
+  public ResponseException(String s, Throwable throwable) {
+    super(s, throwable);
+  }
+
+  public ResponseException(Throwable throwable) {
+    super(throwable);
+  }
+
+  public ResponseException(String s, Throwable throwable, boolean b, boolean b1) {
+    super(s, throwable, b, b1);
   }
 }

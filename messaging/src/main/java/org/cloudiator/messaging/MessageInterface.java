@@ -18,7 +18,6 @@ package org.cloudiator.messaging;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.Parser;
-
 import java.util.function.Consumer;
 
 /**
@@ -26,10 +25,10 @@ import java.util.function.Consumer;
  */
 public interface MessageInterface {
 
-    <T extends Message> Subscription subscribe(String topic, Parser<T> parser,
-        Consumer<T> callback);
+  <T extends Message> Subscription subscribe(String topic, Parser<T> parser,
+      MessageCallback<T> callback);
 
-    void publish(String topic, Message message);
+  void publish(String topic, Message message);
 
-
+  void publish(String topic, String id, Message message);
 }

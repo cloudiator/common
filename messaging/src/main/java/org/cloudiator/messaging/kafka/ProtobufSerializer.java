@@ -16,6 +16,7 @@
 
 package org.cloudiator.messaging.kafka;
 
+import com.google.common.base.Charsets;
 import com.google.protobuf.Message;
 
 /**
@@ -23,7 +24,14 @@ import com.google.protobuf.Message;
  */
 public class ProtobufSerializer extends Adapter implements Serializer<Message> {
 
-    @Override public byte[] serialize(String topic, Message message) {
-        return message.toByteArray();
+  private static final boolean DEBUG = false;
+
+  @Override
+  public byte[] serialize(String topic, Message message) {
+    if (DEBUG) {
+      return message.toString().getBytes(Charsets.UTF_8);
+    } else {
+      return message.toByteArray();
     }
+  }
 }

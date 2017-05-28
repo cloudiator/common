@@ -21,6 +21,6 @@ package org.cloudiator.messaging;
  */
 public interface Subscription {
 
-    void cancel();
+  void cancel();
 
 }
