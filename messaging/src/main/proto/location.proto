@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package iaas;
+
+option java_package = "org.cloudiator.messages";
+
+import "iaasEntities.proto";
+
+message LocationQueryRequest {
+  string userId = 1;
+}
+
+message LocationQueryResponse {
+  repeated Location locations = 1;
+}
+
+message LocationUpdateRequest {
+  string userId = 1;
+  Location location = 2;
+}
+
+message LocationUpdatedResponse {
+  Location location = 1;
+}

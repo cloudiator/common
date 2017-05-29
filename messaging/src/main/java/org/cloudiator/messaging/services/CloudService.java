@@ -17,13 +17,27 @@
 package org.cloudiator.messaging.services;
 
 import org.cloudiator.messages.Cloud.CloudCreatedResponse;
+import org.cloudiator.messages.Cloud.CloudDeletedResponse;
+import org.cloudiator.messages.Cloud.CloudQueryRequest;
+import org.cloudiator.messages.Cloud.CloudQueryResponse;
+import org.cloudiator.messages.Cloud.CloudUpdatedResponse;
 import org.cloudiator.messages.Cloud.CreateCloudRequest;
+import org.cloudiator.messages.Cloud.DeleteCloudRequest;
+import org.cloudiator.messages.Cloud.UpdateCloudRequest;
+import org.cloudiator.messaging.ResponseException;
 
 /**
  * Created by daniel on 24.05.17.
  */
 public interface CloudService {
 
-  CloudCreatedResponse createCloud(CreateCloudRequest createCloudRequest);
+  CloudQueryResponse getClouds(CloudQueryRequest cloudQueryRequest) throws ResponseException;
+
+  CloudCreatedResponse createCloud(CreateCloudRequest createCloudRequest) throws ResponseException;
+
+  CloudUpdatedResponse updateCloud(UpdateCloudRequest updateCloudRequest) throws ResponseException;
+
+  CloudDeletedResponse deleteCloud(DeleteCloudRequest deleteCloudRequest) throws ResponseException;
+
 
 }

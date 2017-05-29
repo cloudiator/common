@@ -6,26 +6,40 @@ option java_package = "org.cloudiator.messages";
 
 import "iaasEntities.proto";
 
+message CloudQueryRequest {
+  string userId = 1;
+}
+
+message CloudQueryResponse {
+  repeated Cloud clouds = 1;
+}
+
 message CreateCloudRequest {
-  NewCloud cloud = 1;
+  string userId = 1;
+  NewCloud cloud = 2;
 }
 
 message CloudCreatedResponse {
-  Cloud cloud = 1;
+  string userId = 1;
+  Cloud cloud = 2;
 }
 
-message UpdateCloud {
-  Cloud cloud = 1;
+message UpdateCloudRequest {
+  string userId = 1;
+  Cloud cloud = 2;
 }
 
-message CloudUpdated {
-  Cloud cloud = 1;
+message CloudUpdatedResponse {
+  string userId = 1;
+  Cloud cloud = 2;
 }
 
-message DeleteCloud {
-  Cloud cloud = 1;
+message DeleteCloudRequest {
+  string userId = 1;
+  Cloud cloud = 2;
 }
 
-message CloudDeleted {
-  Cloud cloud = 1;
+message CloudDeletedResponse {
+  string userId = 1;
+  Cloud cloud = 2;
 }

@@ -16,9 +16,6 @@
 
 package org.cloudiator.messaging.kafka;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import com.google.protobuf.Message;
 import java.util.Properties;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -49,23 +46,6 @@ public class Kafka {
     props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
     props.put("group.id", "myUniqueGroup");
     return props;
-  }
-
-  public enum Queue {
-    DISCOVERY("discovery"), CLOUD("cloud");
-
-    private final String queueName;
-
-
-    Queue(final String queueName) {
-      checkNotNull(queueName, "queueName is null");
-      checkArgument(!queueName.isEmpty(), "queueName is empty");
-      this.queueName = queueName;
-    }
-
-    public String queueName() {
-      return queueName;
-    }
   }
 
   protected static class Producers {

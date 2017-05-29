@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package iaas;
+
+option java_package = "org.cloudiator.messages";
+
+import "iaasEntities.proto";
+
+message ImageQueryRequest {
+  string userId = 1;
+}
+
+message ImageQueryResponse {
+  repeated Image images = 1;
+}
+
+message ImageUpdateRequest {
+  string userId = 1;
+  Image image = 2;
+}
+
+message ImageUpdatedResponse {
+  Image image = 1;
+}

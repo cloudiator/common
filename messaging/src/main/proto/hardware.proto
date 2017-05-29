@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package iaas;
+
+option java_package = "org.cloudiator.messages";
+
+import "iaasEntities.proto";
+
+message HardwareQueryRequest {
+  string userId = 1;
+}
+
+message HardwareQueryResponse {
+  repeated HardwareFlavor hardwareFlavors = 1;
+}
+
+message HardwareUpdateRequest {
+  string userId = 1;
+  HardwareFlavor hardwareFlavor = 2;
+}
+
+message HardwareUpdatedResponse {
+  HardwareFlavor hardwareFlavor = 1;
+}
