@@ -199,10 +199,13 @@ public class KafkaMessageInterface implements MessageInterface {
           });
 
       synchronized (response) {
-        try {
-          response.wait();
-        } catch (InterruptedException e) {
-          throw new IllegalStateException(e);
+        //check if the response is already available
+        if (!response.isAvailable()) {
+          try {
+            response.wait();
+          } catch (InterruptedException e) {
+            throw new IllegalStateException(e);
+          }
         }
       }
       return response.getContentOrThrowException();
@@ -215,6 +218,13 @@ public class KafkaMessageInterface implements MessageInterface {
       private volatile S content = null;
       @Nullable
       private volatile Error error = null;
+
+      private boolean isAvailable() {
+        if (content != null || error != null) {
+          return true;
+        }
+        return false;
+      }
 
       private S getContentOrThrowException() throws ResponseException {
         if (content != null) {
