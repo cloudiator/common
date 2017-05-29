@@ -231,7 +231,7 @@ public class KafkaMessageInterface implements MessageInterface {
           return content;
         }
         if (error != null) {
-          throw new ResponseException(error.getMessage());
+          throw new ResponseException(error.getCode(), error.getMessage());
         }
         throw new IllegalStateException();
       }
