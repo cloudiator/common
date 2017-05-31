@@ -81,8 +81,19 @@ public class KafkaMessageInterface implements MessageInterface {
   }
 
   @Override
+  public <T extends Message> Subscription subscribe(Class<T> messageClass, Parser<T> parser,
+      MessageCallback<T> callback) {
+    return subscribe(messageClass.getName(), parser, callback);
+  }
+
+  @Override
   public void publish(String topic, Message message) {
     this.publish(topic, UUID.randomUUID().toString(), message);
+  }
+
+  @Override
+  public void publish(Message message) {
+    publish(message.getClass().getName(), message);
   }
 
   @Override
@@ -99,9 +110,49 @@ public class KafkaMessageInterface implements MessageInterface {
   }
 
   @Override
+  public <T extends Message, S extends Message> void callAsync(T request, Class<S> responseClass,
+      ResponseCallback<S> responseConsumer) {
+    callAsync(request.getClass().getName(), request, responseClass.getName(), responseClass,
+        responseConsumer);
+  }
+
+  @Override
   public <T extends Message, S extends Message> S call(String requestTopic, T request,
       String responseTopic, Class<S> responseClass) throws ResponseException {
-    return kafkaRequestResponseHandler.call(requestTopic, request, responseTopic, responseClass);
+    return kafkaRequestResponseHandler
+        .call(requestTopic, request, responseTopic, responseClass, 0L);
+  }
+
+  @Override
+  public <T extends Message, S extends Message> S call(String requestTopic, T request,
+      String responseTopic, Class<S> responseClass, long timeout) throws ResponseException {
+    return kafkaRequestResponseHandler
+        .call(requestTopic, request, responseTopic, responseClass, timeout);
+  }
+
+  @Override
+  public <T extends Message, S extends Message> S call(T request, Class<S> responseClass)
+      throws ResponseException {
+    return kafkaRequestResponseHandler
+        .call(request.getClass().getName(), request, responseClass.getName(), responseClass, 0L);
+  }
+
+  @Override
+  public <T extends Message, S extends Message> S call(T request, Class<S> responseClass,
+      long timeout) throws ResponseException {
+    return kafkaRequestResponseHandler
+        .call(request.getClass().getName(), request, responseClass.getName(), responseClass,
+            timeout);
+  }
+
+  @Override
+  public void reply(String originId, Message message) {
+    reply(message.getClass().getName(), originId, message);
+  }
+
+  @Override
+  public <T extends Message> void reply(Class<T> originalMessage, String originId, Error error) {
+    reply(originalMessage.getName(), originId, error);
   }
 
   @Override
@@ -186,7 +237,7 @@ public class KafkaMessageInterface implements MessageInterface {
 
     private <T extends Message, S extends Message> S call(String requestTopic, T request,
         String responseTopic,
-        Class<S> responseClass) throws ResponseException {
+        Class<S> responseClass, long timeout) throws ResponseException {
 
       final SyncResponse<S> response = new SyncResponse<>();
 
@@ -202,7 +253,7 @@ public class KafkaMessageInterface implements MessageInterface {
         //check if the response is already available
         if (!response.isAvailable()) {
           try {
-            response.wait();
+            response.wait(timeout);
           } catch (InterruptedException e) {
             throw new IllegalStateException(e);
           }

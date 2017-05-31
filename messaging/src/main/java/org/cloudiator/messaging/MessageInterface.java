@@ -19,8 +19,7 @@ package org.cloudiator.messaging;
 import com.google.protobuf.Message;
 import com.google.protobuf.Parser;
 import org.cloudiator.messages.General;
-
-import java.util.function.Consumer;
+import org.cloudiator.messages.General.Error;
 
 /**
  * Created by daniel on 17.03.17.
@@ -30,7 +29,12 @@ public interface MessageInterface {
   <T extends Message> Subscription subscribe(String topic, Parser<T> parser,
       MessageCallback<T> callback);
 
+  <T extends Message> Subscription subscribe(Class<T> messageClass, Parser<T> parser,
+      MessageCallback<T> callback);
+
   void publish(String topic, Message message);
+
+  void publish(Message message);
 
   void publish(String topic, String id, Message message);
 
@@ -38,11 +42,28 @@ public interface MessageInterface {
       String responseTopic,
       Class<S> responseClass, ResponseCallback<S> responseConsumer);
 
+  <T extends Message, S extends Message> void callAsync(T request,
+      Class<S> responseClass, ResponseCallback<S> responseConsumer);
+
   <T extends Message, S extends Message> S call(String requestTopic, T request,
       String responseTopic,
       Class<S> responseClass) throws ResponseException;
 
+  <T extends Message, S extends Message> S call(String requestTopic, T request,
+      String responseTopic,
+      Class<S> responseClass, long timeout) throws ResponseException;
+
+  <T extends Message, S extends Message> S call(T request,
+      Class<S> responseClass) throws ResponseException;
+
+  <T extends Message, S extends Message> S call(T request,
+      Class<S> responseClass, long timeout) throws ResponseException;
+
+  void reply(String originId, Message message);
+
+  <T extends Message> void reply(Class<T> originalMessage, String originId, General.Error error);
+
   void reply(String topic, String originId, Message message);
 
-  void reply(String topic, String originId, General.Error error);
+  void reply(String topic, String originId, Error error);
 }
