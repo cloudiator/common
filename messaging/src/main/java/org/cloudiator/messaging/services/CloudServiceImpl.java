@@ -44,28 +44,27 @@ public class CloudServiceImpl implements CloudService {
   @Override
   public CloudQueryResponse getClouds(CloudQueryRequest cloudQueryRequest)
       throws ResponseException {
-    return messageInterface.call("cloudQueryRequest", cloudQueryRequest, "cloudQueryResponse",
-        CloudQueryResponse.class);
+    return messageInterface.call(cloudQueryRequest, CloudQueryResponse.class);
   }
 
   @Override
   public CloudCreatedResponse createCloud(CreateCloudRequest createCloudRequest)
       throws ResponseException {
-    return messageInterface.call("createCloudRequest", createCloudRequest, "cloudCreatedResponse",
+    return messageInterface.call(createCloudRequest,
         CloudCreatedResponse.class);
   }
 
   @Override
   public CloudUpdatedResponse updateCloud(UpdateCloudRequest updateCloudRequest)
       throws ResponseException {
-    return messageInterface.call("updateCloudRequest", updateCloudRequest, "cloudUpdatedResponse",
+    return messageInterface.call(updateCloudRequest,
         CloudUpdatedResponse.class);
   }
 
   @Override
   public CloudDeletedResponse deleteCloud(DeleteCloudRequest deleteCloudRequest)
       throws ResponseException {
-    return messageInterface.call("deleteCloudRequest", deleteCloudRequest, "cloudDeletedResponse",
+    return messageInterface.call(deleteCloudRequest,
         CloudDeletedResponse.class);
   }
 }
