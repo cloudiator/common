@@ -83,7 +83,7 @@ public class KafkaMessageInterface implements MessageInterface {
   @Override
   public <T extends Message> Subscription subscribe(Class<T> messageClass, Parser<T> parser,
       MessageCallback<T> callback) {
-    return subscribe(messageClass.getName(), parser, callback);
+    return subscribe(messageClass.getSimpleName(), parser, callback);
   }
 
   @Override
@@ -93,7 +93,7 @@ public class KafkaMessageInterface implements MessageInterface {
 
   @Override
   public void publish(Message message) {
-    publish(message.getClass().getName(), message);
+    publish(message.getClass().getSimpleName(), message);
   }
 
   @Override
@@ -112,7 +112,8 @@ public class KafkaMessageInterface implements MessageInterface {
   @Override
   public <T extends Message, S extends Message> void callAsync(T request, Class<S> responseClass,
       ResponseCallback<S> responseConsumer) {
-    callAsync(request.getClass().getName(), request, responseClass.getName(), responseClass,
+    callAsync(request.getClass().getSimpleName(), request, responseClass.getSimpleName(),
+        responseClass,
         responseConsumer);
   }
 
@@ -134,25 +135,27 @@ public class KafkaMessageInterface implements MessageInterface {
   public <T extends Message, S extends Message> S call(T request, Class<S> responseClass)
       throws ResponseException {
     return kafkaRequestResponseHandler
-        .call(request.getClass().getName(), request, responseClass.getName(), responseClass, 0L);
+        .call(request.getClass().getSimpleName(), request, responseClass.getSimpleName(),
+            responseClass, 0L);
   }
 
   @Override
   public <T extends Message, S extends Message> S call(T request, Class<S> responseClass,
       long timeout) throws ResponseException {
     return kafkaRequestResponseHandler
-        .call(request.getClass().getName(), request, responseClass.getName(), responseClass,
+        .call(request.getClass().getSimpleName(), request, responseClass.getSimpleName(),
+            responseClass,
             timeout);
   }
 
   @Override
   public void reply(String originId, Message message) {
-    reply(message.getClass().getName(), originId, message);
+    reply(message.getClass().getSimpleName(), originId, message);
   }
 
   @Override
   public <T extends Message> void reply(Class<T> originalMessage, String originId, Error error) {
-    reply(originalMessage.getName(), originId, error);
+    reply(originalMessage.getSimpleName(), originId, error);
   }
 
   @Override
