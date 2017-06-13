@@ -18,6 +18,7 @@ package org.cloudiator.messaging.services;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.inject.Inject;
 import org.cloudiator.messages.Cloud.CloudCreatedResponse;
 import org.cloudiator.messages.Cloud.CloudDeletedResponse;
 import org.cloudiator.messages.Cloud.CloudQueryRequest;
@@ -36,7 +37,7 @@ public class CloudServiceImpl implements CloudService {
 
   private final MessageInterface messageInterface;
 
-  public CloudServiceImpl(MessageInterface messageInterface) {
+  @Inject public CloudServiceImpl(MessageInterface messageInterface) {
     checkNotNull(messageInterface, "messageInterface is null");
     this.messageInterface = messageInterface;
   }

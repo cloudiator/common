@@ -18,6 +18,7 @@ package org.cloudiator.messaging.services;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.inject.Inject;
 import org.cloudiator.messages.Hardware.HardwareQueryRequest;
 import org.cloudiator.messages.Hardware.HardwareQueryResponse;
 import org.cloudiator.messaging.MessageInterface;
@@ -30,7 +31,7 @@ public class HardwareServiceImpl implements HardwareService {
 
   private final MessageInterface messageInterface;
 
-  public HardwareServiceImpl(MessageInterface messageInterface) {
+  @Inject public HardwareServiceImpl(MessageInterface messageInterface) {
     checkNotNull(messageInterface, "messageInterface is null");
     this.messageInterface = messageInterface;
   }

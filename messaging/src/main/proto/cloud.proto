@@ -36,10 +36,8 @@ message CloudUpdatedResponse {
 
 message DeleteCloudRequest {
   string userId = 1;
-  Cloud cloud = 2;
+  string cloudId = 2;
 }
 
 message CloudDeletedResponse {
-  string userId = 1;
-  Cloud cloud = 2;
 }
