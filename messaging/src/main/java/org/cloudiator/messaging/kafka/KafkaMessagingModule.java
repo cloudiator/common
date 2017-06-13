@@ -19,13 +19,8 @@ package org.cloudiator.messaging.kafka;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 import com.google.inject.name.Names;
+import de.uniulm.omi.cloudiator.util.PropertiesLoader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.Properties;
 import org.cloudiator.messaging.MessageInterface;
 
@@ -46,32 +41,6 @@ public class KafkaMessagingModule extends AbstractModule {
     } catch (IOException e) {
       throw new IllegalStateException(e);
     }
-  }
-
-  private static class PropertiesLoader {
-
-    private final static String ERROR_MESSAGE = "Could not read properties file at location %s";
-
-    static Properties loadPropertiesFrom(String fileName) throws IOException {
-
-      final URL resource = PropertiesLoader.class.getClassLoader().getResource(fileName);
-
-      if (resource == null) {
-        throw new IOException(String.format(ERROR_MESSAGE, fileName));
-      }
-
-      try {
-        final InputStream inputStream = Files
-            .newInputStream(Paths.get(resource.toURI()), StandardOpenOption.READ);
-        Properties properties = new Properties();
-        properties.load(inputStream);
-        return properties;
-      } catch (URISyntaxException | IOException e) {
-        throw new IOException(
-            String.format(ERROR_MESSAGE, resource));
-      }
-    }
-
   }
 
 }
