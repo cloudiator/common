@@ -16,6 +16,7 @@
 
 package org.cloudiator.messaging.kafka;
 
+import com.google.inject.Inject;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
@@ -28,10 +29,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import javax.annotation.Nullable;
+import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.serialization.StringDeserializer;
 import org.cloudiator.messages.General.Error;
 import org.cloudiator.messages.General.Response;
 import org.cloudiator.messaging.MessageCallback;
@@ -53,9 +53,11 @@ public class KafkaMessageInterface implements MessageInterface {
   private final KafkaRequestResponseHandler kafkaRequestResponseHandler = new KafkaRequestResponseHandler();
   private static final Logger LOGGER =
       LoggerFactory.getLogger(KafkaMessageInterface.class);
+  private final Kafka kafka;
 
-  KafkaMessageInterface() {
-
+  @Inject
+  KafkaMessageInterface(Kafka kafka) {
+    this.kafka = kafka;
   }
 
   @Override
@@ -66,9 +68,8 @@ public class KafkaMessageInterface implements MessageInterface {
         .format("Registering new subscription for topic %s, with parser %s and callback %s.",
             topic, parser, callback));
 
-    KafkaConsumer<String, T> consumer =
-        new KafkaConsumer<>(Kafka.properties(), new StringDeserializer(),
-            new ProtobufDeserializer<>(parser));
+    final Consumer<String, T> consumer = kafka.consumerFactory().kafkaConsumer(parser);
+
     consumer.subscribe(Collections.singleton(topic));
     final Future<?> future = EXECUTOR_SERVICE.submit(() -> {
       while (!Thread.currentThread().isInterrupted()) {
@@ -111,8 +112,8 @@ public class KafkaMessageInterface implements MessageInterface {
   public void publish(String topic, String id, Message message) {
     LOGGER.debug(
         String.format("Publishing new message %s on topic %s with id %s.", message, topic, id));
-    Kafka.Producers.kafkaProducer()
-        .send(new ProducerRecord<>(topic, id, message));
+    kafka.producerFactory().kafkaProducer().send(new ProducerRecord<>(topic, id, message));
+
   }
 
   @Override
