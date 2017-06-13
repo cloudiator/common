@@ -16,47 +16,100 @@
 
 package org.cloudiator.messaging.kafka;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import com.google.inject.Inject;
 import com.google.protobuf.Message;
+import com.google.protobuf.Parser;
 import java.util.Properties;
+import javax.inject.Named;
+import org.apache.kafka.clients.consumer.Consumer;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.cloudiator.messaging.MessageInterface;
 
 /**
  * Created by daniel on 02.03.17.
  */
 public class Kafka {
 
-  private final static MessageInterface MESSAGE_INTERFACE = new KafkaMessageInterface();
+  private final KafkaProducerFactory kafkaProducerFactory;
+  private final KafkaConsumerFactory kafkaConsumerFactory;
 
-  public static MessageInterface messageInterface() {
-    return MESSAGE_INTERFACE;
+  @Inject
+  private Kafka(@Named("bootstrap.servers") String bootstrapServers,
+      @Named("group.id") String groupId) {
+
+    checkNotNull(bootstrapServers, "bootstrapServers is null");
+    checkNotNull(groupId, "groupId is null");
+
+    kafkaProducerFactory = new KafkaProducerFactory(bootstrapServers);
+    kafkaConsumerFactory = new KafkaConsumerFactory(bootstrapServers, groupId);
+
   }
 
-  protected static Properties properties() {
-    java.util.Properties props = new Properties();
-    props.put("bootstrap.servers", "134.60.47.167:9092");
-    props.put("acks", "all");
-    props.put("retries", 0);
-    props.put("batch.size", 16384);
-    props.put("linger.ms", 1);
-    props.put("buffer.memory", 33554432);
-    props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-    props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-    props.put("group.id", "myUniqueGroup");
-    return props;
+  public KafkaProducerFactory producerFactory() {
+    return kafkaProducerFactory;
   }
 
-  protected static class Producers {
+  public KafkaConsumerFactory consumerFactory() {
+    return kafkaConsumerFactory;
+  }
 
-    private Producers() {
+  static class KafkaProducerFactory {
 
+    private final String bootstrapServers;
+
+    private static class ProducerSingleton {
+
+      private static Producer<String, Message> instance = null;
+
+      private ProducerSingleton() {
+        throw new AssertionError("Do not instantiate " + this);
+      }
+
+      private static Producer<String, Message> getInstance(Properties properties) {
+        if (instance == null) {
+          instance = new KafkaProducer<String, Message>(properties, new StringSerializer(),
+              new ProtobufSerializer());
+        }
+        return instance;
+      }
     }
 
-    protected static Producer<String, Message> kafkaProducer() {
-      return new KafkaProducer<>(properties(), new StringSerializer(),
-          new ProtobufSerializer());
+
+    private KafkaProducerFactory(String bootstrapServers) {
+      this.bootstrapServers = bootstrapServers;
+    }
+
+    Producer<String, Message> kafkaProducer() {
+      final Properties properties = new Properties();
+      properties.put("bootstrap.servers", bootstrapServers);
+      return ProducerSingleton.getInstance(properties);
+    }
+
+  }
+
+  static class KafkaConsumerFactory {
+
+    private final String bootstrapServers;
+    private final String groupId;
+
+    private KafkaConsumerFactory(String bootstrapServers, String groupId) {
+      checkNotNull(bootstrapServers, "bootstrapServers is null");
+      checkNotNull(groupId, "groupId is null");
+      this.bootstrapServers = bootstrapServers;
+      this.groupId = groupId;
+    }
+
+    <T extends Message> Consumer<String, T> kafkaConsumer(Parser<T> parser) {
+      Properties properties = new Properties();
+      properties.put("bootstrap.servers", bootstrapServers);
+      properties.put("group.id", groupId);
+      return new KafkaConsumer<>(properties, new StringDeserializer(),
+          new ProtobufDeserializer<>(parser));
     }
 
   }

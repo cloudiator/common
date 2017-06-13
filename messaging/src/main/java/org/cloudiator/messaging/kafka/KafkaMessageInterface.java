@@ -16,6 +16,7 @@
 
 package org.cloudiator.messaging.kafka;
 
+import com.google.inject.Inject;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
@@ -28,10 +29,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import javax.annotation.Nullable;
+import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.common.serialization.StringDeserializer;
 import org.cloudiator.messages.General.Error;
 import org.cloudiator.messages.General.Response;
 import org.cloudiator.messaging.MessageCallback;
@@ -53,17 +53,17 @@ public class KafkaMessageInterface implements MessageInterface {
   private final KafkaRequestResponseHandler kafkaRequestResponseHandler = new KafkaRequestResponseHandler();
   private static final Logger LOGGER =
       LoggerFactory.getLogger(KafkaMessageInterface.class);
+  private final Kafka kafka;
 
-  KafkaMessageInterface() {
-
+  @Inject
+  KafkaMessageInterface(Kafka kafka) {
+    this.kafka = kafka;
   }
 
   @Override
   public <T extends Message> Subscription subscribe(String topic, Parser<T> parser,
       MessageCallback<T> callback) {
-    KafkaConsumer<String, T> consumer =
-        new KafkaConsumer<>(Kafka.properties(), new StringDeserializer(),
-            new ProtobufDeserializer<>(parser));
+    final Consumer<String, T> consumer = kafka.consumerFactory().kafkaConsumer(parser);
     consumer.subscribe(Collections.singleton(topic));
     final Future<?> future = EXECUTOR_SERVICE.submit(() -> {
       while (!Thread.currentThread().isInterrupted()) {
@@ -98,8 +98,7 @@ public class KafkaMessageInterface implements MessageInterface {
 
   @Override
   public void publish(String topic, String id, Message message) {
-    Kafka.Producers.kafkaProducer()
-        .send(new ProducerRecord<>(topic, id, message));
+    kafka.producerFactory().kafkaProducer().send(new ProducerRecord<>(topic, id, message));
   }
 
   @Override
