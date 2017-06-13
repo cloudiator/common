@@ -39,7 +39,7 @@ public class Kafka {
   private final KafkaConsumerFactory kafkaConsumerFactory;
 
   @Inject
-  private Kafka(@Named("bootstrap.servers") String bootstrapServers,
+  public Kafka(@Named("bootstrap.servers") String bootstrapServers,
       @Named("group.id") String groupId) {
 
     checkNotNull(bootstrapServers, "bootstrapServers is null");
