@@ -16,10 +16,16 @@
 
 package org.cloudiator.messaging;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Created by daniel on 17.03.17.
  */
 public class SubscriptionImpl implements Subscription {
+
+  private static final Logger LOGGER =
+      LoggerFactory.getLogger(SubscriptionImpl.class);
 
   private final Runnable cancelHook;
 
@@ -33,6 +39,7 @@ public class SubscriptionImpl implements Subscription {
 
   @Override
   public void cancel() {
+    LOGGER.debug(String.format("Canceling subscription %s.", this));
     cancelHook.run();
   }
 }

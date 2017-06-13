@@ -61,6 +61,11 @@ public class KafkaMessageInterface implements MessageInterface {
   @Override
   public <T extends Message> Subscription subscribe(String topic, Parser<T> parser,
       MessageCallback<T> callback) {
+
+    LOGGER.debug(String
+        .format("Registering new subscription for topic %s, with parser %s and callback %s.",
+            topic, parser, callback));
+
     KafkaConsumer<String, T> consumer =
         new KafkaConsumer<>(Kafka.properties(), new StringDeserializer(),
             new ProtobufDeserializer<>(parser));
@@ -69,15 +74,21 @@ public class KafkaMessageInterface implements MessageInterface {
       while (!Thread.currentThread().isInterrupted()) {
         final ConsumerRecords<String, T> poll = consumer.poll(1000);
         poll.forEach(
-            stringTConsumerRecord -> {
-              System.out.println("Receiving message with id " + stringTConsumerRecord.key() + " - "
-                  + stringTConsumerRecord.value());
+            consumerRecord -> {
+
+              LOGGER.debug(String.format(
+                  "Receiving message with id %s and content %s. Calling registered callback %s",
+                  consumerRecord.key(), consumerRecord.value(), callback));
               callback
-                  .accept(stringTConsumerRecord.key(), stringTConsumerRecord.value());
+                  .accept(consumerRecord.key(), consumerRecord.value());
             });
       }
     });
-    return SubscriptionImpl.of(() -> future.cancel(true));
+    return SubscriptionImpl.of(() -> {
+      consumer.unsubscribe();
+      future.cancel(
+          true);
+    });
   }
 
   @Override
@@ -98,6 +109,8 @@ public class KafkaMessageInterface implements MessageInterface {
 
   @Override
   public void publish(String topic, String id, Message message) {
+    LOGGER.debug(
+        String.format("Publishing new message %s on topic %s with id %s.", message, topic, id));
     Kafka.Producers.kafkaProducer()
         .send(new ProducerRecord<>(topic, id, message));
   }
@@ -105,6 +118,12 @@ public class KafkaMessageInterface implements MessageInterface {
   @Override
   public <T extends Message, S extends Message> void callAsync(String requestTopic, T request,
       String responseTopic, Class<S> responseClass, ResponseCallback<S> responseConsumer) {
+
+    LOGGER.debug(
+        String.format(
+            "Async call to requestTopic %s with request %s. Response Topic is %s, using class %s and consumer %s",
+            requestTopic, request, responseTopic, responseClass, responseConsumer));
+
     kafkaRequestResponseHandler
         .callAsync(requestTopic, request, responseTopic, responseClass, responseConsumer);
   }
@@ -120,6 +139,11 @@ public class KafkaMessageInterface implements MessageInterface {
   @Override
   public <T extends Message, S extends Message> S call(String requestTopic, T request,
       String responseTopic, Class<S> responseClass) throws ResponseException {
+
+    LOGGER.debug(String.format(
+        "Call (sync) to requestTopic %s with request %s. Response Topic is %s, using class %s",
+        requestTopic, request, responseTopic, responseClass));
+
     return kafkaRequestResponseHandler
         .call(requestTopic, request, responseTopic, responseClass, 0L);
   }
@@ -127,6 +151,11 @@ public class KafkaMessageInterface implements MessageInterface {
   @Override
   public <T extends Message, S extends Message> S call(String requestTopic, T request,
       String responseTopic, Class<S> responseClass, long timeout) throws ResponseException {
+
+    LOGGER.debug(String.format(
+        "Call (sync) to requestTopic %s with request %s. Response Topic is %s, using class %s and timeout %s",
+        requestTopic, request, responseTopic, responseClass, timeout));
+
     return kafkaRequestResponseHandler
         .call(requestTopic, request, responseTopic, responseClass, timeout);
   }
@@ -134,6 +163,11 @@ public class KafkaMessageInterface implements MessageInterface {
   @Override
   public <T extends Message, S extends Message> S call(T request, Class<S> responseClass)
       throws ResponseException {
+
+    LOGGER.debug(String.format(
+        "Call (sync) with request %s. Response Class is %s.",
+        request, responseClass));
+
     return kafkaRequestResponseHandler
         .call(request.getClass().getSimpleName(), request, responseClass.getSimpleName(),
             responseClass, 0L);
@@ -142,6 +176,11 @@ public class KafkaMessageInterface implements MessageInterface {
   @Override
   public <T extends Message, S extends Message> S call(T request, Class<S> responseClass,
       long timeout) throws ResponseException {
+
+    LOGGER.debug(String.format(
+        "Call (sync) with request %s. Response Class is %s. Timeout is %s.",
+        request, responseClass, timeout));
+
     return kafkaRequestResponseHandler
         .call(request.getClass().getSimpleName(), request, responseClass.getSimpleName(),
             responseClass,
@@ -160,6 +199,10 @@ public class KafkaMessageInterface implements MessageInterface {
 
   @Override
   public void reply(String topic, String originId, Message message) {
+
+    LOGGER.debug(String
+        .format("Replying on topic %s for origin ID %s with message %s", topic, originId, message));
+
     Response response = Response.newBuilder().setCorrelation(originId).setContent(
         Any.pack(message)).build();
     this.publish(topic, response);
@@ -234,7 +277,6 @@ public class KafkaMessageInterface implements MessageInterface {
       activeSubscriptions.put(messageId, subscription);
 
       //send the message
-      System.out.println("Sending message with id " + messageId + " - " + request);
       KafkaMessageInterface.this.publish(requestTopic, messageId, request);
     }
 
