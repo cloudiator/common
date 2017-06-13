@@ -16,6 +16,7 @@
 
 package org.cloudiator.messaging.kafka;
 
+import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -27,7 +28,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 import javax.annotation.Nullable;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -38,15 +39,13 @@ import org.cloudiator.messaging.MessageCallback;
 import org.cloudiator.messaging.MessageInterface;
 import org.cloudiator.messaging.ResponseCallback;
 import org.cloudiator.messaging.ResponseException;
-import org.cloudiator.messaging.Subscription;
-import org.cloudiator.messaging.SubscriptionImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Created by daniel on 17.03.17.
  */
-public class KafkaMessageInterface implements MessageInterface {
+public class KafkaMessageInterface implements MessageInterface, AutoCloseable {
 
   private static final ExecutorService EXECUTOR_SERVICE =
       new LoggingScheduledThreadPoolExecutor(5);
@@ -54,6 +53,7 @@ public class KafkaMessageInterface implements MessageInterface {
   private static final Logger LOGGER =
       LoggerFactory.getLogger(KafkaMessageInterface.class);
   private final Kafka kafka;
+  private final Map<String, Consumer> consumerMap = Maps.newConcurrentMap();
 
   @Inject
   KafkaMessageInterface(Kafka kafka) {
@@ -61,17 +61,18 @@ public class KafkaMessageInterface implements MessageInterface {
   }
 
   @Override
-  public <T extends Message> Subscription subscribe(String topic, Parser<T> parser,
+  public <T extends Message> void subscribe(String topic, Parser<T> parser,
       MessageCallback<T> callback) {
 
     LOGGER.debug(String
         .format("Registering new subscription for topic %s, with parser %s and callback %s.",
             topic, parser, callback));
 
-    final Consumer<String, T> consumer = kafka.consumerFactory().kafkaConsumer(parser);
+    @SuppressWarnings("unchecked") final Consumer<String, T> consumer = consumerMap
+        .putIfAbsent(topic, kafka.consumerFactory().kafkaConsumer(parser));
 
     consumer.subscribe(Collections.singleton(topic));
-    final Future<?> future = EXECUTOR_SERVICE.submit(() -> {
+    EXECUTOR_SERVICE.submit(() -> {
       while (!Thread.currentThread().isInterrupted()) {
         final ConsumerRecords<String, T> poll = consumer.poll(1000);
         poll.forEach(
@@ -85,17 +86,12 @@ public class KafkaMessageInterface implements MessageInterface {
             });
       }
     });
-    return SubscriptionImpl.of(() -> {
-      consumer.unsubscribe();
-      future.cancel(
-          true);
-    });
   }
 
   @Override
-  public <T extends Message> Subscription subscribe(Class<T> messageClass, Parser<T> parser,
+  public <T extends Message> void subscribe(Class<T> messageClass, Parser<T> parser,
       MessageCallback<T> callback) {
-    return subscribe(messageClass.getSimpleName(), parser, callback);
+    subscribe(messageClass.getSimpleName(), parser, callback);
   }
 
   @Override
@@ -216,10 +212,30 @@ public class KafkaMessageInterface implements MessageInterface {
 
   }
 
+  public void shutdown() {
+    consumerMap.forEach((topic, consumer) -> {
+      consumer.unsubscribe();
+      consumer.close();
+    });
+    EXECUTOR_SERVICE.shutdown();
+    try {
+      if (!EXECUTOR_SERVICE.awaitTermination(5000, TimeUnit.MILLISECONDS)) {
+        System.out
+            .println("Timed out waiting for consumer threads to shut down, exiting uncleanly");
+      }
+    } catch (InterruptedException e) {
+      System.out.println("Interrupted during shutdown, exiting uncleanly");
+    }
+  }
+
+  @Override
+  public void close() throws Exception {
+    shutdown();
+  }
+
   private class KafkaRequestResponseHandler {
 
     private Map<String, ResponseCallback> waitingCallbacks = new ConcurrentHashMap<>();
-    private Map<String, Subscription> activeSubscriptions = new ConcurrentHashMap<>();
 
     private <T extends Message, S extends Message> void callAsync(String requestTopic, T request,
         String responseTopic,
@@ -232,7 +248,7 @@ public class KafkaMessageInterface implements MessageInterface {
       waitingCallbacks.put(messageId, responseConsumer);
 
       //subscribe to responseTopic
-      final Subscription subscription = KafkaMessageInterface.this
+      KafkaMessageInterface.this
           .subscribe(responseTopic, Response.parser(), (id, response) -> {
             //suppressing warning, as we can be sure that the callback is always of the corresponding
             //type. Not using generics on the class, allows us to provide a more versatile implementation
@@ -265,17 +281,9 @@ public class KafkaMessageInterface implements MessageInterface {
               throw new IllegalStateException(
                   String.format("Error parsing message %s.", e.getMessage()), e);
             } finally {
-              if (activeSubscriptions.containsKey(messageId)) {
-                activeSubscriptions.get(messageId).cancel();
-              } else {
-                LOGGER.warn(
-                    String.format("Tried to cancel subscription for message %s, but found none.",
-                        messageId));
-              }
               waitingCallbacks.remove(response.getCorrelation());
             }
           });
-      activeSubscriptions.put(messageId, subscription);
 
       //send the message
       KafkaMessageInterface.this.publish(requestTopic, messageId, request);

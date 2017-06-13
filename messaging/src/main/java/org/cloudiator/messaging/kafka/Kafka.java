@@ -108,6 +108,9 @@ public class Kafka {
       Properties properties = new Properties();
       properties.put("bootstrap.servers", bootstrapServers);
       properties.put("group.id", groupId);
+      properties.put("zookeeper.session.timeout.ms", "400");
+      properties.put("zookeeper.sync.time.ms", "200");
+      properties.put("auto.commit.interval.ms", "1000");
       return new KafkaConsumer<>(properties, new StringDeserializer(),
           new ProtobufDeserializer<>(parser));
     }
