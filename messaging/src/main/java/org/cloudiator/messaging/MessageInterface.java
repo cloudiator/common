@@ -27,10 +27,10 @@ import org.cloudiator.messages.General.Error;
  */
 public interface MessageInterface {
 
-  <T extends Message> void subscribe(String topic, Parser<T> parser,
+  <T extends Message> Subscription subscribe(String topic, Parser<T> parser,
       MessageCallback<T> callback);
 
-  <T extends Message> void subscribe(Class<T> messageClass, Parser<T> parser,
+  <T extends Message> Subscription subscribe(Class<T> messageClass, Parser<T> parser,
       MessageCallback<T> callback);
 
   void publish(String topic, Message message);
