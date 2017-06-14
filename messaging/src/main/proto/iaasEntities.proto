@@ -17,7 +17,7 @@ message NewCloud {
 
 message Cloud {
   string id = 1;
-  string name = 2;
+  //string name = 2; Removed
   string endpoint = 3;
   Api api = 4;
   Credential credential = 5;
