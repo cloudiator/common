@@ -44,6 +44,7 @@ import org.cloudiator.messaging.ResponseCallback;
 import org.cloudiator.messaging.ResponseException;
 import org.cloudiator.messaging.SubscribtionImpl;
 import org.cloudiator.messaging.Subscription;
+import org.cloudiator.messaging.TimeoutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -341,6 +342,9 @@ public class KafkaMessageInterface implements MessageInterface, AutoCloseable {
           } catch (InterruptedException e) {
             throw new IllegalStateException(e);
           }
+        }
+        if (!response.isAvailable()) {
+          throw new TimeoutException();
         }
       }
       return response.getContentOrThrowException();

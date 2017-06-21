@@ -19,6 +19,7 @@ package org.cloudiator.messaging.services;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.inject.Inject;
+import javax.inject.Named;
 import org.cloudiator.messages.Image.ImageQueryRequest;
 import org.cloudiator.messages.Image.ImageQueryResponse;
 import org.cloudiator.messaging.MessageInterface;
@@ -30,6 +31,12 @@ import org.cloudiator.messaging.ResponseException;
 public class ImageServiceImpl implements ImageService {
 
   private final MessageInterface messageInterface;
+  private long timeout = 0;
+
+  @Inject
+  public void setResponseTimeout(@Named("responseTimeout") long timeout) {
+    this.timeout = timeout;
+  }
 
   @Inject
   public ImageServiceImpl(MessageInterface messageInterface) {
@@ -40,6 +47,6 @@ public class ImageServiceImpl implements ImageService {
   @Override
   public ImageQueryResponse getImages(ImageQueryRequest imageQueryRequest)
       throws ResponseException {
-    return messageInterface.call(imageQueryRequest, ImageQueryResponse.class);
+    return messageInterface.call(imageQueryRequest, ImageQueryResponse.class, timeout);
   }
 }

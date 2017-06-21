@@ -19,6 +19,7 @@ package org.cloudiator.messaging.services;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.inject.Inject;
+import javax.inject.Named;
 import org.cloudiator.messages.Location.LocationQueryRequest;
 import org.cloudiator.messages.Location.LocationQueryResponse;
 import org.cloudiator.messaging.MessageInterface;
@@ -30,6 +31,12 @@ import org.cloudiator.messaging.ResponseException;
 public class LocationServiceImpl implements LocationService {
 
   private final MessageInterface messageInterface;
+  private long timeout = 0;
+
+  @Inject
+  public void setResponseTimeout(@Named("responseTimeout") long timeout) {
+    this.timeout = timeout;
+  }
 
   @Inject
   public LocationServiceImpl(MessageInterface messageInterface) {
@@ -40,6 +47,6 @@ public class LocationServiceImpl implements LocationService {
   @Override
   public LocationQueryResponse getLocations(LocationQueryRequest locationQueryRequest)
       throws ResponseException {
-    return messageInterface.call(locationQueryRequest, LocationQueryResponse.class);
+    return messageInterface.call(locationQueryRequest, LocationQueryResponse.class, timeout);
   }
 }

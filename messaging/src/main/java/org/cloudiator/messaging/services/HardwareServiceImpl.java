@@ -19,6 +19,7 @@ package org.cloudiator.messaging.services;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.inject.Inject;
+import javax.inject.Named;
 import org.cloudiator.messages.Hardware.HardwareQueryRequest;
 import org.cloudiator.messages.Hardware.HardwareQueryResponse;
 import org.cloudiator.messaging.MessageInterface;
@@ -30,6 +31,12 @@ import org.cloudiator.messaging.ResponseException;
 public class HardwareServiceImpl implements HardwareService {
 
   private final MessageInterface messageInterface;
+  private long timeout = 0;
+
+  @Inject
+  public void setResponseTimeout(@Named("responseTimeout") long timeout) {
+    this.timeout = timeout;
+  }
 
   @Inject public HardwareServiceImpl(MessageInterface messageInterface) {
     checkNotNull(messageInterface, "messageInterface is null");
@@ -40,6 +47,6 @@ public class HardwareServiceImpl implements HardwareService {
   @Override
   public HardwareQueryResponse getHardware(HardwareQueryRequest hardwareQueryRequest)
       throws ResponseException {
-    return messageInterface.call(hardwareQueryRequest, HardwareQueryResponse.class);
+    return messageInterface.call(hardwareQueryRequest, HardwareQueryResponse.class, timeout);
   }
 }

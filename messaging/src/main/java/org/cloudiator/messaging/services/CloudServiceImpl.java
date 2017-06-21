@@ -19,6 +19,7 @@ package org.cloudiator.messaging.services;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.inject.Inject;
+import javax.inject.Named;
 import org.cloudiator.messages.Cloud.CloudCreatedResponse;
 import org.cloudiator.messages.Cloud.CloudDeletedResponse;
 import org.cloudiator.messages.Cloud.CloudQueryRequest;
@@ -36,8 +37,15 @@ import org.cloudiator.messaging.ResponseException;
 public class CloudServiceImpl implements CloudService {
 
   private final MessageInterface messageInterface;
+  private long timeout = 0;
 
-  @Inject public CloudServiceImpl(MessageInterface messageInterface) {
+  @Inject
+  public void setResponseTimeout(@Named("responseTimeout") long timeout) {
+    this.timeout = timeout;
+  }
+
+  @Inject
+  public CloudServiceImpl(MessageInterface messageInterface) {
     checkNotNull(messageInterface, "messageInterface is null");
     this.messageInterface = messageInterface;
   }
@@ -45,27 +53,27 @@ public class CloudServiceImpl implements CloudService {
   @Override
   public CloudQueryResponse getClouds(CloudQueryRequest cloudQueryRequest)
       throws ResponseException {
-    return messageInterface.call(cloudQueryRequest, CloudQueryResponse.class);
+    return messageInterface.call(cloudQueryRequest, CloudQueryResponse.class, timeout);
   }
 
   @Override
   public CloudCreatedResponse createCloud(CreateCloudRequest createCloudRequest)
       throws ResponseException {
     return messageInterface.call(createCloudRequest,
-        CloudCreatedResponse.class);
+        CloudCreatedResponse.class, timeout);
   }
 
   @Override
   public CloudUpdatedResponse updateCloud(UpdateCloudRequest updateCloudRequest)
       throws ResponseException {
     return messageInterface.call(updateCloudRequest,
-        CloudUpdatedResponse.class);
+        CloudUpdatedResponse.class, timeout);
   }
 
   @Override
   public CloudDeletedResponse deleteCloud(DeleteCloudRequest deleteCloudRequest)
       throws ResponseException {
     return messageInterface.call(deleteCloudRequest,
-        CloudDeletedResponse.class);
+        CloudDeletedResponse.class, timeout);
   }
 }
