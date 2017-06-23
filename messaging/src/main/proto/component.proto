@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package iaas;
+
+option java_package = "org.cloudiator.messages";
+
+import "componentEntities.proto";
+
+message ComponentQueryRequest {
+  string userId = 1;
+}
+
+message ComponentQueryResponse {
+  repeated LifecycleComponent lifecycleComponents = 1;
+  repeated DockerComponent dockerComponents = 2;
+}
+
+message CreateComponentRequest {
+  string userId = 1;
+  oneof component {
+    LifecycleComponent lifecycleComponent = 2;
+    DockerComponent dockerComponent = 3;
+  }
+}
+
+message ComponentCreatedResponse {
+  oneof component {
+    LifecycleComponent lifecycleComponent = 2;
+    DockerComponent dockerComponent = 3;
+  }
+}
+
+message UpdateComponentRequest {
+  string userId = 1;
+  oneof component {
+    LifecycleComponent lifecycleComponent = 2;
+    DockerComponent dockerComponent = 3;
+  }
+}
+
+message ComponentUpdatedResponse {
+  oneof component {
+    LifecycleComponent lifecycleComponent = 2;
+    DockerComponent dockerComponent = 3;
+  }
+}
+
+message DeleteComponentRequest {
+  string userId = 1;
+  string name = 2;
+}
+
+message ComponentDeletedResponse {
+}

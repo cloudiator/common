@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package iaas;
+
+option java_package = "org.cloudiator.messages";
+
+import "applicationEntities.proto";
+
+message ApplicationQueryRequest {
+  string userId = 1;
+}
+
+message ApplicationQueryResponse {
+  repeated Application applications = 1;
+}
+
+message CreateApplicationRequest {
+  string userId = 1;
+  Application application = 2;
+}
+
+message ApplicationCreatedResponse {
+  Application application = 1;
+}
+
+message UpdateApplicationRequest {
+  string userId = 1;
+  Application application = 2;
+}
+
+message ApplicationUpdatedResponse {
+  Application application = 1;
+}
+
+message DeleteApplicationRequest {
+  string userId = 1;
+  string name = 2;
+}
+
+message ApplicationDeletedResponse {
+}

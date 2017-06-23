@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package iaas;
+
+option java_package = "org.cloudiator.messages.entities";
+
+import "commonEntities.proto";
+
+message Component {
+  string name = 1;
+  repeated PortProvided providedPorts = 2;
+  repeated PortRequired requiredPorts = 3;
+}
+
+message LifecycleComponent {
+  Component component = 1;
+
+  string init = 4;
+  string preInstall = 5;
+  string install = 6;
+  string postInstall = 7;
+  string preStart = 8;
+  string start = 9;
+  string startDetection = 10;
+  string stopDetection = 11;
+  string postStart = 12;
+  string preStop = 13;
+  string stop = 14;
+  string postStop = 15;
+  string shutdown = 16;
+}
+
+message DockerComponent {
+  Component component = 1;
+  string dockerImage = 2;
+}
+
+message PortProvided {
+  string name = 1;
+  int32 port = 2;
+}
+
+message PortRequired {
+  string name = 1;
+  string updateAction = 2;
+  bool isMandatory = 3;
+}
