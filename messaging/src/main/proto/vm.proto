@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package iaas;
+
+option java_package = "org.cloudiator.messages";
+
+import "iaasEntities.proto";
+
+message CreateVirtualMachineRequestRequest {
+  string userId = 1;
+  VirtualMachineRequest virtualMachineRequest = 2;
+}
+
+message VirtualMachineCreatedResponse {
+  VirtualMachine virtualMachine = 1;
+}

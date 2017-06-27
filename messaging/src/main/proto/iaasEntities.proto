@@ -26,8 +26,8 @@ message Cloud {
 }
 
 enum CloudType {
-  PUBLIC = 0;
-  PRIVATE = 1;
+  PUBLIC_CLOUD = 0;
+  PRIVATE_CLOUD = 1;
 }
 
 message Api {
@@ -74,4 +74,48 @@ message Location {
   common.LocationScope locationScope = 4;
   bool isAssignable = 5;
   Location parent = 6;
+}
+
+message VirtualMachineRequest {
+  string image = 1;
+  string location = 2;
+  string hardware = 3;
+}
+
+message LoginCredential {
+  string username = 1;
+  oneof credential {
+    KeyPair keypair = 2;
+    string password = 3;
+  }
+}
+
+message KeyPair {
+  string privateKey = 1;
+  string publicKey = 2;
+}
+
+message IpAddress {
+  IpAddressType type = 1;
+  IpVersion version = 2;
+  string ip = 3;
+}
+
+enum IpAddressType {
+  PUBLIC_IP = 0;
+  PRIVATE_IP = 1;
+}
+
+enum IpVersion {
+  V4 = 0;
+  v6 = 1;
+}
+
+message VirtualMachine {
+  string id = 1;
+  string image = 2;
+  string location = 3;
+  string hardware = 4;
+  repeated IpAddress ipAddresses = 5;
+  LoginCredential loginCredential = 6;
 }
