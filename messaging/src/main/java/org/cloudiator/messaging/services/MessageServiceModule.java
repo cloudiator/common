@@ -30,6 +30,8 @@ public class MessageServiceModule extends AbstractModule {
     bind(HardwareService.class).to(HardwareServiceImpl.class).in(Singleton.class);
     bind(ImageService.class).to(ImageServiceImpl.class).in(Singleton.class);
     bind(LocationService.class).to(LocationServiceImpl.class).in(Singleton.class);
+    bind(VirtualMachineService.class).to(VirtualMachineServiceImpl.class).in(Singleton.class);
+    bind(ApplicationService.class).to(ApplicationServiceImpl.class).in(Singleton.class);
   }
 
 }
