@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+import "node.proto";
+
+package iaas;
+
+option java_package = "org.cloudiator.messages";
+
+import "iaasEntities.proto";
+
+message AddByoNodeRequest {
+  string userId = 1;
+  ByonData byonRequest = 2;
+}
+
+message ByoNodeAddedResponse {
+  ByoNode byoNode = 1;
+}
+
+message ByoNode {
+ string id = 1;
+ ByonData nodeData = 2;
+}
+
+message ByonData {
+ repeated IpAddress ipAddress = 2;
+ LoginCredential loginCredentials = 3;
+ NodeProperties properties = 4;
+}
