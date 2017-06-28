@@ -17,6 +17,7 @@ message VirtualMachineCreatedResponse {
 
 message VirtualMachineEvent {
   VirtualMachine virtualMachine = 1;
+  VmStatus vmStatus = 2;
 }
 
 enum VmStatus{
