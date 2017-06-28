@@ -14,3 +14,13 @@ message CreateVirtualMachineRequestRequest {
 message VirtualMachineCreatedResponse {
   VirtualMachine virtualMachine = 1;
 }
+
+message VirtualMachineEvent {
+  VirtualMachine virtualMachine = 1;
+}
+
+enum VmStatus{
+  UNDEFINED = 0;
+  CREATED = 1;
+  DELETED = 2;
+}
