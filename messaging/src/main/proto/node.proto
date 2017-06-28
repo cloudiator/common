@@ -12,6 +12,7 @@ message Node {
   LoginCredential loginCredential = 2;
   NodeType nodeType = 3;
   repeated IpAddress ipAddresses = 4;
+  NodeProperties nodeProperties = 5;
 }
 
 message NodeProperties {
