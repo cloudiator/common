@@ -16,8 +16,8 @@ message Node {
 
 message NodeProperties {
   int32 numberOfCores = 1;
-  int32 memory = 2;
-  int32 disk = 3;
+  int64 memory = 2;
+  float disk = 3;
   common.OperatingSystem operationSystem = 4;
   Location location = 5;
 }
