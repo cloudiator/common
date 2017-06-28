@@ -35,6 +35,7 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.Nullable;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
+import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.cloudiator.messages.General.Error;
 import org.cloudiator.messages.General.Response;
@@ -143,6 +144,23 @@ public class KafkaMessageInterface implements MessageInterface, AutoCloseable {
 
   }
 
+  private void publishSync(String topic, Message message) {
+    this.publishSync(topic, UUID.randomUUID().toString(), message);
+  }
+
+  private void publishSync(Message message) {
+    publishSync(message.getClass().getSimpleName(), message);
+  }
+
+  private void publishSync(String topic, String id, Message message) {
+    LOGGER.debug(
+        String.format("Publishing (sync) new message %s on topic %s with id %s.", message, topic,
+            id));
+    Producer<String, Message> producer = kafka.producerFactory().kafkaProducer();
+    producer.send(new ProducerRecord<>(topic, id, message));
+    producer.flush();
+  }
+
   @Override
   public <T extends Message, S extends Message> void callAsync(String requestTopic, T request,
       String responseTopic, Class<S> responseClass, ResponseCallback<S> responseConsumer) {
@@ -233,13 +251,17 @@ public class KafkaMessageInterface implements MessageInterface, AutoCloseable {
 
     Response response = Response.newBuilder().setCorrelation(originId).setContent(
         Any.pack(message)).build();
-    this.publish(topic, response);
+    this.publishSync(topic, response);
   }
 
   @Override
   public void reply(String topic, String originId, Error error) {
+
+    LOGGER.debug(String
+        .format("Replying on topic %s for origin ID %s with error %s", topic, originId, error));
+
     Response response = Response.newBuilder().setCorrelation(originId).setError(error).build();
-    this.publish(topic, response);
+    this.publishSync(topic, response);
 
   }
 
