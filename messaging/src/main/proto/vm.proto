@@ -15,13 +15,3 @@ message VirtualMachineCreatedResponse {
   VirtualMachine virtualMachine = 1;
 }
 
-message VirtualMachineEvent {
-  VirtualMachine virtualMachine = 1;
-  VmStatus vmStatus = 2;
-}
-
-enum VmStatus{
-  UNDEFINED = 0;
-  CREATED = 1;
-  DELETED = 2;
-}
