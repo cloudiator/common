@@ -19,7 +19,7 @@ message NodeProperties {
   int32 numberOfCores = 1;
   int64 memory = 2;
   float disk = 3;
-  common.OperatingSystem operationSystem = 4;
+  OperatingSystem operationSystem = 4;
   Location location = 5;
 }
 
