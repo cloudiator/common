@@ -2,8 +2,7 @@ package org.cloudiator.messaging.services;
 
 import com.google.inject.Inject;
 import javax.inject.Named;
-import org.cloudiator.messages.Location.LocationQueryResponse;
-import org.cloudiator.messages.Vm.CreateVirtualMachineRequestRequest;
+import org.cloudiator.messages.Vm.CreateVirtualMachineRequestMessage;
 import org.cloudiator.messages.Vm.VirtualMachineCreatedResponse;
 import org.cloudiator.messaging.MessageInterface;
 import org.cloudiator.messaging.ResponseException;
@@ -16,7 +15,8 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
   private final MessageInterface messageInterface;
   private long timeout = 0;
 
-  @Inject public VirtualMachineServiceImpl(MessageInterface messageInterface) {
+  @Inject
+  public VirtualMachineServiceImpl(MessageInterface messageInterface) {
     this.messageInterface = messageInterface;
   }
 
@@ -27,7 +27,8 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
 
   @Override
   public VirtualMachineCreatedResponse createVirtualMachine(
-      CreateVirtualMachineRequestRequest virtualMachineRequestRequest) throws ResponseException {
-    return messageInterface.call(virtualMachineRequestRequest, VirtualMachineCreatedResponse.class, timeout);
+      CreateVirtualMachineRequestMessage virtualMachineRequestRequest) throws ResponseException {
+    return messageInterface
+        .call(virtualMachineRequestRequest, VirtualMachineCreatedResponse.class, timeout);
   }
 }

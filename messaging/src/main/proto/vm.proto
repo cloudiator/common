@@ -6,7 +6,7 @@ option java_package = "org.cloudiator.messages";
 
 import "iaasEntities.proto";
 
-message CreateVirtualMachineRequestRequest {
+message CreateVirtualMachineRequestMessage {
   string userId = 1;
   VirtualMachineRequest virtualMachineRequest = 2;
 }

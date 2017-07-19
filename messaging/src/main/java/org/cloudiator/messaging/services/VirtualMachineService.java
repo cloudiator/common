@@ -1,6 +1,6 @@
 package org.cloudiator.messaging.services;
 
-import org.cloudiator.messages.Vm.CreateVirtualMachineRequestRequest;
+import org.cloudiator.messages.Vm.CreateVirtualMachineRequestMessage;
 import org.cloudiator.messages.Vm.VirtualMachineCreatedResponse;
 import org.cloudiator.messaging.ResponseException;
 
@@ -10,7 +10,7 @@ import org.cloudiator.messaging.ResponseException;
 public interface VirtualMachineService
 {
 
-  VirtualMachineCreatedResponse createVirtualMachine(CreateVirtualMachineRequestRequest virtualMachineRequestRequest)
+  VirtualMachineCreatedResponse createVirtualMachine(CreateVirtualMachineRequestMessage virtualMachineRequestRequest)
       throws ResponseException;
 
 }
