@@ -47,7 +47,6 @@ public class Kafka {
 
     kafkaProducerFactory = new KafkaProducerFactory(bootstrapServers);
     kafkaConsumerFactory = new KafkaConsumerFactory(bootstrapServers, groupId);
-
   }
 
   public KafkaProducerFactory producerFactory() {
