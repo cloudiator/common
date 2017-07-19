@@ -8,11 +8,12 @@ import "iaasEntities.proto";
 import "commonEntities.proto";
 
 message Node {
-  string userId = 1;
+  string id = 1;
   LoginCredential loginCredential = 2;
   NodeType nodeType = 3;
   repeated IpAddress ipAddresses = 4;
   NodeProperties nodeProperties = 5;
+  string userId = 6;
 }
 
 message NodeProperties {
