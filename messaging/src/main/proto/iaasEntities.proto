@@ -119,3 +119,4 @@ message VirtualMachine {
   repeated IpAddress ipAddresses = 5;
   LoginCredential loginCredential = 6;
 }
+
