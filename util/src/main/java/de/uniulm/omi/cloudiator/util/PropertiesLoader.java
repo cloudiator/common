@@ -18,11 +18,14 @@ package de.uniulm.omi.cloudiator.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Collections;
 import java.util.Properties;
 
 /**
@@ -45,8 +48,11 @@ public class PropertiesLoader {
     }
 
     try {
+      final String[] array = resource.toURI().toString().split("!");
+      final FileSystem fs = FileSystems.newFileSystem(URI.create(array[0]), Collections.emptyMap());
+
       final InputStream inputStream = Files
-          .newInputStream(Paths.get(resource.toURI()), StandardOpenOption.READ);
+          .newInputStream(fs.getPath(array[1]), StandardOpenOption.READ);
       Properties properties = new Properties();
       properties.load(inputStream);
       return properties;
