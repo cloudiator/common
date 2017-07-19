@@ -32,6 +32,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 
 /**
  * Created by daniel on 02.03.17.
+ * FIXME: make timeouts configurable 
  */
 public class Kafka {
 
