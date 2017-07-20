@@ -5,9 +5,11 @@ package iaas;
 option java_package = "org.cloudiator.messages";
 
 import "iaasEntities.proto";
+import "instanceEntities.proto";
 
 message ToolInstalledRequest {
   string userId = 1;
+  string nodeId = 2;
 }
 
 message ToolsInstalledResponse {
@@ -17,10 +19,12 @@ message ToolsInstalledResponse {
 message ToolsInstallRequest {
   string userId = 1;
   repeated Tool tools = 2;
+  string nodeId = 3;
 }
 
 message ToolsInstallResponse {
   repeated Tool tools = 1;
+  string nodeId = 2;
 }
 
 enum Tool {
