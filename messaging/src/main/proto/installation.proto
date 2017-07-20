@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package iaas;
+
+option java_package = "org.cloudiator.messages";
+
+import "iaasEntities.proto";
+
+message ToolInstalledRequest {
+  string userId = 1;
+}
+
+message ToolsInstalledResponse {
+  repeated Tool tools = 1;
+}
+
+message ToolsInstallRequest {
+  string userId = 1;
+  repeated Tool tools = 2;
+}
+
+message ToolsInstallResponse {
+  repeated Tool tools = 1;
+}
+
+enum Tool {
+  VISOR = 0;
+  AXE = 1;
+  LANCE = 2;
+  KAIROSDB = 3;
+}

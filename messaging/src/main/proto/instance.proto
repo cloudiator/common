@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package application;
+
+option java_package = "org.cloudiator.messages";
+
+import "instanceEntities.proto";
+
+message ComponentQueryRequest {
+  string userId = 1;
+}
+
+message InstanceQueryResponse {
+  repeated Instance instances = 1;
+}
+
+message CreateInstanceRequest {
+  string userId = 1;
+  oneof component {
+    LifecycleComponent lifecycleComponent = 2;
+    DockerComponent dockerComponent = 3;
+  }
+}
+
+message InstanceCreatedResponse {
+  oneof component {
+    LifecycleComponent lifecycleComponent = 2;
+    DockerComponent dockerComponent = 3;
+  }
+}
