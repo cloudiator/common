@@ -2,9 +2,12 @@ package org.cloudiator.messaging.services;
 
 import com.google.inject.Inject;
 import javax.inject.Named;
+
+import org.cloudiator.messages.Vm;
 import org.cloudiator.messages.Vm.CreateVirtualMachineRequestMessage;
 import org.cloudiator.messages.Vm.VirtualMachineCreatedResponse;
 import org.cloudiator.messaging.MessageInterface;
+import org.cloudiator.messaging.ResponseCallback;
 import org.cloudiator.messaging.ResponseException;
 
 /**
@@ -30,5 +33,10 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
       CreateVirtualMachineRequestMessage virtualMachineRequestRequest) throws ResponseException {
     return messageInterface
         .call(virtualMachineRequestRequest, VirtualMachineCreatedResponse.class, timeout);
+  }
+
+  @Override
+  public void createVirtualMachineAsync(CreateVirtualMachineRequestMessage virtualMachineRequestMessage, ResponseCallback<VirtualMachineCreatedResponse> callback) {
+    messageInterface.callAsync(virtualMachineRequestMessage, VirtualMachineCreatedResponse.class, callback);
   }
 }
