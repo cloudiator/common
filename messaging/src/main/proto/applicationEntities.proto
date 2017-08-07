@@ -5,6 +5,7 @@ package iaas;
 option java_package = "org.cloudiator.messages.entities";
 
 import "commonEntities.proto";
+import "componentEntities.proto";
 
 message Application {
   string name = 1;
@@ -15,4 +16,10 @@ message Application {
 message Communication {
   string portRequired = 1;
   string portProvided = 2;
+}
+
+message Job  {
+  string name = 1;
+  repeated string tasks = 2;
+  repeated Communication communications = 3;
 }
