@@ -14,24 +14,14 @@
  * limitations under the License.
  */
 
-package de.uniulm.omi.cloudiator.persistance.repositories;
-
-
-import de.uniulm.omi.cloudiator.persistance.entities.Model;
-import java.util.List;
-import javax.annotation.Nullable;
+package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
 /**
- * Created by daniel on 31.10.14.
+ * Created by daniel on 12.03.15.
  */
-public interface ModelRepository<T extends Model> {
+@Deprecated public enum IpType {
 
-  @Nullable
-  T findById(Long id);
+    PUBLIC,
+    PRIVATE
 
-  void delete(T t);
-
-  void save(T t);
-
-  List<T> findAll();
 }

@@ -14,24 +14,15 @@
  * limitations under the License.
  */
 
-package de.uniulm.omi.cloudiator.persistance.repositories;
+package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
-
-import de.uniulm.omi.cloudiator.persistance.entities.Model;
-import java.util.List;
-import javax.annotation.Nullable;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 /**
- * Created by daniel on 31.10.14.
+ * Created by Frank on 20.05.2015.
  */
-public interface ModelRepository<T extends Model> {
-
-  @Nullable
-  T findById(Long id);
-
-  void delete(T t);
-
-  void save(T t);
-
-  List<T> findAll();
+@Deprecated @Entity @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS) public abstract class Window
+    extends Model {
 }

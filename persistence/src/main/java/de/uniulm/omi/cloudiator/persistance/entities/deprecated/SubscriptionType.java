@@ -14,24 +14,25 @@
  * limitations under the License.
  */
 
-package de.uniulm.omi.cloudiator.persistance.repositories;
-
-
-import de.uniulm.omi.cloudiator.persistance.entities.Model;
-import java.util.List;
-import javax.annotation.Nullable;
+package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
 /**
- * Created by daniel on 31.10.14.
+ * Created by Frank on 02.08.2015.
  */
-public interface ModelRepository<T extends Model> {
+@Deprecated public enum SubscriptionType {
 
-  @Nullable
-  T findById(Long id);
+    CDO("CDO"),
+    CDO_EVENT("CDO_EVENT"),
+    JSON_CS("JSON_CS"),
+    SCALING("SCALING");
 
-  void delete(T t);
+    private final String text;
 
-  void save(T t);
+    private SubscriptionType(final String text) {
+        this.text = text;
+    }
 
-  List<T> findAll();
+    @Override public String toString() {
+        return text;
+    }
 }

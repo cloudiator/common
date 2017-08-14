@@ -14,24 +14,23 @@
  * limitations under the License.
  */
 
-package de.uniulm.omi.cloudiator.persistance.repositories;
+package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
-
-import de.uniulm.omi.cloudiator.persistance.entities.Model;
-import java.util.List;
-import javax.annotation.Nullable;
+import javax.persistence.Entity;
 
 /**
- * Created by daniel on 31.10.14.
+ * Created by Frank on 20.05.2015.
  */
-public interface ModelRepository<T extends Model> {
+@Deprecated @Entity public class ComponentHorizontalInScalingAction extends ComponentHorizontalScalingAction {
 
-  @Nullable
-  T findById(Long id);
+    /**
+     * Empty constructor for hibernate.
+     */
+    protected ComponentHorizontalInScalingAction() {
+    }
 
-  void delete(T t);
-
-  void save(T t);
-
-  List<T> findAll();
+    public ComponentHorizontalInScalingAction(Long amount, Long min, Long max, Long count,
+        ApplicationComponent applicationComponent) {
+        super(amount, min, max, count, applicationComponent);
+    }
 }

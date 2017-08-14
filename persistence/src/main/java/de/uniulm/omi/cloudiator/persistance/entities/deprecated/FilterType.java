@@ -14,24 +14,27 @@
  * limitations under the License.
  */
 
-package de.uniulm.omi.cloudiator.persistance.repositories;
-
-
-import de.uniulm.omi.cloudiator.persistance.entities.Model;
-import java.util.List;
-import javax.annotation.Nullable;
+package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
 /**
- * Created by daniel on 31.10.14.
+ * Created by Frank on 02.08.2015.
  */
-public interface ModelRepository<T extends Model> {
+@Deprecated public enum FilterType {
 
-  @Nullable
-  T findById(Long id);
+    ANY("ANY"),
+    GTE("GTE"),
+    GT("GT"),
+    E("E"),
+    LT("LT"),
+    LTE("LTE");
 
-  void delete(T t);
+    private final String text;
 
-  void save(T t);
+    private FilterType(final String text) {
+        this.text = text;
+    }
 
-  List<T> findAll();
+    @Override public String toString() {
+        return text;
+    }
 }

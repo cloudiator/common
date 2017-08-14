@@ -14,24 +14,23 @@
  * limitations under the License.
  */
 
-package de.uniulm.omi.cloudiator.persistance.repositories;
-
-
-import de.uniulm.omi.cloudiator.persistance.entities.Model;
-import java.util.List;
-import javax.annotation.Nullable;
+package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
 /**
- * Created by daniel on 31.10.14.
+ * Created by Frank on 25.05.2015.
  */
-public interface ModelRepository<T extends Model> {
+@Deprecated public enum FlowOperator {
 
-  @Nullable
-  T findById(Long id);
+    MAP("MAP"),
+    REDUCE("REDUCE");
 
-  void delete(T t);
+    private final String text;
 
-  void save(T t);
+    private FlowOperator(final String text) {
+        this.text = text;
+    }
 
-  List<T> findAll();
+    @Override public String toString() {
+        return text;
+    }
 }
