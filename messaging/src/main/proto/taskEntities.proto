@@ -9,11 +9,11 @@ import "commonEntities.proto";
 message Task {
   string name = 1;
   repeated Port ports = 2;
-  repeated Interface interfaces = 3;
+  repeated TaskInterface interfaces = 3;
 }
 
-message Interface {
-  oneof interface {
+message TaskInterface {
+  oneof taskInterface {
     DockerInterface dockerInterface = 1;
     LanceInterface lanceInterface = 2;
   }
