@@ -5,7 +5,6 @@ package iaas;
 option java_package = "org.cloudiator.messages";
 
 import "iaasEntities.proto";
-import "instanceEntities.proto";
 
 message ToolInstalledRequest {
   string userId = 1;

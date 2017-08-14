@@ -29,27 +29,27 @@ message Environment {
   HardwareFlavour hardwareFlavour = 5;
   Runtime runtime = 6;
   repeated RuntimeService runtimeService = 7;
-
 }
 
-message Runtime { //needs to be refiend for a cloud level agnostic application description
-                  string id = 1;
-                  string name = 2;
-                  string providerId = 3;
-                  RuntimeLanguage runtimeLanguage = 5;
-                  double runtimeLanguageVersion = 6;
-                  RuntimeType runtimeType = 7;
-                  double runtimeTypeVersion = 8; //optional, depends if
+//needs to be refiend for a cloud level agnostic application description
+message Runtime {
+  string id = 1;
+  string name = 2;
+  string providerId = 3;
+  RuntimeLanguage runtimeLanguage = 5;
+  double runtimeLanguageVersion = 6;
+  RuntimeType runtimeType = 7;
+  double runtimeTypeVersion = 8; //optional, depends if
 }
 
-message HardwareFlavour { //a simplified configuration for PaaS
-                          string id = 1;
-                          string name = 2;
-                          int32 cores = 4;
-                          int64 ram = 5;
-                          float disk = 6;
+//a simplified configuration for PaaS
+message HardwareFlavour {
+  string id = 1;
+  string name = 2;
+  int32 cores = 4;
+  int64 ram = 5;
+  float disk = 6;
 }
-
 
 enum RuntimeLanguage {
   JAVA = 0;
@@ -63,6 +63,7 @@ enum RuntimeType {
   SERVER = 1;
 }
 
-message RuntimeService { //may be obsolete for a cloud level agnostic application description
-                         //to be defined
+//may be obsolete for a cloud level agnostic application description
+//to be defined
+message RuntimeService {
 }

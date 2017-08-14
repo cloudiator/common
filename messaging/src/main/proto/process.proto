@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package application;
+
+option java_package = "org.cloudiator.messages";
+
+import "taskEntities.proto";
+import "processEntities.proto";
+
+message ProcessQueryRequest {
+  string userId = 1;
+}
+
+message ProcessQueryResponse {
+  repeated Process processes = 1;
+}
+
+message CreateProcessRequest {
+  string userId = 1;
+  Task task = 2;
+}
+
+message ProcessCreatedResponse {
+  Process process = 1;
+}

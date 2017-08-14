@@ -4,8 +4,8 @@ package application;
 
 option java_package = "org.cloudiator.messages.entities";
 
-import "componentEntities.proto";
+import "taskEntities.proto";
 
-message Instance {
-  Component name = 1;
+message Process {
+  Task name = 1;
 }

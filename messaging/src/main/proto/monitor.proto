@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-package application;
-
-option java_package = "org.cloudiator.messages";
-
-import "monitorEntities.proto";
-

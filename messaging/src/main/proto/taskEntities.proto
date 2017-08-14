@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package application;
+
+option java_package = "org.cloudiator.messages.entities";
+
+import "commonEntities.proto";
+
+message Task {
+  string name = 1;
+  repeated Port ports = 2;
+  repeated Interface interfaces = 3;
+}
+
+message Interface {
+  oneof interface {
+    DockerInterface dockerInterface = 1;
+    LanceInterface lanceInterface = 2;
+  }
+}
+
+message Port {
+  oneof port {
+    PortProvided portProvided = 1;
+    PortRequired portRequired = 2;
+  }
+}
+
+message DockerInterface {
+  string dockerImage = 1;
+}
+
+message LanceInterface {
+  string init = 1;
+  string preInstall = 2;
+  string install = 3;
+  string postInstall = 4;
+  string preStart = 5;
+  string start = 6;
+  string startDetection = 7;
+  string stopDetection = 8;
+  string postStart = 9;
+  string preStop = 10;
+  string stop = 11;
+  string postStop = 12;
+  string shutdown = 13;
+}
+
+message PortProvided {
+  string name = 1;
+  int32 port = 2;
+}
+
+message PortRequired {
+  string name = 1;
+  string updateAction = 2;
+  bool isMandatory = 3;
+}

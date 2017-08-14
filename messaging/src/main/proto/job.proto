@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package iaas;
+
+option java_package = "org.cloudiator.messages";
+
+import "jobEntities.proto";
+
+message JobQueryRequest {
+  string userId = 1;
+}
+
+message JobQueryResponse {
+  repeated Job jobs = 1;
+}
+
+message CreateJobRequest {
+  string userId = 1;
+  Job job = 2;
+}
+
+message JobCreatedResponse {
+  Job job = 1;
+}
+
+message UpdateJobRequest {
+  string userId = 1;
+  Job job = 2;
+}
+
+message JobUpdatedResponse {
+  Job job = 1;
+}
+
+message DeleteJobRequest {
+  string userId = 1;
+  string name = 2;
+}
+
+message JobDeletedResponse {
+}

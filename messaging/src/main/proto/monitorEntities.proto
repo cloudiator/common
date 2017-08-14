@@ -4,8 +4,8 @@ package application;
 
 option java_package = "org.cloudiator.messages.entities";
 
-import "instanceEntities.proto";
-import "componentEntities.proto";
+import "processEntities.proto";
+import "taskEntities.proto";
 
 message Monitor {
   MonitorFilter filter = 1;
@@ -16,10 +16,10 @@ message Monitor {
 }
 
 message MonitorFilter {
-  string applicationInstance = 1;
-  string application = 2;
-  string component = 3;
-  string instance = 4;
+  //string applicationInstance = 1;
+  string job = 2;
+  string task = 3;
+  string process = 4;
   string cloud = 5;
 }
 
