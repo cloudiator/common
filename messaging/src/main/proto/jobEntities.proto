@@ -16,4 +16,5 @@ message Job  {
   string name = 1;
   repeated Task tasks = 2;
   repeated Communication communications = 3;
+  repeated Requirement requirements = 4;
 }

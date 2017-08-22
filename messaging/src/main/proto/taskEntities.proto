@@ -10,6 +10,11 @@ message Task {
   string name = 1;
   repeated Port ports = 2;
   repeated TaskInterface interfaces = 3;
+  repeated Requirement requirements = 4;
+}
+
+message Requirement {
+  string requirement = 1;
 }
 
 message TaskInterface {
