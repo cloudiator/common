@@ -74,6 +74,14 @@ message Location {
   common.LocationScope locationScope = 4;
   bool isAssignable = 5;
   Location parent = 6;
+  GeoLocation geoLocation = 7;
+}
+
+message GeoLocation {
+  string country = 1;
+  double latitude = 2;
+  double longitude = 3;
+  string city = 4;
 }
 
 message VirtualMachineRequest {
@@ -108,7 +116,7 @@ enum IpAddressType {
 
 enum IpVersion {
   V4 = 0;
-  v6 = 1;
+  V6 = 1;
 }
 
 message VirtualMachine {

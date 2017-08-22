@@ -21,11 +21,11 @@ message NodeProperties {
   int64 memory = 2;
   float disk = 3;
   common.OperatingSystem operationSystem = 4;
-  Location location = 5;
+  GeoLocation geoLocation = 5;
 }
 
 enum NodeType {
-  UNDEFINED_TYPE = 0;
+  UNKNOWN_TYPE = 0;
   VM = 1;
   BYON = 2;
   CONTAINER = 3;
@@ -37,7 +37,7 @@ message NodeEvent {
 }
 
 enum NodeStatus {
-  UNDEFINED_STATUS = 0;
+  UNKNOWN_STATUS = 0;
   CREATED = 1;
   DELETED = 2;
 }
