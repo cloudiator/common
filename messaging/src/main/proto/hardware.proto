@@ -7,7 +7,12 @@ option java_package = "org.cloudiator.messages";
 import "iaasEntities.proto";
 
 message HardwareQueryRequest {
+    //mandatory userID
     string userId = 1;
+    //unique identifier for the hardware to retrieve
+    string hardwareId = 2;
+    //unique identifier for the cloud to retrieve
+    string cloudId = 3;
 }
 
 message HardwareQueryResponse {
