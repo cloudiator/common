@@ -8,6 +8,10 @@ import "iaasEntities.proto";
 
 message ImageQueryRequest {
   string userId = 1;
+  //unique identifier for the image to retrieve
+  string imageId = 2;
+  //unique identifier for the cloud to retrieve
+  string cloudId = 3;
 }
 
 message ImageQueryResponse {
