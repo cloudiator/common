@@ -4,6 +4,10 @@ package common;
 
 option java_package = "org.cloudiator.messages.entities";
 
+message Requirement {
+    string requirement = 1;
+}
+
 enum LocationScope {
     PROVIDER = 0;
     REGION = 1;

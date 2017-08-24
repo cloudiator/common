@@ -16,6 +16,19 @@ message Node {
   string userId = 6;
 }
 
+message NodeRequest {
+  repeated common.Requirement requirements = 1;
+}
+
+message NodeRequestMessage {
+  string userId = 1;
+  NodeRequest nodeRequest = 2;
+}
+
+message NodeRequestResponse {
+  Node node = 1;
+}
+
 message NodeProperties {
   int32 numberOfCores = 1;
   int64 memory = 2;
