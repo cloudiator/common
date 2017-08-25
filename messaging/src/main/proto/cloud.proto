@@ -8,6 +8,7 @@ import "iaasEntities.proto";
 
 message CloudQueryRequest {
   string userId = 1;
+  string cloudId = 2;
 }
 
 message CloudQueryResponse {
