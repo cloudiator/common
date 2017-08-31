@@ -5,7 +5,20 @@ package common;
 option java_package = "org.cloudiator.messages.entities";
 
 message Requirement {
-    string requirement = 1;
+  oneof requirement {
+    OclRequirement oclRequirement = 1;
+    IdRequirement idRequirement = 2;
+  }
+}
+
+message OclRequirement {
+  string constraint = 1;
+}
+
+message IdRequirement {
+  string hardwareId = 1;
+  string locationId = 2;
+  string imageId = 3;
 }
 
 enum LocationScope {
