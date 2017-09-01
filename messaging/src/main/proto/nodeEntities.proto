@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package iaas;
+
+option java_package = "org.cloudiator.messages";
+
+import "iaasEntities.proto";
+import "commonEntities.proto";
+
+message Node {
+  string id = 1;
+  LoginCredential loginCredential = 2;
+  NodeType nodeType = 3;
+  repeated IpAddress ipAddresses = 4;
+  NodeProperties nodeProperties = 5;
+  string userId = 6;
+}
+
+message NodeProperties {
+  int32 numberOfCores = 1;
+  int64 memory = 2;
+  float disk = 3;
+  common.OperatingSystem operationSystem = 4;
+  GeoLocation geoLocation = 5;
+}
+
+enum NodeType {
+  UNKNOWN_TYPE = 0;
+  VM = 1;
+  BYON = 2;
+  CONTAINER = 3;
+}
