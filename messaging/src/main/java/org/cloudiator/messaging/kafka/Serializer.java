@@ -19,6 +19,6 @@ package org.cloudiator.messaging.kafka;
 /**
  * Created by daniel on 02.03.17.
  */
-public interface Serializer<T> extends org.apache.kafka.common.serialization.Serializer<T> {
+interface Serializer<T> extends org.apache.kafka.common.serialization.Serializer<T> {
 
 }

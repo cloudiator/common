@@ -22,7 +22,7 @@ import com.google.protobuf.Message;
 /**
  * Created by daniel on 02.03.17.
  */
-public class ProtobufSerializer extends Adapter implements Serializer<Message> {
+class ProtobufSerializer extends Adapter implements Serializer<Message> {
 
   private static final boolean DEBUG = false;
 

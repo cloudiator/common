@@ -32,6 +32,9 @@ public class MessageServiceModule extends AbstractModule {
     bind(LocationService.class).to(LocationServiceImpl.class).in(Singleton.class);
     bind(VirtualMachineService.class).to(VirtualMachineServiceImpl.class).in(Singleton.class);
     bind(JobService.class).to(JobServiceImpl.class).in(Singleton.class);
+    bind(TaskService.class).to(TaskServiceImpl.class).in(Singleton.class);
+    bind(NodeService.class).to(NodeServiceImpl.class).in(Singleton.class);
+    bind(SolutionService.class).to(SolutionServiceImpl.class).in(Singleton.class);
   }
 
 }

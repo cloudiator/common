@@ -7,6 +7,10 @@ option java_package = "org.cloudiator.messages";
 import "iaasEntities.proto";
 import "commonEntities.proto";
 
+message NodeRequest {
+  repeated common.Requirement requirements = 1;
+}
+
 message Node {
   string id = 1;
   LoginCredential loginCredential = 2;

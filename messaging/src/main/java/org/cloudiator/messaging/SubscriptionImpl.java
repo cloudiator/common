@@ -17,9 +17,18 @@
 package org.cloudiator.messaging;
 
 /**
- * Created by daniel on 24.05.17.
+ * Created by daniel on 14.06.17.
  */
-public interface MessageCallback<T> {
+public class SubscriptionImpl implements Subscription {
 
-  void accept(String id, T content);
+  private final Runnable cancelCallback;
+
+  public SubscriptionImpl(Runnable cancelCallback) {
+    this.cancelCallback = cancelCallback;
+  }
+
+  @Override
+  public void cancel() {
+    cancelCallback.run();
+  }
 }

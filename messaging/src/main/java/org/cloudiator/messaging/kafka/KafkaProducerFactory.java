@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package org.cloudiator.messaging;
+package org.cloudiator.messaging.kafka;
 
-/**
- * Created by daniel on 24.05.17.
- */
-public interface MessageCallback<T> {
+import com.google.protobuf.Message;
+import org.apache.kafka.clients.producer.Producer;
 
-  void accept(String id, T content);
+interface KafkaProducerFactory {
+
+  Producer<String, Message> createKafkaProducer();
 }

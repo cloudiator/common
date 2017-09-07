@@ -17,7 +17,6 @@
 package org.cloudiator.messaging.kafka;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Singleton;
 import com.google.inject.name.Names;
 import de.uniulm.omi.cloudiator.util.PropertiesLoader;
 import java.io.IOException;
@@ -39,7 +38,10 @@ public class KafkaMessagingModule extends AbstractModule {
 
   @Override
   protected void configure() {
-    bind(MessageInterface.class).to(KafkaMessageInterface.class).in(Singleton.class);
+    bind(MessageInterface.class).to(KafkaMessageInterface.class);
+    bind(KafkaSubscriptionService.class).to(KafkaSubscriptionServiceImpl.class);
+    bind(KafkaConsumerFactory.class).to(BaseKafkaConsumerFactory.class);
+    bind(KafkaProducerFactory.class).to(SingletonKafkaProducerFactory.class);
 
     if (CONFIG_FILE_LOCATION == null) {
       CONFIG_FILE_LOCATION = DEFAULT_CONFIG_FILE_LOCATION;

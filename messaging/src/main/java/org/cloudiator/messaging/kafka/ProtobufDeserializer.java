@@ -23,11 +23,11 @@ import com.google.protobuf.Parser;
 /**
  * Created by daniel on 15.03.17.
  */
-public class ProtobufDeserializer<T extends Message> extends Adapter implements Deserializer<T> {
+class ProtobufDeserializer<T extends Message> extends Adapter implements Deserializer<T> {
 
   private final Parser<T> parser;
 
-  public ProtobufDeserializer(Parser<T> parser) {
+  ProtobufDeserializer(Parser<T> parser) {
     this.parser = parser;
   }
 

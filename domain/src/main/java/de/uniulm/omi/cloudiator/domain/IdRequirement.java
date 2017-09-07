@@ -14,12 +14,29 @@
  * limitations under the License.
  */
 
-package org.cloudiator.messaging;
+package de.uniulm.omi.cloudiator.domain;
 
-/**
- * Created by daniel on 24.05.17.
- */
-public interface MessageCallback<T> {
+public class IdRequirement implements Requirement {
 
-  void accept(String id, T content);
+  private final String hardwareId;
+  private final String locationId;
+  private final String imageId;
+
+  public IdRequirement(String hardwareId, String locationId, String imageId) {
+    this.hardwareId = hardwareId;
+    this.locationId = locationId;
+    this.imageId = imageId;
+  }
+
+  public String getHardwareId() {
+    return hardwareId;
+  }
+
+  public String getLocationId() {
+    return locationId;
+  }
+
+  public String getImageId() {
+    return imageId;
+  }
 }

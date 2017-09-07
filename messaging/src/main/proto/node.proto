@@ -8,19 +8,13 @@ import "iaasEntities.proto";
 import "nodeEntities.proto";
 import "commonEntities.proto";
 
-
-
-message NodeRequest {
-  repeated common.Requirement requirements = 1;
-}
-
 message NodeRequestMessage {
   string userId = 1;
   NodeRequest nodeRequest = 2;
 }
 
 message NodeRequestResponse {
-  Node node = 1;
+  repeated Node node = 1;
 }
 
 message NodeEvent {

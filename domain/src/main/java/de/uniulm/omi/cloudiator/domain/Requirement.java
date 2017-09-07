@@ -14,21 +14,10 @@
  * limitations under the License.
  */
 
-package org.cloudiator.messaging;
+package de.uniulm.omi.cloudiator.domain;
 
-/**
- * Created by daniel on 14.06.17.
- */
-public class SubscribtionImpl implements Subscription {
+public interface Requirement {
 
-  private final Runnable cancelCallback;
+  //marker interface
 
-  public SubscribtionImpl(Runnable cancelCallback) {
-    this.cancelCallback = cancelCallback;
-  }
-
-  @Override
-  public void cancel() {
-    cancelCallback.run();
-  }
 }

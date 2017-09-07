@@ -14,12 +14,18 @@
  * limitations under the License.
  */
 
-package org.cloudiator.messaging;
+package org.cloudiator.messaging.services;
 
-/**
- * Created by daniel on 24.05.17.
- */
-public interface MessageCallback<T> {
+import org.cloudiator.messages.Node.NodeRequestMessage;
+import org.cloudiator.messages.Node.NodeRequestResponse;
+import org.cloudiator.messaging.ResponseCallback;
+import org.cloudiator.messaging.ResponseException;
 
-  void accept(String id, T content);
+public interface NodeService {
+
+  NodeRequestResponse createNodes(NodeRequestMessage nodeRequestMessage) throws ResponseException;
+
+  void createNodesAsync(NodeRequestMessage nodeRequestMessage,
+      ResponseCallback<NodeRequestResponse> callback);
+
 }

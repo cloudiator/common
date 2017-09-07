@@ -14,12 +14,16 @@
  * limitations under the License.
  */
 
-package org.cloudiator.messaging;
+package org.cloudiator.messaging.kafka;
 
-/**
- * Created by daniel on 24.05.17.
- */
-public interface MessageCallback<T> {
+import com.google.protobuf.Message;
+import com.google.protobuf.Parser;
+import org.cloudiator.messaging.MessageCallback;
+import org.cloudiator.messaging.Subscription;
 
-  void accept(String id, T content);
+interface KafkaSubscriptionService {
+
+  <T extends Message> Subscription subscribe(String topic, Parser<T> parser,
+      MessageCallback<T> messageCallback);
+
 }

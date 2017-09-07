@@ -16,25 +16,18 @@
 
 package org.cloudiator.messaging.kafka;
 
-import com.google.common.collect.Maps;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import com.google.protobuf.Parser;
-import de.uniulm.omi.cloudiator.util.execution.LoggingScheduledThreadPoolExecutor;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 import javax.annotation.Nullable;
-import org.apache.kafka.clients.consumer.Consumer;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.cloudiator.messages.General.Error;
@@ -43,7 +36,6 @@ import org.cloudiator.messaging.MessageCallback;
 import org.cloudiator.messaging.MessageInterface;
 import org.cloudiator.messaging.ResponseCallback;
 import org.cloudiator.messaging.ResponseException;
-import org.cloudiator.messaging.SubscribtionImpl;
 import org.cloudiator.messaging.Subscription;
 import org.cloudiator.messaging.TimeoutException;
 import org.slf4j.Logger;
@@ -52,72 +44,32 @@ import org.slf4j.LoggerFactory;
 /**
  * Created by daniel on 17.03.17.
  */
-public class KafkaMessageInterface implements MessageInterface, AutoCloseable {
+@Singleton
+class KafkaMessageInterface implements MessageInterface {
 
-  private static final ExecutorService EXECUTOR_SERVICE =
-      new LoggingScheduledThreadPoolExecutor(5);
   private final KafkaRequestResponseHandler kafkaRequestResponseHandler = new KafkaRequestResponseHandler();
   private static final Logger LOGGER =
       LoggerFactory.getLogger(KafkaMessageInterface.class);
-  private final Kafka kafka;
-  private final Map<String, Consumer> consumerPerTopic = Maps.newConcurrentMap();
-  private final Map<String, List<MessageCallback>> callbacksPerTopic = Maps.newConcurrentMap();
+  private final KafkaProducerFactory kafkaProducerFactory;
+  private final KafkaSubscriptionService kafkaSubscriptionService;
+
 
   @Inject
-  KafkaMessageInterface(Kafka kafka) {
-    this.kafka = kafka;
-  }
-
-  private synchronized <T extends Message> void createConsumerForTopicIfNecessary(String topic,
-      Parser<T> parser) {
-
-    if (consumerPerTopic.containsKey(topic)) {
-      return;
-    }
-
-    final Consumer<String, T> kafkaConsumer = kafka.consumerFactory().kafkaConsumer(parser);
-    kafkaConsumer.subscribe(Collections.singleton(topic));
-    consumerPerTopic.put(topic, kafkaConsumer);
-
-    final Future<?> submit = EXECUTOR_SERVICE.submit(() -> {
-      while (!Thread.currentThread().isInterrupted()) {
-        final ConsumerRecords<String, T> poll = kafkaConsumer.poll(1000);
-        poll.forEach(
-            consumerRecord -> {
-
-              callbacksPerTopic.get(topic).forEach(
-                  messageCallback -> {
-                    LOGGER.debug(String.format(
-                        "Receiving message with id %s and content %s. Calling registered callback %s",
-                        consumerRecord.key(), consumerRecord.value(), messageCallback));
-                    //todo we probably need to check, that no different types of callbacks
-                    //todo are registered for a topic
-                    //noinspection unchecked
-                    messageCallback.accept(consumerRecord.key(), consumerRecord.value());
-                  });
-            });
-      }
-    });
-
-    @SuppressWarnings("unchecked") final Consumer<String, T> consumer = consumerPerTopic
-        .putIfAbsent(topic, kafka.consumerFactory().kafkaConsumer(parser));
+  KafkaMessageInterface(KafkaProducerFactory kafkaProducerFactory,
+      KafkaSubscriptionService kafkaSubscriptionService) {
+    this.kafkaProducerFactory = kafkaProducerFactory;
+    this.kafkaSubscriptionService = kafkaSubscriptionService;
   }
 
   @Override
-  public synchronized <T extends Message> Subscription subscribe(String topic, Parser<T> parser,
+  public <T extends Message> Subscription subscribe(String topic, Parser<T> parser,
       MessageCallback<T> callback) {
 
     LOGGER.debug(String
         .format("Registering new subscription for topic %s, with parser %s and callback %s.",
             topic, parser, callback));
 
-    callbacksPerTopic.putIfAbsent(topic, new ArrayList<>());
-    callbacksPerTopic.get(topic).add(callback);
-
-    createConsumerForTopicIfNecessary(topic, parser);
-
-    //todo need to remove last consumer from execution service?
-    return new SubscribtionImpl(() -> callbacksPerTopic.get(topic).remove(callback));
+    return kafkaSubscriptionService.subscribe(topic, parser, callback);
   }
 
   @Override
@@ -140,7 +92,7 @@ public class KafkaMessageInterface implements MessageInterface, AutoCloseable {
   public void publish(String topic, String id, Message message) {
     LOGGER.debug(
         String.format("Publishing new message %s on topic %s with id %s.", message, topic, id));
-    kafka.producerFactory().kafkaProducer().send(new ProducerRecord<>(topic, id, message));
+    kafkaProducerFactory.createKafkaProducer().send(new ProducerRecord<>(topic, id, message));
 
   }
 
@@ -156,7 +108,7 @@ public class KafkaMessageInterface implements MessageInterface, AutoCloseable {
     LOGGER.debug(
         String.format("Publishing (sync) new message %s on topic %s with id %s.", message, topic,
             id));
-    Producer<String, Message> producer = kafka.producerFactory().kafkaProducer();
+    Producer<String, Message> producer = kafkaProducerFactory.createKafkaProducer();
     producer.send(new ProducerRecord<>(topic, id, message));
     producer.flush();
   }
@@ -265,30 +217,22 @@ public class KafkaMessageInterface implements MessageInterface, AutoCloseable {
 
   }
 
-  public void shutdown() {
-    consumerPerTopic.forEach((topic, consumer) -> {
-      consumer.unsubscribe();
-      consumer.close();
-    });
-    EXECUTOR_SERVICE.shutdown();
-    try {
-      if (!EXECUTOR_SERVICE.awaitTermination(5000, TimeUnit.MILLISECONDS)) {
-        System.out
-            .println("Timed out waiting for consumer threads to shut down, exiting uncleanly");
-      }
-    } catch (InterruptedException e) {
-      System.out.println("Interrupted during shutdown, exiting uncleanly");
-    }
-  }
-
-  @Override
-  public void close() throws Exception {
-    shutdown();
-  }
-
   private class KafkaRequestResponseHandler {
 
     private Map<String, ResponseCallback> waitingCallbacks = new ConcurrentHashMap<>();
+    private Map<String, Subscription> pendingSubscriptions = new ConcurrentHashMap<>();
+
+    private void cleanup() {
+      //todo remove very long waiting callbacks
+      for (Iterator<Entry<String, Subscription>> it = pendingSubscriptions.entrySet().iterator();
+          it.hasNext(); ) {
+        Map.Entry<String, Subscription> entry = it.next();
+        if (!waitingCallbacks.containsKey(entry.getKey())) {
+          entry.getValue().cancel();
+          it.remove();
+        }
+      }
+    }
 
     private <T extends Message, S extends Message> void callAsync(String requestTopic, T request,
         String responseTopic,
@@ -301,7 +245,7 @@ public class KafkaMessageInterface implements MessageInterface, AutoCloseable {
       waitingCallbacks.put(messageId, responseConsumer);
 
       //subscribe to responseTopic
-      KafkaMessageInterface.this
+      final Subscription subscription = KafkaMessageInterface.this
           .subscribe(responseTopic, Response.parser(), (id, response) -> {
             //suppressing warning, as we can be sure that the callback is always of the corresponding
             //type. Not using generics on the class, allows us to provide a more versatile implementation
@@ -313,6 +257,11 @@ public class KafkaMessageInterface implements MessageInterface, AutoCloseable {
                       response.getCorrelation(), response));
               return;
             }
+            //we remove the callback before we start execution, to ensure
+            //that this is only executed once
+            waitingCallbacks.remove(response.getCorrelation());
+            //we cleanup old subscriptions and long pending callbacks
+            cleanup();
             try {
               switch (response.getResponseCase()) {
                 case CONTENT:
@@ -333,10 +282,9 @@ public class KafkaMessageInterface implements MessageInterface, AutoCloseable {
             } catch (InvalidProtocolBufferException e) {
               throw new IllegalStateException(
                   String.format("Error parsing message %s.", e.getMessage()), e);
-            } finally {
-              waitingCallbacks.remove(response.getCorrelation());
             }
           });
+      pendingSubscriptions.put(messageId, subscription);
 
       //send the message
       KafkaMessageInterface.this.publish(requestTopic, messageId, request);
@@ -376,9 +324,9 @@ public class KafkaMessageInterface implements MessageInterface, AutoCloseable {
     private class SyncResponse<S> {
 
       @Nullable
-      private volatile S content = null;
+      private S content = null;
       @Nullable
-      private volatile Error error = null;
+      private Error error = null;
 
       private boolean isAvailable() {
         if (content != null || error != null) {

@@ -14,12 +14,17 @@
  * limitations under the License.
  */
 
-package org.cloudiator.messaging;
+package de.uniulm.omi.cloudiator.domain;
 
-/**
- * Created by daniel on 24.05.17.
- */
-public interface MessageCallback<T> {
+public class OclRequirement implements Requirement {
 
-  void accept(String id, T content);
+  private final String constraint;
+
+  public OclRequirement(String constraint) {
+    this.constraint = constraint;
+  }
+
+  public String constraint() {
+    return constraint;
+  }
 }
