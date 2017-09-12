@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package iaas;
+
+option java_package = "org.cloudiator.messages";
+
+import "nodeEntities.proto";
+
+enum Tool {
+  VISOR = 0;
+  AXE = 1;
+  LANCE = 2;
+  KAIROSDB = 3;
+  DOCKER = 4;
+}
+
+message Installation {
+  repeated Tool tool = 1;
+  Node node = 2;
+}
+
+

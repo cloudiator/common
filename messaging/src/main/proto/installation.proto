@@ -4,31 +4,12 @@ package iaas;
 
 option java_package = "org.cloudiator.messages";
 
-import "iaasEntities.proto";
+import "installationEntities.proto";
 
-message ToolInstalledRequest {
+message InstallationRequest {
   string userId = 1;
-  string nodeId = 2;
+  Installation installation = 2;
 }
 
-message ToolsInstalledResponse {
-  repeated Tool tools = 1;
-}
-
-message ToolsInstallRequest {
-  string userId = 1;
-  repeated Tool tools = 2;
-  string nodeId = 3;
-}
-
-message ToolsInstallResponse {
-  repeated Tool tools = 1;
-  string nodeId = 2;
-}
-
-enum Tool {
-  VISOR = 0;
-  AXE = 1;
-  LANCE = 2;
-  KAIROSDB = 3;
+message InstallationResponse {
 }

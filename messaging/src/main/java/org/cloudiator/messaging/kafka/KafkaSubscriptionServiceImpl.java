@@ -98,7 +98,7 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
     private Subscriber(Consumer<String, T> consumer,
         String topic) {
       this.consumer = consumer;
-      this.callbacks = Lists.newArrayList();
+      this.callbacks = Lists.newCopyOnWriteArrayList(Lists.newArrayList());
       this.topic = topic;
     }
 
