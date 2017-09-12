@@ -17,7 +17,6 @@ message Node {
   NodeType nodeType = 3;
   repeated IpAddress ipAddresses = 4;
   NodeProperties nodeProperties = 5;
-  string userId = 6;
 }
 
 message NodeProperties {
