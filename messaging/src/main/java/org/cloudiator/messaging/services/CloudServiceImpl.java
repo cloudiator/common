@@ -37,12 +37,10 @@ import org.cloudiator.messaging.ResponseException;
 public class CloudServiceImpl implements CloudService {
 
   private final MessageInterface messageInterface;
-  private long timeout = 0;
 
   @Inject
-  public void setResponseTimeout(@Named("responseTimeout") long timeout) {
-    this.timeout = timeout;
-  }
+  @Named("responseTimeout")
+  private long timeout = 20000;
 
   @Inject
   public CloudServiceImpl(MessageInterface messageInterface) {

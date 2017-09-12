@@ -11,16 +11,14 @@ import org.cloudiator.messaging.ResponseException;
 public class SolutionServiceImpl implements SolutionService {
 
   private final MessageInterface messageInterface;
-  private long timeout = 0;
+  
+  @Inject
+  @Named("responseTimeout")
+  private long timeout = 20000;
 
   @Inject
   public SolutionServiceImpl(MessageInterface messageInterface) {
     this.messageInterface = messageInterface;
-  }
-
-  @Inject
-  public void setResponseTimeout(@Named("responseTimeout") long timeout) {
-    this.timeout = timeout;
   }
 
   @Override
