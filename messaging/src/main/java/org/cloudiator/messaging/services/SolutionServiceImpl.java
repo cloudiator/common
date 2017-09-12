@@ -17,7 +17,7 @@ public class SolutionServiceImpl implements SolutionService {
   private long timeout = 20000;
 
   @Inject
-  public SolutionServiceImpl(MessageInterface messageInterface) {
+  SolutionServiceImpl(MessageInterface messageInterface) {
     this.messageInterface = messageInterface;
   }
 

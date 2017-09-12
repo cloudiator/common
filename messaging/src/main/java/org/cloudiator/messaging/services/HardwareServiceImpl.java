@@ -36,7 +36,7 @@ public class HardwareServiceImpl implements HardwareService {
   @Named("responseTimeout")
   private long timeout = 20000;
 
-  @Inject public HardwareServiceImpl(MessageInterface messageInterface) {
+  @Inject HardwareServiceImpl(MessageInterface messageInterface) {
     checkNotNull(messageInterface, "messageInterface is null");
     this.messageInterface = messageInterface;
   }

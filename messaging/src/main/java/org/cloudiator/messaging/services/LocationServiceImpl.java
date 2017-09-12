@@ -37,7 +37,7 @@ public class LocationServiceImpl implements LocationService {
   private long timeout = 20000;
 
   @Inject
-  public LocationServiceImpl(MessageInterface messageInterface) {
+  LocationServiceImpl(MessageInterface messageInterface) {
     checkNotNull(messageInterface, "messageInterface is null");
     this.messageInterface = messageInterface;
   }

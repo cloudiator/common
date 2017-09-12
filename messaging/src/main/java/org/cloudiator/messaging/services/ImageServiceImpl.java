@@ -37,7 +37,7 @@ public class ImageServiceImpl implements ImageService {
   private long timeout = 20000;
 
   @Inject
-  public ImageServiceImpl(MessageInterface messageInterface) {
+  ImageServiceImpl(MessageInterface messageInterface) {
     checkNotNull(messageInterface, "messageInterface is null");
     this.messageInterface = messageInterface;
   }

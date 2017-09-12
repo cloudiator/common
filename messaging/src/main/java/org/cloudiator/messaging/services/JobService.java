@@ -25,12 +25,17 @@ import org.cloudiator.messages.Job.JobQueryRequest;
 import org.cloudiator.messages.Job.JobQueryResponse;
 import org.cloudiator.messages.Job.JobUpdatedResponse;
 import org.cloudiator.messages.Job.UpdateJobRequest;
+import org.cloudiator.messaging.MessageCallback;
 import org.cloudiator.messaging.ResponseException;
 
 /**
  * Created by daniel on 23.06.17.
  */
 public interface JobService {
+
+  void subscribeToJobQueryRequest(MessageCallback<JobQueryRequest> callback);
+
+  void subscribeToCreateJobRequest(MessageCallback<CreateJobRequest> callback);
 
   JobQueryResponse getJobs(JobQueryRequest jobQueryRequest)
       throws ResponseException;

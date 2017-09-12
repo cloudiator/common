@@ -26,6 +26,7 @@ import org.cloudiator.messages.Job.JobQueryRequest;
 import org.cloudiator.messages.Job.JobQueryResponse;
 import org.cloudiator.messages.Job.JobUpdatedResponse;
 import org.cloudiator.messages.Job.UpdateJobRequest;
+import org.cloudiator.messaging.MessageCallback;
 import org.cloudiator.messaging.MessageInterface;
 import org.cloudiator.messaging.ResponseException;
 
@@ -41,8 +42,18 @@ public class JobServiceImpl implements JobService {
   private long timeout = 20000;
 
   @Inject
-  public JobServiceImpl(MessageInterface messageInterface) {
+  JobServiceImpl(MessageInterface messageInterface) {
     this.messageInterface = messageInterface;
+  }
+
+  @Override
+  public void subscribeToJobQueryRequest(MessageCallback<JobQueryRequest> callback) {
+    messageInterface.subscribe(JobQueryRequest.class, JobQueryRequest.parser(), callback);
+  }
+
+  @Override
+  public void subscribeToCreateJobRequest(MessageCallback<CreateJobRequest> callback) {
+    messageInterface.subscribe(CreateJobRequest.class, CreateJobRequest.parser(), callback);
   }
 
   @Override

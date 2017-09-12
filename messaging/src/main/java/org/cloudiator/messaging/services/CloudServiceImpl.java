@@ -43,7 +43,7 @@ public class CloudServiceImpl implements CloudService {
   private long timeout = 20000;
 
   @Inject
-  public CloudServiceImpl(MessageInterface messageInterface) {
+  CloudServiceImpl(MessageInterface messageInterface) {
     checkNotNull(messageInterface, "messageInterface is null");
     this.messageInterface = messageInterface;
   }

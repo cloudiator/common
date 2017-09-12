@@ -33,7 +33,7 @@ public class NodeServiceImpl implements NodeService {
   private long timeout = 20000;
 
   @Inject
-  public NodeServiceImpl(MessageInterface messageInterface) {
+  NodeServiceImpl(MessageInterface messageInterface) {
     this.messageInterface = messageInterface;
   }
 

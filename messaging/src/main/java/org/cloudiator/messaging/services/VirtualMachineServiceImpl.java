@@ -20,7 +20,7 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
   private long timeout = 20000;
 
   @Inject
-  public VirtualMachineServiceImpl(MessageInterface messageInterface) {
+  VirtualMachineServiceImpl(MessageInterface messageInterface) {
     this.messageInterface = messageInterface;
   }
 

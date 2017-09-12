@@ -41,7 +41,7 @@ public class TaskServiceImpl implements TaskService {
   private long timeout = 20000;
 
   @Inject
-  public TaskServiceImpl(MessageInterface messageInterface) {
+  TaskServiceImpl(MessageInterface messageInterface) {
     this.messageInterface = messageInterface;
   }
 
