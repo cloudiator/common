@@ -121,10 +121,12 @@ enum IpVersion {
 
 message VirtualMachine {
   string id = 1;
-  string image = 2;
-  string location = 3;
-  string hardware = 4;
-  repeated IpAddress ipAddresses = 5;
-  LoginCredential loginCredential = 6;
+  string providerId = 2;
+  string name = 3;
+  Image image = 4;
+  Location location = 5;
+  HardwareFlavor hardware = 6;
+  repeated IpAddress ipAddresses = 7;
+  LoginCredential loginCredential = 8;
 }
 
