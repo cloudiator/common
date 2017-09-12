@@ -14,8 +14,8 @@ import org.cloudiator.messaging.ResponseException;
 public class VirtualMachineServiceImpl implements VirtualMachineService {
 
   private final MessageInterface messageInterface;
-  
-  @Inject
+
+  @Inject(optional = true)
   @Named("responseTimeout")
   private long timeout = 20000;
 

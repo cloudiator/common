@@ -11,8 +11,8 @@ import org.cloudiator.messaging.ResponseException;
 public class SolutionServiceImpl implements SolutionService {
 
   private final MessageInterface messageInterface;
-  
-  @Inject
+
+  @Inject(optional = true)
   @Named("responseTimeout")
   private long timeout = 20000;
 

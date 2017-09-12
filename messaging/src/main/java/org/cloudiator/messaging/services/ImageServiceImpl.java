@@ -32,7 +32,7 @@ public class ImageServiceImpl implements ImageService {
 
   private final MessageInterface messageInterface;
 
-  @Inject
+  @Inject(optional = true)
   @Named("responseTimeout")
   private long timeout = 20000;
 
