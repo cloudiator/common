@@ -17,7 +17,7 @@ message Task {
 
 enum TaskType {
   BATCH = 0;
-  LONG_RUNNING = 1;
+  SERVICE = 1;
 }
 
 enum ExecutionEnvironment {
