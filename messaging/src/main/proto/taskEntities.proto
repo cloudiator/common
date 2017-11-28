@@ -43,6 +43,7 @@ message Port {
 
 message DockerInterface {
   string dockerImage = 1;
+  repeated common.Param params = 2;
 }
 
 message LanceInterface {

@@ -85,9 +85,10 @@ message GeoLocation {
 }
 
 message VirtualMachineRequest {
-  string image = 1;
-  string location = 2;
-  string hardware = 3;
+  string name = 1;
+  string image = 2;
+  string location = 3;
+  string hardware = 4;
 }
 
 message LoginCredential {

@@ -11,6 +11,11 @@ message Requirement {
   }
 }
 
+message Param {
+  string name = 1;
+  string value = 2;
+}
+
 message OclRequirement {
   string constraint = 1;
 }

@@ -16,7 +16,9 @@
 
 package org.cloudiator.messaging.kafka;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.cloudiator.messaging.kafka.Constants.KAFKA_SERVERS;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -51,8 +53,9 @@ class SingletonKafkaProducerFactory implements KafkaProducerFactory {
 
 
   @Inject
-  SingletonKafkaProducerFactory(@Named("bootstrap.servers") String bootstrapServers) {
+  SingletonKafkaProducerFactory(@Named(KAFKA_SERVERS) String bootstrapServers) {
     checkNotNull(bootstrapServers, "bootstrapServers is null");
+    checkArgument(!bootstrapServers.isEmpty(), "bootstrapServers is empty.");
     this.bootstrapServers = bootstrapServers;
   }
 

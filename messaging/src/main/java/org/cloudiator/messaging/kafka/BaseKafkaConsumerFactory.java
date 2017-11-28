@@ -16,6 +16,7 @@
 
 package org.cloudiator.messaging.kafka;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.inject.Inject;
@@ -33,10 +34,12 @@ class BaseKafkaConsumerFactory implements KafkaConsumerFactory {
   private final String groupId;
 
   @Inject
-  BaseKafkaConsumerFactory(@Named("bootstrap.servers") String bootstrapServers,
-      @Named("group.id") String groupId) {
+  BaseKafkaConsumerFactory(@Named(Constants.KAFKA_SERVERS) String bootstrapServers,
+      @Named(Constants.KAFKA_GROUP_ID) String groupId) {
     checkNotNull(bootstrapServers, "bootstrapServers is null");
+    checkArgument(!bootstrapServers.isEmpty(), "bootstrapServers is empty");
     checkNotNull(groupId, "groupId is null");
+    checkArgument(!groupId.isEmpty(), "groupId is empty");
     this.bootstrapServers = bootstrapServers;
     this.groupId = groupId;
   }
