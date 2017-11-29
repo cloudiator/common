@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package iaas;
+
+option java_package = "org.cloudiator.messages";
+
+import "iaasEntities.proto";
+import "commonEntities.proto";
+
+message NodeCandidateRequestMessage {
+  string userId = 1;
+}
+
+message NodeCandidateRequestResponse {
+  repeated NodeCandidate candidates = 1;
+}
+
