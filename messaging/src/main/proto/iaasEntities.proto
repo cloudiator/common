@@ -136,6 +136,6 @@ message NodeCandidate {
   Location location = 2;
   Image image = 3;
   HardwareFlavor hardwareFlavor = 4;
-  float price = 5;
+  double price = 5;
 }
 
