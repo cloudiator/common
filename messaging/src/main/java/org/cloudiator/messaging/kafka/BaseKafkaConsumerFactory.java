@@ -25,6 +25,7 @@ import com.google.protobuf.Parser;
 import java.util.Properties;
 import javax.inject.Named;
 import org.apache.kafka.clients.consumer.Consumer;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
@@ -47,12 +48,12 @@ class BaseKafkaConsumerFactory implements KafkaConsumerFactory {
   @Override
   public <T extends Message> Consumer<String, T> createKafkaConsumer(Parser<T> parser) {
     Properties properties = new Properties();
-    properties.put("bootstrap.servers", bootstrapServers);
-    properties.put("group.id", groupId);
-    properties.put("enable.auto.commit", true);
-    properties.put("auto.commit.interval.ms", 1000);
-    properties.put("fetch.wait.max.ms", 1000);
-    properties.put("fetch.error.backoff.ms", 1000);
+
+    properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+    properties.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
+    properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
+    properties.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, 1000);
+    properties.put(ConsumerConfig.FETCH_MAX_WAIT_MS_CONFIG, 1000);
     return new KafkaConsumer<>(properties, new StringDeserializer(),
         new ProtobufDeserializer<>(parser));
   }
