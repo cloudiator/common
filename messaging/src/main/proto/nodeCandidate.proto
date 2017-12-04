@@ -6,9 +6,11 @@ option java_package = "org.cloudiator.messages";
 
 import "iaasEntities.proto";
 import "commonEntities.proto";
+import "nodeEntities.proto";
 
 message NodeCandidateRequestMessage {
   string userId = 1;
+  NodeRequirements requirements = 2;
 }
 
 message NodeCandidateRequestResponse {

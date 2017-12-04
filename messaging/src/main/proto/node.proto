@@ -10,7 +10,7 @@ import "commonEntities.proto";
 
 message NodeRequestMessage {
   string userId = 1;
-  NodeRequest nodeRequest = 2;
+  NodeRequirements nodeRequest = 2;
 }
 
 message NodeRequestResponse {
