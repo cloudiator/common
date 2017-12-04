@@ -49,8 +49,10 @@ class BaseKafkaConsumerFactory implements KafkaConsumerFactory {
     Properties properties = new Properties();
     properties.put("bootstrap.servers", bootstrapServers);
     properties.put("group.id", groupId);
-    properties.put("enable.auto.commit", "true");
-    properties.put("auto.commit.interval.ms", "1000");
+    properties.put("enable.auto.commit", true);
+    properties.put("auto.commit.interval.ms", 1000);
+    properties.put("fetch.wait.max.ms", 1000);
+    properties.put("fetch.error.backoff.ms", 1000);
     return new KafkaConsumer<>(properties, new StringDeserializer(),
         new ProtobufDeserializer<>(parser));
   }

@@ -63,6 +63,7 @@ class SingletonKafkaProducerFactory implements KafkaProducerFactory {
   public Producer<String, Message> createKafkaProducer() {
     final Properties properties = new Properties();
     properties.put("bootstrap.servers", bootstrapServers);
+    properties.put("queue.buffering.max.ms", 500);
     return ProducerSingleton.getInstance(properties);
   }
 
