@@ -7,10 +7,6 @@ option java_package = "org.cloudiator.messages";
 import "iaasEntities.proto";
 import "commonEntities.proto";
 
-message NodeRequirements {
-  repeated common.Requirement requirements = 1;
-}
-
 message Node {
   string id = 1;
   LoginCredential loginCredential = 2;
@@ -32,4 +28,19 @@ enum NodeType {
   VM = 1;
   BYON = 2;
   CONTAINER = 3;
+}
+
+message NodeEvent {
+  Node node = 1;
+  NodeStatus nodeStatus = 2;
+}
+
+enum NodeStatus {
+  UNKNOWN_STATUS = 0;
+  CREATED = 1;
+  DELETED = 2;
+}
+
+message NodeRequirements {
+  repeated common.Requirement requirements = 1;
 }

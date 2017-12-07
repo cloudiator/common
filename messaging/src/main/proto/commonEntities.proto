@@ -8,6 +8,7 @@ message Requirement {
   oneof requirement {
     OclRequirement oclRequirement = 1;
     IdRequirement idRequirement = 2;
+    AttributeRequirement attributeRequirement = 3;
   }
 }
 
@@ -26,62 +27,75 @@ message IdRequirement {
   string imageId = 3;
 }
 
+enum RequirementOperator {
+  EQ = 0;
+  LEQ = 1;
+  GEQ = 2;
+  GT = 3;
+  LT = 4;
+}
+
+message AttributeRequirement {
+  string requirementClass = 1;
+  string requirementAttribute = 2;
+  RequirementOperator requirementOperator = 3;
+}
+
 enum LocationScope {
-    PROVIDER = 0;
-    REGION = 1;
-    ZONE = 2;
-    HOST = 3;
+  PROVIDER = 0;
+  REGION = 1;
+  ZONE = 2;
+  HOST = 3;
 }
 
 message OperatingSystem {
-    OperatingSystemType operatingSystemType = 1;
-    OperatingSystemFamily operatingSystemFamily = 2; // Typ verändert
-    OperatingSystemArchitecture operatingSystemArchitecture = 3; // Typ verändert
-    string operatingSystemVersion = 4;
+  OperatingSystemType operatingSystemType = 1;
+  OperatingSystemFamily operatingSystemFamily = 2; // Typ verändert
+  OperatingSystemArchitecture operatingSystemArchitecture = 3; // Typ verändert
+  string operatingSystemVersion = 4;
 }
 
-
 enum OperatingSystemArchitecture {
-    UNKOWN_OS_ARCH = 0;
-    AMD64 = 1;
-    I386 = 2;
+  UNKOWN_OS_ARCH = 0;
+  AMD64 = 1;
+  I386 = 2;
 }
 
 enum OperatingSystemType {
-    UNKOWN_OS_TYPE = 0;
-    UNIX = 1;
-    LINUX = 2;
-    WINDOWS_OS = 3;
-    BSD = 4;
-    MAC = 5;
+  UNKOWN_OS_TYPE = 0;
+  UNIX = 1;
+  LINUX = 2;
+  WINDOWS_OS = 3;
+  BSD = 4;
+  MAC = 5;
 }
 
 enum OperatingSystemFamily {
-    UNKOWN_OS_FAMILY = 0;
-    AIX = 1;
-    ARCH = 2;
-    CENTOS = 3;
-    DARWIN = 4;
-    DEBIAN = 5;
-    ESX = 6;
-    FEDORA = 7;
-    FREEBSD = 8;
-    GENTOO = 9;
-    HPUX = 10;
-    COREOS = 11;
-    AMZN_LINUX = 12;
-    MANDRIVA = 13;
-    NETBSD = 14;
-    OEL = 15;
-    OPENBSD = 16;
-    RHEL = 17;
-    SCIENTIFIC = 18;
-    CEL = 19;
-    SLACKWARE = 20;
-    SOLARIS = 21;
-    SUSE = 22;
-    TURBOLINUX = 23;
-    CLOUD_LINUX = 24;
-    UBUNTU = 25;
-    WINDOWS = 26;
+  UNKOWN_OS_FAMILY = 0;
+  AIX = 1;
+  ARCH = 2;
+  CENTOS = 3;
+  DARWIN = 4;
+  DEBIAN = 5;
+  ESX = 6;
+  FEDORA = 7;
+  FREEBSD = 8;
+  GENTOO = 9;
+  HPUX = 10;
+  COREOS = 11;
+  AMZN_LINUX = 12;
+  MANDRIVA = 13;
+  NETBSD = 14;
+  OEL = 15;
+  OPENBSD = 16;
+  RHEL = 17;
+  SCIENTIFIC = 18;
+  CEL = 19;
+  SLACKWARE = 20;
+  SOLARIS = 21;
+  SUSE = 22;
+  TURBOLINUX = 23;
+  CLOUD_LINUX = 24;
+  UBUNTU = 25;
+  WINDOWS = 26;
 }

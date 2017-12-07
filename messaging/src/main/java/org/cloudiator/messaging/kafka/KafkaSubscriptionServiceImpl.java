@@ -124,6 +124,11 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
         while (!Thread.currentThread().isInterrupted()) {
           final ConsumerRecords<String, T> poll = consumer.poll(1000);
           for (ConsumerRecord<String, T> record : poll) {
+            if (callbacks.isEmpty()) {
+              LOGGER.warn(String
+                  .format("Receiving message with id %s but could not find any attached callbacks.",
+                      callbacks));
+            }
             for (MessageCallback<T> callback : callbacks) {
               LOGGER.debug(String.format(
                   "Receiving message with id %s and content %s on topic %s. Scheduling callback %s for Execution",

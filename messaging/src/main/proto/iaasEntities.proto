@@ -131,11 +131,3 @@ message VirtualMachine {
   LoginCredential loginCredential = 8;
 }
 
-message NodeCandidate {
-  Cloud cloud = 1;
-  Location location = 2;
-  Image image = 3;
-  HardwareFlavor hardwareFlavor = 4;
-  double price = 5;
-}
-

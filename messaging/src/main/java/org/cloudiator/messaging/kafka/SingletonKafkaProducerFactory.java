@@ -16,56 +16,59 @@
 
 package org.cloudiator.messaging.kafka;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+import static org.cloudiator.messaging.kafka.Constants.KAFKA_SERVERS;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.protobuf.Message;
+import java.util.Properties;
+import javax.inject.Named;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 
-import javax.inject.Named;
-import java.util.Properties;
+@Singleton
+class SingletonKafkaProducerFactory implements KafkaProducerFactory {
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-import static org.cloudiator.messaging.kafka.Constants.KAFKA_SERVERS;
-
-@Singleton class SingletonKafkaProducerFactory implements KafkaProducerFactory {
-
-    private final String bootstrapServers;
+  private final String bootstrapServers;
 
 
-    private static class ProducerSingleton {
+  private static class ProducerSingleton {
 
-        private static Producer<String, Message> instance = null;
+    private static Producer<String, Message> instance = null;
 
-        private ProducerSingleton() {
-            throw new AssertionError("Do not instantiate " + this);
-        }
-
-        private static Producer<String, Message> getInstance(Properties properties) {
-            if (instance == null) {
-                instance = new KafkaProducer<>(properties, new StringSerializer(),
-                    new ProtobufSerializer());
-            }
-            return instance;
-        }
+    private ProducerSingleton() {
+      throw new AssertionError("Do not instantiate " + this);
     }
 
-
-    @Inject SingletonKafkaProducerFactory(@Named(KAFKA_SERVERS) String bootstrapServers) {
-        checkNotNull(bootstrapServers, "bootstrapServers is null");
-        checkArgument(!bootstrapServers.isEmpty(), "bootstrapServers is empty.");
-        this.bootstrapServers = bootstrapServers;
+    private static Producer<String, Message> getInstance(Properties properties) {
+      if (instance == null) {
+        instance = new KafkaProducer<>(properties, new StringSerializer(),
+            new ProtobufSerializer());
+      }
+      return instance;
     }
+  }
 
-    @Override public Producer<String, Message> createKafkaProducer() {
-        final Properties properties = new Properties();
-        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        properties.put(ProducerConfig.MAX_REQUEST_SIZE_CONFIG, Integer.MAX_VALUE);
-        properties.put(ProducerConfig.BATCH_SIZE_CONFIG, 0);
-        return ProducerSingleton.getInstance(properties);
-    }
+
+  @Inject
+  SingletonKafkaProducerFactory(@Named(KAFKA_SERVERS) String bootstrapServers) {
+    checkNotNull(bootstrapServers, "bootstrapServers is null");
+    checkArgument(!bootstrapServers.isEmpty(), "bootstrapServers is empty.");
+    this.bootstrapServers = bootstrapServers;
+  }
+
+  @Override
+  public Producer<String, Message> createKafkaProducer() {
+    final Properties properties = new Properties();
+    properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+    properties.put(ProducerConfig.MAX_REQUEST_SIZE_CONFIG, Integer.MAX_VALUE);
+    properties.put(ProducerConfig.BATCH_SIZE_CONFIG, 0);
+    properties.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, 600000);
+    return ProducerSingleton.getInstance(properties);
+  }
 
 }

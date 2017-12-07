@@ -1,7 +1,5 @@
 syntax = "proto3";
 
-import "node.proto";
-
 package iaas;
 
 option java_package = "org.cloudiator.messages";

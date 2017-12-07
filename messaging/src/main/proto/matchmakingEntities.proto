@@ -1,17 +1,20 @@
 syntax = "proto3";
 
-package application;
+package iaas;
 
 option java_package = "org.cloudiator.messages.entities";
 
 import "commonEntities.proto";
 import "iaasEntities.proto";
 
-message OclSolution {
-  repeated iaas.VirtualMachineRequest nodes = 1;
-}
-
 message OclProblem {
   repeated common.OclRequirement requirements = 2;
 }
 
+message NodeCandidate {
+  iaas.Cloud cloud = 1;
+  Location location = 2;
+  Image image = 3;
+  HardwareFlavor hardwareFlavor = 4;
+  double price = 5;
+}
