@@ -39,6 +39,7 @@ message AttributeRequirement {
   string requirementClass = 1;
   string requirementAttribute = 2;
   RequirementOperator requirementOperator = 3;
+  string value = 4;
 }
 
 enum LocationScope {
