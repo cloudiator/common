@@ -55,7 +55,7 @@ message HardwareFlavor {
   string providerId = 3;
   int32 cores = 4;
   int64 ram = 5;
-  float disk = 6;
+  double disk = 6;
   Location location = 7;
 }
 
