@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.Nullable;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -94,6 +95,7 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
     private final Consumer<String, T> consumer;
     private final List<MessageCallback<T>> callbacks;
     private final String topic;
+    private final AtomicBoolean initialized = new AtomicBoolean(false);
 
     private Subscriber(Consumer<String, T> consumer,
         String topic) {
@@ -117,10 +119,16 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
       return MoreObjects.toStringHelper(this).add("topic", topic).toString();
     }
 
+    void init() {
+      checkState(!initialized.get(), String.format("%s was already initialized.", this));
+      consumer.subscribe(Collections.singletonList(topic));
+      initialized.set(true);
+    }
+
     @Override
     public void run() {
+      checkState(initialized.get(), String.format("Subscriber %s was not initialized.", this));
       try {
-        consumer.subscribe(Collections.singletonList(topic));
         while (!Thread.currentThread().isInterrupted()) {
           final ConsumerRecords<String, T> poll = consumer.poll(1000);
           for (ConsumerRecord<String, T> record : poll) {
@@ -156,6 +164,7 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
     Subscriber subscriber = subscriberRegistry.getSubscriberForTopic(topic);
     if (subscriber == null) {
       subscriber = new Subscriber(kafkaConsumerFactory.createKafkaConsumer(parser), topic);
+      subscriber.init();
       subscriberRegistry.registerSubscriber(topic, subscriber);
       SUBSCRIBER_EXECUTION.execute(subscriber);
     }
