@@ -23,6 +23,10 @@ import javax.persistence.InheritanceType;
 /**
  * Created by Frank on 20.05.2015.
  */
-@Deprecated @Entity @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS) public abstract class Window
+@Deprecated
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Window
     extends Model {
+
 }

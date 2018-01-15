@@ -18,13 +18,12 @@ package org.cloudiator.messaging.kafka;
 
 public final class Constants {
 
-  private Constants() {
-
-  }
-
   public static final String KAFKA_SERVERS = "bootstrapServers";
   public static final String KAFKA_GROUP_ID = "groupId";
   public static final String RESPONSE_TIMEOUT = "responseTimeout";
+  private Constants() {
+
+  }
 
 
 }

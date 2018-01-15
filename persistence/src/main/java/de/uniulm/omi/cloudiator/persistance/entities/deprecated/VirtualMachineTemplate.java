@@ -16,78 +16,85 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
-import com.google.common.collect.ImmutableList;
+import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.common.collect.ImmutableList;
 import java.util.List;
 import java.util.Optional;
-
 import javax.annotation.Nullable;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Created by daniel on 11.02.15.
  */
-@Deprecated @Entity public class VirtualMachineTemplate extends Model {
+@Deprecated
+@Entity
+public class VirtualMachineTemplate extends Model {
 
-    /**
-     * Owned relations
-     */
-    @ManyToOne(optional = false) private Cloud cloud;
-    @ManyToOne(optional = false) private Image image;
-    @ManyToOne(optional = false) private Location location;
-    @ManyToOne(optional = false) private Hardware hardware;
-    @Nullable @ManyToOne(optional = true) private TemplateOptions templateOptions;
+  /**
+   * Owned relations
+   */
+  @ManyToOne(optional = false)
+  private Cloud cloud;
+  @ManyToOne(optional = false)
+  private Image image;
+  @ManyToOne(optional = false)
+  private Location location;
+  @ManyToOne(optional = false)
+  private Hardware hardware;
+  @Nullable
+  @ManyToOne(optional = true)
+  private TemplateOptions templateOptions;
 
-    /**
-     * Foreign relations
-     */
-    @OneToMany(mappedBy = "virtualMachineTemplate") private List<ApplicationComponent>
-        applicationComponents;
+  /**
+   * Foreign relations
+   */
+  @OneToMany(mappedBy = "virtualMachineTemplate")
+  private List<ApplicationComponent>
+      applicationComponents;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected VirtualMachineTemplate() {
-    }
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected VirtualMachineTemplate() {
+  }
 
-    public VirtualMachineTemplate(Cloud cloud, Image image, Location location, Hardware hardware,
-        @Nullable TemplateOptions templateOptions) {
-        checkNotNull(cloud);
-        this.cloud = cloud;
-        checkNotNull(image);
-        this.image = image;
-        checkNotNull(location);
-        this.location = location;
-        checkNotNull(hardware);
-        this.hardware = hardware;
-        this.templateOptions = templateOptions;
-    }
+  public VirtualMachineTemplate(Cloud cloud, Image image, Location location, Hardware hardware,
+      @Nullable TemplateOptions templateOptions) {
+    checkNotNull(cloud);
+    this.cloud = cloud;
+    checkNotNull(image);
+    this.image = image;
+    checkNotNull(location);
+    this.location = location;
+    checkNotNull(hardware);
+    this.hardware = hardware;
+    this.templateOptions = templateOptions;
+  }
 
-    public List<ApplicationComponent> getApplicationComponentsUsedFor() {
-        return ImmutableList.copyOf(applicationComponents);
-    }
+  public List<ApplicationComponent> getApplicationComponentsUsedFor() {
+    return ImmutableList.copyOf(applicationComponents);
+  }
 
-    public Image image() {
-        return image;
-    }
+  public Image image() {
+    return image;
+  }
 
-    public Location location() {
-        return location;
-    }
+  public Location location() {
+    return location;
+  }
 
-    public Hardware hardware() {
-        return hardware;
-    }
+  public Hardware hardware() {
+    return hardware;
+  }
 
-    public Cloud cloud() {
-        return cloud;
-    }
+  public Cloud cloud() {
+    return cloud;
+  }
 
-    public Optional<TemplateOptions> templateOptions() {
-        return Optional.ofNullable(templateOptions);
-    }
+  public Optional<TemplateOptions> templateOptions() {
+    return Optional.ofNullable(templateOptions);
+  }
 }

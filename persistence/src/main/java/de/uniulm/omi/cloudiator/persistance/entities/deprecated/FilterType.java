@@ -19,22 +19,24 @@ package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 /**
  * Created by Frank on 02.08.2015.
  */
-@Deprecated public enum FilterType {
+@Deprecated
+public enum FilterType {
 
-    ANY("ANY"),
-    GTE("GTE"),
-    GT("GT"),
-    E("E"),
-    LT("LT"),
-    LTE("LTE");
+  ANY("ANY"),
+  GTE("GTE"),
+  GT("GT"),
+  E("E"),
+  LT("LT"),
+  LTE("LTE");
 
-    private final String text;
+  private final String text;
 
-    private FilterType(final String text) {
-        this.text = text;
-    }
+  private FilterType(final String text) {
+    this.text = text;
+  }
 
-    @Override public String toString() {
-        return text;
-    }
+  @Override
+  public String toString() {
+    return text;
+  }
 }

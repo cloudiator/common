@@ -21,7 +21,7 @@ package de.uniulm.omi.cloudiator.util.execution;
  */
 public interface SimpleBlockingQueue<T> {
 
-    void add(T t);
+  void add(T t);
 
-    T take() throws InterruptedException;
+  T take() throws InterruptedException;
 }

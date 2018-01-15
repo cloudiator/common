@@ -19,7 +19,6 @@ package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
-
 import javax.annotation.Nullable;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
@@ -28,40 +27,48 @@ import javax.persistence.OneToOne;
 /**
  * Created by daniel on 03.08.15.
  */
-@Deprecated @Entity public class PortRequired extends Port {
+@Deprecated
+@Entity
+public class PortRequired extends Port {
 
-    private @OneToOne(mappedBy = "requiredPort") Communication requiredCommunication;
-    private @Nullable @Lob String updateAction;
-    private @Nullable Boolean isMandatory;
+  private @OneToOne(mappedBy = "requiredPort")
+  Communication requiredCommunication;
+  private @Nullable
+  @Lob
+  String updateAction;
+  private @Nullable
+  Boolean isMandatory;
 
-    /**
-     * Default constructor for hibernate.
-     */
-    protected PortRequired() {
+  /**
+   * Default constructor for hibernate.
+   */
+  protected PortRequired() {
+  }
+
+  public PortRequired(String name, ApplicationComponent applicationComponent,
+      @Nullable String updateAction, @Nullable Boolean isMandatory) {
+    super(name, applicationComponent);
+    this.updateAction = updateAction;
+  }
+
+  @Override
+  public Set<Communication> getAttachedCommunications() {
+    return Collections.singleton(requiredCommunication);
+  }
+
+  @Nullable
+  public Communication communication() {
+    return requiredCommunication;
+  }
+
+  public Optional<String> updateAction() {
+    return Optional.ofNullable(updateAction);
+  }
+
+  public boolean isMandatory() {
+    if (isMandatory == null) {
+      return false;
     }
-
-    @Override public Set<Communication> getAttachedCommunications() {
-        return Collections.singleton(requiredCommunication);
-    }
-
-    public PortRequired(String name, ApplicationComponent applicationComponent,
-        @Nullable String updateAction, @Nullable Boolean isMandatory) {
-        super(name, applicationComponent);
-        this.updateAction = updateAction;
-    }
-
-    @Nullable public Communication communication() {
-        return requiredCommunication;
-    }
-
-    public Optional<String> updateAction() {
-        return Optional.ofNullable(updateAction);
-    }
-
-    public boolean isMandatory() {
-        if (isMandatory == null) {
-            return false;
-        }
-        return isMandatory;
-    }
+    return isMandatory;
+  }
 }

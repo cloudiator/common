@@ -19,9 +19,10 @@ package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 /**
  * Created by daniel on 12.03.15.
  */
-@Deprecated public enum IpType {
+@Deprecated
+public enum IpType {
 
-    PUBLIC,
-    PRIVATE
+  PUBLIC,
+  PRIVATE
 
 }

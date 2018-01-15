@@ -20,33 +20,31 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.PriorityBlockingQueue;
 
 /**
- * A simple {@link BlockingQueue} implementation returning entries based
- * on their priority given by {@link Prioritized}.
- * <p>
- * If two objects have the same priority (are equal with respect to their
- * compareTo ({@link Comparable}) method) this queue ensures that FIFO
- * will be applied as tie-breaker.
- *
- * @param <T>
+ * A simple {@link BlockingQueue} implementation returning entries based on their priority given by
+ * {@link Prioritized}. <p> If two objects have the same priority (are equal with respect to their
+ * compareTo ({@link Comparable}) method) this queue ensures that FIFO will be applied as
+ * tie-breaker.
  */
 public class SimpleFifoPriorityBlockingQueue<T extends Comparable<? super T>>
     implements SimpleBlockingQueue<T> {
 
-    private BlockingQueue<FiFoEntry<T>> queue;
+  private BlockingQueue<FiFoEntry<T>> queue;
 
-    public SimpleFifoPriorityBlockingQueue() {
-        this.queue = new PriorityBlockingQueue<>();
-    }
+  public SimpleFifoPriorityBlockingQueue() {
+    this.queue = new PriorityBlockingQueue<>();
+  }
 
-    private FiFoEntry<T> decorateFiFo(T prioritized) {
-        return FiFoEntry.of(prioritized);
-    }
+  private FiFoEntry<T> decorateFiFo(T prioritized) {
+    return FiFoEntry.of(prioritized);
+  }
 
-    @Override public void add(T t) {
-        this.queue.add(decorateFiFo(t));
-    }
+  @Override
+  public void add(T t) {
+    this.queue.add(decorateFiFo(t));
+  }
 
-    @Override public T take() throws InterruptedException {
-        return this.queue.take().getEntry();
-    }
+  @Override
+  public T take() throws InterruptedException {
+    return this.queue.take().getEntry();
+  }
 }

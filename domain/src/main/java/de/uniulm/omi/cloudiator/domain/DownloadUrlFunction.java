@@ -23,7 +23,7 @@ import java.net.URL;
  */
 public interface DownloadUrlFunction {
 
-    public URL generateURL(OperatingSystemArchitecture operatingSystemArchitecture,
-        OperatingSystemVersion operatingSystemVersion, ImageFormat imageFormat);
+  public URL generateURL(OperatingSystemArchitecture operatingSystemArchitecture,
+      OperatingSystemVersion operatingSystemVersion, ImageFormat imageFormat);
 
 }

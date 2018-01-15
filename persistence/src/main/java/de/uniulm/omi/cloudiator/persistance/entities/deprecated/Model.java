@@ -17,49 +17,49 @@
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
 import com.google.common.base.MoreObjects;
-
 import java.io.Serializable;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 /**
- * Superclass for all model classes.
- * <p>
- * Defines the auto generated id for
- * each model class.
+ * Superclass for all model classes. <p> Defines the auto generated id for each model class.
  */
-@Deprecated @MappedSuperclass public abstract class Model extends Unique implements Serializable {
+@Deprecated
+@MappedSuperclass
+public abstract class Model extends Unique implements Serializable {
 
-    @Id @GeneratedValue(strategy = GenerationType.TABLE) private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.TABLE)
+  private Long id;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected Model() {
-    }
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected Model() {
+  }
 
-    /**
-     * Getter for the id.
-     *
-     * @return the identifies for this model object.
-     */
-    public Long getId() {
-        return id;
-    }
+  /**
+   * Getter for the id.
+   *
+   * @return the identifies for this model object.
+   */
+  public Long getId() {
+    return id;
+  }
 
-    /**
-     * Setter for the id.
-     *
-     * @param id the identified for this model object
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+  /**
+   * Setter for the id.
+   *
+   * @param id the identified for this model object
+   */
+  public void setId(Long id) {
+    this.id = id;
+  }
 
-    @Override public String toString() {
-        return MoreObjects.toStringHelper(this).add("id", id).toString();
-    }
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this).add("id", id).toString();
+  }
 }

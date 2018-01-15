@@ -16,10 +16,11 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.google.common.collect.ImmutableList;
-
 import java.util.List;
-
 import javax.annotation.Nullable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,46 +28,47 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
+@Deprecated
+@Entity
+public class Hardware extends RemoteResourceInLocation {
 
-@Deprecated @Entity public class Hardware extends RemoteResourceInLocation {
+  @Column(updatable = false, nullable = false)
+  private String name;
 
-    @Column(updatable = false, nullable = false) private String name;
+  @ManyToOne(optional = false)
+  private HardwareOffer hardwareOffer;
 
-    @ManyToOne(optional = false) private HardwareOffer hardwareOffer;
+  @OneToMany(mappedBy = "hardware", cascade = CascadeType.REMOVE)
+  private List<VirtualMachineTemplate> virtualMachineTemplates;
 
-    @OneToMany(mappedBy = "hardware", cascade = CascadeType.REMOVE)
-    private List<VirtualMachineTemplate> virtualMachineTemplates;
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected Hardware() {
+  }
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected Hardware() {
-    }
+  public Hardware(@Nullable String remoteId, @Nullable String providerId,
+      @Nullable String swordId, Cloud cloud, Location location, String name,
+      HardwareOffer hardwareOffer) {
+    super(remoteId, providerId, swordId, cloud, null, location);
 
-    public Hardware(@Nullable String remoteId, @Nullable String providerId,
-        @Nullable String swordId, Cloud cloud, Location location, String name,
-        HardwareOffer hardwareOffer) {
-        super(remoteId, providerId, swordId, cloud, null, location);
+    checkNotNull(name);
+    checkArgument(!name.isEmpty());
 
-        checkNotNull(name);
-        checkArgument(!name.isEmpty());
+    this.name = name;
+    this.hardwareOffer = hardwareOffer;
+  }
 
-        this.name = name;
-        this.hardwareOffer = hardwareOffer;
-    }
+  public HardwareOffer hardwareOffer() {
+    return hardwareOffer;
+  }
 
-    public HardwareOffer hardwareOffer() {
-        return hardwareOffer;
-    }
+  public List<VirtualMachineTemplate> virtualMachineTemplatesUsedFor() {
+    return ImmutableList.copyOf(virtualMachineTemplates);
+  }
 
-    public List<VirtualMachineTemplate> virtualMachineTemplatesUsedFor() {
-        return ImmutableList.copyOf(virtualMachineTemplates);
-    }
-
-    public String name() {
-        return name;
-    }
+  public String name() {
+    return name;
+  }
 
 }

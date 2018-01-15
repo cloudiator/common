@@ -23,7 +23,7 @@ import org.cloudiator.messaging.ResponseException;
 /**
  * Created by daniel on 02.06.17.
  */
-public interface LocationService  {
+public interface LocationService {
 
   LocationQueryResponse getLocations(LocationQueryRequest locationQueryRequest)
       throws ResponseException;

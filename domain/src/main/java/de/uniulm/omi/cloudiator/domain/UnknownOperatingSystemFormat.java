@@ -24,19 +24,25 @@ import java.util.Set;
  */
 public class UnknownOperatingSystemFormat implements OperatingSystemVersionFormat {
 
-    @Override public boolean isValid(OperatingSystemVersion operatingSystemVersion) {
-        return false;
-    }
+  @Override
+  public boolean isValid(OperatingSystemVersion operatingSystemVersion) {
+    return false;
+  }
 
-    @Deprecated @Override public OperatingSystemVersion newest() {
-        return OperatingSystemVersions.unknown();
-    }
+  @Deprecated
+  @Override
+  public OperatingSystemVersion newest() {
+    return OperatingSystemVersions.unknown();
+  }
 
-    @Override public Set<OperatingSystemVersion> allVersions() {
-        return Collections.emptySet();
-    }
+  @Override
+  public Set<OperatingSystemVersion> allVersions() {
+    return Collections.emptySet();
+  }
 
-    @Deprecated @Override public OperatingSystemVersion parse(String version) {
-        return OperatingSystemVersions.unknown();
-    }
+  @Deprecated
+  @Override
+  public OperatingSystemVersion parse(String version) {
+    return OperatingSystemVersions.unknown();
+  }
 }

@@ -16,94 +16,111 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSet;
-import de.uniulm.omi.cloudiator.domain.LocationScope;
-
-import javax.annotation.Nullable;
-import javax.persistence.*;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-@Deprecated @Entity public class Location extends RemoteResourceInCloud {
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import de.uniulm.omi.cloudiator.domain.LocationScope;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import javax.annotation.Nullable;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
-    @Nullable @ManyToOne(optional = true) private GeoLocation geoLocation;
+@Deprecated
+@Entity
+public class Location extends RemoteResourceInCloud {
 
-    @Column(updatable = false, nullable = false) private String name;
+  @Nullable
+  @ManyToOne(optional = true)
+  private GeoLocation geoLocation;
 
-    @ManyToOne @Nullable private Location parent;
+  @Column(updatable = false, nullable = false)
+  private String name;
 
-    @OneToMany(mappedBy = "parent") private List<Location> children;
+  @ManyToOne
+  @Nullable
+  private Location parent;
 
-    @Nullable @Column(updatable = false) @Enumerated(EnumType.STRING) private LocationScope
-        locationScope;
+  @OneToMany(mappedBy = "parent")
+  private List<Location> children;
 
-    @Column(nullable = false, updatable = false) private Boolean isAssignable;
+  @Nullable
+  @Column(updatable = false)
+  @Enumerated(EnumType.STRING)
+  private LocationScope
+      locationScope;
 
-    @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE)
-    private List<VirtualMachineTemplate> virtualMachineTemplates;
+  @Column(nullable = false, updatable = false)
+  private Boolean isAssignable;
 
-    @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE)
-    private List<RemoteResourceInLocation> remoteResources;
+  @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE)
+  private List<VirtualMachineTemplate> virtualMachineTemplates;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected Location() {
-    }
+  @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE)
+  private List<RemoteResourceInLocation> remoteResources;
 
-    public Location(@Nullable String remoteId, @Nullable String providerId,
-        @Nullable String swordId, Cloud cloud, String name, @Nullable GeoLocation geoLocation,
-        @Nullable Location parent, @Nullable LocationScope locationScope, Boolean isAssignable) {
-        super(remoteId, providerId, swordId, cloud, null);
-        checkNotNull(name);
-        checkArgument(!name.isEmpty());
-        this.name = name;
-        this.geoLocation = geoLocation;
-        this.parent = parent;
-        this.locationScope = locationScope;
-        this.isAssignable = isAssignable;
-    }
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected Location() {
+  }
 
-    public Optional<GeoLocation> geoLocation() {
-        return Optional.ofNullable(geoLocation);
-    }
+  public Location(@Nullable String remoteId, @Nullable String providerId,
+      @Nullable String swordId, Cloud cloud, String name, @Nullable GeoLocation geoLocation,
+      @Nullable Location parent, @Nullable LocationScope locationScope, Boolean isAssignable) {
+    super(remoteId, providerId, swordId, cloud, null);
+    checkNotNull(name);
+    checkArgument(!name.isEmpty());
+    this.name = name;
+    this.geoLocation = geoLocation;
+    this.parent = parent;
+    this.locationScope = locationScope;
+    this.isAssignable = isAssignable;
+  }
 
-    public Optional<Location> getParent() {
-        return Optional.ofNullable(parent);
-    }
+  public Optional<GeoLocation> geoLocation() {
+    return Optional.ofNullable(geoLocation);
+  }
 
-    public Set<Location> hierachy() {
-        final ImmutableSet.Builder<Location> builder = ImmutableSet.builder();
-        Location location = this;
-        do {
-            builder.add(location);
-            location = location.getParent().orElse(null);
-        } while (location != null);
-        return builder.build();
-    }
+  public Optional<Location> getParent() {
+    return Optional.ofNullable(parent);
+  }
 
-    public List<Location> children() {
-        return ImmutableList.copyOf(children);
-    }
+  public Set<Location> hierachy() {
+    final ImmutableSet.Builder<Location> builder = ImmutableSet.builder();
+    Location location = this;
+    do {
+      builder.add(location);
+      location = location.getParent().orElse(null);
+    } while (location != null);
+    return builder.build();
+  }
 
-    public Optional<LocationScope> locationScope() {
-        return Optional.ofNullable(locationScope);
-    }
+  public List<Location> children() {
+    return ImmutableList.copyOf(children);
+  }
 
-    public boolean isAssignable() {
-        return isAssignable;
-    }
+  public Optional<LocationScope> locationScope() {
+    return Optional.ofNullable(locationScope);
+  }
 
-    public List<VirtualMachineTemplate> virtualMachineTemplatesUsedFor() {
-        return ImmutableList.copyOf(virtualMachineTemplates);
-    }
+  public boolean isAssignable() {
+    return isAssignable;
+  }
 
-    public List<RemoteResourceInLocation> remoteResourcesUsedFor() {
-        return ImmutableList.copyOf(remoteResources);
-    }
+  public List<VirtualMachineTemplate> virtualMachineTemplatesUsedFor() {
+    return ImmutableList.copyOf(virtualMachineTemplates);
+  }
+
+  public List<RemoteResourceInLocation> remoteResourcesUsedFor() {
+    return ImmutableList.copyOf(remoteResources);
+  }
 }

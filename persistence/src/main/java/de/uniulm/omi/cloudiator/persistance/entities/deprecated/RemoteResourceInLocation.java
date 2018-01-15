@@ -17,7 +17,6 @@
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
 import java.util.Optional;
-
 import javax.annotation.Nullable;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -25,30 +24,33 @@ import javax.persistence.ManyToOne;
 /**
  * Created by daniel on 22.09.15.
  */
-@Deprecated @Entity public abstract class RemoteResourceInLocation extends RemoteResourceInCloud {
+@Deprecated
+@Entity
+public abstract class RemoteResourceInLocation extends RemoteResourceInCloud {
 
-    @ManyToOne private Location location;
+  @ManyToOne
+  private Location location;
 
-    /**
-     * No-arg constructor for hibernate.
-     */
-    protected RemoteResourceInLocation() {
-    }
+  /**
+   * No-arg constructor for hibernate.
+   */
+  protected RemoteResourceInLocation() {
+  }
 
-    public RemoteResourceInLocation(Cloud cloud, Location location) {
-        super(cloud);
-        this.location = location;
-    }
+  public RemoteResourceInLocation(Cloud cloud, Location location) {
+    super(cloud);
+    this.location = location;
+  }
 
-    public RemoteResourceInLocation(@Nullable String remoteId, @Nullable String providerId,
-        @Nullable String swordId, Cloud cloud, @Nullable CloudCredential owner,
-        @Nullable Location location) {
-        super(remoteId, providerId, swordId, cloud, owner);
-        this.location = location;
-    }
+  public RemoteResourceInLocation(@Nullable String remoteId, @Nullable String providerId,
+      @Nullable String swordId, Cloud cloud, @Nullable CloudCredential owner,
+      @Nullable Location location) {
+    super(remoteId, providerId, swordId, cloud, owner);
+    this.location = location;
+  }
 
-    public Optional<Location> location() {
-        return Optional.ofNullable(location);
-    }
+  public Optional<Location> location() {
+    return Optional.ofNullable(location);
+  }
 
 }

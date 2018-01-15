@@ -21,27 +21,28 @@ package de.uniulm.omi.cloudiator.domain;
  */
 public interface LoginNameSupplier {
 
-    class UnknownLoginNameException extends RuntimeException {
-        public UnknownLoginNameException() {
-        }
+  String loginName();
 
-        public UnknownLoginNameException(String message) {
-            super(message);
-        }
+  class UnknownLoginNameException extends RuntimeException {
 
-        public UnknownLoginNameException(String message, Throwable cause) {
-            super(message, cause);
-        }
-
-        public UnknownLoginNameException(Throwable cause) {
-            super(cause);
-        }
-
-        public UnknownLoginNameException(String message, Throwable cause, boolean enableSuppression,
-            boolean writableStackTrace) {
-            super(message, cause, enableSuppression, writableStackTrace);
-        }
+    public UnknownLoginNameException() {
     }
 
-    String loginName();
+    public UnknownLoginNameException(String message) {
+      super(message);
+    }
+
+    public UnknownLoginNameException(String message, Throwable cause) {
+      super(message, cause);
+    }
+
+    public UnknownLoginNameException(Throwable cause) {
+      super(cause);
+    }
+
+    public UnknownLoginNameException(String message, Throwable cause, boolean enableSuppression,
+        boolean writableStackTrace) {
+      super(message, cause, enableSuppression, writableStackTrace);
+    }
+  }
 }

@@ -23,12 +23,12 @@ import java.util.Set;
  */
 public interface OperatingSystemVersionFormat {
 
-    boolean isValid(OperatingSystemVersion operatingSystemVersion);
+  boolean isValid(OperatingSystemVersion operatingSystemVersion);
 
-    OperatingSystemVersion newest();
+  OperatingSystemVersion newest();
 
-    Set<OperatingSystemVersion> allVersions();
+  Set<OperatingSystemVersion> allVersions();
 
-    OperatingSystemVersion parse(String version);
+  OperatingSystemVersion parse(String version);
 
 }

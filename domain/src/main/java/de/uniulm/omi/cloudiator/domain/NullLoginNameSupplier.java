@@ -21,12 +21,13 @@ package de.uniulm.omi.cloudiator.domain;
  */
 public class NullLoginNameSupplier implements LoginNameSupplier {
 
-    NullLoginNameSupplier() {
-    }
+  NullLoginNameSupplier() {
+  }
 
-    @Override public String loginName() {
-        throw new UnknownLoginNameException(
-            "Retrieving the login name is not supported by " + this);
-    }
+  @Override
+  public String loginName() {
+    throw new UnknownLoginNameException(
+        "Retrieving the login name is not supported by " + this);
+  }
 
 }

@@ -16,67 +16,68 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.Optional;
 import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
-import java.util.Optional;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by daniel on 12.05.15.
  */
 @Entity
 @Inheritance(strategy = javax.persistence.InheritanceType.TABLE_PER_CLASS)
-@Deprecated public abstract class RemoteResource extends Model {
+@Deprecated
+public abstract class RemoteResource extends Model {
 
-    private RemoteState remoteState = RemoteState.INPROGRESS;
-    @Nullable
-    @Column(unique = true, nullable = true)
-    private String remoteId;
+  private RemoteState remoteState = RemoteState.INPROGRESS;
+  @Nullable
+  @Column(unique = true, nullable = true)
+  private String remoteId;
 
 
-    public RemoteState getRemoteState() {
-        if (remoteState == null) {
-            return RemoteState.INPROGRESS;
-        }
-        return remoteState;
+  public RemoteResource() {
+
+  }
+
+  public RemoteResource(@Nullable String remoteId) {
+    this.remoteId = remoteId;
+
+  }
+
+  public RemoteResource(@Nullable String remoteId, @Nullable RemoteState remoteState) {
+    this.remoteId = remoteId;
+    this.remoteState = remoteState;
+  }
+
+  public RemoteState getRemoteState() {
+    if (remoteState == null) {
+      return RemoteState.INPROGRESS;
     }
+    return remoteState;
+  }
 
-    public void setRemoteState(RemoteState remoteState) {
-        this.remoteState = remoteState;
+  public void setRemoteState(RemoteState remoteState) {
+    this.remoteState = remoteState;
+  }
+
+  public Optional<String> remoteId() {
+    return Optional.ofNullable(remoteId);
+  }
+
+  public void bindRemoteId(String remoteId) {
+    checkNotNull(remoteId, "Binding null remoteId is not allowed. Use unbind.");
+    if (this.remoteId != null) {
+      throw new IllegalStateException("RemoteId was already bound, unbind first.");
     }
+    this.remoteId = remoteId;
+  }
 
-    public Optional<String> remoteId() {
-        return Optional.ofNullable(remoteId);
-    }
-
-    public void bindRemoteId(String remoteId) {
-        checkNotNull(remoteId, "Binding null remoteId is not allowed. Use unbind.");
-        if (this.remoteId != null) {
-            throw new IllegalStateException("RemoteId was already bound, unbind first.");
-        }
-        this.remoteId = remoteId;
-    }
-
-    public void unbindRemoteId() {
-        this.remoteId = null;
-    }
-
-    public RemoteResource() {
-
-    }
-
-    public RemoteResource(@Nullable String remoteId) {
-        this.remoteId = remoteId;
-
-    }
-
-    public RemoteResource(@Nullable String remoteId, @Nullable RemoteState remoteState) {
-        this.remoteId = remoteId;
-        this.remoteState = remoteState;
-    }
+  public void unbindRemoteId() {
+    this.remoteId = null;
+  }
 
 
 }

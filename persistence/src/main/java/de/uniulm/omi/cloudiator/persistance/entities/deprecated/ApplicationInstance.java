@@ -19,7 +19,6 @@ package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -27,39 +26,43 @@ import javax.persistence.OneToMany;
 /**
  * Created by daniel on 11.05.15.
  */
-@Deprecated @Entity public class ApplicationInstance extends Model {
+@Deprecated
+@Entity
+public class ApplicationInstance extends Model {
 
-    @ManyToOne(optional = false) private Application application;
-    @OneToMany(mappedBy = "applicationInstance") private List<Instance> instances;
+  @ManyToOne(optional = false)
+  private Application application;
+  @OneToMany(mappedBy = "applicationInstance")
+  private List<Instance> instances;
 
-    /**
-     * No-args constructor for hibernate.
-     */
-    protected ApplicationInstance() {
+  /**
+   * No-args constructor for hibernate.
+   */
+  protected ApplicationInstance() {
 
-    }
+  }
 
-    public ApplicationInstance(Application application) {
-        this.application = application;
-    }
+  public ApplicationInstance(Application application) {
+    this.application = application;
+  }
 
-    public Application getApplication() {
-        return application;
-    }
+  public Application getApplication() {
+    return application;
+  }
 
-    public void setApplication(Application application) {
-        this.application = application;
-    }
+  public void setApplication(Application application) {
+    this.application = application;
+  }
 
-    public List<Instance> getInstances() {
-        return instances;
-    }
+  public List<Instance> getInstances() {
+    return instances;
+  }
 
-    public void setInstances(List<Instance> instances) {
-        this.instances = instances;
-    }
+  public void setInstances(List<Instance> instances) {
+    this.instances = instances;
+  }
 
-    public Set<VirtualMachine> virtualMachines() {
-        return instances.stream().map(Instance::getVirtualMachine).collect(Collectors.toSet());
-    }
+  public Set<VirtualMachine> virtualMachines() {
+    return instances.stream().map(Instance::getVirtualMachine).collect(Collectors.toSet());
+  }
 }

@@ -21,16 +21,18 @@ import javax.persistence.Entity;
 /**
  * Created by Frank on 20.05.2015.
  */
-@Deprecated @Entity public class ComponentHorizontalOutScalingAction extends ComponentHorizontalScalingAction {
+@Deprecated
+@Entity
+public class ComponentHorizontalOutScalingAction extends ComponentHorizontalScalingAction {
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected ComponentHorizontalOutScalingAction() {
-    }
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected ComponentHorizontalOutScalingAction() {
+  }
 
-    public ComponentHorizontalOutScalingAction(Long amount, Long min, Long max, Long count,
-        ApplicationComponent applicationComponent) {
-        super(amount, min, max, count, applicationComponent);
-    }
+  public ComponentHorizontalOutScalingAction(Long amount, Long min, Long max, Long count,
+      ApplicationComponent applicationComponent) {
+    super(amount, min, max, count, applicationComponent);
+  }
 }

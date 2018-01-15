@@ -16,77 +16,89 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
-import com.google.common.collect.ImmutableList;
-
-import javax.annotation.Nullable;
-import javax.persistence.*;
-import java.util.List;
-import java.util.Optional;
-
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-@Deprecated @Entity public class Cloud extends Model {
+import com.google.common.collect.ImmutableList;
+import java.util.List;
+import java.util.Optional;
+import javax.annotation.Nullable;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
-    @Column(unique = true, nullable = false, updatable = false) private String name;
-    @Nullable @Column(nullable = true) private String endpoint;
-    @ManyToOne(optional = false) private Api api;
-    @OneToMany(mappedBy = "cloud", cascade = CascadeType.REMOVE) private List<RemoteResourceInCloud>
-        remoteResources;
-    @OneToMany(mappedBy = "cloud", cascade = CascadeType.REMOVE)
-    private List<VirtualMachineTemplate> virtualMachineTemplates;
-    @OneToMany(mappedBy = "cloud", cascade = CascadeType.REMOVE) private List<CloudCredential>
-        cloudCredentials;
-    @OneToMany(mappedBy = "cloud", cascade = CascadeType.REMOVE) private List<CloudProperty>
-        cloudProperties;
+@Deprecated
+@Entity
+public class Cloud extends Model {
 
-    /**
-     * Empty constructor. Needed by hibernate.
-     */
-    protected Cloud() {
+  @Column(unique = true, nullable = false, updatable = false)
+  private String name;
+  @Nullable
+  @Column(nullable = true)
+  private String endpoint;
+  @ManyToOne(optional = false)
+  private Api api;
+  @OneToMany(mappedBy = "cloud", cascade = CascadeType.REMOVE)
+  private List<RemoteResourceInCloud>
+      remoteResources;
+  @OneToMany(mappedBy = "cloud", cascade = CascadeType.REMOVE)
+  private List<VirtualMachineTemplate> virtualMachineTemplates;
+  @OneToMany(mappedBy = "cloud", cascade = CascadeType.REMOVE)
+  private List<CloudCredential>
+      cloudCredentials;
+  @OneToMany(mappedBy = "cloud", cascade = CascadeType.REMOVE)
+  private List<CloudProperty>
+      cloudProperties;
+
+  /**
+   * Empty constructor. Needed by hibernate.
+   */
+  protected Cloud() {
+  }
+
+  public Cloud(String name, @Nullable String endpoint, Api api) {
+    checkNotNull(name);
+    checkArgument(!name.isEmpty());
+    if (endpoint != null) {
+      checkArgument(!endpoint.isEmpty());
     }
+    checkNotNull(api);
+    this.name = name;
+    this.endpoint = endpoint;
+    this.api = api;
+  }
 
-    public Cloud(String name, @Nullable String endpoint, Api api) {
-        checkNotNull(name);
-        checkArgument(!name.isEmpty());
-        if (endpoint != null) {
-            checkArgument(!endpoint.isEmpty());
-        }
-        checkNotNull(api);
-        this.name = name;
-        this.endpoint = endpoint;
-        this.api = api;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public Optional<String> getEndpoint() {
+    return Optional.ofNullable(endpoint);
+  }
 
-    public Optional<String> getEndpoint() {
-        return Optional.ofNullable(endpoint);
-    }
+  public Api api() {
+    return api;
+  }
 
-    public Api api() {
-        return api;
-    }
+  public List<RemoteResourceInCloud> remoteResources() {
+    return ImmutableList.copyOf(remoteResources);
+  }
 
-    public List<RemoteResourceInCloud> remoteResources() {
-        return ImmutableList.copyOf(remoteResources);
-    }
+  public void setRemoteResources(List<RemoteResourceInCloud> remoteResources) {
+    this.remoteResources = remoteResources;
+  }
 
-    public void setRemoteResources(List<RemoteResourceInCloud> remoteResources) {
-        this.remoteResources = remoteResources;
-    }
+  public List<CloudCredential> getCloudCredentials() {
+    return ImmutableList.copyOf(cloudCredentials);
+  }
 
-    public List<CloudCredential> getCloudCredentials() {
-        return ImmutableList.copyOf(cloudCredentials);
-    }
-
-    public void addProperty(CloudProperty cloudProperty) {
-        this.cloudProperties.add(cloudProperty);
-    }
+  public void addProperty(CloudProperty cloudProperty) {
+    this.cloudProperties.add(cloudProperty);
+  }
 }

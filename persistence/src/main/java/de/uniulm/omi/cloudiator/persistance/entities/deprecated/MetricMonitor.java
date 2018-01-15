@@ -16,31 +16,34 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by Frank on 20.05.2015.
  */
-@Deprecated @Entity public abstract class MetricMonitor extends Monitor {
+@Deprecated
+@Entity
+public abstract class MetricMonitor extends Monitor {
 
-    /* Actually is not optional but due to a inheritance bug this is now optional */
-    @ManyToOne(optional = true) private Schedule schedule;
+  /* Actually is not optional but due to a inheritance bug this is now optional */
+  @ManyToOne(optional = true)
+  private Schedule schedule;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected MetricMonitor() {
-    }
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected MetricMonitor() {
+  }
 
-    public MetricMonitor(Schedule schedule) {
-        checkNotNull(schedule);
-        this.schedule = schedule;
-    }
+  public MetricMonitor(Schedule schedule) {
+    checkNotNull(schedule);
+    this.schedule = schedule;
+  }
 
-    public Schedule getSchedule() {
-        return schedule;
-    }
+  public Schedule getSchedule() {
+    return schedule;
+  }
 }

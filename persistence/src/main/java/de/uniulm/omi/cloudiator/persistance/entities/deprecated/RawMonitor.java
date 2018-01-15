@@ -16,67 +16,77 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.Optional;
 import javax.annotation.Nullable;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import java.util.Optional;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by Frank on 20.05.2015.
  */
-@Deprecated @Entity public class RawMonitor extends MetricMonitor {
+@Deprecated
+@Entity
+public class RawMonitor extends MetricMonitor {
 
-    /* filter */
-    @ManyToOne(optional = true) private Application application;
-    @ManyToOne(optional = true) private Component component;
-    @ManyToOne(optional = true) private Instance componentInstance;
-    @ManyToOne(optional = true) private Cloud cloud;
-    @ManyToOne(optional = true) private SensorDescription sensorDescription;
+  /* filter */
+  @ManyToOne(optional = true)
+  private Application application;
+  @ManyToOne(optional = true)
+  private Component component;
+  @ManyToOne(optional = true)
+  private Instance componentInstance;
+  @ManyToOne(optional = true)
+  private Cloud cloud;
+  @ManyToOne(optional = true)
+  private SensorDescription sensorDescription;
 
-    @Nullable @ManyToOne(optional = true) private SensorConfigurations sensorConfigurations;
+  @Nullable
+  @ManyToOne(optional = true)
+  private SensorConfigurations sensorConfigurations;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected RawMonitor() {
-    }
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected RawMonitor() {
+  }
 
-    public RawMonitor(Schedule schedule, Application application, Component component,
-        Instance componentInstance, Cloud cloud, SensorDescription sensorDescription,
-        SensorConfigurations sensorConfigurations) {
-        super(schedule);
-        this.application = application;
-        this.component = component;
-        this.componentInstance = componentInstance;
-        this.cloud = cloud;
-        checkNotNull(sensorDescription);
-        this.sensorDescription = sensorDescription;
-        this.sensorConfigurations = sensorConfigurations;
-    }
+  public RawMonitor(Schedule schedule, Application application, Component component,
+      Instance componentInstance, Cloud cloud, SensorDescription sensorDescription,
+      SensorConfigurations sensorConfigurations) {
+    super(schedule);
+    this.application = application;
+    this.component = component;
+    this.componentInstance = componentInstance;
+    this.cloud = cloud;
+    checkNotNull(sensorDescription);
+    this.sensorDescription = sensorDescription;
+    this.sensorConfigurations = sensorConfigurations;
+  }
 
-    public Application getApplication() {
-        return application;
-    }
+  public Application getApplication() {
+    return application;
+  }
 
-    public Component getComponent() {
-        return component;
-    }
+  public Component getComponent() {
+    return component;
+  }
 
-    public Instance getComponentInstance() {
-        return componentInstance;
-    }
+  public Instance getComponentInstance() {
+    return componentInstance;
+  }
 
-    public Cloud getCloud() {
-        return cloud;
-    }
+  public Cloud getCloud() {
+    return cloud;
+  }
 
-    public SensorDescription getSensorDescription() {
-        return sensorDescription;
-    }
+  public SensorDescription getSensorDescription() {
+    return sensorDescription;
+  }
 
-    @Nullable public Optional<SensorConfigurations> getSensorConfigurations() {
-        return Optional.ofNullable(sensorConfigurations);
-    }
+  @Nullable
+  public Optional<SensorConfigurations> getSensorConfigurations() {
+    return Optional.ofNullable(sensorConfigurations);
+  }
 }

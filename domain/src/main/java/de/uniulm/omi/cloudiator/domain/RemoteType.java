@@ -21,6 +21,6 @@ package de.uniulm.omi.cloudiator.domain;
  */
 public enum RemoteType {
 
-    UNKNOWN, SSH, WINRM
+  UNKNOWN, SSH, WINRM
 
 }

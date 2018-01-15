@@ -16,47 +16,52 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Created by Frank on 20.05.2015.
  */
-@Deprecated @Entity public class Schedule extends Model {
+@Deprecated
+@Entity
+public class Schedule extends Model {
 
-    @Column(name = "column_interval", nullable = false, updatable = false) private Long interval;
-    @Enumerated(EnumType.STRING) @Column(nullable = false, updatable = false) private TimeUnit timeUnit;
+  @Column(name = "column_interval", nullable = false, updatable = false)
+  private Long interval;
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false, updatable = false)
+  private TimeUnit timeUnit;
 
 
-    @OneToMany(mappedBy = "schedule") private List<MetricMonitor> monitors;
+  @OneToMany(mappedBy = "schedule")
+  private List<MetricMonitor> monitors;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected Schedule() {
-    }
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected Schedule() {
+  }
 
-    public Schedule(Long interval, TimeUnit timeUnit) {
-        checkArgument(interval > 0);
-        checkNotNull(timeUnit);
-        this.interval = interval;
-        this.timeUnit = timeUnit;
-    }
+  public Schedule(Long interval, TimeUnit timeUnit) {
+    checkArgument(interval > 0);
+    checkNotNull(timeUnit);
+    this.interval = interval;
+    this.timeUnit = timeUnit;
+  }
 
-    public Long getInterval() {
-        return interval;
-    }
+  public Long getInterval() {
+    return interval;
+  }
 
-    public TimeUnit getTimeUnit() {
-        return timeUnit;
-    }
+  public TimeUnit getTimeUnit() {
+    return timeUnit;
+  }
 }

@@ -23,14 +23,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class StaticLoginNameSupplier implements LoginNameSupplier {
 
-    private final String loginName;
+  private final String loginName;
 
-    StaticLoginNameSupplier(String loginName) {
-        checkNotNull(loginName);
-        this.loginName = loginName;
-    }
+  StaticLoginNameSupplier(String loginName) {
+    checkNotNull(loginName);
+    this.loginName = loginName;
+  }
 
-    @Override public String loginName() {
-        return loginName;
-    }
+  @Override
+  public String loginName() {
+    return loginName;
+  }
 }

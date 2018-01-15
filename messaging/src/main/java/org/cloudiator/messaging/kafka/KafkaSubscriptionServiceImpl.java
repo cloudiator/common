@@ -73,6 +73,22 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
     }));
   }
 
+  @SuppressWarnings("unchecked")
+  @Override
+  public synchronized <T extends Message> Subscription subscribe(String topic, Parser<T> parser,
+      MessageCallback<T> messageCallback) {
+
+    Subscriber subscriber = subscriberRegistry.getSubscriberForTopic(topic);
+    if (subscriber == null) {
+      subscriber = new Subscriber(kafkaConsumerFactory.createKafkaConsumer(parser), topic);
+      subscriber.init();
+      subscriberRegistry.registerSubscriber(topic, subscriber);
+      SUBSCRIBER_EXECUTION.execute(subscriber);
+    }
+
+    return subscriber.addCallback(messageCallback);
+  }
+
   private static class SubscriberRegistry {
 
     private final Map<String, Subscriber> subscriberMap = Maps.newConcurrentMap();
@@ -154,22 +170,6 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
         consumer.close();
       }
     }
-  }
-
-  @SuppressWarnings("unchecked")
-  @Override
-  public synchronized <T extends Message> Subscription subscribe(String topic, Parser<T> parser,
-      MessageCallback<T> messageCallback) {
-
-    Subscriber subscriber = subscriberRegistry.getSubscriberForTopic(topic);
-    if (subscriber == null) {
-      subscriber = new Subscriber(kafkaConsumerFactory.createKafkaConsumer(parser), topic);
-      subscriber.init();
-      subscriberRegistry.registerSubscriber(topic, subscriber);
-      SUBSCRIBER_EXECUTION.execute(subscriber);
-    }
-
-    return subscriber.addCallback(messageCallback);
   }
 
 

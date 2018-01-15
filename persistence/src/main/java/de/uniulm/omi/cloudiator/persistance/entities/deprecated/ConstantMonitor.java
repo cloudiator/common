@@ -16,31 +16,34 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by Frank on 20.05.2015.
  */
-@Deprecated @Entity public class ConstantMonitor extends Monitor {
+@Deprecated
+@Entity
+public class ConstantMonitor extends Monitor {
 
 
-    @Column(nullable = false, updatable = false) private Double value;
+  @Column(nullable = false, updatable = false)
+  private Double value;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected ConstantMonitor() {
-    }
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected ConstantMonitor() {
+  }
 
-    public ConstantMonitor(Double value) {
-        checkNotNull(value);
-        this.value = value;
-    }
+  public ConstantMonitor(Double value) {
+    checkNotNull(value);
+    this.value = value;
+  }
 
-    public Double getValue() {
-        return value;
-    }
+  public Double getValue() {
+    return value;
+  }
 }

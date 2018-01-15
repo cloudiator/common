@@ -16,32 +16,35 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
 /**
  * Created by Frank on 20.05.2015.
  */
-@Deprecated @Entity public class MeasurementWindow extends Window {
+@Deprecated
+@Entity
+public class MeasurementWindow extends Window {
 
-    @Column(nullable = false, updatable = false) private Long measurements;
+  @Column(nullable = false, updatable = false)
+  private Long measurements;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected MeasurementWindow() {
-    }
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected MeasurementWindow() {
+  }
 
-    public MeasurementWindow(Long measurements) {
-        checkNotNull(measurements);
-        checkArgument(measurements > 0);
-        this.measurements = measurements;
-    }
+  public MeasurementWindow(Long measurements) {
+    checkNotNull(measurements);
+    checkArgument(measurements > 0);
+    this.measurements = measurements;
+  }
 
-    public Long getMeasurements() {
-        return measurements;
-    }
+  public Long getMeasurements() {
+    return measurements;
+  }
 }

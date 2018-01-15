@@ -16,71 +16,79 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
-import com.google.common.collect.ImmutableList;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
-import javax.persistence.*;
+import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 /**
  * Created by daniel on 12.03.15.
  */
-@Deprecated @Entity public class Tenant extends Model {
+@Deprecated
+@Entity
+public class Tenant extends Model {
 
-    @ManyToMany private List<FrontendUser> frontendUsers;
-    @Column(unique = true, nullable = false) private String name;
+  @ManyToMany
+  private List<FrontendUser> frontendUsers;
+  @Column(unique = true, nullable = false)
+  private String name;
 
-    @OneToMany(mappedBy = "tenant", cascade = CascadeType.REMOVE) private List<CloudCredential>
-        cloudCredentials;
+  @OneToMany(mappedBy = "tenant", cascade = CascadeType.REMOVE)
+  private List<CloudCredential>
+      cloudCredentials;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected Tenant() {
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected Tenant() {
 
+  }
+
+  public Tenant(String name) {
+    checkNotNull(name);
+    checkArgument(!name.isEmpty());
+    this.name = name;
+  }
+
+  public List<FrontendUser> getFrontendUsers() {
+    return ImmutableList.copyOf(frontendUsers);
+  }
+
+  public void setFrontendUsers(List<FrontendUser> frontendUsers) {
+    this.frontendUsers = frontendUsers;
+  }
+
+  public void addFrontendUser(FrontendUser frontendUser) {
+    if (frontendUsers == null) {
+      frontendUsers = new ArrayList<>();
     }
+    frontendUsers.add(frontendUser);
+  }
 
-    public Tenant(String name) {
-        checkNotNull(name);
-        checkArgument(!name.isEmpty());
-        this.name = name;
+  public List<CloudCredential> getCloudCredentials() {
+    if (cloudCredentials == null) {
+      cloudCredentials = Collections.emptyList();
     }
+    return ImmutableList.copyOf(cloudCredentials);
+  }
 
-    public List<FrontendUser> getFrontendUsers() {
-        return ImmutableList.copyOf(frontendUsers);
-    }
+  public void setCloudCredentials(List<CloudCredential> cloudCredentials) {
+    this.cloudCredentials = cloudCredentials;
+  }
 
-    public void addFrontendUser(FrontendUser frontendUser) {
-        if (frontendUsers == null) {
-            frontendUsers = new ArrayList<>();
-        }
-        frontendUsers.add(frontendUser);
-    }
+  public String getName() {
+    return name;
+  }
 
-    public List<CloudCredential> getCloudCredentials() {
-        if (cloudCredentials == null) {
-            cloudCredentials = Collections.emptyList();
-        }
-        return ImmutableList.copyOf(cloudCredentials);
-    }
-
-    public void setFrontendUsers(List<FrontendUser> frontendUsers) {
-        this.frontendUsers = frontendUsers;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCloudCredentials(List<CloudCredential> cloudCredentials) {
-        this.cloudCredentials = cloudCredentials;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 }

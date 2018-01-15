@@ -21,8 +21,8 @@ package de.uniulm.omi.cloudiator.domain;
  */
 public interface Identifiable {
 
-    /**
-     * @return a unique identifier for the resource.
-     */
-    String id();
+  /**
+   * @return a unique identifier for the resource.
+   */
+  String id();
 }

@@ -16,41 +16,44 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
-import java.util.concurrent.TimeUnit;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.concurrent.TimeUnit;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
 /**
  * Created by Frank on 20.05.2015.
  */
-@Deprecated @Entity public class TimeWindow extends Window {
+@Deprecated
+@Entity
+public class TimeWindow extends Window {
 
-    @Column(name = "column_interval", nullable = false, updatable = false) private Long interval;
-    @Column(nullable = false, updatable = false) private TimeUnit timeUnit;
+  @Column(name = "column_interval", nullable = false, updatable = false)
+  private Long interval;
+  @Column(nullable = false, updatable = false)
+  private TimeUnit timeUnit;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected TimeWindow() {
-    }
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected TimeWindow() {
+  }
 
-    public TimeWindow(Long interval, TimeUnit timeUnit) {
-        checkNotNull(interval);
-        checkArgument(interval > 0);
-        checkNotNull(timeUnit);
-        this.interval = interval;
-        this.timeUnit = timeUnit;
-    }
+  public TimeWindow(Long interval, TimeUnit timeUnit) {
+    checkNotNull(interval);
+    checkArgument(interval > 0);
+    checkNotNull(timeUnit);
+    this.interval = interval;
+    this.timeUnit = timeUnit;
+  }
 
-    public Long getInterval() {
-        return interval;
-    }
+  public Long getInterval() {
+    return interval;
+  }
 
-    public TimeUnit getTimeUnit() {
-        return timeUnit;
-    }
+  public TimeUnit getTimeUnit() {
+    return timeUnit;
+  }
 }

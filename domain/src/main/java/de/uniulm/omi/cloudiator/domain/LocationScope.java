@@ -16,72 +16,80 @@
 
 package de.uniulm.omi.cloudiator.domain;
 
-import javax.annotation.Nullable;
-import java.util.*;
-
 import static com.google.common.base.Preconditions.checkNotNull;
+
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.Set;
+import javax.annotation.Nullable;
 
 /**
  * Created by daniel on 11.12.15.
  */
 public enum LocationScope implements Iterable {
 
-    PROVIDER(null), REGION(PROVIDER), ZONE(REGION), HOST(ZONE);
+  PROVIDER(null), REGION(PROVIDER), ZONE(REGION), HOST(ZONE);
 
-    private final LocationScope parent;
+  private final LocationScope parent;
 
-    LocationScope(LocationScope parent) {
-        this.parent = parent;
+  LocationScope(LocationScope parent) {
+    this.parent = parent;
+  }
+
+  public Optional<LocationScope> parent() {
+    return Optional.ofNullable(parent);
+  }
+
+  public Set<LocationScope> parents() {
+    Set<LocationScope> parents = new HashSet<>();
+    if (parent().isPresent()) {
+      LocationScope parent = parent().get();
+      parents.add(parent);
+      parents.addAll(parent.parents());
+    }
+    return parents;
+  }
+
+  /**
+   * Checks if the given location scope is a parent of this.
+   *
+   * @param locationScope the location scope to test for.
+   * @return true of given scope is parent of this one, false if not.
+   */
+  public boolean hasParent(LocationScope locationScope) {
+    return this.parents().contains(locationScope);
+  }
+
+  @Override
+  public Iterator iterator() {
+    return new LocationScopeIterator(this);
+  }
+
+  private static class LocationScopeIterator implements Iterator<LocationScope> {
+
+    @Nullable
+    private LocationScope cursor;
+
+    private LocationScopeIterator(LocationScope start) {
+      checkNotNull(start, "start is null");
+      this.cursor = start;
     }
 
-    public Optional<LocationScope> parent() {
-        return Optional.ofNullable(parent);
+    @Override
+    public boolean hasNext() {
+      return cursor != null;
     }
 
-    public Set<LocationScope> parents() {
-        Set<LocationScope> parents = new HashSet<>();
-        if (parent().isPresent()) {
-            LocationScope parent = parent().get();
-            parents.add(parent);
-            parents.addAll(parent.parents());
-        }
-        return parents;
+    @Override
+    public LocationScope next() {
+      if (cursor == null) {
+        throw new NoSuchElementException();
+      }
+      LocationScope current = cursor;
+      cursor = cursor.parent().orElse(null);
+      return current;
     }
-
-    /**
-     * Checks if the given location scope is a parent of this.
-     *
-     * @param locationScope the location scope to test for.
-     * @return true of given scope is parent of this one, false if not.
-     */
-    public boolean hasParent(LocationScope locationScope) {
-        return this.parents().contains(locationScope);
-    }
-
-    private static class LocationScopeIterator implements Iterator<LocationScope> {
-
-        @Nullable private LocationScope cursor;
-
-        private LocationScopeIterator(LocationScope start) {
-            checkNotNull(start, "start is null");
-            this.cursor = start;
-        }
-
-        @Override public boolean hasNext() {
-            return cursor != null;
-        }
-
-        @Override public LocationScope next() {
-            if (cursor == null) {
-                throw new NoSuchElementException();
-            }
-            LocationScope current = cursor;
-            cursor = cursor.parent().orElse(null);
-            return current;
-        }
-    }
-
-    @Override public Iterator iterator() {
-        return new LocationScopeIterator(this);
-    }
+  }
 }

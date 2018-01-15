@@ -7,23 +7,23 @@ option java_package = "org.cloudiator.messages";
 import "iaasEntities.proto";
 
 message HardwareQueryRequest {
-    //mandatory userID
-    string userId = 1;
-    //unique identifier for the hardware to retrieve
-    string hardwareId = 2;
-    //unique identifier for the cloud to retrieve
-    string cloudId = 3;
+  //mandatory userID
+  string userId = 1;
+  //unique identifier for the hardware to retrieve
+  string hardwareId = 2;
+  //unique identifier for the cloud to retrieve
+  string cloudId = 3;
 }
 
 message HardwareQueryResponse {
-    repeated HardwareFlavor hardwareFlavors = 1;
+  repeated HardwareFlavor hardwareFlavors = 1;
 }
 
 message HardwareUpdateRequest {
-    string userId = 1;
-    HardwareFlavor hardwareFlavor = 2;
+  string userId = 1;
+  HardwareFlavor hardwareFlavor = 2;
 }
 
 message HardwareUpdatedResponse {
-    HardwareFlavor hardwareFlavor = 1;
+  HardwareFlavor hardwareFlavor = 1;
 }

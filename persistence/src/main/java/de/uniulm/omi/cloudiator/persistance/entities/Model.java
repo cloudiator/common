@@ -25,10 +25,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 /**
- * Superclass for all model classes.
- * <p>
- * Defines the auto generated id for
- * each model class.
+ * Superclass for all model classes. <p> Defines the auto generated id for each model class.
  */
 @MappedSuperclass
 public abstract class Model implements Serializable {

@@ -23,20 +23,21 @@ import java.util.Collections;
  */
 public class OperatingSystemVersions {
 
-    private OperatingSystemVersions() {
-    }
+  private OperatingSystemVersions() {
+  }
 
-    public static OperatingSystemVersion unknown() {
-        return new OperatingSystemVersionImpl(OperatingSystemVersionImpl.UNKNOWN_VERSION, null, Collections.emptySet());
-    }
+  public static OperatingSystemVersion unknown() {
+    return new OperatingSystemVersionImpl(OperatingSystemVersionImpl.UNKNOWN_VERSION, null,
+        Collections.emptySet());
+  }
 
-    public static OperatingSystemVersion of(int version, String name) {
-        return new OperatingSystemVersionImpl(version, name, Collections.emptySet());
-    }
+  public static OperatingSystemVersion of(int version, String name) {
+    return new OperatingSystemVersionImpl(version, name, Collections.emptySet());
+  }
 
-    public static OperatingSystemVersion of(String name,
-        OperatingSystemVersionFormat operatingSystemVersionFormat) {
-        return operatingSystemVersionFormat.parse(name);
-    }
+  public static OperatingSystemVersion of(String name,
+      OperatingSystemVersionFormat operatingSystemVersionFormat) {
+    return operatingSystemVersionFormat.parse(name);
+  }
 
 }

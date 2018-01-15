@@ -17,33 +17,36 @@
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
 import com.google.common.collect.ImmutableMap;
-
+import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.MapKeyColumn;
-import java.util.Map;
 
 /**
  * Created by Frank on 17.03.2016.
  */
-@Deprecated @Entity public class SensorConfigurations extends Model {
+@Deprecated
+@Entity
+public class SensorConfigurations extends Model {
 
-    @ElementCollection @MapKeyColumn(name = "configName") @Column(name = "configValue")
-    private Map<String, String> configs;
+  @ElementCollection
+  @MapKeyColumn(name = "configName")
+  @Column(name = "configValue")
+  private Map<String, String> configs;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected SensorConfigurations() {
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected SensorConfigurations() {
 
-    }
+  }
 
-    public Map<String, String> configs() {
-        return ImmutableMap.copyOf(configs);
-    }
+  public Map<String, String> configs() {
+    return ImmutableMap.copyOf(configs);
+  }
 
-    public void addTag(String configName, String configValue) {
-        this.configs.put(configName, configValue);
-    }
+  public void addTag(String configName, String configValue) {
+    this.configs.put(configName, configValue);
+  }
 }

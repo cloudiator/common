@@ -16,40 +16,42 @@
 
 package de.uniulm.omi.cloudiator.util.execution;
 
+import java.util.concurrent.ScheduledExecutorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.concurrent.ScheduledExecutorService;
 
 /**
  * Created by daniel on 17.04.15.
  */
 public class ScheduledThreadPoolExecutorExecutionService implements ExecutionService {
 
-    private final ScheduledExecutorService scheduledExecutorService;
+  private static final Logger LOGGER = LoggerFactory
+      .getLogger(ScheduledThreadPoolExecutorExecutionService.class);
+  private final ScheduledExecutorService scheduledExecutorService;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ScheduledThreadPoolExecutorExecutionService.class);
+  public ScheduledThreadPoolExecutorExecutionService(
+      ScheduledExecutorService scheduledExecutorService) {
+    this.scheduledExecutorService = scheduledExecutorService;
+  }
 
-    public ScheduledThreadPoolExecutorExecutionService(
-        ScheduledExecutorService scheduledExecutorService) {
-        this.scheduledExecutorService = scheduledExecutorService;
-    }
+  @Override
+  public void schedule(Schedulable schedulable) {
+    LOGGER.info(String
+        .format("%s is scheduling %s with initial delay of %s and period of %s %s", this,
+            schedulable, schedulable.delay(), schedulable.period(), schedulable.timeUnit()));
+    this.scheduledExecutorService
+        .scheduleAtFixedRate(schedulable, schedulable.delay(), schedulable.period(),
+            schedulable.timeUnit());
+  }
 
-    @Override public void schedule(Schedulable schedulable) {
-        LOGGER.info(String
-            .format("%s is scheduling %s with initial delay of %s and period of %s %s", this,
-                schedulable, schedulable.delay(), schedulable.period(), schedulable.timeUnit()));
-        this.scheduledExecutorService
-            .scheduleAtFixedRate(schedulable, schedulable.delay(), schedulable.period(),
-                schedulable.timeUnit());
-    }
+  @Override
+  public void execute(Runnable runnable) {
+    LOGGER.info(String.format("%s is executing %s", this, runnable));
+    this.scheduledExecutorService.execute(runnable);
+  }
 
-    @Override public void execute(Runnable runnable) {
-        LOGGER.info(String.format("%s is executing %s", this, runnable));
-        this.scheduledExecutorService.execute(runnable);
-    }
-
-    @Override public void shutdown() {
-        this.scheduledExecutorService.shutdown();
-    }
+  @Override
+  public void shutdown() {
+    this.scheduledExecutorService.shutdown();
+  }
 }

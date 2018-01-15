@@ -16,82 +16,95 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
+import java.util.Optional;
 import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import java.util.Optional;
-
 /**
  * Created by Frank on 20.05.2015.
  */
-@Deprecated @Entity public class MonitorInstance extends ModelWithExternalReference {
+@Deprecated
+@Entity
+public class MonitorInstance extends ModelWithExternalReference {
 
-    @ManyToOne(optional = false) private Monitor monitor;
-    private String apiEndpoint;
-    @ManyToOne(optional = true) @Nullable private VirtualMachine virtualMachine;
-    @ManyToOne(optional = true) @Nullable private Component component;
-    @Column() private Integer port;
+  @ManyToOne(optional = false)
+  private Monitor monitor;
+  private String apiEndpoint;
+  @ManyToOne(optional = true)
+  @Nullable
+  private VirtualMachine virtualMachine;
+  @ManyToOne(optional = true)
+  @Nullable
+  private Component component;
+  @Column()
+  private Integer port;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected MonitorInstance() {
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected MonitorInstance() {
+  }
+
+  public MonitorInstance(Monitor monitor, String apiEndpoint,
+      @Nullable VirtualMachine virtualMachine, @Nullable Component component,
+      @Nullable Integer port) {
+    this.apiEndpoint = apiEndpoint;
+    this.monitor = monitor;
+    this.virtualMachine = virtualMachine;
+    this.component = component;
+    this.port = port;
+  }
+
+  @Nullable
+  public Monitor getMonitor() {
+    return monitor;
+  }
+
+  @Nullable
+  public VirtualMachine getVirtualMachine() {
+    return virtualMachine;
+  }
+
+  @Nullable
+  public Component getComponent() {
+    return component;
+  }
+
+  @Nullable
+  public Integer getPort() {
+    return port;
+  }
+
+  public void setPort(@Nullable Integer port) {
+    this.port = port;
+  }
+
+  public String getApiEndpoint() {
+    return apiEndpoint;
+  }
+
+  public String getIpOfVisor() {
+    // TODO: implement according to Visor distribution strategy
+    if (this.getVirtualMachine() != null) {
+      Optional<IpAddress> ip = this.getVirtualMachine().publicIpAddress();
+      if (ip.isPresent()) {
+        return ip.get().getIp();
+      }
     }
 
-    public MonitorInstance(Monitor monitor, String apiEndpoint,
-        @Nullable VirtualMachine virtualMachine, @Nullable Component component, @Nullable Integer port) {
-        this.apiEndpoint = apiEndpoint;
-        this.monitor = monitor;
-        this.virtualMachine = virtualMachine;
-        this.component = component;
-        this.port = port;
+    // TODO: We do not use isEmpty() as an empty string is aloud for home domain
+    if (getApiEndpoint() != null) {
+      return getApiEndpoint();
     }
 
-    @Nullable public Monitor getMonitor() {
-        return monitor;
-    }
+    throw new IllegalStateException("No Visor API found!");
+  }
 
-    @Nullable public VirtualMachine getVirtualMachine() {
-        return virtualMachine;
-    }
-
-    @Nullable public Component getComponent() {
-        return component;
-    }
-
-    @Nullable
-    public Integer getPort() {
-        return port;
-    }
-
-    public void setPort(@Nullable Integer port) {
-        this.port = port;
-    }
-
-    public String getApiEndpoint() {
-        return apiEndpoint;
-    }
-
-    public String getIpOfVisor(){
-        // TODO: implement according to Visor distribution strategy
-        if(this.getVirtualMachine() != null){
-            Optional<IpAddress> ip = this.getVirtualMachine().publicIpAddress();
-            if(ip.isPresent()) return ip.get().getIp();
-        }
-
-        // TODO: We do not use isEmpty() as an empty string is aloud for home domain
-        if(getApiEndpoint() != null){
-            return getApiEndpoint();
-        }
-
-        throw new IllegalStateException("No Visor API found!");
-    }
-
-    public String getIpOfTsdb(){
-        // TODO: implement according to TSBD distribution strategy
-        // TODO: currently we assume Visor and TSBD are installed equivalent
-        return getIpOfVisor();
-    }
+  public String getIpOfTsdb() {
+    // TODO: implement according to TSBD distribution strategy
+    // TODO: currently we assume Visor and TSBD are installed equivalent
+    return getIpOfVisor();
+  }
 }

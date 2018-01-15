@@ -27,10 +27,9 @@ import org.slf4j.LoggerFactory;
  */
 public class KafkaMessagingModule extends AbstractModule {
 
-  private final KafkaContext kafkaContext;
-
   private static final Logger LOGGER =
       LoggerFactory.getLogger(KafkaMessagingModule.class);
+  private final KafkaContext kafkaContext;
 
   public KafkaMessagingModule(KafkaContext kafkaContext) {
     this.kafkaContext = kafkaContext;

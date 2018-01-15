@@ -16,86 +16,91 @@
 
 package de.uniulm.omi.cloudiator.domain;
 
-import com.google.common.base.MoreObjects;
-
 import static com.google.common.base.Preconditions.checkNotNull;
+
+import com.google.common.base.MoreObjects;
 
 /**
  * Created by daniel on 22.06.16.
  */
 public class HomeDirFunctions {
 
-    private HomeDirFunctions() {
-        throw new AssertionError("static class");
+  private HomeDirFunctions() {
+    throw new AssertionError("static class");
+  }
+
+  public static HomeDirFunctionProvider.HomeDirFunction unix() {
+    return new UnixHomeDirFunction();
+  }
+
+  public static HomeDirFunctionProvider.HomeDirFunction windows() {
+    return new WindowsHomeDirFunction();
+  }
+
+  public static HomeDirFunctionProvider.HomeDirFunction unknown() {
+    return new UnknownHomeDirFunction();
+  }
+
+  public static class UnknownHomeDirException extends RuntimeException {
+
+    public UnknownHomeDirException() {
     }
 
-    public static class UnknownHomeDirException extends RuntimeException {
-        public UnknownHomeDirException() {
-        }
-
-        public UnknownHomeDirException(String s) {
-            super(s);
-        }
-
-        public UnknownHomeDirException(String s, Throwable throwable) {
-            super(s, throwable);
-        }
-
-        public UnknownHomeDirException(Throwable throwable) {
-            super(throwable);
-        }
-
-        public UnknownHomeDirException(String s, Throwable throwable, boolean b, boolean b1) {
-            super(s, throwable, b, b1);
-        }
+    public UnknownHomeDirException(String s) {
+      super(s);
     }
 
-
-    private static class UnknownHomeDirFunction implements HomeDirFunctionProvider.HomeDirFunction {
-
-        @Override public String apply(String userName) {
-            throw new UnknownHomeDirException("HomeDir is unknown.");
-        }
+    public UnknownHomeDirException(String s, Throwable throwable) {
+      super(s, throwable);
     }
 
-
-    private static class UnixHomeDirFunction implements HomeDirFunctionProvider.HomeDirFunction {
-        @Override public String apply(String userName) {
-            checkNotNull(userName);
-            if (userName.equals("root")) {
-                return "/root";
-            } else {
-                return "/home/" + userName;
-            }
-        }
-
-        @Override public String toString() {
-            return MoreObjects.toStringHelper(this).toString();
-        }
+    public UnknownHomeDirException(Throwable throwable) {
+      super(throwable);
     }
 
+    public UnknownHomeDirException(String s, Throwable throwable, boolean b, boolean b1) {
+      super(s, throwable, b, b1);
+    }
+  }
 
-    private static class WindowsHomeDirFunction implements HomeDirFunctionProvider.HomeDirFunction {
-        @Override public String apply(String userName) {
-            checkNotNull(userName);
-            return "C:\\Users\\" + userName;
-        }
+  private static class UnknownHomeDirFunction implements HomeDirFunctionProvider.HomeDirFunction {
 
-        @Override public String toString() {
-            return MoreObjects.toStringHelper(this).toString();
-        }
+    @Override
+    public String apply(String userName) {
+      throw new UnknownHomeDirException("HomeDir is unknown.");
+    }
+  }
+
+  private static class UnixHomeDirFunction implements HomeDirFunctionProvider.HomeDirFunction {
+
+    @Override
+    public String apply(String userName) {
+      checkNotNull(userName);
+      if (userName.equals("root")) {
+        return "/root";
+      } else {
+        return "/home/" + userName;
+      }
     }
 
-    public static HomeDirFunctionProvider.HomeDirFunction unix() {
-        return new UnixHomeDirFunction();
+    @Override
+    public String toString() {
+      return MoreObjects.toStringHelper(this).toString();
+    }
+  }
+
+  private static class WindowsHomeDirFunction implements HomeDirFunctionProvider.HomeDirFunction {
+
+    @Override
+    public String apply(String userName) {
+      checkNotNull(userName);
+      return "C:\\Users\\" + userName;
     }
 
-    public static HomeDirFunctionProvider.HomeDirFunction windows() {
-        return new WindowsHomeDirFunction();
+    @Override
+    public String toString() {
+      return MoreObjects.toStringHelper(this).toString();
     }
-
-    public static HomeDirFunctionProvider.HomeDirFunction unknown() {
-        return new UnknownHomeDirFunction();
-    }
+  }
 
 }

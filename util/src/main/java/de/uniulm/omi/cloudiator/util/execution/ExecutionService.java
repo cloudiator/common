@@ -21,9 +21,9 @@ package de.uniulm.omi.cloudiator.util.execution;
 
 public interface ExecutionService {
 
-    void schedule(Schedulable schedulable);
+  void schedule(Schedulable schedulable);
 
-    void execute(Runnable runnable);
+  void execute(Runnable runnable);
 
-    void shutdown();
+  void shutdown();
 }

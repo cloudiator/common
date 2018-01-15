@@ -21,18 +21,18 @@ package de.uniulm.omi.cloudiator.domain;
  */
 public enum ImageFormat {
 
-    QCOW2("img"), // QCOW2 disk image file for use with QEMU and KVM
-    HYPERV("vhd.zip"), // HyperV images for use with Microsoft Azure or SCVMM
-    OVA("ova"), // Open Virtualization Appliance
-    OVF("ovf"); // Open Virtualiztion Format file
+  QCOW2("img"), // QCOW2 disk image file for use with QEMU and KVM
+  HYPERV("vhd.zip"), // HyperV images for use with Microsoft Azure or SCVMM
+  OVA("ova"), // Open Virtualization Appliance
+  OVF("ovf"); // Open Virtualiztion Format file
 
-    private String fileNameExtension;
+  private String fileNameExtension;
 
-    ImageFormat(String fileNameExtension) {
-        this.fileNameExtension = fileNameExtension;
-    }
+  ImageFormat(String fileNameExtension) {
+    this.fileNameExtension = fileNameExtension;
+  }
 
-    public String fileNameExtension() {
-        return fileNameExtension;
-    }
+  public String fileNameExtension() {
+    return fileNameExtension;
+  }
 }

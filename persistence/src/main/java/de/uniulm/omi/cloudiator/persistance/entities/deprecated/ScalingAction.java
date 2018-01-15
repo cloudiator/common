@@ -21,5 +21,8 @@ import javax.persistence.Entity;
 /**
  * Created by Frank on 20.05.2015.
  */
-@Deprecated @Entity public abstract class ScalingAction extends ModelWithExternalReference {
+@Deprecated
+@Entity
+public abstract class ScalingAction extends ModelWithExternalReference {
+
 }

@@ -36,24 +36,6 @@ class SingletonKafkaProducerFactory implements KafkaProducerFactory {
   private final String bootstrapServers;
 
 
-  private static class ProducerSingleton {
-
-    private static Producer<String, Message> instance = null;
-
-    private ProducerSingleton() {
-      throw new AssertionError("Do not instantiate " + this);
-    }
-
-    private static Producer<String, Message> getInstance(Properties properties) {
-      if (instance == null) {
-        instance = new KafkaProducer<>(properties, new StringSerializer(),
-            new ProtobufSerializer());
-      }
-      return instance;
-    }
-  }
-
-
   @Inject
   SingletonKafkaProducerFactory(@Named(KAFKA_SERVERS) String bootstrapServers) {
     checkNotNull(bootstrapServers, "bootstrapServers is null");
@@ -69,6 +51,23 @@ class SingletonKafkaProducerFactory implements KafkaProducerFactory {
     properties.put(ProducerConfig.BATCH_SIZE_CONFIG, 0);
     properties.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, 600000);
     return ProducerSingleton.getInstance(properties);
+  }
+
+  private static class ProducerSingleton {
+
+    private static Producer<String, Message> instance = null;
+
+    private ProducerSingleton() {
+      throw new AssertionError("Do not instantiate " + this);
+    }
+
+    private static Producer<String, Message> getInstance(Properties properties) {
+      if (instance == null) {
+        instance = new KafkaProducer<>(properties, new StringSerializer(),
+            new ProtobufSerializer());
+      }
+      return instance;
+    }
   }
 
 }

@@ -17,9 +17,7 @@
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
 import com.google.common.collect.ImmutableMap;
-
 import java.util.Map;
-
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -30,17 +28,21 @@ import javax.persistence.MapKeyColumn;
 /**
  * Created by Frank on 20.05.2015.
  */
-@Deprecated @Entity @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Deprecated
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class ModelWithExternalReference extends Model {
 
-    @ElementCollection @MapKeyColumn(name = "refName") @Column(name = "refValue")
-    private Map<String, String> externalReferences;
+  @ElementCollection
+  @MapKeyColumn(name = "refName")
+  @Column(name = "refValue")
+  private Map<String, String> externalReferences;
 
-    public Map<String, String> externalReferences() {
-        return ImmutableMap.copyOf(externalReferences);
-    }
+  public Map<String, String> externalReferences() {
+    return ImmutableMap.copyOf(externalReferences);
+  }
 
-    public void addExternalReference(String tagName, String tagValue) {
-        this.externalReferences.put(tagName, tagValue);
-    }
+  public void addExternalReference(String tagName, String tagValue) {
+    this.externalReferences.put(tagName, tagValue);
+  }
 }

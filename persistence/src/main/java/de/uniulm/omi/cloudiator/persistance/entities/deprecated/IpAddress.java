@@ -16,69 +16,76 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Created by daniel on 12.03.15.
  */
-@Deprecated @Entity public class IpAddress extends Model {
+@Deprecated
+@Entity
+public class IpAddress extends Model {
 
-    @Column(updatable = false) private String ip;
+  @Column(updatable = false)
+  private String ip;
 
-    @Enumerated(EnumType.STRING) @Column(updatable = false) private IpType ipType;
+  @Enumerated(EnumType.STRING)
+  @Column(updatable = false)
+  private IpType ipType;
 
-    @ManyToOne(optional = false) private VirtualMachine virtualMachine;
+  @ManyToOne(optional = false)
+  private VirtualMachine virtualMachine;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected IpAddress() {
-    }
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected IpAddress() {
+  }
 
-    public IpAddress(VirtualMachine virtualMachine, String ip, IpType ipType) {
+  public IpAddress(VirtualMachine virtualMachine, String ip, IpType ipType) {
 
-        checkNotNull(virtualMachine);
-        checkNotNull(ip);
-        checkArgument(!ip.isEmpty());
-        checkNotNull(ipType);
+    checkNotNull(virtualMachine);
+    checkNotNull(ip);
+    checkArgument(!ip.isEmpty());
+    checkNotNull(ipType);
 
-        this.ip = ip;
-        this.ipType = ipType;
-        this.virtualMachine = virtualMachine;
-    }
+    this.ip = ip;
+    this.ipType = ipType;
+    this.virtualMachine = virtualMachine;
+  }
 
-    public String getIp() {
-        return ip;
-    }
+  public String getIp() {
+    return ip;
+  }
 
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
+  public void setIp(String ip) {
+    this.ip = ip;
+  }
 
-    public IpType getIpType() {
-        return ipType;
-    }
+  public IpType getIpType() {
+    return ipType;
+  }
 
-    public void setIpType(IpType ipType) {
-        this.ipType = ipType;
-    }
+  public void setIpType(IpType ipType) {
+    this.ipType = ipType;
+  }
 
-    public VirtualMachine getVirtualMachine() {
-        return virtualMachine;
-    }
+  public VirtualMachine getVirtualMachine() {
+    return virtualMachine;
+  }
 
-    public void setVirtualMachine(VirtualMachine virtualMachine) {
-        this.virtualMachine = virtualMachine;
-    }
+  public void setVirtualMachine(VirtualMachine virtualMachine) {
+    this.virtualMachine = virtualMachine;
+  }
 
-    @Override public String toString() {
-        return ip;
-    }
+  @Override
+  public String toString() {
+    return ip;
+  }
 }

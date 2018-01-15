@@ -17,12 +17,12 @@ message ByoNodeAddedResponse {
 }
 
 message ByoNode {
- string id = 1;
- ByonData nodeData = 2;
+  string id = 1;
+  ByonData nodeData = 2;
 }
 
 message ByonData {
- repeated IpAddress ipAddress = 2;
- LoginCredential loginCredentials = 3;
- NodeProperties properties = 4;
+  repeated IpAddress ipAddress = 2;
+  LoginCredential loginCredentials = 3;
+  NodeProperties properties = 4;
 }

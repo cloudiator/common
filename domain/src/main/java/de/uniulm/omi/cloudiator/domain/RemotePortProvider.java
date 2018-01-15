@@ -21,34 +21,35 @@ package de.uniulm.omi.cloudiator.domain;
  */
 public interface RemotePortProvider {
 
-    class UnknownRemotePortException extends RuntimeException {
-        public UnknownRemotePortException() {
-        }
+  /**
+   * The remote port to use.
+   *
+   * @return integer representation of the remote port.
+   * @throws UnknownRemotePortException if the remote port is unknown
+   */
+  int remotePort();
 
-        public UnknownRemotePortException(String message) {
-            super(message);
-        }
+  class UnknownRemotePortException extends RuntimeException {
 
-        public UnknownRemotePortException(String message, Throwable cause) {
-            super(message, cause);
-        }
-
-        public UnknownRemotePortException(Throwable cause) {
-            super(cause);
-        }
-
-        public UnknownRemotePortException(String message, Throwable cause,
-            boolean enableSuppression, boolean writableStackTrace) {
-            super(message, cause, enableSuppression, writableStackTrace);
-        }
+    public UnknownRemotePortException() {
     }
 
-    /**
-     * The remote port to use.
-     *
-     * @return integer representation of the remote port.
-     * @throws UnknownRemotePortException if the remote port is unknown
-     */
-    int remotePort();
+    public UnknownRemotePortException(String message) {
+      super(message);
+    }
+
+    public UnknownRemotePortException(String message, Throwable cause) {
+      super(message, cause);
+    }
+
+    public UnknownRemotePortException(Throwable cause) {
+      super(cause);
+    }
+
+    public UnknownRemotePortException(String message, Throwable cause,
+        boolean enableSuppression, boolean writableStackTrace) {
+      super(message, cause, enableSuppression, writableStackTrace);
+    }
+  }
 
 }

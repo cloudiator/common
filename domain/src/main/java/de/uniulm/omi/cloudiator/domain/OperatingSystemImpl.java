@@ -16,69 +16,79 @@
 
 package de.uniulm.omi.cloudiator.domain;
 
-import com.google.common.base.MoreObjects;
-
 import static com.google.common.base.Preconditions.checkNotNull;
+
+import com.google.common.base.MoreObjects;
 
 /**
  * Created by daniel on 08.03.16.
  */
 public class OperatingSystemImpl implements OperatingSystem {
 
-    private OperatingSystemFamily operatingSystemFamily;
-    private OperatingSystemArchitecture operatingSystemArchitecture;
-    private OperatingSystemVersion version;
+  private OperatingSystemFamily operatingSystemFamily;
+  private OperatingSystemArchitecture operatingSystemArchitecture;
+  private OperatingSystemVersion version;
 
 
-    public OperatingSystemImpl(OperatingSystemFamily operatingSystemFamily,
-        OperatingSystemArchitecture operatingSystemArchitecture, OperatingSystemVersion version) {
+  public OperatingSystemImpl(OperatingSystemFamily operatingSystemFamily,
+      OperatingSystemArchitecture operatingSystemArchitecture, OperatingSystemVersion version) {
 
-        checkNotNull(operatingSystemFamily, "operatingSystemFamily is null");
-        checkNotNull(operatingSystemArchitecture, "operatingSystemArchitecture is null");
-        checkNotNull(version, "version is null");
+    checkNotNull(operatingSystemFamily, "operatingSystemFamily is null");
+    checkNotNull(operatingSystemArchitecture, "operatingSystemArchitecture is null");
+    checkNotNull(version, "version is null");
 
-        this.operatingSystemFamily = operatingSystemFamily;
-        this.operatingSystemArchitecture = operatingSystemArchitecture;
-        this.version = version;
+    this.operatingSystemFamily = operatingSystemFamily;
+    this.operatingSystemArchitecture = operatingSystemArchitecture;
+    this.version = version;
+  }
+
+  @Override
+  public OperatingSystemFamily operatingSystemFamily() {
+    return operatingSystemFamily;
+  }
+
+  @Override
+  public OperatingSystemArchitecture operatingSystemArchitecture() {
+    return operatingSystemArchitecture;
+  }
+
+  @Override
+  public OperatingSystemVersion operatingSystemVersion() {
+    return version;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof OperatingSystemImpl)) {
+      return false;
     }
 
-    @Override public OperatingSystemFamily operatingSystemFamily() {
-        return operatingSystemFamily;
+    OperatingSystemImpl that = (OperatingSystemImpl) o;
+
+    if (operatingSystemFamily != that.operatingSystemFamily) {
+      return false;
     }
-
-    @Override public OperatingSystemArchitecture operatingSystemArchitecture() {
-        return operatingSystemArchitecture;
+    if (operatingSystemArchitecture != that.operatingSystemArchitecture) {
+      return false;
     }
+    return version.equals(that.version);
 
-    @Override public OperatingSystemVersion operatingSystemVersion() {
-        return version;
-    }
+  }
 
-    @Override public boolean equals(Object o) {
-        if (this == o)
-            return true;
-        if (!(o instanceof OperatingSystemImpl))
-            return false;
+  @Override
+  public int hashCode() {
+    int result = operatingSystemFamily.hashCode();
+    result = 31 * result + operatingSystemArchitecture.hashCode();
+    result = 31 * result + version.hashCode();
+    return result;
+  }
 
-        OperatingSystemImpl that = (OperatingSystemImpl) o;
-
-        if (operatingSystemFamily != that.operatingSystemFamily)
-            return false;
-        if (operatingSystemArchitecture != that.operatingSystemArchitecture)
-            return false;
-        return version.equals(that.version);
-
-    }
-
-    @Override public int hashCode() {
-        int result = operatingSystemFamily.hashCode();
-        result = 31 * result + operatingSystemArchitecture.hashCode();
-        result = 31 * result + version.hashCode();
-        return result;
-    }
-
-    @Override public String toString() {
-        return MoreObjects.toStringHelper(this).add("family", operatingSystemFamily)
-            .add("arch", operatingSystemArchitecture).add("version", version).toString();
-    }
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this).add("family", operatingSystemFamily)
+        .add("arch", operatingSystemArchitecture).add("version", version).toString();
+  }
 }

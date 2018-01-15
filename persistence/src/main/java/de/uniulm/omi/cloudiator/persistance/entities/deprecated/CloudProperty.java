@@ -23,34 +23,39 @@ import javax.persistence.ManyToOne;
 /**
  * Created by daniel on 08.09.15.
  */
-@Deprecated @Entity public class CloudProperty extends Model {
+@Deprecated
+@Entity
+public class CloudProperty extends Model {
 
-    @Column(nullable = false, name = "cloudproperty_key") private String key;
-    @Column(nullable = false) private String value;
-    @ManyToOne(optional = false) private Cloud cloud;
+  @Column(nullable = false, name = "cloudproperty_key")
+  private String key;
+  @Column(nullable = false)
+  private String value;
+  @ManyToOne(optional = false)
+  private Cloud cloud;
 
-    public CloudProperty(String key, String value, Cloud cloud) {
-        this.key = key;
-        this.value = value;
-        this.cloud = cloud;
-    }
+  public CloudProperty(String key, String value, Cloud cloud) {
+    this.key = key;
+    this.value = value;
+    this.cloud = cloud;
+  }
 
-    protected CloudProperty() {
-    }
+  protected CloudProperty() {
+  }
 
-    public String key() {
-        return key;
-    }
+  public String key() {
+    return key;
+  }
 
-    public String value() {
-        return value;
-    }
+  public String value() {
+    return value;
+  }
 
-    public void value(String value) {
-        this.value = value;
-    }
+  public void value(String value) {
+    this.value = value;
+  }
 
-    public Cloud cloud() {
-        return cloud;
-    }
+  public Cloud cloud() {
+    return cloud;
+  }
 }

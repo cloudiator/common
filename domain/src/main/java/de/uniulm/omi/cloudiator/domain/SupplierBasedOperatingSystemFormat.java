@@ -17,7 +17,6 @@
 package de.uniulm.omi.cloudiator.domain;
 
 import com.google.common.collect.ImmutableSet;
-
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
@@ -30,33 +29,37 @@ import java.util.stream.Collectors;
  */
 public class SupplierBasedOperatingSystemFormat implements OperatingSystemVersionFormat {
 
-    private final SortedSet<OperatingSystemVersion> possibleValues;
+  private final SortedSet<OperatingSystemVersion> possibleValues;
 
-    SupplierBasedOperatingSystemFormat(
-        Supplier<Set<OperatingSystemVersion>> operatingSystemVersionsSupplier) {
-        this.possibleValues = new TreeSet<>(operatingSystemVersionsSupplier.get());
-    }
+  SupplierBasedOperatingSystemFormat(
+      Supplier<Set<OperatingSystemVersion>> operatingSystemVersionsSupplier) {
+    this.possibleValues = new TreeSet<>(operatingSystemVersionsSupplier.get());
+  }
 
-    @Override public boolean isValid(OperatingSystemVersion operatingSystemVersion) {
-        return possibleValues.contains(operatingSystemVersion);
-    }
+  @Override
+  public boolean isValid(OperatingSystemVersion operatingSystemVersion) {
+    return possibleValues.contains(operatingSystemVersion);
+  }
 
-    @Override public OperatingSystemVersion newest() {
-        return possibleValues.last();
-    }
+  @Override
+  public OperatingSystemVersion newest() {
+    return possibleValues.last();
+  }
 
-    @Override public Set<OperatingSystemVersion> allVersions() {
-        return ImmutableSet.copyOf(possibleValues);
-    }
+  @Override
+  public Set<OperatingSystemVersion> allVersions() {
+    return ImmutableSet.copyOf(possibleValues);
+  }
 
-    @Override public OperatingSystemVersion parse(String version) {
-        final List<OperatingSystemVersion> collect = possibleValues.stream().filter(
-            operatingSystemVersion -> operatingSystemVersion.name().isPresent()
-                && operatingSystemVersion.name().get().equals(version))
-            .collect(Collectors.toList());
-        if (collect.size() != 1) {
-            throw new IllegalArgumentException();
-        }
-        return collect.get(0);
+  @Override
+  public OperatingSystemVersion parse(String version) {
+    final List<OperatingSystemVersion> collect = possibleValues.stream().filter(
+        operatingSystemVersion -> operatingSystemVersion.name().isPresent()
+            && operatingSystemVersion.name().get().equals(version))
+        .collect(Collectors.toList());
+    if (collect.size() != 1) {
+      throw new IllegalArgumentException();
     }
+    return collect.get(0);
+  }
 }

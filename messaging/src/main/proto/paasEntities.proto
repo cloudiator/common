@@ -44,7 +44,7 @@ message Environment {
 }
 
 message NewEnvironment {
-  reserved  1;
+  reserved 1;
   string name = 2;
   string providerId = 3;
   Platform platform = 4;

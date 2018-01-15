@@ -17,7 +17,6 @@
 package de.uniulm.omi.cloudiator.util.execution;
 
 import com.google.common.collect.Sets;
-
 import java.util.Set;
 
 /**
@@ -25,24 +24,26 @@ import java.util.Set;
  */
 public class UniqueBlockingQueue<T> implements SimpleBlockingQueue<T> {
 
-    private final Set<T> set;
-    private final SimpleBlockingQueue<T> queue;
+  private final Set<T> set;
+  private final SimpleBlockingQueue<T> queue;
 
-    public UniqueBlockingQueue(SimpleBlockingQueue<T> queue) {
-        set = Sets.newConcurrentHashSet();
-        this.queue = queue;
-    }
+  public UniqueBlockingQueue(SimpleBlockingQueue<T> queue) {
+    set = Sets.newConcurrentHashSet();
+    this.queue = queue;
+  }
 
-    @Override public void add(T t) {
-        if (this.set.add(t)) {
-            this.queue.add(t);
-        }
+  @Override
+  public void add(T t) {
+    if (this.set.add(t)) {
+      this.queue.add(t);
     }
+  }
 
-    @Override public T take() throws InterruptedException {
-        T t = this.queue.take();
-        this.set.remove(t);
-        return t;
-    }
+  @Override
+  public T take() throws InterruptedException {
+    T t = this.queue.take();
+    this.set.remove(t);
+    return t;
+  }
 
 }

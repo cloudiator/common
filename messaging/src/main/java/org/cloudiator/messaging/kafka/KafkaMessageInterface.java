@@ -49,9 +49,9 @@ import org.slf4j.LoggerFactory;
 @Singleton
 class KafkaMessageInterface implements MessageInterface {
 
+  private static final Logger LOGGER = LoggerFactory.getLogger(KafkaMessageInterface.class);
   private final KafkaRequestResponseHandler kafkaRequestResponseHandler =
       new KafkaRequestResponseHandler();
-  private static final Logger LOGGER = LoggerFactory.getLogger(KafkaMessageInterface.class);
   private final KafkaProducerFactory kafkaProducerFactory;
   private final KafkaSubscriptionService kafkaSubscriptionService;
 
