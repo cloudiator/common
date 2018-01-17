@@ -83,7 +83,7 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
       subscriber = new Subscriber(kafkaConsumerFactory.createKafkaConsumer(parser), topic);
       subscriber.init();
       subscriberRegistry.registerSubscriber(topic, subscriber);
-      SUBSCRIBER_EXECUTION.execute(subscriber);
+
     }
 
     return subscriber.addCallback(messageCallback);
@@ -137,16 +137,34 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
 
     void init() {
       checkState(!initialized.get(), String.format("%s was already initialized.", this));
-      consumer.subscribe(Collections.singletonList(topic));
-      initialized.set(true);
+      synchronized (initialized) {
+        consumer.subscribe(Collections.singletonList(topic));
+        SUBSCRIBER_EXECUTION.execute(this);
+        try {
+          if (!initialized.get()) {
+            //We wait until the consumer has started polling as this is when
+            //partitions get assigned and our subscription becomes active
+            //https://issues.apache.org/jira/browse/KAFKA-2359
+            initialized.wait();
+          }
+        } catch (InterruptedException e) {
+          throw new IllegalStateException(e);
+        }
+      }
+      LOGGER.debug(String.format("Finished initializing subscriber %s.", this));
     }
 
     @Override
     public void run() {
-      checkState(initialized.get(), String.format("Subscriber %s was not initialized.", this));
       try {
         while (!Thread.currentThread().isInterrupted()) {
           final ConsumerRecords<String, T> poll = consumer.poll(1000);
+          synchronized (initialized) {
+            if (!initialized.get()) {
+              initialized.set(true);
+              initialized.notify();
+            }
+          }
           for (ConsumerRecord<String, T> record : poll) {
             if (callbacks.isEmpty()) {
               LOGGER.warn(String

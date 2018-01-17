@@ -7,10 +7,6 @@ option java_package = "org.cloudiator.messages.entities";
 import "commonEntities.proto";
 import "iaasEntities.proto";
 
-message OclProblem {
-  repeated common.OclRequirement requirements = 2;
-}
-
 message NodeCandidate {
   iaas.Cloud cloud = 1;
   Location location = 2;

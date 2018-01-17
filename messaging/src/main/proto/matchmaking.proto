@@ -8,11 +8,6 @@ import "matchmakingEntities.proto";
 import "iaasEntities.proto";
 import "nodeEntities.proto";
 
-message OclSolutionRequest {
-  string userId = 1;
-  OclProblem problem = 2;
-}
-
 message NodeCandidateRequestMessage {
   string userId = 1;
   NodeRequirements requirements = 2;
