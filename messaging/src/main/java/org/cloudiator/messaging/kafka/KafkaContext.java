@@ -36,7 +36,7 @@ public class KafkaContext {
 
   public Properties getProperties() {
     final Properties properties = new Properties();
-    config.entrySet()
+    config.getConfig("kafka").entrySet()
         .forEach(stringConfigValueEntry -> properties.setProperty(stringConfigValueEntry.getKey(),
             String.valueOf(stringConfigValueEntry.getValue().unwrapped())));
     return properties;

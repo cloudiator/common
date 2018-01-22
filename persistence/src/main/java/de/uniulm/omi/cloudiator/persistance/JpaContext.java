@@ -34,22 +34,22 @@ public class JpaContext {
   }
 
   public String dialect() {
-    return config.getString("dialect");
+    return config.getString("jpa.dialect");
   }
 
   public String driver() {
-    return config.getString("driver");
+    return config.getString("jpa.driver");
   }
 
   public String url() {
-    return config.getString("url");
+    return config.getString("jpa.url");
   }
 
   public String user() {
-    return config.getString("user");
+    return config.getString("jpa.user");
   }
 
   public String password() {
-    return config.getString("password");
+    return config.getString("jpa.password");
   }
 }
