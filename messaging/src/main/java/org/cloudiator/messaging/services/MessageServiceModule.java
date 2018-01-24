@@ -35,6 +35,7 @@ public class MessageServiceModule extends AbstractModule {
     bind(TaskService.class).to(TaskServiceImpl.class).in(Singleton.class);
     bind(NodeService.class).to(NodeServiceImpl.class).in(Singleton.class);
     bind(MatchmakingService.class).to(MatchmakingServiceImpl.class).in(Singleton.class);
+    bind(UserService.class).to(UserServiceImpl.class).in(Singleton.class);
   }
 
 }
