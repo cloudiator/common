@@ -16,7 +16,7 @@
  * under the License.
  */
 
-package de.uniulm.omi.cloudiator.persistance.util;
+package io.github.cloudiator.util;
 
 import java.util.List;
 import javax.persistence.NonUniqueResultException;
