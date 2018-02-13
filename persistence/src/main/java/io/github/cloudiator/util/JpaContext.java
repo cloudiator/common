@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.uniulm.omi.cloudiator.persistance;
+package io.github.cloudiator.util;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;

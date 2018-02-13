@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 
-package de.uniulm.omi.cloudiator.persistance.repositories;
+package io.github.cloudiator.persistance;
 
 
-import de.uniulm.omi.cloudiator.persistance.entities.Model;
 import java.util.List;
 import javax.annotation.Nullable;
 
 /**
  * Created by daniel on 31.10.14.
  */
-public interface ModelRepository<T extends Model> {
+interface ModelRepository<T extends Model> {
 
   @Nullable
   T findById(Long id);
