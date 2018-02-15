@@ -10,6 +10,7 @@ import "nodeEntities.proto";
 message NodeRequestMessage {
   string userId = 1;
   NodeRequirements nodeRequest = 2;
+  string groupName = 3;
 }
 
 message NodeRequestResponse {
