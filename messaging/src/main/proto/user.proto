@@ -28,6 +28,7 @@ message LoginRequest {
 
 message LoginResponse {
   Token token = 1;
+  User  user = 2;
 }
 
 message AuthRequest {
@@ -35,5 +36,5 @@ message AuthRequest {
 }
 
 message AuthResponse {
-  Tenant tenant = 1;
+  User user = 1;
 }
