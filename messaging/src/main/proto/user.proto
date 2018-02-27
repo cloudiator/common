@@ -15,7 +15,7 @@ message CreateUserResponse {
 }
 
 message CreateTenantRequest {
-  Tenant tenant = 1;
+  String tenant = 1;
 }
 
 message CreateTenantResponse {
