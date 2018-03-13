@@ -28,6 +28,8 @@ message Login {
 
 message Token {
   string token = 1;
-  int64 generationTime = 4;
-  int64 expireTime = 5;
+  string userEmail = 2;
+  int64 generationTime = 3;
+  int64 expireTime = 4;
+
 }
