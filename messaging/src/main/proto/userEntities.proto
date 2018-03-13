@@ -31,4 +31,5 @@ message Token {
   string userEmail = 2;
   int64 generationTime = 3;
   int64 expireTime = 4;
+
 }
