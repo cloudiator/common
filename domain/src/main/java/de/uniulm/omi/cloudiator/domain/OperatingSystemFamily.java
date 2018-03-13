@@ -16,12 +16,11 @@
 
 package de.uniulm.omi.cloudiator.domain;
 
-import com.google.common.base.CaseFormat;
-
-import javax.annotation.Nullable;
-import java.util.Optional;
-
 import static com.google.common.base.Preconditions.checkNotNull;
+
+import com.google.common.base.CaseFormat;
+import java.util.Optional;
+import javax.annotation.Nullable;
 
 /**
  * Created by daniel on 08.03.16.
@@ -90,6 +89,16 @@ public enum OperatingSystemFamily implements RemotePortProvider, LoginNameSuppli
     this.downloadUrlFunction = null;
   }
 
+  public static OperatingSystemFamily fromValue(String operatingSystemFamily) {
+    checkNotNull(operatingSystemFamily);
+    try {
+      return valueOf(
+          CaseFormat.LOWER_HYPHEN.to(CaseFormat.UPPER_UNDERSCORE, operatingSystemFamily));
+    } catch (IllegalArgumentException e) {
+      return DEFAULT;
+    }
+  }
+
   public String value() {
     return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_HYPHEN, this.name());
   }
@@ -101,16 +110,6 @@ public enum OperatingSystemFamily implements RemotePortProvider, LoginNameSuppli
 
   public OperatingSystemVersionFormat operatingSystemVersionFormat() {
     return operatingSystemVersionFormat;
-  }
-
-  public static OperatingSystemFamily fromValue(String operatingSystemFamily) {
-    checkNotNull(operatingSystemFamily);
-    try {
-      return valueOf(
-          CaseFormat.LOWER_HYPHEN.to(CaseFormat.UPPER_UNDERSCORE, operatingSystemFamily));
-    } catch (IllegalArgumentException e) {
-      return DEFAULT;
-    }
   }
 
   public OperatingSystemType operatingSystemType() {

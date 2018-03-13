@@ -16,46 +16,49 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
-import java.util.Set;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Created by daniel on 03.08.15.
  */
-@Deprecated @Entity public abstract class Port extends Model {
+@Deprecated
+@Entity
+public abstract class Port extends Model {
 
-    @Column(updatable = false, unique = true, nullable = false) private String name;
-    @ManyToOne(optional = false) private ApplicationComponent applicationComponent;
+  @Column(updatable = false, unique = true, nullable = false)
+  private String name;
+  @ManyToOne(optional = false)
+  private ApplicationComponent applicationComponent;
 
-    /**
-     * Default constructor for hibernate.
-     */
-    protected Port() {
-    }
+  /**
+   * Default constructor for hibernate.
+   */
+  protected Port() {
+  }
 
-    public Port(String name, ApplicationComponent applicationComponent) {
+  public Port(String name, ApplicationComponent applicationComponent) {
 
-        checkNotNull(name);
-        checkArgument(!name.isEmpty());
-        checkNotNull(applicationComponent);
+    checkNotNull(name);
+    checkArgument(!name.isEmpty());
+    checkNotNull(applicationComponent);
 
-        this.name = name;
-        this.applicationComponent = applicationComponent;
-    }
+    this.name = name;
+    this.applicationComponent = applicationComponent;
+  }
 
-    public String name() {
-        return name;
-    }
+  public String name() {
+    return name;
+  }
 
-    public ApplicationComponent getApplicationComponent() {
-        return applicationComponent;
-    }
+  public ApplicationComponent getApplicationComponent() {
+    return applicationComponent;
+  }
 
-    public abstract Set<Communication> getAttachedCommunications();
+  public abstract Set<Communication> getAttachedCommunications();
 }

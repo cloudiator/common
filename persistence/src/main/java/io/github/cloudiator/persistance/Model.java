@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.uniulm.omi.cloudiator.persistance.entities;
+package io.github.cloudiator.persistance;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.MoreObjects.ToStringHelper;
@@ -25,13 +25,10 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 /**
- * Superclass for all model classes.
- * <p>
- * Defines the auto generated id for
- * each model class.
+ * Superclass for all model classes. <p> Defines the auto generated id for each model class.
  */
 @MappedSuperclass
-public abstract class Model implements Serializable {
+abstract class Model implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.TABLE)

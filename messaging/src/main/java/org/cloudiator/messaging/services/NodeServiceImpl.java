@@ -27,15 +27,13 @@ import org.cloudiator.messaging.ResponseException;
 public class NodeServiceImpl implements NodeService {
 
   private final MessageInterface messageInterface;
-  private long timeout = 0;
+
+  @Inject(optional = true)
+  @Named("responseTimeout")
+  private long timeout = 20000;
 
   @Inject
-  public void setResponseTimeout(@Named("responseTimeout") long timeout) {
-    this.timeout = timeout;
-  }
-
-  @Inject
-  public NodeServiceImpl(MessageInterface messageInterface) {
+  NodeServiceImpl(MessageInterface messageInterface) {
     this.messageInterface = messageInterface;
   }
 

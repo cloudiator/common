@@ -14,14 +14,13 @@
  * limitations under the License.
  */
 
-package de.uniulm.omi.cloudiator.persistance.repositories;
+package io.github.cloudiator.persistance;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.TypeLiteral;
-import de.uniulm.omi.cloudiator.persistance.entities.Model;
 import java.util.List;
 import javax.annotation.Nullable;
 import javax.persistence.EntityManager;

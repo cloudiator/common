@@ -17,71 +17,85 @@
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
 
-import de.uniulm.omi.cloudiator.domain.OperatingSystemVersions;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import de.uniulm.omi.cloudiator.domain.OperatingSystemArchitecture;
 import de.uniulm.omi.cloudiator.domain.OperatingSystemFamily;
 import de.uniulm.omi.cloudiator.domain.OperatingSystemVersion;
-
-import javax.annotation.Nullable;
-import javax.persistence.*;
+import de.uniulm.omi.cloudiator.domain.OperatingSystemVersions;
 import java.util.List;
-
-import static com.google.common.base.Preconditions.checkNotNull;
+import javax.annotation.Nullable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
 
 /**
  * Created by daniel on 04.11.14.
  */
-@Deprecated @Entity public class OperatingSystem extends Model
+@Deprecated
+@Entity
+public class OperatingSystem extends Model
     implements de.uniulm.omi.cloudiator.domain.OperatingSystem {
 
-    @Column(nullable = false) @Enumerated(EnumType.STRING) private OperatingSystemArchitecture
-        operatingSystemArchitecture;
+  @Column(nullable = false)
+  @Enumerated(EnumType.STRING)
+  private OperatingSystemArchitecture
+      operatingSystemArchitecture;
 
-    @Column(nullable = false) @Enumerated(EnumType.STRING) private OperatingSystemFamily
-        operatingSystemFamily;
+  @Column(nullable = false)
+  @Enumerated(EnumType.STRING)
+  private OperatingSystemFamily
+      operatingSystemFamily;
 
-    @Nullable private String version;
+  @Nullable
+  private String version;
 
-    @OneToMany(mappedBy = "operatingSystem") private List<Image> images;
+  @OneToMany(mappedBy = "operatingSystem")
+  private List<Image> images;
 
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected OperatingSystem() {
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected OperatingSystem() {
+  }
+
+  public OperatingSystem(OperatingSystemArchitecture operatingSystemArchitecture,
+      OperatingSystemFamily operatingSystemFamily, @Nullable String version) {
+
+    checkNotNull(operatingSystemArchitecture);
+    checkNotNull(operatingSystemFamily);
+
+    this.operatingSystemArchitecture = operatingSystemArchitecture;
+    this.operatingSystemFamily = operatingSystemFamily;
+    this.version = version;
+  }
+
+  public OperatingSystem(de.uniulm.omi.cloudiator.domain.OperatingSystem operatingSystem) {
+    checkNotNull(operatingSystem);
+    this.operatingSystemArchitecture = operatingSystem.operatingSystemArchitecture();
+    this.operatingSystemFamily = operatingSystem.operatingSystemFamily();
+    this.version = operatingSystem.operatingSystemVersion().name().orElse(null);
+  }
+
+  @Override
+  public OperatingSystemFamily operatingSystemFamily() {
+    return operatingSystemFamily;
+  }
+
+  @Override
+  public OperatingSystemArchitecture operatingSystemArchitecture() {
+    return operatingSystemArchitecture;
+  }
+
+  @Override
+  public OperatingSystemVersion operatingSystemVersion() {
+    if (version == null) {
+      return OperatingSystemVersions.unknown();
     }
-
-    public OperatingSystem(OperatingSystemArchitecture operatingSystemArchitecture,
-        OperatingSystemFamily operatingSystemFamily, @Nullable String version) {
-
-        checkNotNull(operatingSystemArchitecture);
-        checkNotNull(operatingSystemFamily);
-
-        this.operatingSystemArchitecture = operatingSystemArchitecture;
-        this.operatingSystemFamily = operatingSystemFamily;
-        this.version = version;
-    }
-
-    public OperatingSystem(de.uniulm.omi.cloudiator.domain.OperatingSystem operatingSystem) {
-        checkNotNull(operatingSystem);
-        this.operatingSystemArchitecture = operatingSystem.operatingSystemArchitecture();
-        this.operatingSystemFamily = operatingSystem.operatingSystemFamily();
-        this.version = operatingSystem.operatingSystemVersion().name().orElse(null);
-    }
-
-    @Override public OperatingSystemFamily operatingSystemFamily() {
-        return operatingSystemFamily;
-    }
-
-    @Override public OperatingSystemArchitecture operatingSystemArchitecture() {
-        return operatingSystemArchitecture;
-    }
-
-    @Override public OperatingSystemVersion operatingSystemVersion() {
-        if (version == null) {
-            return OperatingSystemVersions.unknown();
-        }
-        return OperatingSystemVersions
-            .of(version, operatingSystemFamily.operatingSystemVersionFormat());
-    }
+    return OperatingSystemVersions
+        .of(version, operatingSystemFamily.operatingSystemVersionFormat());
+  }
 }

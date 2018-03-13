@@ -18,7 +18,6 @@ package org.cloudiator.messaging;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.Parser;
-import java.io.Closeable;
 import org.cloudiator.messages.General;
 import org.cloudiator.messages.General.Error;
 

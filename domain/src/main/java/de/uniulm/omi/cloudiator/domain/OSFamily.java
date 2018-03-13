@@ -17,17 +17,17 @@
 package de.uniulm.omi.cloudiator.domain;
 
 /**
- * Enumeration for the operating system family
- * the OS belongs to.
+ * Enumeration for the operating system family the OS belongs to.
  */
-@Deprecated public enum OSFamily {
+@Deprecated
+public enum OSFamily {
 
-    /**
-     * A windows operating system.
-     */
-    WINDOWS, /**
-     * A unix operating system.
-     */
-    UNIX
+  /**
+   * A windows operating system.
+   */
+  WINDOWS, /**
+   * A unix operating system.
+   */
+  UNIX
 
 }

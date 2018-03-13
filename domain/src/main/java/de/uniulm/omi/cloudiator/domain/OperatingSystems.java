@@ -21,14 +21,14 @@ package de.uniulm.omi.cloudiator.domain;
  */
 public class OperatingSystems {
 
-    public OperatingSystems() {
-        throw new AssertionError("static class");
-    }
+  public OperatingSystems() {
+    throw new AssertionError("static class");
+  }
 
-    public static OperatingSystem unknown() {
-        return OperatingSystemBuilder.newBuilder().architecture(OperatingSystemArchitecture.UNKNOWN)
-            .family(OperatingSystemFamily.UNKNOWN).version(OperatingSystemVersions.unknown())
-            .build();
-    }
+  public static OperatingSystem unknown() {
+    return OperatingSystemBuilder.newBuilder().architecture(OperatingSystemArchitecture.UNKNOWN)
+        .family(OperatingSystemFamily.UNKNOWN).version(OperatingSystemVersions.unknown())
+        .build();
+  }
 
 }

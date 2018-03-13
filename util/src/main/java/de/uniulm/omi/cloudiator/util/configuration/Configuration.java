@@ -14,29 +14,21 @@
  * limitations under the License.
  */
 
-package de.uniulm.omi.cloudiator.domain;
+package de.uniulm.omi.cloudiator.util.configuration;
 
-public class IdRequirement implements Requirement {
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 
-  private final String hardwareId;
-  private final String locationId;
-  private final String imageId;
+public class Configuration {
 
-  public IdRequirement(String hardwareId, String locationId, String imageId) {
-    this.hardwareId = hardwareId;
-    this.locationId = locationId;
-    this.imageId = imageId;
+  private static Config conf = ConfigFactory.load();
+
+  private Configuration() {
+
   }
 
-  public String getHardwareId() {
-    return hardwareId;
+  public static Config conf() {
+    return conf;
   }
 
-  public String getLocationId() {
-    return locationId;
-  }
-
-  public String getImageId() {
-    return imageId;
-  }
 }

@@ -16,63 +16,66 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
-import com.google.common.base.MoreObjects;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.common.base.MoreObjects;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Created by daniel on 12.12.14.
  */
-@Entity @Deprecated public class Application extends Model {
+@Entity
+@Deprecated
+public class Application extends Model {
 
-    @OneToMany(mappedBy = "application") private List<ApplicationComponent> applicationComponents;
-    @Column(unique = true, nullable = false) protected String name;
+  @Column(unique = true, nullable = false)
+  protected String name;
+  @OneToMany(mappedBy = "application")
+  private List<ApplicationComponent> applicationComponents;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected Application() {
-    }
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected Application() {
+  }
 
-    public Application(String name) {
-        checkNotNull(name);
-        checkArgument(!name.isEmpty());
-        this.name = name;
-    }
+  public Application(String name) {
+    checkNotNull(name);
+    checkArgument(!name.isEmpty());
+    this.name = name;
+  }
 
-    public List<ApplicationComponent> getApplicationComponents() {
-        return applicationComponents;
-    }
+  public List<ApplicationComponent> getApplicationComponents() {
+    return applicationComponents;
+  }
 
-    public void setApplicationComponents(List<ApplicationComponent> applicationComponents) {
-        this.applicationComponents = applicationComponents;
-    }
+  public void setApplicationComponents(List<ApplicationComponent> applicationComponents) {
+    this.applicationComponents = applicationComponents;
+  }
 
-    public Set<Communication> communications() {
-        return applicationComponents.stream()
-            .flatMap(applicationComponent -> applicationComponent.communications().stream())
-            .collect(Collectors.toSet());
-    }
+  public Set<Communication> communications() {
+    return applicationComponents.stream()
+        .flatMap(applicationComponent -> applicationComponent.communications().stream())
+        .collect(Collectors.toSet());
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    @Override public String toString() {
-        return MoreObjects.toStringHelper(this).add("id", getId()).add("name", getName())
-            .toString();
-    }
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this).add("id", getId()).add("name", getName())
+        .toString();
+  }
 }

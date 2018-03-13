@@ -16,55 +16,58 @@
 
 package de.uniulm.omi.cloudiator.domain;
 
-import com.google.common.base.MoreObjects;
-
-import javax.annotation.Nullable;
-
 import static com.google.common.base.Preconditions.checkNotNull;
+
+import com.google.common.base.MoreObjects;
+import javax.annotation.Nullable;
 
 /**
  * Created by daniel on 08.03.16.
  */
 public enum OperatingSystemType implements RemotePortProvider, HomeDirFunctionProvider {
 
-    UNKNOWN(null, HomeDirFunctions.unknown(), RemoteType.UNKNOWN), UNIX(22, HomeDirFunctions.unix(),
-        RemoteType.SSH), LINUX(22, HomeDirFunctions.unix(), RemoteType.SSH), WINDOWS(5985,
-        HomeDirFunctions.windows(), RemoteType.WINRM), BSD(null, HomeDirFunctions.unknown(),
-        RemoteType.SSH), MAC(null, HomeDirFunctions.unknown(), RemoteType.SSH);
+  UNKNOWN(null, HomeDirFunctions.unknown(), RemoteType.UNKNOWN), UNIX(22, HomeDirFunctions.unix(),
+      RemoteType.SSH), LINUX(22, HomeDirFunctions.unix(), RemoteType.SSH), WINDOWS(5985,
+      HomeDirFunctions.windows(), RemoteType.WINRM), BSD(null, HomeDirFunctions.unknown(),
+      RemoteType.SSH), MAC(null, HomeDirFunctions.unknown(), RemoteType.SSH);
 
-    public static final OperatingSystemType DEFAULT = UNKNOWN;
+  public static final OperatingSystemType DEFAULT = UNKNOWN;
 
-    @Nullable private final Integer defaultRemotePort;
-    private final HomeDirFunction homeDirFunction;
-    private final RemoteType remoteType;
+  @Nullable
+  private final Integer defaultRemotePort;
+  private final HomeDirFunction homeDirFunction;
+  private final RemoteType remoteType;
 
-    OperatingSystemType(@Nullable Integer defaultRemotePort, HomeDirFunction homeDirFunction,
-        RemoteType remoteType) {
-        this.defaultRemotePort = defaultRemotePort;
-        checkNotNull(homeDirFunction);
-        this.homeDirFunction = homeDirFunction;
-        checkNotNull(remoteType);
-        this.remoteType = remoteType;
+  OperatingSystemType(@Nullable Integer defaultRemotePort, HomeDirFunction homeDirFunction,
+      RemoteType remoteType) {
+    this.defaultRemotePort = defaultRemotePort;
+    checkNotNull(homeDirFunction);
+    this.homeDirFunction = homeDirFunction;
+    checkNotNull(remoteType);
+    this.remoteType = remoteType;
+  }
+
+  @Override
+  public int remotePort() {
+    if (defaultRemotePort == null) {
+      throw new UnknownRemotePortException(
+          "No remote port defined for operating system type " + this);
     }
+    return defaultRemotePort;
+  }
 
-    @Override public int remotePort() {
-        if (defaultRemotePort == null) {
-            throw new UnknownRemotePortException(
-                "No remote port defined for operating system type " + this);
-        }
-        return defaultRemotePort;
-    }
+  @Override
+  public HomeDirFunction homeDirFunction() {
+    return homeDirFunction;
+  }
 
-    @Override public HomeDirFunction homeDirFunction() {
-        return homeDirFunction;
-    }
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this).add("defaultRemotePort", defaultRemotePort)
+        .add("homeDirFunction", homeDirFunction).toString();
+  }
 
-    @Override public String toString() {
-        return MoreObjects.toStringHelper(this).add("defaultRemotePort", defaultRemotePort)
-            .add("homeDirFunction", homeDirFunction).toString();
-    }
-
-    public RemoteType remoteType() {
-        return remoteType;
-    }
+  public RemoteType remoteType() {
+    return remoteType;
+  }
 }

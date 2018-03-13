@@ -17,7 +17,6 @@
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
 import java.util.List;
-
 import javax.annotation.Nullable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -25,39 +24,46 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 
-@Deprecated @Entity public class HardwareOffer extends Model {
+@Deprecated
+@Entity
+public class HardwareOffer extends Model {
 
-    @Column(nullable = false, updatable = false) private Integer numberOfCores;
+  @Column(nullable = false, updatable = false)
+  private Integer numberOfCores;
 
-    @Column(nullable = false, updatable = false) private Long mbOfRam;
+  @Column(nullable = false, updatable = false)
+  private Long mbOfRam;
 
-    @Nullable private Float localDiskSpace;
+  @Nullable
+  private Float localDiskSpace;
 
-    @OneToMany(mappedBy = "hardwareOffer", cascade = CascadeType.REMOVE) private List<Hardware>
-        hardware;
+  @OneToMany(mappedBy = "hardwareOffer", cascade = CascadeType.REMOVE)
+  private List<Hardware>
+      hardware;
 
-    protected HardwareOffer() {
-    }
+  protected HardwareOffer() {
+  }
 
-    public HardwareOffer(Integer numberOfCores, Long mbOfRam, @Nullable Float localDiskSpace) {
-        this.numberOfCores = numberOfCores;
-        this.mbOfRam = mbOfRam;
-        this.localDiskSpace = localDiskSpace;
-    }
+  public HardwareOffer(Integer numberOfCores, Long mbOfRam, @Nullable Float localDiskSpace) {
+    this.numberOfCores = numberOfCores;
+    this.mbOfRam = mbOfRam;
+    this.localDiskSpace = localDiskSpace;
+  }
 
-    public Integer getNumberOfCores() {
-        return numberOfCores;
-    }
+  public Integer getNumberOfCores() {
+    return numberOfCores;
+  }
 
-    public Long getMbOfRam() {
-        return mbOfRam;
-    }
+  public Long getMbOfRam() {
+    return mbOfRam;
+  }
 
-    @Nullable public Float getLocalDiskSpace() {
-        return localDiskSpace;
-    }
+  @Nullable
+  public Float getLocalDiskSpace() {
+    return localDiskSpace;
+  }
 
-    public List<Hardware> getHardware() {
-        return hardware;
-    }
+  public List<Hardware> getHardware() {
+    return hardware;
+  }
 }

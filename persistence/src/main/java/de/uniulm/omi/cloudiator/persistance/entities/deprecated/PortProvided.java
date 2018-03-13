@@ -16,45 +16,49 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Created by daniel on 03.08.15.
  */
-@Deprecated @Entity public class PortProvided extends Port {
+@Deprecated
+@Entity
+public class PortProvided extends Port {
 
-    @Column private Integer port;
-    @OneToMany(mappedBy = "providedPort") List<Communication> providedCommunications;
+  @OneToMany(mappedBy = "providedPort")
+  List<Communication> providedCommunications;
+  @Column
+  private Integer port;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected PortProvided() {
-    }
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected PortProvided() {
+  }
 
-    @Override public Set<Communication> getAttachedCommunications() {
-        if (providedCommunications == null) {
-            return Collections.emptySet();
-        }
-        return new HashSet<>(providedCommunications);
-    }
-    
-    public PortProvided(String name, ApplicationComponent applicationComponent, int port) {
-        super(name, applicationComponent);
-        checkNotNull(port);
-        this.port = port;
-    }
+  public PortProvided(String name, ApplicationComponent applicationComponent, int port) {
+    super(name, applicationComponent);
+    checkNotNull(port);
+    this.port = port;
+  }
 
-    public int getPort() {
-        return port;
+  @Override
+  public Set<Communication> getAttachedCommunications() {
+    if (providedCommunications == null) {
+      return Collections.emptySet();
     }
+    return new HashSet<>(providedCommunications);
+  }
+
+  public int getPort() {
+    return port;
+  }
 }

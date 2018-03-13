@@ -16,15 +16,14 @@
 
 package de.uniulm.omi.cloudiator.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.Optional;
 
 /**
  * Created by daniel on 08.02.17.
  */
 public interface OperatingSystemVersion {
-    Optional<String> name();
 
-    int version();
+  Optional<String> name();
+
+  int version();
 }

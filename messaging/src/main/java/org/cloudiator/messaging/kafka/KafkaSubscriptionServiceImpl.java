@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.Nullable;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -72,6 +73,22 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
     }));
   }
 
+  @SuppressWarnings("unchecked")
+  @Override
+  public synchronized <T extends Message> Subscription subscribe(String topic, Parser<T> parser,
+      MessageCallback<T> messageCallback) {
+
+    Subscriber subscriber = subscriberRegistry.getSubscriberForTopic(topic);
+    if (subscriber == null) {
+      subscriber = new Subscriber(kafkaConsumerFactory.createKafkaConsumer(parser), topic);
+      subscriber.init();
+      subscriberRegistry.registerSubscriber(topic, subscriber);
+
+    }
+
+    return subscriber.addCallback(messageCallback);
+  }
+
   private static class SubscriberRegistry {
 
     private final Map<String, Subscriber> subscriberMap = Maps.newConcurrentMap();
@@ -94,6 +111,7 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
     private final Consumer<String, T> consumer;
     private final List<MessageCallback<T>> callbacks;
     private final String topic;
+    private final AtomicBoolean initialized = new AtomicBoolean(false);
 
     private Subscriber(Consumer<String, T> consumer,
         String topic) {
@@ -117,13 +135,42 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
       return MoreObjects.toStringHelper(this).add("topic", topic).toString();
     }
 
+    void init() {
+      checkState(!initialized.get(), String.format("%s was already initialized.", this));
+      synchronized (initialized) {
+        consumer.subscribe(Collections.singletonList(topic));
+        SUBSCRIBER_EXECUTION.execute(this);
+        try {
+          if (!initialized.get()) {
+            //We wait until the consumer has started polling as this is when
+            //partitions get assigned and our subscription becomes active
+            //https://issues.apache.org/jira/browse/KAFKA-2359
+            initialized.wait();
+          }
+        } catch (InterruptedException e) {
+          throw new IllegalStateException(e);
+        }
+      }
+      LOGGER.debug(String.format("Finished initializing subscriber %s.", this));
+    }
+
     @Override
     public void run() {
       try {
-        consumer.subscribe(Collections.singletonList(topic));
         while (!Thread.currentThread().isInterrupted()) {
           final ConsumerRecords<String, T> poll = consumer.poll(1000);
+          synchronized (initialized) {
+            if (!initialized.get()) {
+              initialized.set(true);
+              initialized.notify();
+            }
+          }
           for (ConsumerRecord<String, T> record : poll) {
+            if (callbacks.isEmpty()) {
+              LOGGER.warn(String
+                  .format("Receiving message with id %s but could not find any attached callbacks.",
+                      callbacks));
+            }
             for (MessageCallback<T> callback : callbacks) {
               LOGGER.debug(String.format(
                   "Receiving message with id %s and content %s on topic %s. Scheduling callback %s for Execution",
@@ -141,21 +188,6 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
         consumer.close();
       }
     }
-  }
-
-  @SuppressWarnings("unchecked")
-  @Override
-  public synchronized <T extends Message> Subscription subscribe(String topic, Parser<T> parser,
-      MessageCallback<T> messageCallback) {
-
-    Subscriber subscriber = subscriberRegistry.getSubscriberForTopic(topic);
-    if (subscriber == null) {
-      subscriber = new Subscriber(kafkaConsumerFactory.createKafkaConsumer(parser), topic);
-      subscriberRegistry.registerSubscriber(topic, subscriber);
-      SUBSCRIBER_EXECUTION.execute(subscriber);
-    }
-
-    return subscriber.addCallback(messageCallback);
   }
 
 

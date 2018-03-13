@@ -16,82 +16,89 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Created by Frank on 02.08.2015.
  */
-@Deprecated @Entity public class MonitorSubscription extends Model {
+@Deprecated
+@Entity
+public class MonitorSubscription extends Model {
 
-    @ManyToOne(optional = false) private Monitor monitor;
-    @Column(unique = false, nullable = false) private String endpoint;
-    @Enumerated(EnumType.STRING) private SubscriptionType type;
-    @Enumerated(EnumType.STRING) private FilterType filterType;
-    @Column(unique = false, nullable = false) private Double filterValue;
+  @ManyToOne(optional = false)
+  private Monitor monitor;
+  @Column(unique = false, nullable = false)
+  private String endpoint;
+  @Enumerated(EnumType.STRING)
+  private SubscriptionType type;
+  @Enumerated(EnumType.STRING)
+  private FilterType filterType;
+  @Column(unique = false, nullable = false)
+  private Double filterValue;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected MonitorSubscription() {
-    }
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected MonitorSubscription() {
+  }
 
-    public MonitorSubscription(Monitor monitor, String endpoint, SubscriptionType type,
-        FilterType filterType, Double filterValue) {
-        checkNotNull(monitor);
-        checkNotNull(endpoint);
-        checkNotNull(type);
-        checkNotNull(filterType);
-        checkNotNull(filterValue);
-        this.monitor = monitor;
-        this.endpoint = endpoint;
-        this.type = type;
-        this.filterType = filterType;
-        this.filterValue = filterValue;
-    }
+  public MonitorSubscription(Monitor monitor, String endpoint, SubscriptionType type,
+      FilterType filterType, Double filterValue) {
+    checkNotNull(monitor);
+    checkNotNull(endpoint);
+    checkNotNull(type);
+    checkNotNull(filterType);
+    checkNotNull(filterValue);
+    this.monitor = monitor;
+    this.endpoint = endpoint;
+    this.type = type;
+    this.filterType = filterType;
+    this.filterValue = filterValue;
+  }
 
-    public Monitor getMonitor() {
-        return monitor;
-    }
+  public Monitor getMonitor() {
+    return monitor;
+  }
 
-    public void setMonitor(Monitor monitor) {
-        this.monitor = monitor;
-    }
+  public void setMonitor(Monitor monitor) {
+    this.monitor = monitor;
+  }
 
-    public String getEndpoint() {
-        return endpoint;
-    }
+  public String getEndpoint() {
+    return endpoint;
+  }
 
-    public void setEndpoint(String endpoint) {
-        this.endpoint = endpoint;
-    }
+  public void setEndpoint(String endpoint) {
+    this.endpoint = endpoint;
+  }
 
-    public SubscriptionType getType() {
-        return type;
-    }
+  public SubscriptionType getType() {
+    return type;
+  }
 
-    public void setType(SubscriptionType type) {
-        this.type = type;
-    }
+  public void setType(SubscriptionType type) {
+    this.type = type;
+  }
 
-    public FilterType getFilterType() {
-        return filterType;
-    }
+  public FilterType getFilterType() {
+    return filterType;
+  }
 
-    public void setFilterType(FilterType filterType) {
-        this.filterType = filterType;
-    }
+  public void setFilterType(FilterType filterType) {
+    this.filterType = filterType;
+  }
 
-    public Double getFilterValue() {
-        return filterValue;
-    }
+  public Double getFilterValue() {
+    return filterValue;
+  }
 
-    public void setFilterValue(Double filterValue) {
-        this.filterValue = filterValue;
-    }
+  public void setFilterValue(Double filterValue) {
+    this.filterValue = filterValue;
+  }
 }

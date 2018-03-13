@@ -16,54 +16,57 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import com.google.common.base.MoreObjects;
-
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Created by daniel on 12.12.14.
  */
-@Deprecated @Entity public abstract class Component extends Model {
+@Deprecated
+@Entity
+public abstract class Component extends Model {
 
-    @OneToMany(mappedBy = "component") private List<ApplicationComponent> applicationComponents;
-    @Column(unique = true, nullable = false) private String name;
+  @OneToMany(mappedBy = "component")
+  private List<ApplicationComponent> applicationComponents;
+  @Column(unique = true, nullable = false)
+  private String name;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected Component() {
-    }
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected Component() {
+  }
 
-    public Component(String name) {
-        checkNotNull(name);
-        checkArgument(!name.isEmpty());
-        this.name = name;
-    }
+  public Component(String name) {
+    checkNotNull(name);
+    checkArgument(!name.isEmpty());
+    this.name = name;
+  }
 
-    public List<ApplicationComponent> getApplicationComponents() {
-        return applicationComponents;
-    }
+  public List<ApplicationComponent> getApplicationComponents() {
+    return applicationComponents;
+  }
 
-    public void setApplicationComponents(List<ApplicationComponent> applicationComponents) {
-        this.applicationComponents = applicationComponents;
-    }
+  public void setApplicationComponents(List<ApplicationComponent> applicationComponents) {
+    this.applicationComponents = applicationComponents;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+  public void setName(String name) {
+    this.name = name;
+  }
 
-    @Override public String toString() {
-        return MoreObjects.toStringHelper(this).add("id", getId()).add("name", name).toString();
-    }
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this).add("id", getId()).add("name", name).toString();
+  }
 }

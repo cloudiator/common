@@ -21,9 +21,9 @@ package de.uniulm.omi.cloudiator.domain;
  */
 public interface OperatingSystem {
 
-    OperatingSystemFamily operatingSystemFamily();
+  OperatingSystemFamily operatingSystemFamily();
 
-    OperatingSystemArchitecture operatingSystemArchitecture();
+  OperatingSystemArchitecture operatingSystemArchitecture();
 
-    OperatingSystemVersion operatingSystemVersion();
+  OperatingSystemVersion operatingSystemVersion();
 }

@@ -16,32 +16,35 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by Frank on 20.05.2015.
  */
-@Deprecated @Entity public abstract class ComponentHorizontalScalingAction extends HorizontalScalingAction {
+@Deprecated
+@Entity
+public abstract class ComponentHorizontalScalingAction extends HorizontalScalingAction {
 
-    @ManyToOne(optional = false) private ApplicationComponent applicationComponent;
+  @ManyToOne(optional = false)
+  private ApplicationComponent applicationComponent;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected ComponentHorizontalScalingAction() {
-    }
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected ComponentHorizontalScalingAction() {
+  }
 
-    public ComponentHorizontalScalingAction(Long amount, Long min, Long max, Long count,
-        ApplicationComponent applicationComponent) {
-        super(amount, min, max, count);
-        checkNotNull(applicationComponent);
-        this.applicationComponent = applicationComponent;
-    }
+  public ComponentHorizontalScalingAction(Long amount, Long min, Long max, Long count,
+      ApplicationComponent applicationComponent) {
+    super(amount, min, max, count);
+    checkNotNull(applicationComponent);
+    this.applicationComponent = applicationComponent;
+  }
 
-    public ApplicationComponent getApplicationComponent() {
-        return applicationComponent;
-    }
+  public ApplicationComponent getApplicationComponent() {
+    return applicationComponent;
+  }
 }

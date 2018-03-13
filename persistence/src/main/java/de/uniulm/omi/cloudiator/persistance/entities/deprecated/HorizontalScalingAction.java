@@ -16,51 +16,57 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-
-import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Created by Frank on 20.05.2015.
  */
-@Deprecated @Entity public abstract class HorizontalScalingAction extends ScalingAction {
+@Deprecated
+@Entity
+public abstract class HorizontalScalingAction extends ScalingAction {
 
-    @Column(nullable = false, updatable = false) private Long amount;
-    @Column(nullable = false, updatable = false) private Long min;
-    @Column(nullable = false, updatable = false) private Long max;
-    @Column(nullable = false, updatable = false) private Long count;
+  @Column(nullable = false, updatable = false)
+  private Long amount;
+  @Column(nullable = false, updatable = false)
+  private Long min;
+  @Column(nullable = false, updatable = false)
+  private Long max;
+  @Column(nullable = false, updatable = false)
+  private Long count;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected HorizontalScalingAction() {
-    }
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected HorizontalScalingAction() {
+  }
 
-    public HorizontalScalingAction(Long amount, Long min, Long max, Long count) {
-        checkArgument(amount > 0);
-        checkArgument(min > 0);
-        checkArgument(max > 0);
-        checkArgument(min < max);
-        this.amount = amount;
-        this.min = min;
-        this.max = max;
-        this.count = count;
-    }
+  public HorizontalScalingAction(Long amount, Long min, Long max, Long count) {
+    checkArgument(amount > 0);
+    checkArgument(min > 0);
+    checkArgument(max > 0);
+    checkArgument(min < max);
+    this.amount = amount;
+    this.min = min;
+    this.max = max;
+    this.count = count;
+  }
 
-    public Long getAmount() {
-        return amount;
-    }
+  public Long getAmount() {
+    return amount;
+  }
 
-    public Long getMin() {
-        return min;
-    }
+  public Long getMin() {
+    return min;
+  }
 
-    public Long getMax() {
-        return max;
-    }
+  public Long getMax() {
+    return max;
+  }
 
-    public Long getCount() {
-        return count;
-    }
+  public Long getCount() {
+    return count;
+  }
 }

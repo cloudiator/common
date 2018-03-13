@@ -16,53 +16,58 @@
 
 package de.uniulm.omi.cloudiator.domain;
 
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 import java.util.Optional;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.hamcrest.Matchers;
+import org.junit.Test;
 
 /**
  * Created by daniel on 17.01.17.
  */
 public class LocationScopeTest {
 
-    @Test public void testParents() {
-        assertThat(LocationScope.PROVIDER.parents(), empty());
-        assertThat(LocationScope.HOST.parents(), Matchers.hasItem(LocationScope.ZONE));
-        assertThat(LocationScope.HOST.parents(), Matchers.hasItem(LocationScope.REGION));
-        assertThat(LocationScope.HOST.parents(), Matchers.hasItem(LocationScope.PROVIDER));
-    }
+  @Test
+  public void testParents() {
+    assertThat(LocationScope.PROVIDER.parents(), empty());
+    assertThat(LocationScope.HOST.parents(), Matchers.hasItem(LocationScope.ZONE));
+    assertThat(LocationScope.HOST.parents(), Matchers.hasItem(LocationScope.REGION));
+    assertThat(LocationScope.HOST.parents(), Matchers.hasItem(LocationScope.PROVIDER));
+  }
 
-    @Test public void testParent() {
-        assertThat(LocationScope.PROVIDER.parent(), is(equalTo(Optional.empty())));
-        assertThat(LocationScope.HOST.parent().get(), is(equalTo(LocationScope.ZONE)));
-    }
+  @Test
+  public void testParent() {
+    assertThat(LocationScope.PROVIDER.parent(), is(equalTo(Optional.empty())));
+    assertThat(LocationScope.HOST.parent().get(), is(equalTo(LocationScope.ZONE)));
+  }
 
-    @Test public void testHasParent() {
-        assertFalse(LocationScope.PROVIDER.hasParent(LocationScope.ZONE));
-        assertTrue(LocationScope.HOST.hasParent(LocationScope.REGION));
-        assertTrue(LocationScope.REGION.hasParent(LocationScope.PROVIDER));
-        assertTrue(LocationScope.ZONE.hasParent(LocationScope.PROVIDER));
-        assertFalse(LocationScope.ZONE.hasParent(LocationScope.HOST));
-    }
+  @Test
+  public void testHasParent() {
+    assertFalse(LocationScope.PROVIDER.hasParent(LocationScope.ZONE));
+    assertTrue(LocationScope.HOST.hasParent(LocationScope.REGION));
+    assertTrue(LocationScope.REGION.hasParent(LocationScope.PROVIDER));
+    assertTrue(LocationScope.ZONE.hasParent(LocationScope.PROVIDER));
+    assertFalse(LocationScope.ZONE.hasParent(LocationScope.HOST));
+  }
 
-    @Test public void testIteration() {
-        final Iterator hostIterator = LocationScope.HOST.iterator();
-        assertTrue(hostIterator.hasNext());
-        assertThat(hostIterator.next(), is(equalTo(LocationScope.HOST)));
-        assertTrue(hostIterator.hasNext());
-        assertThat(hostIterator.next(), is(equalTo(LocationScope.ZONE)));
-        assertTrue(hostIterator.hasNext());
-        assertThat(hostIterator.next(), is(equalTo(LocationScope.REGION)));
-        assertTrue(hostIterator.hasNext());
-        assertThat(hostIterator.next(), is(equalTo(LocationScope.PROVIDER)));
-        assertFalse(hostIterator.hasNext());
-    }
+  @Test
+  public void testIteration() {
+    final Iterator hostIterator = LocationScope.HOST.iterator();
+    assertTrue(hostIterator.hasNext());
+    assertThat(hostIterator.next(), is(equalTo(LocationScope.HOST)));
+    assertTrue(hostIterator.hasNext());
+    assertThat(hostIterator.next(), is(equalTo(LocationScope.ZONE)));
+    assertTrue(hostIterator.hasNext());
+    assertThat(hostIterator.next(), is(equalTo(LocationScope.REGION)));
+    assertTrue(hostIterator.hasNext());
+    assertThat(hostIterator.next(), is(equalTo(LocationScope.PROVIDER)));
+    assertFalse(hostIterator.hasNext());
+  }
 
 }

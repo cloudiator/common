@@ -23,21 +23,20 @@ import org.slf4j.LoggerFactory;
 
 class RunnableMessageCallback<T> implements MessageCallback<T>, Runnable {
 
+  private static final Logger LOGGER =
+      LoggerFactory.getLogger(RunnableMessageCallback.class);
   private final MessageCallback<T> delegate;
   private final String id;
   private final T content;
-  private static final Logger LOGGER =
-      LoggerFactory.getLogger(RunnableMessageCallback.class);
-
-  static <T> RunnableMessageCallback<T> of(MessageCallback<T> delegate, String id, T content) {
-    return new RunnableMessageCallback<>(delegate, id, content);
-  }
-
 
   private RunnableMessageCallback(MessageCallback<T> delegate, String id, T content) {
     this.delegate = delegate;
     this.id = id;
     this.content = content;
+  }
+
+  static <T> RunnableMessageCallback<T> of(MessageCallback<T> delegate, String id, T content) {
+    return new RunnableMessageCallback<>(delegate, id, content);
   }
 
   @Override

@@ -18,9 +18,6 @@ package org.cloudiator.messaging.kafka;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
-import de.uniulm.omi.cloudiator.util.PropertiesLoader;
-import java.io.IOException;
-import java.util.Properties;
 import org.cloudiator.messaging.MessageInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,11 +27,13 @@ import org.slf4j.LoggerFactory;
  */
 public class KafkaMessagingModule extends AbstractModule {
 
-  private static String CONFIG_FILE_LOCATION = System.getProperty("kafkaConfigFile");
-  private static final String DEFAULT_CONFIG_FILE_LOCATION = "kafka.properties";
-
   private static final Logger LOGGER =
       LoggerFactory.getLogger(KafkaMessagingModule.class);
+  private final KafkaContext kafkaContext;
+
+  public KafkaMessagingModule(KafkaContext kafkaContext) {
+    this.kafkaContext = kafkaContext;
+  }
 
   @Override
   protected void configure() {
@@ -43,18 +42,7 @@ public class KafkaMessagingModule extends AbstractModule {
     bind(KafkaConsumerFactory.class).to(BaseKafkaConsumerFactory.class);
     bind(KafkaProducerFactory.class).to(SingletonKafkaProducerFactory.class);
 
-    if (CONFIG_FILE_LOCATION == null) {
-      CONFIG_FILE_LOCATION = DEFAULT_CONFIG_FILE_LOCATION;
-      LOGGER.warn("Could not read system property. Falling back to default.");
-    }
-    LOGGER.debug("Trying to open kafkaConfigFile from " + CONFIG_FILE_LOCATION);
-
-    try {
-      Properties properties = PropertiesLoader.loadPropertiesFrom(CONFIG_FILE_LOCATION);
-      Names.bindProperties(binder(), properties);
-    } catch (IOException e) {
-      throw new IllegalStateException(e);
-    }
+    Names.bindProperties(binder(), kafkaContext.getProperties());
   }
 
 }

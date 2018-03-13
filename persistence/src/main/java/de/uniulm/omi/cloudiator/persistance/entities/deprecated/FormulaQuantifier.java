@@ -16,39 +16,43 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
 
 /**
  * Created by Frank on 20.05.2015.
  */
-@Deprecated @Entity public class FormulaQuantifier extends Model {
+@Deprecated
+@Entity
+public class FormulaQuantifier extends Model {
 
-    @Column(nullable = false, updatable = false) private Boolean relative;
-    @Column(nullable = false, updatable = false) private Double value;
+  @Column(nullable = false, updatable = false)
+  private Boolean relative;
+  @Column(nullable = false, updatable = false)
+  private Double value;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected FormulaQuantifier() {
-    }
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected FormulaQuantifier() {
+  }
 
-    public FormulaQuantifier(Boolean relative, Double value) {
-        checkNotNull(relative);
-        checkNotNull(value);
-        checkArgument(value > 0);
-        this.relative = relative;
-        this.value = value;
-    }
+  public FormulaQuantifier(Boolean relative, Double value) {
+    checkNotNull(relative);
+    checkNotNull(value);
+    checkArgument(value > 0);
+    this.relative = relative;
+    this.value = value;
+  }
 
-    public Boolean getRelative() {
-        return relative;
-    }
+  public Boolean getRelative() {
+    return relative;
+  }
 
-    public Double getValue() {
-        return value;
-    }
+  public Double getValue() {
+    return value;
+  }
 }

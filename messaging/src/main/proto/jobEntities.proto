@@ -12,7 +12,7 @@ message Communication {
   string portProvided = 2;
 }
 
-message Job  {
+message Job {
   string name = 1;
   repeated Task tasks = 2;
   repeated Communication communications = 3;

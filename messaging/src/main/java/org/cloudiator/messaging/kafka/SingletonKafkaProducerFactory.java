@@ -16,7 +16,9 @@
 
 package org.cloudiator.messaging.kafka;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+import static org.cloudiator.messaging.kafka.Constants.KAFKA_SERVERS;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -25,12 +27,31 @@ import java.util.Properties;
 import javax.inject.Named;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 @Singleton
 class SingletonKafkaProducerFactory implements KafkaProducerFactory {
 
   private final String bootstrapServers;
+
+
+  @Inject
+  SingletonKafkaProducerFactory(@Named(KAFKA_SERVERS) String bootstrapServers) {
+    checkNotNull(bootstrapServers, "bootstrapServers is null");
+    checkArgument(!bootstrapServers.isEmpty(), "bootstrapServers is empty.");
+    this.bootstrapServers = bootstrapServers;
+  }
+
+  @Override
+  public Producer<String, Message> createKafkaProducer() {
+    final Properties properties = new Properties();
+    properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+    properties.put(ProducerConfig.MAX_REQUEST_SIZE_CONFIG, Integer.MAX_VALUE);
+    properties.put(ProducerConfig.BATCH_SIZE_CONFIG, 0);
+    properties.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, 600000);
+    return ProducerSingleton.getInstance(properties);
+  }
 
   private static class ProducerSingleton {
 
@@ -47,20 +68,6 @@ class SingletonKafkaProducerFactory implements KafkaProducerFactory {
       }
       return instance;
     }
-  }
-
-
-  @Inject
-  SingletonKafkaProducerFactory(@Named("bootstrap.servers") String bootstrapServers) {
-    checkNotNull(bootstrapServers, "bootstrapServers is null");
-    this.bootstrapServers = bootstrapServers;
-  }
-
-  @Override
-  public Producer<String, Message> createKafkaProducer() {
-    final Properties properties = new Properties();
-    properties.put("bootstrap.servers", bootstrapServers);
-    return ProducerSingleton.getInstance(properties);
   }
 
 }

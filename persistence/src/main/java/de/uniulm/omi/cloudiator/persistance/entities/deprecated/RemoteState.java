@@ -19,8 +19,9 @@ package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 /**
  * Created by daniel on 12.05.15.
  */
-@Deprecated public enum RemoteState {
-    OK,
-    INPROGRESS,
-    ERROR;
+@Deprecated
+public enum RemoteState {
+  OK,
+  INPROGRESS,
+  ERROR;
 }

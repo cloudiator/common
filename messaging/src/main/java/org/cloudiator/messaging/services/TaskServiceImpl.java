@@ -35,16 +35,14 @@ import org.cloudiator.messaging.ResponseException;
 public class TaskServiceImpl implements TaskService {
 
   private final MessageInterface messageInterface;
-  private long timeout = 0;
+
+  @Inject(optional = true)
+  @Named("responseTimeout")
+  private long timeout = 20000;
 
   @Inject
-  public TaskServiceImpl(MessageInterface messageInterface) {
+  TaskServiceImpl(MessageInterface messageInterface) {
     this.messageInterface = messageInterface;
-  }
-
-  @Inject
-  public void setResponseTimeout(@Named("responseTimeout") long timeout) {
-    this.timeout = timeout;
   }
 
   @Override

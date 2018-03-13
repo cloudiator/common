@@ -16,6 +16,7 @@
 
 package org.cloudiator.messaging.kafka;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.inject.Inject;
@@ -24,6 +25,7 @@ import com.google.protobuf.Parser;
 import java.util.Properties;
 import javax.inject.Named;
 import org.apache.kafka.clients.consumer.Consumer;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
@@ -33,10 +35,12 @@ class BaseKafkaConsumerFactory implements KafkaConsumerFactory {
   private final String groupId;
 
   @Inject
-  BaseKafkaConsumerFactory(@Named("bootstrap.servers") String bootstrapServers,
-      @Named("group.id") String groupId) {
+  BaseKafkaConsumerFactory(@Named(Constants.KAFKA_SERVERS) String bootstrapServers,
+      @Named(Constants.KAFKA_GROUP_ID) String groupId) {
     checkNotNull(bootstrapServers, "bootstrapServers is null");
+    checkArgument(!bootstrapServers.isEmpty(), "bootstrapServers is empty");
     checkNotNull(groupId, "groupId is null");
+    checkArgument(!groupId.isEmpty(), "groupId is empty");
     this.bootstrapServers = bootstrapServers;
     this.groupId = groupId;
   }
@@ -44,11 +48,12 @@ class BaseKafkaConsumerFactory implements KafkaConsumerFactory {
   @Override
   public <T extends Message> Consumer<String, T> createKafkaConsumer(Parser<T> parser) {
     Properties properties = new Properties();
-    properties.put("bootstrap.servers", bootstrapServers);
-    properties.put("group.id", groupId);
-    properties.put("zookeeper.session.timeout.ms", "400");
-    properties.put("zookeeper.sync.time.ms", "200");
-    properties.put("auto.commit.interval.ms", "1000");
+
+    properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+    properties.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
+    properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
+    properties.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, 1000);
+    properties.put(ConsumerConfig.FETCH_MAX_WAIT_MS_CONFIG, 1000);
     return new KafkaConsumer<>(properties, new StringDeserializer(),
         new ProtobufDeserializer<>(parser));
   }

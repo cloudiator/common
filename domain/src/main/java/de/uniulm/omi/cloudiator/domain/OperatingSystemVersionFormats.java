@@ -26,27 +26,27 @@ import java.util.stream.Collectors;
  */
 public class OperatingSystemVersionFormats {
 
-    private OperatingSystemVersionFormats() {
-        throw new AssertionError();
-    }
+  private OperatingSystemVersionFormats() {
+    throw new AssertionError();
+  }
 
-    public static OperatingSystemVersionFormat unknown() {
-        return new UnknownOperatingSystemFormat();
-    }
+  public static OperatingSystemVersionFormat unknown() {
+    return new UnknownOperatingSystemFormat();
+  }
 
-    public static OperatingSystemVersionFormat set(Set<OperatingSystemVersion> set) {
-        return new SupplierBasedOperatingSystemFormat(() -> set);
-    }
+  public static OperatingSystemVersionFormat set(Set<OperatingSystemVersion> set) {
+    return new SupplierBasedOperatingSystemFormat(() -> set);
+  }
 
-    public static OperatingSystemVersionFormat set(int... versions) {
-        return new SupplierBasedOperatingSystemFormat(() -> Arrays.stream(versions)
-            .mapToObj(i -> OperatingSystemVersions.of(i, String.valueOf(i)))
-            .collect(Collectors.toSet()));
-    }
+  public static OperatingSystemVersionFormat set(int... versions) {
+    return new SupplierBasedOperatingSystemFormat(() -> Arrays.stream(versions)
+        .mapToObj(i -> OperatingSystemVersions.of(i, String.valueOf(i)))
+        .collect(Collectors.toSet()));
+  }
 
-    public static OperatingSystemVersionFormat supplier(
-        Supplier<Set<OperatingSystemVersion>> supplier) {
-        return new SupplierBasedOperatingSystemFormat(supplier);
-    }
+  public static OperatingSystemVersionFormat supplier(
+      Supplier<Set<OperatingSystemVersion>> supplier) {
+    return new SupplierBasedOperatingSystemFormat(supplier);
+  }
 
 }

@@ -17,48 +17,53 @@
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
 import java.util.UUID;
-
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
 /**
  * Created by daniel on 08.01.15.
  */
-@Deprecated @MappedSuperclass public abstract class Unique {
+@Deprecated
+@MappedSuperclass
+public abstract class Unique {
 
-    @Column(unique = true, nullable = false, updatable = false) private final String uuid =
-        UUID.randomUUID().toString();
+  @Column(unique = true, nullable = false, updatable = false)
+  private final String uuid =
+      UUID.randomUUID().toString();
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected Unique() {
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected Unique() {
+  }
+
+  public String getUuid() {
+    return uuid;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
     }
 
-    public String getUuid() {
-        return uuid;
+    if (!(o instanceof Unique)) {
+      return false;
     }
 
-    @Override public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
+    Unique unique = (Unique) o;
 
-        if (!(o instanceof Unique)) {
-            return false;
-        }
+    return this.getUuid().equals(unique.getUuid());
 
-        Unique unique = (Unique) o;
+  }
 
-        return this.getUuid().equals(unique.getUuid());
+  @Override
+  public int hashCode() {
+    return this.getUuid().hashCode();
+  }
 
-    }
-
-    @Override public int hashCode() {
-        return this.getUuid().hashCode();
-    }
-
-    @Override public String toString() {
-        return String.format("ColosseumResource{uuid='%s'}", uuid);
-    }
+  @Override
+  public String toString() {
+    return String.format("ColosseumResource{uuid='%s'}", uuid);
+  }
 }

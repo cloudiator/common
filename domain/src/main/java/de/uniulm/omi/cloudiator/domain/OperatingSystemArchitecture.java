@@ -21,10 +21,8 @@ package de.uniulm.omi.cloudiator.domain;
  */
 public enum OperatingSystemArchitecture {
 
-    UNKNOWN,
-    AMD64,
-    I368
-
-
+  UNKNOWN,
+  AMD64,
+  I368
 
 }

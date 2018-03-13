@@ -16,7 +16,6 @@
 
 package de.uniulm.omi.cloudiator.domain;
 
-import de.uniulm.omi.cloudiator.domain.UbuntuOperatingSystemVersionSupplier;
 import org.junit.Test;
 
 /**
@@ -24,11 +23,12 @@ import org.junit.Test;
  */
 public class UbuntuOperatingSystemVersionSupplierTest {
 
-    public static void main(String[] args) {
-        System.out.println(new UbuntuOperatingSystemVersionSupplier().get());
-    }
+  public static void main(String[] args) {
+    System.out.println(new UbuntuOperatingSystemVersionSupplier().get());
+  }
 
-    @Test public void test() {
+  @Test
+  public void test() {
 
-    }
+  }
 }

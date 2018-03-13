@@ -17,11 +17,9 @@
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
 import com.google.common.collect.Lists;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
 import javax.annotation.Nullable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,59 +29,69 @@ import javax.persistence.ManyToOne;
 /**
  * Created by daniel on 18.05.15.
  */
-@Deprecated @Entity public class KeyPair extends RemoteResourceInCloud {
+@Deprecated
+@Entity
+public class KeyPair extends RemoteResourceInCloud {
 
-    @Lob private String privateKey;
-    @Lob @Nullable @Column(nullable = true) private String publicKey;
-    @Nullable @ManyToOne(optional = true) private VirtualMachine virtualMachine;
+  @Lob
+  private String privateKey;
+  @Lob
+  @Nullable
+  @Column(nullable = true)
+  private String publicKey;
+  @Nullable
+  @ManyToOne(optional = true)
+  private VirtualMachine virtualMachine;
 
-    /**
-     * No-args constructor for hibernate
-     */
-    protected KeyPair() {
+  /**
+   * No-args constructor for hibernate
+   */
+  protected KeyPair() {
+  }
+
+  public KeyPair(@Nullable String remoteId, @Nullable String providerId, @Nullable String swordId,
+      Cloud cloud, @Nullable CloudCredential owner, String privateKey, @Nullable String publicKey,
+      @Nullable VirtualMachine virtualMachine) {
+    super(remoteId, providerId, swordId, cloud, owner);
+    this.privateKey = privateKey;
+    this.publicKey = publicKey;
+    this.virtualMachine = virtualMachine;
+  }
+
+  public String getPrivateKey() {
+    return privateKey;
+  }
+
+  public void setPrivateKey(String privateKey) {
+    this.privateKey = privateKey;
+  }
+
+  @Nullable
+  public String getPublicKey() {
+    return publicKey;
+  }
+
+  public void setPublicKey(@Nullable String publicKey) {
+    this.publicKey = publicKey;
+  }
+
+  @Override
+  public List<CloudCredential> cloudCredentials() {
+    if (owner().isPresent()) {
+      return Lists.newArrayList(owner().get());
     }
+    return Collections.emptyList();
+  }
 
-    public KeyPair(@Nullable String remoteId, @Nullable String providerId, @Nullable String swordId,
-        Cloud cloud, @Nullable CloudCredential owner, String privateKey, @Nullable String publicKey,
-        @Nullable VirtualMachine virtualMachine) {
-        super(remoteId, providerId, swordId, cloud, owner);
-        this.privateKey = privateKey;
-        this.publicKey = publicKey;
-        this.virtualMachine = virtualMachine;
-    }
+  /**
+   * @todo find a better way to undecorate the keypair for the virtual machine template. Maybe do it
+   * in the template itself?
+   */
+  public String name() {
+    return providerId().get();
+  }
 
-    public String getPrivateKey() {
-        return privateKey;
-    }
-
-    public void setPrivateKey(String privateKey) {
-        this.privateKey = privateKey;
-    }
-
-    @Nullable public String getPublicKey() {
-        return publicKey;
-    }
-
-    public void setPublicKey(@Nullable String publicKey) {
-        this.publicKey = publicKey;
-    }
-
-    @Override public List<CloudCredential> cloudCredentials() {
-        if (owner().isPresent()) {
-            return Lists.newArrayList(owner().get());
-        }
-        return Collections.emptyList();
-    }
-
-    /**
-     * @todo find a better way to undecorate the keypair for the virtual machine template.
-     * Maybe do it in the template itself?
-     */
-    public String name() {
-        return providerId().get();
-    }
-
-    public Optional<VirtualMachine> virtualMachine() {
-        return Optional.ofNullable(virtualMachine);
-    }
+  public Optional<VirtualMachine> virtualMachine() {
+    return Optional.ofNullable(virtualMachine);
+  }
 }

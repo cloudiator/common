@@ -23,10 +23,10 @@ import java.util.concurrent.TimeUnit;
  */
 public interface Schedulable extends Runnable {
 
-    long period();
+  long period();
 
-    long delay();
+  long delay();
 
-    TimeUnit timeUnit();
+  TimeUnit timeUnit();
 
 }

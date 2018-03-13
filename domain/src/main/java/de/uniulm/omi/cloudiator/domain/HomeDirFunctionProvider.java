@@ -23,18 +23,19 @@ import java.util.function.Function;
  */
 public interface HomeDirFunctionProvider {
 
-    interface HomeDirFunction extends Function<String, String> {
+  HomeDirFunction homeDirFunction();
 
-        /**
-         * Function to derive the home directory of the given username.
-         *
-         * @param userName the name of the user.
-         * @return the directory
-         * @throws NullPointerException if the username is null.
-         */
-        @Override String apply(String userName);
-    }
+  interface HomeDirFunction extends Function<String, String> {
 
-    HomeDirFunction homeDirFunction();
+    /**
+     * Function to derive the home directory of the given username.
+     *
+     * @param userName the name of the user.
+     * @return the directory
+     * @throws NullPointerException if the username is null.
+     */
+    @Override
+    String apply(String userName);
+  }
 
 }

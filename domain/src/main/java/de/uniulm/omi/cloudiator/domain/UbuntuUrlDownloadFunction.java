@@ -16,44 +16,46 @@
 
 package de.uniulm.omi.cloudiator.domain;
 
+import static com.google.common.base.Preconditions.checkState;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.function.Function;
-
-import static com.google.common.base.Preconditions.checkState;
 
 /**
  * Created by daniel on 01.08.16.
  */
 public class UbuntuUrlDownloadFunction implements DownloadUrlFunction {
 
-    private final static String UBUNTU_CLOUD_IMAGES_SITE =
-        "https://cloud-images.ubuntu.com/daily/server/releases/%1$s/release/ubuntu-%1$s-server-cloudimg-%2$s.%3$s";
+  private final static String UBUNTU_CLOUD_IMAGES_SITE =
+      "https://cloud-images.ubuntu.com/daily/server/releases/%1$s/release/ubuntu-%1$s-server-cloudimg-%2$s.%3$s";
 
-    @Override public URL generateURL(OperatingSystemArchitecture operatingSystemArchitecture,
-        OperatingSystemVersion operatingSystemVersion, ImageFormat imageFormat) {
+  @Override
+  public URL generateURL(OperatingSystemArchitecture operatingSystemArchitecture,
+      OperatingSystemVersion operatingSystemVersion, ImageFormat imageFormat) {
 
-        checkState(operatingSystemVersion.name().isPresent(),
-            "Name of the version is not present.");
+    checkState(operatingSystemVersion.name().isPresent(),
+        "Name of the version is not present.");
 
-        try {
-            return new URL(String.format(UBUNTU_CLOUD_IMAGES_SITE, operatingSystemVersion.name(),
-                new ArchitectureToStringConverter().apply(operatingSystemArchitecture),
-                imageFormat.fileNameExtension()));
-        } catch (MalformedURLException e) {
-            throw new IllegalStateException(e);
-        }
-
+    try {
+      return new URL(String.format(UBUNTU_CLOUD_IMAGES_SITE, operatingSystemVersion.name(),
+          new ArchitectureToStringConverter().apply(operatingSystemArchitecture),
+          imageFormat.fileNameExtension()));
+    } catch (MalformedURLException e) {
+      throw new IllegalStateException(e);
     }
 
-    private static class ArchitectureToStringConverter
-        implements Function<OperatingSystemArchitecture, String> {
+  }
 
-        @Override public String apply(OperatingSystemArchitecture operatingSystemArchitecture) {
-            if (operatingSystemArchitecture.equals(OperatingSystemArchitecture.UNKNOWN)) {
-                throw new IllegalStateException("operatingSystemArchitecture is unknown.");
-            }
-            return operatingSystemArchitecture.toString().toLowerCase();
-        }
+  private static class ArchitectureToStringConverter
+      implements Function<OperatingSystemArchitecture, String> {
+
+    @Override
+    public String apply(OperatingSystemArchitecture operatingSystemArchitecture) {
+      if (operatingSystemArchitecture.equals(OperatingSystemArchitecture.UNKNOWN)) {
+        throw new IllegalStateException("operatingSystemArchitecture is unknown.");
+      }
+      return operatingSystemArchitecture.toString().toLowerCase();
     }
+  }
 }

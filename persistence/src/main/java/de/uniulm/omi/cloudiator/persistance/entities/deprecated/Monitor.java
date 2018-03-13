@@ -16,36 +16,39 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 
 /**
  * Created by Frank on 20.05.2015.
  */
-@Deprecated @Entity public abstract class Monitor extends ModelWithExternalReference {
+@Deprecated
+@Entity
+public abstract class Monitor extends ModelWithExternalReference {
 
-    @OneToMany(mappedBy = "monitor") private List<MonitorInstance> monitorInstances =
-        new ArrayList<>();
-    ;
+  @OneToMany(mappedBy = "monitor")
+  private List<MonitorInstance> monitorInstances =
+      new ArrayList<>();
+  ;
 
-    public List<MonitorInstance> getMonitorInstances() {
-        return monitorInstances;
-    }
+  public List<MonitorInstance> getMonitorInstances() {
+    return monitorInstances;
+  }
 
-    public void setMonitorInstances(List<MonitorInstance> monitorInstances) {
-        this.monitorInstances = monitorInstances;
-    }
+  public void setMonitorInstances(List<MonitorInstance> monitorInstances) {
+    this.monitorInstances = monitorInstances;
+  }
 
-    //    @ManyToMany(mappedBy = "monitors") private List<ComposedMonitor>
-    //        composedMonitors;
-    //
-    //    public List<ComposedMonitor> getComposedMonitors() {
-    //        return composedMonitors;
-    //    }
-    //
-    //    public void setComposedMonitors(List<ComposedMonitor> composedMonitors) {
-    //        this.composedMonitors = composedMonitors;
-    //    }
+  //    @ManyToMany(mappedBy = "monitors") private List<ComposedMonitor>
+  //        composedMonitors;
+  //
+  //    public List<ComposedMonitor> getComposedMonitors() {
+  //        return composedMonitors;
+  //    }
+  //
+  //    public void setComposedMonitors(List<ComposedMonitor> composedMonitors) {
+  //        this.composedMonitors = composedMonitors;
+  //    }
 }

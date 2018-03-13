@@ -21,16 +21,16 @@ package de.uniulm.omi.cloudiator.domain;
  */
 public class LoginNameSuppliers {
 
-    private LoginNameSuppliers() {
-        throw new AssertionError("static class");
-    }
+  private LoginNameSuppliers() {
+    throw new AssertionError("static class");
+  }
 
-    public static LoginNameSupplier nullSupplier() {
-        return new NullLoginNameSupplier();
-    }
+  public static LoginNameSupplier nullSupplier() {
+    return new NullLoginNameSupplier();
+  }
 
-    public static LoginNameSupplier staticSupplier(String loginName) {
-        return new StaticLoginNameSupplier(loginName);
-    }
+  public static LoginNameSupplier staticSupplier(String loginName) {
+    return new StaticLoginNameSupplier(loginName);
+  }
 
 }

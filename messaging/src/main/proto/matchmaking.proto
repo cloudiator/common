@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package iaas;
+
+option java_package = "org.cloudiator.messages.entities";
+
+import "matchmakingEntities.proto";
+import "iaasEntities.proto";
+import "nodeEntities.proto";
+
+message NodeCandidateRequestMessage {
+  string userId = 1;
+  NodeRequirements requirements = 2;
+}
+
+message NodeCandidateRequestResponse {
+  repeated NodeCandidate candidates = 1;
+}
+
+message MatchmakingRequest {
+  string userId = 1;
+  NodeRequirements requirements = 2;
+}
+
+message MatchmakingResponse {
+  repeated iaas.VirtualMachineRequest nodes = 1;
+}

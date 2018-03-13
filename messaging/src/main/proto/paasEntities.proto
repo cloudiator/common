@@ -4,13 +4,25 @@ package paas;
 
 option java_package = "org.cloudiator.messages.entities";
 
+import "iaasEntities.proto";
+
 message Platform {
   string id = 1;
   string name = 2;
   string providerId = 3;
   PlatformType platformType = 4;
   string endpoint = 5;
+  iaas.Credential credential = 6;
 
+}
+
+message NewPlatform {
+  reserved 1;
+  string name = 2;
+  string providerId = 3;
+  PlatformType platformType = 4;
+  string endpoint = 5;
+  iaas.Credential credential = 6;
 
 }
 
@@ -31,11 +43,31 @@ message Environment {
   repeated RuntimeService runtimeService = 7;
 }
 
+message NewEnvironment {
+  reserved 1;
+  string name = 2;
+  string providerId = 3;
+  Platform platform = 4;
+  HardwareFlavour hardwareFlavour = 5;
+  Runtime runtime = 6;
+  repeated RuntimeService runtimeService = 7;
+}
+
 //needs to be refiend for a cloud level agnostic application description
 message Runtime {
   string id = 1;
   string name = 2;
-  string providerId = 3;
+  string providerId = 3; //obsolet
+  RuntimeLanguage runtimeLanguage = 5;
+  double runtimeLanguageVersion = 6;
+  RuntimeType runtimeType = 7;
+  double runtimeTypeVersion = 8; //optional, depends if
+}
+
+message NewRuntime {
+  reserved 1;
+  string name = 2;
+  string providerId = 3; //obsolet
   RuntimeLanguage runtimeLanguage = 5;
   double runtimeLanguageVersion = 6;
   RuntimeType runtimeType = 7;
@@ -45,6 +77,14 @@ message Runtime {
 //a simplified configuration for PaaS
 message HardwareFlavour {
   string id = 1;
+  string name = 2;
+  int32 cores = 4;
+  int64 ram = 5;
+  float disk = 6;
+}
+
+message NewHardwareFlavour {
+  reserved 1;
   string name = 2;
   int32 cores = 4;
   int64 ram = 5;
@@ -66,4 +106,6 @@ enum RuntimeType {
 //may be obsolete for a cloud level agnostic application description
 //to be defined
 message RuntimeService {
+  string id = 1;
+  string name = 2;
 }

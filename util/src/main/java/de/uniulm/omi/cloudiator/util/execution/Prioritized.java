@@ -16,34 +16,33 @@
 
 package de.uniulm.omi.cloudiator.util.execution;
 
-import javax.annotation.Nonnull;
-
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import javax.annotation.Nonnull;
+
 /**
- * A prioritized object, offering a way to compare two objects with
- * respect to their priority.
- * <p>
- * For this purpose this class extends {@link Comparable} and offers
- * a default implementation of the compareTo method.
+ * A prioritized object, offering a way to compare two objects with respect to their priority. <p>
+ * For this purpose this class extends {@link Comparable} and offers a default implementation of the
+ * compareTo method.
  */
 public interface Prioritized extends Comparable<Prioritized> {
 
-    class Priority {
+  int getPriority();
 
-        public static final int HIGH = 2;
-        public static final int MEDIUM = 1;
-        public static final int LOW = 0;
+  @Override
+  default int compareTo(@Nonnull Prioritized o) {
+    checkNotNull(o);
+    return Integer.compare(getPriority(), o.getPriority());
+  }
 
-        private Priority() {
-            throw new AssertionError("Intentionally left empty.");
-        }
+  class Priority {
+
+    public static final int HIGH = 2;
+    public static final int MEDIUM = 1;
+    public static final int LOW = 0;
+
+    private Priority() {
+      throw new AssertionError("Intentionally left empty.");
     }
-
-    int getPriority();
-
-    @Override default int compareTo(@Nonnull Prioritized o) {
-        checkNotNull(o);
-        return Integer.compare(getPriority(), o.getPriority());
-    }
+  }
 }

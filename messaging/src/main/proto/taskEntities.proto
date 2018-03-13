@@ -11,6 +11,20 @@ message Task {
   repeated Port ports = 2;
   repeated TaskInterface interfaces = 3;
   repeated common.Requirement requirements = 4;
+  TaskType taskType = 5;
+  ExecutionEnvironment executionEnvironment = 6;
+}
+
+enum TaskType {
+  BATCH = 0;
+  SERVICE = 1;
+}
+
+enum ExecutionEnvironment {
+  SPARK = 0;
+  NATIVE = 1;
+  CONTAINER = 2;
+  LANCE = 3;
 }
 
 message TaskInterface {
@@ -29,6 +43,7 @@ message Port {
 
 message DockerInterface {
   string dockerImage = 1;
+  repeated common.Param params = 2;
 }
 
 message LanceInterface {

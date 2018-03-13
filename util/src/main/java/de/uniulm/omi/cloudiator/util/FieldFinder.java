@@ -27,28 +27,28 @@ import java.util.Set;
  */
 public class FieldFinder {
 
-    private final Class c;
+  private final Class c;
 
-    private FieldFinder(Class c) {
-        this.c = c;
-    }
+  private FieldFinder(Class c) {
+    this.c = c;
+  }
 
-    public static FieldFinder of(Class c) {
-        return new FieldFinder(c);
-    }
+  public static FieldFinder of(Class c) {
+    return new FieldFinder(c);
+  }
 
-    public Set<Field> getFields() {
-        Class clazz = c;
-        Set<Field> fields = new HashSet<>();
-        while (clazz != null) {
-            Collections.addAll(fields, clazz.getDeclaredFields());
-            clazz = clazz.getSuperclass();
-        }
-        return fields;
+  public Set<Field> getFields() {
+    Class clazz = c;
+    Set<Field> fields = new HashSet<>();
+    while (clazz != null) {
+      Collections.addAll(fields, clazz.getDeclaredFields());
+      clazz = clazz.getSuperclass();
     }
+    return fields;
+  }
 
-    public Optional<Field> getField(String name) {
-        return getFields().stream().filter(field -> field.getName().equals(name)).findAny();
-    }
+  public Optional<Field> getField(String name) {
+    return getFields().stream().filter(field -> field.getName().equals(name)).findAny();
+  }
 
 }

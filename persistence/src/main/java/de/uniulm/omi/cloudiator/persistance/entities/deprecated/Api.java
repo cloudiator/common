@@ -16,64 +16,68 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
-import java.util.List;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * Created by daniel on 31.10.14.
  */
-@Deprecated @Entity public class Api extends Model {
+@Deprecated
+@Entity
+public class Api extends Model {
 
-    @Column(nullable = false) private String internalProviderName;
-    @Column(unique = true, nullable = false) private String name;
-    @OneToMany(mappedBy = "api") private List<Cloud> clouds;
+  @Column(nullable = false)
+  private String internalProviderName;
+  @Column(unique = true, nullable = false)
+  private String name;
+  @OneToMany(mappedBy = "api")
+  private List<Cloud> clouds;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected Api() {
-    }
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected Api() {
+  }
 
-    public Api(String name, String internalProviderName) {
-        checkNotNull(name);
-        checkArgument(!name.isEmpty());
-        checkNotNull(internalProviderName);
-        checkArgument(!internalProviderName.isEmpty());
-        this.name = name;
-        this.internalProviderName = internalProviderName;
-    }
+  public Api(String name, String internalProviderName) {
+    checkNotNull(name);
+    checkArgument(!name.isEmpty());
+    checkNotNull(internalProviderName);
+    checkArgument(!internalProviderName.isEmpty());
+    this.name = name;
+    this.internalProviderName = internalProviderName;
+  }
 
-    public String getInternalProviderName() {
-        return internalProviderName;
-    }
+  public String getInternalProviderName() {
+    return internalProviderName;
+  }
 
-    public void setInternalProviderName(String internalProviderName) {
-        checkNotNull(internalProviderName);
-        checkArgument(!internalProviderName.isEmpty());
-        this.internalProviderName = internalProviderName;
-    }
+  public void setInternalProviderName(String internalProviderName) {
+    checkNotNull(internalProviderName);
+    checkArgument(!internalProviderName.isEmpty());
+    this.internalProviderName = internalProviderName;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public void setName(String name) {
-        checkNotNull(name);
-        checkArgument(!name.isEmpty());
-        this.name = name;
-    }
+  public void setName(String name) {
+    checkNotNull(name);
+    checkArgument(!name.isEmpty());
+    this.name = name;
+  }
 
-    public List<Cloud> getClouds() {
-        return clouds;
-    }
+  public List<Cloud> getClouds() {
+    return clouds;
+  }
 
-    public void setClouds(List<Cloud> clouds) {
-        this.clouds = clouds;
-    }
+  public void setClouds(List<Cloud> clouds) {
+    this.clouds = clouds;
+  }
 }

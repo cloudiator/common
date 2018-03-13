@@ -24,46 +24,51 @@ import javax.persistence.OneToOne;
 /**
  * Created by daniel on 07.01.15.
  */
-@Deprecated @Entity public class Communication extends Model {
+@Deprecated
+@Entity
+public class Communication extends Model {
 
-    @OneToOne(optional = false) @JoinColumn(name = "requiredCommunication") private PortRequired
-        requiredPort;
-    @ManyToOne(optional = false) private PortProvided providedPort;
+  @OneToOne(optional = false)
+  @JoinColumn(name = "requiredCommunication")
+  private PortRequired
+      requiredPort;
+  @ManyToOne(optional = false)
+  private PortProvided providedPort;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected Communication() {
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected Communication() {
 
-    }
+  }
 
-    public Communication(PortRequired requiredPort, PortProvided providedPort) {
-        this.requiredPort = requiredPort;
-        this.providedPort = providedPort;
-    }
+  public Communication(PortRequired requiredPort, PortProvided providedPort) {
+    this.requiredPort = requiredPort;
+    this.providedPort = providedPort;
+  }
 
-    public PortRequired getRequiredPort() {
-        return requiredPort;
-    }
+  public PortRequired getRequiredPort() {
+    return requiredPort;
+  }
 
-    public PortProvided getProvidedPort() {
-        return providedPort;
-    }
+  public PortProvided getProvidedPort() {
+    return providedPort;
+  }
 
-    public ApplicationComponent getSource() {
-        return getRequiredPort().getApplicationComponent();
-    }
+  public ApplicationComponent getSource() {
+    return getRequiredPort().getApplicationComponent();
+  }
 
-    public ApplicationComponent getTarget() {
-        return getProvidedPort().getApplicationComponent();
-    }
+  public ApplicationComponent getTarget() {
+    return getProvidedPort().getApplicationComponent();
+  }
 
-    public boolean isMandatory() {
-        return requiredPort.isMandatory();
-    }
+  public boolean isMandatory() {
+    return requiredPort.isMandatory();
+  }
 
-    public boolean isReflexive() {
-        return requiredPort.getApplicationComponent()
-            .equals(providedPort.getApplicationComponent());
-    }
+  public boolean isReflexive() {
+    return requiredPort.getApplicationComponent()
+        .equals(providedPort.getApplicationComponent());
+  }
 }

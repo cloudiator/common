@@ -6,24 +6,13 @@ option java_package = "org.cloudiator.messages";
 
 import "iaasEntities.proto";
 import "nodeEntities.proto";
-import "commonEntities.proto";
 
 message NodeRequestMessage {
   string userId = 1;
-  NodeRequest nodeRequest = 2;
+  NodeRequirements nodeRequest = 2;
+  string groupName = 3;
 }
 
 message NodeRequestResponse {
   repeated Node node = 1;
-}
-
-message NodeEvent {
-  Node node = 1;
-  NodeStatus nodeStatus = 2;
-}
-
-enum NodeStatus {
-  UNKNOWN_STATUS = 0;
-  CREATED = 1;
-  DELETED = 2;
 }

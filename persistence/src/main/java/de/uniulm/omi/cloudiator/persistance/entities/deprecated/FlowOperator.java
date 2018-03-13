@@ -19,18 +19,20 @@ package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 /**
  * Created by Frank on 25.05.2015.
  */
-@Deprecated public enum FlowOperator {
+@Deprecated
+public enum FlowOperator {
 
-    MAP("MAP"),
-    REDUCE("REDUCE");
+  MAP("MAP"),
+  REDUCE("REDUCE");
 
-    private final String text;
+  private final String text;
 
-    private FlowOperator(final String text) {
-        this.text = text;
-    }
+  private FlowOperator(final String text) {
+    this.text = text;
+  }
 
-    @Override public String toString() {
-        return text;
-    }
+  @Override
+  public String toString() {
+    return text;
+  }
 }

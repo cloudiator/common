@@ -16,69 +16,81 @@
 
 package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 /**
  * Created by Frank on 20.05.2015.
  */
-@Deprecated @Entity public class ComposedMonitor extends MetricMonitor {
+@Deprecated
+@Entity
+public class ComposedMonitor extends MetricMonitor {
 
-    @Enumerated(EnumType.STRING) private FlowOperator flowOperator;
-    @Enumerated(EnumType.STRING) private FormulaOperator function;
+  @Enumerated(EnumType.STRING)
+  private FlowOperator flowOperator;
+  @Enumerated(EnumType.STRING)
+  private FormulaOperator function;
 
-    /* Actually is not optional but due to a inheritance bug this is now optional */
-    @ManyToOne(optional = true) private FormulaQuantifier quantifier;
-    @ManyToOne(optional = true) private Window window;
-    @ManyToMany private List<Monitor> monitors = new ArrayList<>();
-    @ManyToMany private List<ScalingAction> scalingActions = new ArrayList<>();
+  /* Actually is not optional but due to a inheritance bug this is now optional */
+  @ManyToOne(optional = true)
+  private FormulaQuantifier quantifier;
+  @ManyToOne(optional = true)
+  private Window window;
+  @ManyToMany
+  private List<Monitor> monitors = new ArrayList<>();
+  @ManyToMany
+  private List<ScalingAction> scalingActions = new ArrayList<>();
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected ComposedMonitor() {
-    }
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected ComposedMonitor() {
+  }
 
-    public ComposedMonitor(Schedule schedule, FlowOperator flowOperator, FormulaOperator function,
-        FormulaQuantifier quantifier, Window window, List<Monitor> monitors) {
-        super(schedule);
-        this.flowOperator = flowOperator;
-        this.function = function;
-        this.quantifier = quantifier;
-        this.window = window;
-        this.monitors = monitors;
-    }
+  public ComposedMonitor(Schedule schedule, FlowOperator flowOperator, FormulaOperator function,
+      FormulaQuantifier quantifier, Window window, List<Monitor> monitors) {
+    super(schedule);
+    this.flowOperator = flowOperator;
+    this.function = function;
+    this.quantifier = quantifier;
+    this.window = window;
+    this.monitors = monitors;
+  }
 
-    public FlowOperator getFlowOperator() {
-        return flowOperator;
-    }
+  public FlowOperator getFlowOperator() {
+    return flowOperator;
+  }
 
-    public FormulaOperator getFunction() {
-        return function;
-    }
+  public FormulaOperator getFunction() {
+    return function;
+  }
 
-    public FormulaQuantifier getQuantifier() {
-        return quantifier;
-    }
+  public FormulaQuantifier getQuantifier() {
+    return quantifier;
+  }
 
-    public Window getWindow() {
-        return window;
-    }
+  public Window getWindow() {
+    return window;
+  }
 
-    public List<Monitor> getMonitors() {
-        return monitors;
-    }
+  public List<Monitor> getMonitors() {
+    return monitors;
+  }
 
-    public List<ScalingAction> getScalingActions() {
-        return scalingActions;
-    }
+  public List<ScalingAction> getScalingActions() {
+    return scalingActions;
+  }
 
-    public void setScalingActions(List<ScalingAction> scalingActions) {
-        this.scalingActions = scalingActions;
-    }
+  public void setScalingActions(List<ScalingAction> scalingActions) {
+    this.scalingActions = scalingActions;
+  }
 
-    public void addScalingActions(ScalingAction scalingAction) {
-        this.scalingActions.add(scalingAction);
-    }
+  public void addScalingActions(ScalingAction scalingAction) {
+    this.scalingActions.add(scalingAction);
+  }
 }

@@ -23,10 +23,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public interface Named {
 
-    /**
-     * @return a human readable name for the resource.
-     */
-    @JsonProperty
-    String name();
+  /**
+   * @return a human readable name for the resource.
+   */
+  @JsonProperty
+  String name();
 
 }

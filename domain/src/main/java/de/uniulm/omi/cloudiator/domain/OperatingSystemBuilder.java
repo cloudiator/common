@@ -23,65 +23,64 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class OperatingSystemBuilder {
 
-    private OperatingSystemArchitecture operatingSystemArchitecture;
-    private OperatingSystemVersion operatingSystemVersion;
-    private OperatingSystemFamily operatingSystemFamily;
+  private OperatingSystemArchitecture operatingSystemArchitecture;
+  private OperatingSystemVersion operatingSystemVersion;
+  private OperatingSystemFamily operatingSystemFamily;
 
-    private OperatingSystemBuilder(OperatingSystem operatingSystem) {
-        this.operatingSystemArchitecture = operatingSystem.operatingSystemArchitecture();
-        this.operatingSystemVersion = operatingSystem.operatingSystemVersion();
-        this.operatingSystemFamily = operatingSystem.operatingSystemFamily();
+  private OperatingSystemBuilder(OperatingSystem operatingSystem) {
+    this.operatingSystemArchitecture = operatingSystem.operatingSystemArchitecture();
+    this.operatingSystemVersion = operatingSystem.operatingSystemVersion();
+    this.operatingSystemFamily = operatingSystem.operatingSystemFamily();
+  }
+
+  private OperatingSystemBuilder() {
+  }
+
+  public static OperatingSystemBuilder newBuilder() {
+    return new OperatingSystemBuilder();
+  }
+
+  public static OperatingSystemBuilder of(OperatingSystem operatingSystem) {
+    checkNotNull(operatingSystem, "operatingSystem is null");
+    return new OperatingSystemBuilder(operatingSystem);
+  }
+
+  public OperatingSystemBuilder merge(OperatingSystem operatingSystem) {
+    if (operatingSystemArchitecture == null || operatingSystemArchitecture
+        .equals(OperatingSystemArchitecture.UNKNOWN)) {
+      operatingSystemArchitecture = operatingSystem.operatingSystemArchitecture();
     }
-
-    private OperatingSystemBuilder() {
+    if (operatingSystemFamily == null || operatingSystemFamily
+        .equals(OperatingSystemFamily.UNKNOWN)) {
+      operatingSystemFamily = operatingSystem.operatingSystemFamily();
     }
-
-    public static OperatingSystemBuilder newBuilder() {
-        return new OperatingSystemBuilder();
+    if (operatingSystemVersion == null || operatingSystemVersion
+        .equals(OperatingSystemVersions.unknown())) {
+      operatingSystemVersion = operatingSystem.operatingSystemVersion();
     }
+    return this;
+  }
 
-    public static OperatingSystemBuilder of(OperatingSystem operatingSystem) {
-        checkNotNull(operatingSystem, "operatingSystem is null");
-        return new OperatingSystemBuilder(operatingSystem);
-    }
+  public OperatingSystemBuilder architecture(
+      OperatingSystemArchitecture operatingSystemArchitecture) {
+    this.operatingSystemArchitecture = operatingSystemArchitecture;
+    return this;
+  }
 
-    public OperatingSystemBuilder merge(OperatingSystem operatingSystem) {
-        if (operatingSystemArchitecture == null || operatingSystemArchitecture
-            .equals(OperatingSystemArchitecture.UNKNOWN)) {
-            operatingSystemArchitecture = operatingSystem.operatingSystemArchitecture();
-        }
-        if (operatingSystemFamily == null || operatingSystemFamily
-            .equals(OperatingSystemFamily.UNKNOWN)) {
-            operatingSystemFamily = operatingSystem.operatingSystemFamily();
-        }
-        if (operatingSystemVersion == null || operatingSystemVersion
-            .equals(OperatingSystemVersions.unknown())) {
-            operatingSystemVersion = operatingSystem.operatingSystemVersion();
-        }
-        return this;
-    }
+  public OperatingSystemBuilder version(OperatingSystemVersion operatingSystemVersion) {
+    this.operatingSystemVersion = operatingSystemVersion;
+    return this;
+  }
 
-    public OperatingSystemBuilder architecture(
-        OperatingSystemArchitecture operatingSystemArchitecture) {
-        this.operatingSystemArchitecture = operatingSystemArchitecture;
-        return this;
-    }
+  public OperatingSystemBuilder family(OperatingSystemFamily operatingSystemFamily) {
+    this.operatingSystemFamily = operatingSystemFamily;
+    return this;
+  }
 
-    public OperatingSystemBuilder version(OperatingSystemVersion operatingSystemVersion) {
-        this.operatingSystemVersion = operatingSystemVersion;
-        return this;
-    }
-
-    public OperatingSystemBuilder family(OperatingSystemFamily operatingSystemFamily) {
-        this.operatingSystemFamily = operatingSystemFamily;
-        return this;
-    }
-
-    public OperatingSystem build() {
-        return new OperatingSystemImpl(operatingSystemFamily, operatingSystemArchitecture,
-            operatingSystemVersion);
-    }
-
+  public OperatingSystem build() {
+    return new OperatingSystemImpl(operatingSystemFamily, operatingSystemArchitecture,
+        operatingSystemVersion);
+  }
 
 
 }

@@ -18,19 +18,19 @@
 
 package de.uniulm.omi.cloudiator.util;
 
-import javax.annotation.Nullable;
 import java.util.function.Function;
+import javax.annotation.Nullable;
 
 /**
- * A one-way converter for converting one type to another type.
- * <p>
- * Extends {@link Function} so it can be used
- * with functional programming methods.
+ * A one-way converter for converting one type to another type. <p> Extends {@link Function} so it
+ * can be used with functional programming methods.
  *
  * @param <T> the type to be converted.
  * @param <S> the resulting type.
  */
 public interface OneWayConverter<T, S> extends Function<T, S> {
 
-    @Override @Nullable S apply(@Nullable T t);
+  @Override
+  @Nullable
+  S apply(@Nullable T t);
 }

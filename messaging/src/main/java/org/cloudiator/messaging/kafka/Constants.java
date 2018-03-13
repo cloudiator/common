@@ -14,10 +14,16 @@
  * limitations under the License.
  */
 
-package de.uniulm.omi.cloudiator.domain;
+package org.cloudiator.messaging.kafka;
 
-public interface Requirement {
+public final class Constants {
 
-  //marker interface
+  public static final String KAFKA_SERVERS = "bootstrapServers";
+  public static final String KAFKA_GROUP_ID = "groupId";
+  public static final String RESPONSE_TIMEOUT = "responseTimeout";
+  private Constants() {
+
+  }
+
 
 }

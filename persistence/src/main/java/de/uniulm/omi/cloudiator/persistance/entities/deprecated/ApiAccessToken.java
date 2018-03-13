@@ -28,65 +28,74 @@ import javax.persistence.Table;
  * Created by daniel on 19.12.14.
  */
 @Table(
-    indexes = {@Index(columnList = "token", unique = true)}) @Deprecated @Entity public class ApiAccessToken
+    indexes = {@Index(columnList = "token", unique = true)})
+@Deprecated
+@Entity
+public class ApiAccessToken
     extends Model {
 
-    private static final long VALIDITY = (long) 5 * 60 * 1000;
+  private static final long VALIDITY = (long) 5 * 60 * 1000;
 
-    @Column(nullable = false) private long createdOn;
+  @Column(nullable = false)
+  private long createdOn;
 
-    @Column(nullable = false) private long expiresAt;
+  @Column(nullable = false)
+  private long expiresAt;
 
-    @Lob @Column(nullable = false, unique = true) private String token;
+  @Lob
+  @Column(nullable = false, unique = true)
+  private String token;
 
-    @ManyToOne(optional = false) private FrontendUser frontendUser;
+  @ManyToOne(optional = false)
+  private FrontendUser frontendUser;
 
-    /**
-     * Empty constructor for hibernate.
-     */
-    protected ApiAccessToken() {
-    }
+  /**
+   * Empty constructor for hibernate.
+   */
+  protected ApiAccessToken() {
+  }
 
-    public ApiAccessToken(final FrontendUser frontendUser, final String token) {
-        this.frontendUser = frontendUser;
-        this.token = token;
-    }
+  public ApiAccessToken(final FrontendUser frontendUser, final String token) {
+    this.frontendUser = frontendUser;
+    this.token = token;
+  }
 
-    @PrePersist protected void onCreate() {
-        long currentTime = System.currentTimeMillis();
-        this.createdOn = currentTime;
-        this.expiresAt = currentTime + VALIDITY;
-    }
+  @PrePersist
+  protected void onCreate() {
+    long currentTime = System.currentTimeMillis();
+    this.createdOn = currentTime;
+    this.expiresAt = currentTime + VALIDITY;
+  }
 
-    public long getCreatedOn() {
-        return createdOn;
-    }
+  public long getCreatedOn() {
+    return createdOn;
+  }
 
-    public void setCreatedOn(long createdOn) {
-        this.createdOn = createdOn;
-    }
+  public void setCreatedOn(long createdOn) {
+    this.createdOn = createdOn;
+  }
 
-    public String getToken() {
-        return token;
-    }
+  public String getToken() {
+    return token;
+  }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
+  public void setToken(String token) {
+    this.token = token;
+  }
 
-    public FrontendUser getFrontendUser() {
-        return frontendUser;
-    }
+  public FrontendUser getFrontendUser() {
+    return frontendUser;
+  }
 
-    public void setFrontendUser(FrontendUser frontendUser) {
-        this.frontendUser = frontendUser;
-    }
+  public void setFrontendUser(FrontendUser frontendUser) {
+    this.frontendUser = frontendUser;
+  }
 
-    public long getExpiresAt() {
-        return expiresAt;
-    }
+  public long getExpiresAt() {
+    return expiresAt;
+  }
 
-    protected void setExpiresAt(final long expiresAt) {
-        this.expiresAt = expiresAt;
-    }
+  protected void setExpiresAt(final long expiresAt) {
+    this.expiresAt = expiresAt;
+  }
 }
