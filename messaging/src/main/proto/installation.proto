@@ -12,4 +12,5 @@ message InstallationRequest {
 }
 
 message InstallationResponse {
+  repeated Tool tool = 1;
 }
