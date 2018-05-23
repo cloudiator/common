@@ -14,5 +14,5 @@ message NodeRequestMessage {
 }
 
 message NodeRequestResponse {
-  repeated Node node = 1;
+  NodeGroup nodeGroup = 1;
 }
