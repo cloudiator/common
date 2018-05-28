@@ -16,3 +16,21 @@ message NodeRequestMessage {
 message NodeRequestResponse {
   NodeGroup nodeGroup = 1;
 }
+
+message NodeQueryMessage {
+  string userId = 1;
+  string nodeId = 2;
+}
+
+message NodeQueryResponse {
+  repeated Node nodes = 1;
+}
+
+message NodeGroupQueryMessage {
+  string userId = 1;
+  string nodeGroupId = 2;
+}
+
+message NodeGroupQueryResponse {
+  repeated NodeGroup nodeGroups = 1;
+}

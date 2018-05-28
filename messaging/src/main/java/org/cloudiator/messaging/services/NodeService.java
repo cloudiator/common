@@ -16,6 +16,10 @@
 
 package org.cloudiator.messaging.services;
 
+import org.cloudiator.messages.Node.NodeGroupQueryMessage;
+import org.cloudiator.messages.Node.NodeGroupQueryResponse;
+import org.cloudiator.messages.Node.NodeQueryMessage;
+import org.cloudiator.messages.Node.NodeQueryResponse;
 import org.cloudiator.messages.Node.NodeRequestMessage;
 import org.cloudiator.messages.Node.NodeRequestResponse;
 import org.cloudiator.messaging.ResponseCallback;
@@ -25,7 +29,12 @@ public interface NodeService {
 
   NodeRequestResponse createNodes(NodeRequestMessage nodeRequestMessage) throws ResponseException;
 
+  NodeQueryResponse queryNodes(NodeQueryMessage nodeQueryMessage) throws ResponseException;
+
   void createNodesAsync(NodeRequestMessage nodeRequestMessage,
       ResponseCallback<NodeRequestResponse> callback);
+
+  NodeGroupQueryResponse queryNodeGroups(NodeGroupQueryMessage nodeGroupQueryMessage)
+      throws ResponseException;
 
 }

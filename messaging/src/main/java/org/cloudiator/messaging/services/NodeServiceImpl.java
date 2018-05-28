@@ -18,6 +18,10 @@ package org.cloudiator.messaging.services;
 
 import com.google.inject.Inject;
 import javax.inject.Named;
+import org.cloudiator.messages.Node.NodeGroupQueryMessage;
+import org.cloudiator.messages.Node.NodeGroupQueryResponse;
+import org.cloudiator.messages.Node.NodeQueryMessage;
+import org.cloudiator.messages.Node.NodeQueryResponse;
 import org.cloudiator.messages.Node.NodeRequestMessage;
 import org.cloudiator.messages.Node.NodeRequestResponse;
 import org.cloudiator.messaging.MessageInterface;
@@ -44,9 +48,20 @@ public class NodeServiceImpl implements NodeService {
   }
 
   @Override
+  public NodeQueryResponse queryNodes(NodeQueryMessage nodeQueryMessage) throws ResponseException {
+    return messageInterface.call(nodeQueryMessage, NodeQueryResponse.class, timeout);
+  }
+
+  @Override
   public void createNodesAsync(NodeRequestMessage nodeRequestMessage,
       ResponseCallback<NodeRequestResponse> callback) {
     messageInterface.callAsync(nodeRequestMessage, NodeRequestResponse.class, callback);
+  }
+
+  @Override
+  public NodeGroupQueryResponse queryNodeGroups(NodeGroupQueryMessage nodeGroupQueryMessage)
+      throws ResponseException {
+    return messageInterface.call(nodeGroupQueryMessage, NodeGroupQueryResponse.class, timeout);
   }
 
 

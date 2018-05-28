@@ -4,9 +4,6 @@ package application;
 
 option java_package = "org.cloudiator.messages.entities";
 
-import "processEntities.proto";
-import "taskEntities.proto";
-
 message Monitor {
   MonitorFilter filter = 1;
   Sensor sensor = 2;
