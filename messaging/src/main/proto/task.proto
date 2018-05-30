@@ -6,7 +6,7 @@ option java_package = "org.cloudiator.messages";
 
 import "taskEntities.proto";
 
-message TaskQueryRequest {
+message MonitorQueryRequest {
   string userId = 1;
 }
 
