@@ -93,10 +93,8 @@ message VirtualMachineRequest {
 
 message LoginCredential {
   string username = 1;
-  oneof credential {
-    string privateKey = 2;
-    string password = 3;
-  }
+  string privateKey = 2;
+  string password = 3;
 }
 
 message KeyPair {
