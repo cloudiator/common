@@ -4,8 +4,6 @@ package application;
 
 option java_package = "org.cloudiator.messages.entities";
 
-//import "processEntities.proto";
-//import "taskEntities.proto";
 
 
 message Monitor {
@@ -91,7 +89,7 @@ enum SinkType {
 
 message Sink {
   SinkType type = 1;
-  SinkConfiguration = 2;
+  SinkConfiguration configuration = 2;
 }
 
 message MonitoringTag {

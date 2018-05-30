@@ -46,7 +46,8 @@ public class MonitorServiceImpl implements MonitorService {
   }
 
   @Override
-  public MonitorQueryResponse findMonitors(MonitorQueryRequest MonitorQueryRequest) throws ResponseException {
+  public MonitorQueryResponse findMonitors(MonitorQueryRequest MonitorQueryRequest)
+      throws ResponseException {
     return messageInterface.call(MonitorQueryRequest, MonitorQueryResponse.class);
   }
 
@@ -57,7 +58,7 @@ public class MonitorServiceImpl implements MonitorService {
   }
 
   @Override
-  public MonitorUpdatedResponse updateMonitor(UpdateMonitorRequest updateMonitorRequest)
+  public MonitorUpdatedResponse getMonitor(UpdateMonitorRequest updateMonitorRequest)
       throws ResponseException {
     return messageInterface.call(updateMonitorRequest, MonitorUpdatedResponse.class, timeout);
   }
