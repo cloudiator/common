@@ -33,6 +33,8 @@ enum RequirementOperator {
   GEQ = 2;
   GT = 3;
   LT = 4;
+  NEQ = 5;
+  IN = 6;
 }
 
 message AttributeRequirement {
