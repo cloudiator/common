@@ -11,7 +11,7 @@ message Monitor {
   string metric = 2;
   repeated MonitoringTarget target = 3;
   Sensor sensor = 4;
-  Sink datasink = 5;
+  repeated Sink datasink = 5;
   repeated MonitoringTag tags = 6;
 }
 
@@ -20,7 +20,7 @@ message NewMonitor {
   string metric = 1;
   repeated MonitoringTarget target = 2;
   Sensor sensor = 3;
-  Sink datasink = 4;
+  repeated Sink datasink = 4;
   repeated MonitoringTag tags = 5;
 }
 
