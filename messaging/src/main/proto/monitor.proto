@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package application;
+
+option java_package = "org.cloudiator.messages";
+
+import "monitorEntities.proto";
+
+message MonitorQueryRequest {
+  string userId = 1;
+}
+
+message MonitorQueryResponse {
+  repeated Monitor monitor = 1;
+}
+
+message CreateMonitorRequest {
+  string userId = 1;
+  NewMonitor newmonitor = 2;
+}
+
+message MonitorCreatedResponse {
+  Monitor monitor = 1;
+}
+
+message UpdateMonitorRequest {
+  string userId = 1;
+  Monitor monitor = 2;
+}
+
+message MonitorUpdatedResponse {
+  Monitor monitor = 1;
+}
+
+message DeleteMonitorRequest {
+  string userId = 1;
+  Monitor monitor = 2;
+}
+
+message MonitorDeletedResponse {
+}

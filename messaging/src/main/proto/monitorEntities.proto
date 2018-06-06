@@ -4,6 +4,103 @@ package application;
 
 option java_package = "org.cloudiator.messages.entities";
 
+
+
+message Monitor {
+  string id = 1;
+  string metric = 2;
+  repeated MonitoringTarget target = 3;
+  Sensor sensor = 4;
+  repeated Sink datasink = 5;
+  repeated MonitoringTag tags = 6;
+}
+
+
+message NewMonitor {
+  string metric = 1;
+  repeated MonitoringTarget target = 2;
+  Sensor sensor = 3;
+  repeated Sink datasink = 4;
+  repeated MonitoringTag tags = 5;
+}
+
+enum TargetType {
+  JOB = 0;
+  TASK = 1;
+  PROCESS = 2;
+  CLOUD = 3;
+  NODE = 4;
+}
+
+message MonitoringTarget {
+  TargetType type = 1;
+  string identifier = 2;
+}
+
+message Sensor {
+  oneof sensor {
+    PullSensor pullsensor = 1;
+    PushSensor pushsensor = 2;
+  }
+}
+
+enum Unit {
+  DAYS = 0;
+  HOURS = 1;
+  MINUTES = 2;
+  SECONDS = 3;
+  MILLISECONDS = 4;
+  MICROSECONDS = 5;
+  NANOSECONDS = 6;
+}
+message Interval {
+  Unit unit = 1;
+  int64 period = 2;
+}
+
+message SensorConfiguration {
+  repeated ConfigurationProperties Properties = 1;
+}
+
+message ConfigurationProperties {
+  string key = 1;
+  string value = 2;
+}
+
+message PullSensor {
+  string className = 1;
+  SensorConfiguration configuration = 2;
+  Interval interval = 3;
+}
+
+message PushSensor {
+  int32 port = 1;
+}
+
+message SinkConfiguration {
+  string key = 1;
+  string value = 2;
+}
+
+enum SinkType {
+  KAIROS_DB = 0;
+  INFLUX = 1;
+}
+
+message Sink {
+  SinkType type = 1;
+  SinkConfiguration configuration = 2;
+}
+
+message MonitoringTag {
+  string key = 1;
+  string value = 2;
+}
+
+///////old ones//////////
+/*
+=======
+>>>>>>> master
 message Monitor {
   MonitorFilter filter = 1;
   Sensor sensor = 2;
@@ -36,3 +133,4 @@ message Map {
   string key = 1;
   string value = 2;
 }
+*/
