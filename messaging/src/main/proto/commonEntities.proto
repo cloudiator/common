@@ -44,6 +44,36 @@ message AttributeRequirement {
   string value = 4;
 }
 
+message Optimization {
+  oneof optimization {
+    AttributeOptimization attributeOptimization = 1;
+    OCLOptimization oclOptimization = 2;
+  }
+}
+
+message AttributeOptimization {
+  Objective objective = 1;
+  string objectiveClass = 2;
+  string objectiveAttribute = 3;
+  Aggregation aggregation = 4;
+}
+
+message OCLOptimization {
+  Objective objective = 1;
+  string expression = 2;
+}
+
+enum Objective {
+  MAXIMIZE = 0;
+  MINIMIZE = 1;
+}
+
+enum Aggregation {
+  SUM = 0;
+  AVG = 1;
+}
+
+
 enum LocationScope {
   PROVIDER = 0;
   REGION = 1;

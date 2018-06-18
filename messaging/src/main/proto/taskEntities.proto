@@ -11,8 +11,9 @@ message Task {
   repeated Port ports = 2;
   repeated TaskInterface interfaces = 3;
   repeated common.Requirement requirements = 4;
-  TaskType taskType = 5;
-  ExecutionEnvironment executionEnvironment = 6;
+  common.Optimization optimization = 5;
+  TaskType taskType = 6;
+  ExecutionEnvironment executionEnvironment = 7;
 }
 
 enum TaskType {
