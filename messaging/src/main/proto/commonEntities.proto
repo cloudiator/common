@@ -45,22 +45,21 @@ message AttributeRequirement {
 }
 
 message Optimization {
+  Objective objective = 1;
   oneof optimization {
-    AttributeOptimization attributeOptimization = 1;
-    OCLOptimization oclOptimization = 2;
+    AttributeOptimization attributeOptimization = 2;
+    OCLOptimization oclOptimization = 3;
   }
 }
 
 message AttributeOptimization {
-  Objective objective = 1;
-  string objectiveClass = 2;
-  string objectiveAttribute = 3;
-  Aggregation aggregation = 4;
+  string objectiveClass = 1;
+  string objectiveAttribute = 2;
+  Aggregation aggregation = 3;
 }
 
 message OCLOptimization {
-  Objective objective = 1;
-  string expression = 2;
+  string expression = 1;
 }
 
 enum Objective {
