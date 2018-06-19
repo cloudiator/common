@@ -8,8 +8,8 @@ import org.cloudiator.messages.entities.User.CreateTenantRequest;
 import org.cloudiator.messages.entities.User.CreateTenantResponse;
 import org.cloudiator.messages.entities.User.CreateUserRequest;
 import org.cloudiator.messages.entities.User.CreateUserResponse;
-import org.cloudiator.messages.entities.User.GetTenantRequest;
-import org.cloudiator.messages.entities.User.GetTenantResponse;
+import org.cloudiator.messages.entities.User.TenantQueryRequest;
+import org.cloudiator.messages.entities.User.TenantQueryResponse;
 import org.cloudiator.messages.entities.User.LoginRequest;
 import org.cloudiator.messages.entities.User.LoginResponse;
 import org.cloudiator.messaging.MessageInterface;
@@ -51,7 +51,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public GetTenantResponse getTenant(GetTenantRequest getTenantRequest) throws ResponseException {
-    return messageInterface.call(getTenantRequest, GetTenantResponse.class, timeout);
+  public TenantQueryResponse getTenants(TenantQueryRequest getTenantRequest)
+      throws ResponseException {
+    return messageInterface.call(getTenantRequest, TenantQueryResponse.class, timeout);
   }
 }

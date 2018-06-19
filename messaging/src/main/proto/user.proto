@@ -39,10 +39,10 @@ message AuthResponse {
   User user = 1;
 }
 
-message GetTenantRequest {
+message TenantQueryRequest {
   string tenantId = 1;
 }
 
-message GetTenantResponse {
+message TenantQueryResponse {
   repeated Tenant tenant = 1;
 }

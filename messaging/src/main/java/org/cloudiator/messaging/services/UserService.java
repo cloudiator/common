@@ -8,8 +8,8 @@ import org.cloudiator.messages.entities.User.CreateUserRequest;
 import org.cloudiator.messages.entities.User.CreateUserResponse;
 import org.cloudiator.messages.entities.User.LoginRequest;
 import org.cloudiator.messages.entities.User.LoginResponse;
-import org.cloudiator.messages.entities.User.GetTenantRequest;
-import org.cloudiator.messages.entities.User.GetTenantResponse;
+import org.cloudiator.messages.entities.User.TenantQueryRequest;
+import org.cloudiator.messages.entities.User.TenantQueryResponse;
 import org.cloudiator.messaging.ResponseException;
 
 public interface UserService {
@@ -23,6 +23,6 @@ public interface UserService {
 
   AuthResponse auth(AuthRequest authRequest) throws ResponseException;
 
-  GetTenantResponse getTenant(GetTenantRequest getTenantRequest) throws ResponseException;
+  TenantQueryResponse getTenants(TenantQueryRequest getTenantRequest) throws ResponseException;
 
 }
