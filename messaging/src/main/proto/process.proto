@@ -23,3 +23,12 @@ message CreateProcessRequest {
 message ProcessCreatedResponse {
   Process process = 1;
 }
+
+message CreateScheduleRequest {
+  string userId = 1;
+  Schedule schedule = 2;
+}
+
+message ScheduleCreatedResponse {
+  Schedule schedule = 1;
+}

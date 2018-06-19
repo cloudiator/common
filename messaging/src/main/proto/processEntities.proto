@@ -5,7 +5,18 @@ package application;
 option java_package = "org.cloudiator.messages.entities";
 
 import "taskEntities.proto";
+import "jobEntities.proto";
 
 message Process {
   Task name = 1;
+}
+
+message Schedule {
+  Job job = 1;
+  Instantiation instantiaton = 2;
+}
+
+enum Instantiation {
+  MANUAL = 0;
+  AUTOMATIC = 1;
 }
