@@ -38,3 +38,11 @@ message AuthRequest {
 message AuthResponse {
   User user = 1;
 }
+
+message GetTenantRequest {
+  string tenantId = 1;
+}
+
+message GetTenantResponse {
+  repeated Tenant tenant = 1;
+}
