@@ -10,6 +10,8 @@ import org.cloudiator.messages.entities.User.LoginRequest;
 import org.cloudiator.messages.entities.User.LoginResponse;
 import org.cloudiator.messages.entities.User.TenantQueryRequest;
 import org.cloudiator.messages.entities.User.TenantQueryResponse;
+import org.cloudiator.messages.entities.User.TenantCreatedEvent;
+import org.cloudiator.messages.entities.User.TenantDeletedEvent;
 import org.cloudiator.messaging.ResponseException;
 
 public interface UserService {
@@ -25,8 +27,8 @@ public interface UserService {
 
   TenantQueryResponse getTenants(TenantQueryRequest getTenantRequest) throws ResponseException;
 
-  void tenantCreatedEvent (TenantCreatedEvent tenantCreatedEvent);
+  void tenantCreatedEvent(TenantCreatedEvent tenantCreatedEvent);
 
-  void tenantDeletedEvent (TenantDeletedEvent tenantDeletedEvent);
+  void tenantDeletedEvent(TenantDeletedEvent tenantDeletedEvent);
 
 }
