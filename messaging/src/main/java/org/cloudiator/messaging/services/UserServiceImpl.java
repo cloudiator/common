@@ -55,4 +55,15 @@ public class UserServiceImpl implements UserService {
       throws ResponseException {
     return messageInterface.call(getTenantRequest, TenantQueryResponse.class, timeout);
   }
+
+  @Override
+  public void tenantCreatedEvent(TenantCreatedEvent tenantCreatedEvent) {
+    return messageInterface.publish(tenantCreatedEvent);
+  }
+
+  @Override
+  public void tenantDeletedEvent(TenantDeletedEvent tenantDeletedEvent) {
+    return messageInterface.publish(tenantDeletedEvent);
+  }
+
 }

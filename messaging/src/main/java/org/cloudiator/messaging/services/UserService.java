@@ -25,4 +25,8 @@ public interface UserService {
 
   TenantQueryResponse getTenants(TenantQueryRequest getTenantRequest) throws ResponseException;
 
+  void tenantCreatedEvent (TenantCreatedEvent tenantCreatedEvent);
+
+  void tenantDeletedEvent (TenantDeletedEvent tenantDeletedEvent);
+
 }

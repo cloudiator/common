@@ -46,3 +46,11 @@ message TenantQueryRequest {
 message TenantQueryResponse {
   repeated Tenant tenant = 1;
 }
+
+message TenantCreatedEvent {
+  Tenant createdTenant = 1;
+}
+
+message TenantDeletedEvent {
+  Tenant deletedTenant = 1;
+}
