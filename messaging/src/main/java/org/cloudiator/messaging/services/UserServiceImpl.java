@@ -10,6 +10,8 @@ import org.cloudiator.messages.entities.User.CreateUserRequest;
 import org.cloudiator.messages.entities.User.CreateUserResponse;
 import org.cloudiator.messages.entities.User.TenantQueryRequest;
 import org.cloudiator.messages.entities.User.TenantQueryResponse;
+import org.cloudiator.messages.entities.User.TenantCreatedEvent;
+import org.cloudiator.messages.entities.User.TenantDeletedEvent;
 import org.cloudiator.messages.entities.User.LoginRequest;
 import org.cloudiator.messages.entities.User.LoginResponse;
 import org.cloudiator.messaging.MessageInterface;
@@ -58,12 +60,12 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void tenantCreatedEvent(TenantCreatedEvent tenantCreatedEvent) {
-    return messageInterface.publish(tenantCreatedEvent);
+    messageInterface.publish(tenantCreatedEvent);
   }
 
   @Override
   public void tenantDeletedEvent(TenantDeletedEvent tenantDeletedEvent) {
-    return messageInterface.publish(tenantDeletedEvent);
+    messageInterface.publish(tenantDeletedEvent);
   }
 
 }
