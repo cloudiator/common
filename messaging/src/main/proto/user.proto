@@ -28,7 +28,6 @@ message LoginRequest {
 
 message LoginResponse {
   Token token = 1;
-  User user = 2;
 }
 
 message AuthRequest {

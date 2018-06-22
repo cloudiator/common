@@ -21,7 +21,7 @@ message NodeCandidateRequestResponse {
 message MatchmakingRequest {
   string userId = 1;
   NodeRequirements requirements = 2;
-  common.Objective objective = 3;
+  common.Optimization optimization = 3;
 }
 
 message MatchmakingResponse {
