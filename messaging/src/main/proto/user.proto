@@ -31,7 +31,7 @@ message LoginResponse {
 }
 
 message AuthRequest {
-  Token token = 1;
+  string handedToken = 1;
 }
 
 message AuthResponse {
