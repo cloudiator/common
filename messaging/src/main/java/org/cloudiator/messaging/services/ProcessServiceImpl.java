@@ -4,6 +4,7 @@ import com.google.inject.Inject;
 import javax.inject.Named;
 import org.cloudiator.messages.Process.CreateScheduleRequest;
 import org.cloudiator.messages.Process.ScheduleCreatedResponse;
+import org.cloudiator.messaging.MessageCallback;
 import org.cloudiator.messaging.MessageInterface;
 import org.cloudiator.messaging.ResponseException;
 
@@ -24,4 +25,11 @@ public class ProcessServiceImpl implements ProcessService {
       throws ResponseException {
     return messageInterface.call(createScheduleRequest, ScheduleCreatedResponse.class, timeout);
   }
+
+  @Override
+  public void subscribeSchedule(MessageCallback<CreateScheduleRequest> callback) {
+    messageInterface
+        .subscribe(CreateScheduleRequest.class, CreateScheduleRequest.parser(), callback);
+  }
+
 }
