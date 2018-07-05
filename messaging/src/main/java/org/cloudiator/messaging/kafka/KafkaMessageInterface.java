@@ -266,7 +266,7 @@ class KafkaMessageInterface implements MessageInterface {
       //add waiting callback
       waitingCallbacks.put(messageId, responseConsumer);
 
-      //subscribe to responseTopic
+      //subscribeEncryption to responseTopic
       final Subscription subscription = KafkaMessageInterface.this
           .subscribe(responseTopic, Response.parser(), (id, response) -> {
             //suppressing warning, as we can be sure that the callback is always of the corresponding

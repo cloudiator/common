@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package common;
+
+option java_package = "org.cloudiator.messages.entities";
+
+message EncryptionRequest {
+  string userId = 1;
+  string plaintext = 2;
+}
+
+message EncryptionResponse {
+  string ciphertext = 1;
+}
+
+message DecryptionRequest {
+  string userId = 1;
+  string ciphertext = 2;
+}
+
+message DecryptionResponse {
+  string plaintext = 1;
+}
