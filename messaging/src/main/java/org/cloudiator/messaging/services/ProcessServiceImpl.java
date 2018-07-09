@@ -16,6 +16,7 @@ public class ProcessServiceImpl implements ProcessService {
   @Named("responseTimeout")
   private long timeout = 20000;
 
+  @Inject
   public ProcessServiceImpl(MessageInterface messageInterface) {
     this.messageInterface = messageInterface;
   }
