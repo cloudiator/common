@@ -11,9 +11,15 @@ message Process {
   Task name = 1;
 }
 
-message Schedule {
+message ScheduleNew {
   string job = 1;
   Instantiation instantiaton = 2;
+}
+
+message Schedule {
+  string id = 1;
+  string Job = 2;
+  Instantiation instantiaton = 3;
 }
 
 enum Instantiation {
