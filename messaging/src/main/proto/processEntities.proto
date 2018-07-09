@@ -12,7 +12,7 @@ message Process {
 }
 
 message Schedule {
-  Job job = 1;
+  string job = 1;
   Instantiation instantiaton = 2;
 }
 
