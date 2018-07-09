@@ -39,6 +39,7 @@ public class MessageServiceModule extends AbstractModule {
     bind(InstallationRequestService.class).to(InstallationRequestServiceImpl.class)
         .in(Singleton.class);
     bind(EncryptionService.class).to(EncryptionServiceImpl.class).in(Singleton.class);
+    bind(SecureStoreService.class).to(SecureStoreServiceImpl.class).in(Singleton.class);
   }
 
 }
