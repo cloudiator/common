@@ -17,11 +17,16 @@ message ProcessQueryResponse {
 
 message CreateProcessRequest {
   string userId = 1;
-  Task task = 2;
+  ProcessNew process = 2;
 }
 
 message ProcessCreatedResponse {
   Process process = 1;
+}
+
+message CreateLanceProcessRequest {
+  string userId = 1;
+  LanceProcess lance = 2;
 }
 
 message CreateScheduleRequest {

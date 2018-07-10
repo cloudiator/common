@@ -6,9 +6,23 @@ option java_package = "org.cloudiator.messages.entities";
 
 import "taskEntities.proto";
 import "jobEntities.proto";
+import "nodeEntities.proto";
+
+message ProcessNew {
+  string task = 2;
+  string node = 3;
+}
 
 message Process {
-  Task name = 1;
+  string id = 1;
+  string task = 2;
+  string node = 3;
+}
+
+message LanceProcess {
+  Job job = 1;
+  string task = 2;
+  iaas.Node node = 3;
 }
 
 message ScheduleNew {
