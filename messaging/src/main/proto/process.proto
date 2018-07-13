@@ -21,7 +21,7 @@ message CreateProcessRequest {
 }
 
 message ProcessCreatedResponse {
-  Process process = 1;
+  ProcessGroup processGroup = 1;
 }
 
 message CreateLanceProcessRequest {
