@@ -17,7 +17,7 @@ message JobQueryResponse {
 
 message CreateJobRequest {
   string userId = 1;
-  Job job = 2;
+  JobNew job = 2;
 }
 
 message JobCreatedResponse {
