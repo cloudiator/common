@@ -15,7 +15,7 @@ message CreateUserResponse {
 }
 
 message CreateTenantRequest {
-  Tenant tenant = 1;
+  string tenant = 1;
 }
 
 message CreateTenantResponse {
@@ -28,13 +28,20 @@ message LoginRequest {
 
 message LoginResponse {
   Token token = 1;
-  User  user = 2;
 }
 
 message AuthRequest {
-  Token token = 1;
+  string handedToken = 1;
 }
 
 message AuthResponse {
   User user = 1;
+}
+
+message TenantQueryRequest {
+  string tenantId = 1;
+}
+
+message TenantQueryResponse {
+  repeated Tenant tenant = 1;
 }

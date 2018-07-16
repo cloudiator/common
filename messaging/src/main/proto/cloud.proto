@@ -6,6 +6,16 @@ option java_package = "org.cloudiator.messages";
 
 import "iaasEntities.proto";
 
+message CloudCreatedEvent {
+  string userId = 1;
+  Cloud cloud = 2;
+}
+
+message CloudDeletedEvent {
+  string userId = 1;
+  Cloud cloud = 2;
+}
+
 message CloudQueryRequest {
   string userId = 1;
   string cloudId = 2;

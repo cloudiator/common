@@ -33,6 +33,8 @@ enum RequirementOperator {
   GEQ = 2;
   GT = 3;
   LT = 4;
+  NEQ = 5;
+  IN = 6;
 }
 
 message AttributeRequirement {
@@ -41,6 +43,35 @@ message AttributeRequirement {
   RequirementOperator requirementOperator = 3;
   string value = 4;
 }
+
+message Optimization {
+  Objective objective = 1;
+  oneof optimization {
+    AttributeOptimization attributeOptimization = 2;
+    OCLOptimization oclOptimization = 3;
+  }
+}
+
+message AttributeOptimization {
+  string objectiveClass = 1;
+  string objectiveAttribute = 2;
+  Aggregation aggregation = 3;
+}
+
+message OCLOptimization {
+  string expression = 1;
+}
+
+enum Objective {
+  MAXIMIZE = 0;
+  MINIMIZE = 1;
+}
+
+enum Aggregation {
+  SUM = 0;
+  AVG = 1;
+}
+
 
 enum LocationScope {
   PROVIDER = 0;
