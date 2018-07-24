@@ -21,12 +21,16 @@ message CreateProcessRequest {
 }
 
 message ProcessCreatedResponse {
-  ProcessGroup processGroup = 1;
+  Process process = 1;
 }
 
 message CreateLanceProcessRequest {
   string userId = 1;
   LanceProcess lance = 2;
+}
+
+message LanceProcessCreatedResponse {
+  Process process = 2;
 }
 
 message CreateScheduleRequest {

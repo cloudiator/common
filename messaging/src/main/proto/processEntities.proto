@@ -11,16 +11,14 @@ import "nodeEntities.proto";
 message ProcessNew {
   Schedule schedule = 1;
   string task = 2;
+  string node = 3;
 }
 
 message Process {
   string id = 1;
   string job = 2;
   string task = 3;
-}
-
-message ProcessGroup {
-  repeated Process processes = 1;
+  string node = 4;
 }
 
 message LanceProcess {

@@ -5,6 +5,7 @@ import javax.inject.Named;
 import org.cloudiator.messages.Process.CreateLanceProcessRequest;
 import org.cloudiator.messages.Process.CreateProcessRequest;
 import org.cloudiator.messages.Process.CreateScheduleRequest;
+import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
 import org.cloudiator.messages.Process.ScheduleCreatedResponse;
 import org.cloudiator.messaging.MessageCallback;
@@ -49,15 +50,15 @@ public class ProcessServiceImpl implements ProcessService {
   }
 
   @Override
-  public ProcessCreatedResponse createLanceProcess(
+  public LanceProcessCreatedResponse createLanceProcess(
       CreateLanceProcessRequest createLanceProcessRequest) throws ResponseException {
-    return messageInterface.call(createLanceProcessRequest, ProcessCreatedResponse.class, timeout);
+    return messageInterface.call(createLanceProcessRequest, LanceProcessCreatedResponse.class, timeout);
   }
 
   @Override
   public void createLanceProcessAsync(CreateLanceProcessRequest createLanceProcessRequest,
-      ResponseCallback<ProcessCreatedResponse> callback) {
-    messageInterface.callAsync(createLanceProcessRequest, ProcessCreatedResponse.class, callback);
+      ResponseCallback<LanceProcessCreatedResponse> callback) {
+    messageInterface.callAsync(createLanceProcessRequest, LanceProcessCreatedResponse.class, callback);
   }
 
   @Override
