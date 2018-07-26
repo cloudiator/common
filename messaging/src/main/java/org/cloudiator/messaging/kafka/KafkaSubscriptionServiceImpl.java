@@ -26,11 +26,13 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.protobuf.Message;
 import com.google.protobuf.Parser;
+import de.uniulm.omi.cloudiator.util.execution.LoggingThreadPoolExecutor;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.Nullable;
@@ -48,7 +50,8 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
 
   private static final Logger LOGGER =
       LoggerFactory.getLogger(KafkaSubscriptionServiceImpl.class);
-  private static final ExecutorService SUBSCRIBER_EXECUTION = Executors.newCachedThreadPool();
+  private static final ExecutorService SUBSCRIBER_EXECUTION = new LoggingThreadPoolExecutor(0,
+      2147483647, 60L, TimeUnit.SECONDS, new SynchronousQueue());
   private final SubscriberRegistry subscriberRegistry = new SubscriberRegistry();
   private final KafkaConsumerFactory kafkaConsumerFactory;
 
