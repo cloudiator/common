@@ -172,7 +172,7 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
                       callbacks));
             }
             for (MessageCallback<T> callback : callbacks) {
-              LOGGER.debug(String.format(
+              LOGGER.trace(String.format(
                   "Receiving message with id %s and content %s on topic %s. Scheduling callback %s for Execution",
                   record.key(), record.value(), topic, callback));
               Runnable runnable = RunnableMessageCallback
