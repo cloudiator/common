@@ -15,6 +15,9 @@ public interface ProcessService {
   ScheduleCreatedResponse createSchedule(CreateScheduleRequest createScheduleRequest)
       throws ResponseException;
 
+  void createScheduleAsync(CreateScheduleRequest createScheduleRequest,
+      ResponseCallback<ScheduleCreatedResponse> callback);
+
   ProcessCreatedResponse createProcess(CreateProcessRequest createProcessRequest)
       throws ResponseException;
 
