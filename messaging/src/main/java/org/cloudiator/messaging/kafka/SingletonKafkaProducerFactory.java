@@ -20,6 +20,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.cloudiator.messaging.kafka.Constants.KAFKA_SERVERS;
 
+import com.google.common.base.MoreObjects;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.protobuf.Message;
@@ -29,11 +30,15 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Singleton
 class SingletonKafkaProducerFactory implements KafkaProducerFactory {
 
   private final String bootstrapServers;
+  private static final Logger LOGGER =
+      LoggerFactory.getLogger(SingletonKafkaProducerFactory.class);
 
 
   @Inject
@@ -65,9 +70,19 @@ class SingletonKafkaProducerFactory implements KafkaProducerFactory {
       if (instance == null) {
         instance = new KafkaProducer<>(properties, new StringSerializer(),
             new ProtobufSerializer());
+        LOGGER.info(String.format("Using %s as kafka producer.", instance));
       }
       return instance;
     }
+
+    @Override
+    public String toString() {
+      return MoreObjects.toStringHelper(this).add("producer", instance).toString();
+    }
   }
 
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this).toString();
+  }
 }

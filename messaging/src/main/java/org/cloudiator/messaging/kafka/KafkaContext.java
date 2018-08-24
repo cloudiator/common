@@ -16,6 +16,7 @@
 
 package org.cloudiator.messaging.kafka;
 
+import com.google.common.base.MoreObjects;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import de.uniulm.omi.cloudiator.util.configuration.Configuration;
@@ -42,5 +43,8 @@ public class KafkaContext {
     return properties;
   }
 
-
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this).add("config", config).toString();
+  }
 }

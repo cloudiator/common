@@ -92,18 +92,20 @@ class KafkaMessageInterface implements MessageInterface {
 
   @Override
   public void publish(String topic, String id, Message message) {
-    LOGGER.debug(
+    LOGGER.trace(
         String.format("Publishing new message %s on topic %s with id %s.", message, topic, id));
     kafkaProducerFactory.createKafkaProducer()
         .send(new ProducerRecord<>(topic, id, message), new Callback() {
           @Override
           public void onCompletion(RecordMetadata metadata, Exception exception) {
             if (exception != null) {
+              LOGGER.error(String.format("Error sending message with ID %s on topic %s", id, topic),
+                  exception);
               throw new IllegalStateException(
                   String.format("Error sending message with ID %s on topic %s", id, topic),
                   exception);
             }
-            LOGGER.debug(
+            LOGGER.trace(
                 String.format("Successfully send message with id %s in topic %s.", id, topic));
           }
         });
@@ -119,7 +121,7 @@ class KafkaMessageInterface implements MessageInterface {
   }
 
   private void publishSync(String topic, String id, Message message) {
-    LOGGER.debug(String
+    LOGGER.trace(String
         .format("Publishing (sync) new message %s on topic %s with id %s.", message, topic,
             id));
     Producer<String, Message> producer = kafkaProducerFactory.createKafkaProducer();
@@ -127,11 +129,13 @@ class KafkaMessageInterface implements MessageInterface {
       @Override
       public void onCompletion(RecordMetadata metadata, Exception exception) {
         if (exception != null) {
+          LOGGER.error(String.format("Error sending message with ID %s on topic %s", id, topic),
+              exception);
           throw new IllegalStateException(
               String.format("Error sending message with ID %s on topic %s", id, topic),
               exception);
         }
-        LOGGER.debug(
+        LOGGER.trace(
             String.format("Successfully send message with id %s in topic %s.", id, topic));
       }
     });
@@ -142,7 +146,7 @@ class KafkaMessageInterface implements MessageInterface {
   public <T extends Message, S extends Message> void callAsync(String requestTopic, T request,
       String responseTopic, Class<S> responseClass, ResponseCallback<S> responseConsumer) {
 
-    LOGGER.debug(String.format(
+    LOGGER.trace(String.format(
         "Async call to requestTopic %s with request %s. Response Topic is %s, using class %s and consumer %s",
         requestTopic, request, responseTopic, responseClass, responseConsumer));
 
@@ -161,7 +165,7 @@ class KafkaMessageInterface implements MessageInterface {
   public <T extends Message, S extends Message> S call(String requestTopic, T request,
       String responseTopic, Class<S> responseClass) throws ResponseException {
 
-    LOGGER.debug(String.format(
+    LOGGER.trace(String.format(
         "Call (sync) to requestTopic %s with request %s. Response Topic is %s, using class %s",
         requestTopic, request, responseTopic, responseClass));
 
@@ -173,7 +177,7 @@ class KafkaMessageInterface implements MessageInterface {
   public <T extends Message, S extends Message> S call(String requestTopic, T request,
       String responseTopic, Class<S> responseClass, long timeout) throws ResponseException {
 
-    LOGGER.debug(String.format(
+    LOGGER.trace(String.format(
         "Call (sync) to requestTopic %s with request %s. Response Topic is %s, using class %s and timeout %s",
         requestTopic, request, responseTopic, responseClass, timeout));
 
@@ -185,7 +189,7 @@ class KafkaMessageInterface implements MessageInterface {
   public <T extends Message, S extends Message> S call(T request, Class<S> responseClass)
       throws ResponseException {
 
-    LOGGER.debug(String
+    LOGGER.trace(String
         .format("Call (sync) with request %s. Response Class is %s.", request, responseClass));
 
     return kafkaRequestResponseHandler
@@ -197,7 +201,7 @@ class KafkaMessageInterface implements MessageInterface {
   public <T extends Message, S extends Message> S call(T request, Class<S> responseClass,
       long timeout) throws ResponseException {
 
-    LOGGER.debug(String
+    LOGGER.trace(String
         .format("Call (sync) with request %s. Response Class is %s. Timeout is %s.", request,
             responseClass, timeout));
 
@@ -219,7 +223,7 @@ class KafkaMessageInterface implements MessageInterface {
   @Override
   public void reply(String topic, String originId, Message message) {
 
-    LOGGER.debug(String
+    LOGGER.trace(String
         .format("Replying on topic %s for origin ID %s with message %s", topic, originId,
             message));
 
@@ -231,7 +235,7 @@ class KafkaMessageInterface implements MessageInterface {
   @Override
   public void reply(String topic, String originId, Error error) {
 
-    LOGGER.debug(String
+    LOGGER.trace(String
         .format("Replying on topic %s for origin ID %s with error %s", topic, originId, error));
 
     Response response = Response.newBuilder().setCorrelation(originId).setError(error).build();
@@ -266,7 +270,7 @@ class KafkaMessageInterface implements MessageInterface {
       //add waiting callback
       waitingCallbacks.put(messageId, responseConsumer);
 
-      //subscribe to responseTopic
+      //subscribeEncryption to responseTopic
       final Subscription subscription = KafkaMessageInterface.this
           .subscribe(responseTopic, Response.parser(), (id, response) -> {
             //suppressing warning, as we can be sure that the callback is always of the corresponding

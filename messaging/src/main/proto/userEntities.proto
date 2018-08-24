@@ -8,7 +8,6 @@ message UserNew {
   string email = 1;
   Tenant tenant = 2;
   string password = 3;
-  string passwordRepeat = 4;
 }
 
 message Tenant {

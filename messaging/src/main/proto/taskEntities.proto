@@ -11,20 +11,13 @@ message Task {
   repeated Port ports = 2;
   repeated TaskInterface interfaces = 3;
   repeated common.Requirement requirements = 4;
-  TaskType taskType = 5;
-  ExecutionEnvironment executionEnvironment = 6;
+  common.Optimization optimization = 5;
+  TaskType taskType = 6;
 }
 
 enum TaskType {
   BATCH = 0;
   SERVICE = 1;
-}
-
-enum ExecutionEnvironment {
-  SPARK = 0;
-  NATIVE = 1;
-  CONTAINER = 2;
-  LANCE = 3;
 }
 
 message TaskInterface {
@@ -46,6 +39,12 @@ message DockerInterface {
   repeated common.Param params = 2;
 }
 
+enum ContainerType {
+  NATIVE = 0;
+  DOCKER = 1;
+  BOTH = 2;
+}
+
 message LanceInterface {
   string init = 1;
   string preInstall = 2;
@@ -60,6 +59,7 @@ message LanceInterface {
   string stop = 11;
   string postStop = 12;
   string shutdown = 13;
+  ContainerType containerType = 14;
 }
 
 message PortProvided {
