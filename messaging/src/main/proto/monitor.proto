@@ -8,19 +8,23 @@ import "monitorEntities.proto";
 
 message MonitorQueryRequest {
   string userId = 1;
+
 }
 
 message MonitorQueryResponse {
   repeated Monitor monitor = 1;
+
 }
 
 message CreateMonitorRequest {
   string userId = 1;
   NewMonitor newmonitor = 2;
+
 }
 
 message CreateMonitorResponse {
   Monitor monitor = 1;
+
 }
 
 message UpdateMonitorRequest {
