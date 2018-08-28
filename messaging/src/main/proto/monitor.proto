@@ -19,7 +19,7 @@ message CreateMonitorRequest {
   NewMonitor newmonitor = 2;
 }
 
-message MonitorCreatedResponse {
+message CreateMonitorResponse {
   Monitor monitor = 1;
 }
 
@@ -28,7 +28,7 @@ message UpdateMonitorRequest {
   Monitor monitor = 2;
 }
 
-message MonitorUpdatedResponse {
+message UpdateMonitorResponse {
   Monitor monitor = 1;
 }
 
@@ -37,5 +37,5 @@ message DeleteMonitorRequest {
   Monitor monitor = 2;
 }
 
-message MonitorDeletedResponse {
+message DeleteMonitorResponse {
 }
