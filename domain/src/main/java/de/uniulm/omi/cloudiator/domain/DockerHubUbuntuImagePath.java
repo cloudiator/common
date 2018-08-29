@@ -26,6 +26,6 @@ public class DockerHubUbuntuImagePath implements DockerHubImagePath {
   public String generateImagePath(OperatingSystemVersion operatingSystemVersion) {
 
     checkState(operatingSystemVersion.name().isPresent(), "Name of the version is not present.");
-    return(UBUNTU_DOCKERHUB_REPO + ":" + operatingSystemVersion.name());
+    return(UBUNTU_DOCKERHUB_REPO + ":" + operatingSystemVersion.name().get());
   }
 }
