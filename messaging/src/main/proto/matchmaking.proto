@@ -25,5 +25,5 @@ message MatchmakingRequest {
 }
 
 message MatchmakingResponse {
-  repeated iaas.VirtualMachineRequest nodes = 1;
+  repeated NodeCandidate candidates = 1;
 }
