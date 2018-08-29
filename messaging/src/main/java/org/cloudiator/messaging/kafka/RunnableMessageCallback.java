@@ -46,7 +46,7 @@ class RunnableMessageCallback<T> implements MessageCallback<T>, Runnable {
 
   @Override
   public void run() {
-    LOGGER.debug(String
+    LOGGER.trace(String
         .format("%s is starting execution.", this));
     accept(this.id, this.content);
   }

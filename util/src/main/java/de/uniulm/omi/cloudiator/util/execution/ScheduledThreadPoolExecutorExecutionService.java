@@ -16,7 +16,9 @@
 
 package de.uniulm.omi.cloudiator.util.execution;
 
+import com.google.common.util.concurrent.MoreExecutors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,5 +55,10 @@ public class ScheduledThreadPoolExecutorExecutionService implements ExecutionSer
   @Override
   public void shutdown() {
     this.scheduledExecutorService.shutdown();
+  }
+
+  @Override
+  public void delayShutdownHook(long terminationTimeout, TimeUnit timeUnit) {
+    MoreExecutors.addDelayedShutdownHook(scheduledExecutorService, terminationTimeout, timeUnit);
   }
 }

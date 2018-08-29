@@ -19,6 +19,7 @@ package org.cloudiator.messaging.kafka;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.common.base.MoreObjects;
 import com.google.inject.Inject;
 import com.google.protobuf.Message;
 import com.google.protobuf.Parser;
@@ -28,11 +29,15 @@ import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class BaseKafkaConsumerFactory implements KafkaConsumerFactory {
 
   private final String bootstrapServers;
   private final String groupId;
+  private static final Logger LOGGER =
+      LoggerFactory.getLogger(BaseKafkaConsumerFactory.class);
 
   @Inject
   BaseKafkaConsumerFactory(@Named(Constants.KAFKA_SERVERS) String bootstrapServers,
@@ -54,8 +59,19 @@ class BaseKafkaConsumerFactory implements KafkaConsumerFactory {
     properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, true);
     properties.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, 1000);
     properties.put(ConsumerConfig.FETCH_MAX_WAIT_MS_CONFIG, 1000);
-    return new KafkaConsumer<>(properties, new StringDeserializer(),
+
+    final KafkaConsumer<String, T> kafkaConsumer = new KafkaConsumer<>(properties,
+        new StringDeserializer(),
         new ProtobufDeserializer<>(parser));
+
+    LOGGER.debug(String.format("%s generated the kafka consumer %s.", this, kafkaConsumer));
+
+    return kafkaConsumer;
+
   }
 
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this).toString();
+  }
 }

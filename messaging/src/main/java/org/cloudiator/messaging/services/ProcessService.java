@@ -3,6 +3,7 @@ package org.cloudiator.messaging.services;
 import org.cloudiator.messages.Process.CreateLanceProcessRequest;
 import org.cloudiator.messages.Process.CreateProcessRequest;
 import org.cloudiator.messages.Process.CreateScheduleRequest;
+import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
 import org.cloudiator.messages.Process.ScheduleCreatedResponse;
 import org.cloudiator.messaging.MessageCallback;
@@ -14,6 +15,9 @@ public interface ProcessService {
   ScheduleCreatedResponse createSchedule(CreateScheduleRequest createScheduleRequest)
       throws ResponseException;
 
+  void createScheduleAsync(CreateScheduleRequest createScheduleRequest,
+      ResponseCallback<ScheduleCreatedResponse> callback);
+
   ProcessCreatedResponse createProcess(CreateProcessRequest createProcessRequest)
       throws ResponseException;
 
@@ -22,11 +26,12 @@ public interface ProcessService {
 
   void subscribeCreateProcessRequest(MessageCallback<CreateProcessRequest> callback);
 
-  ProcessCreatedResponse createLanceProcess(CreateLanceProcessRequest createLanceProcessRequest)
+  LanceProcessCreatedResponse createLanceProcess(
+      CreateLanceProcessRequest createLanceProcessRequest)
       throws ResponseException;
 
   void createLanceProcessAsync(CreateLanceProcessRequest createLanceProcessRequest,
-      ResponseCallback<ProcessCreatedResponse> callback) throws ResponseException;
+      ResponseCallback<LanceProcessCreatedResponse> callback);
 
   void subscribeCreateLanceProcessRequest(MessageCallback<CreateLanceProcessRequest> callback);
 

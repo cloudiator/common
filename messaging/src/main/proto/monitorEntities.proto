@@ -5,7 +5,6 @@ package application;
 option java_package = "org.cloudiator.messages.entities";
 
 
-
 message Monitor {
   string id = 1;
   string metric = 2;
@@ -89,48 +88,10 @@ enum SinkType {
 
 message Sink {
   SinkType type = 1;
-  SinkConfiguration configuration = 2;
+  repeated SinkConfiguration configuration = 2;
 }
 
 message MonitoringTag {
   string key = 1;
   string value = 2;
 }
-
-///////old ones//////////
-/*
-=======
->>>>>>> master
-message Monitor {
-  MonitorFilter filter = 1;
-  Sensor sensor = 2;
-  repeated Map sensorConfiguration = 3;
-  Schedule schedule = 4;
-  repeated Map externalReferences = 5;
-}
-
-message MonitorFilter {
-  //string applicationInstance = 1;
-  string job = 2;
-  string task = 3;
-  string process = 4;
-  string cloud = 5;
-}
-
-message Sensor {
-  string metricName = 1;
-  string className = 2;
-  bool isVmSensor = 3;
-  bool isPush = 4;
-}
-
-message Schedule {
-  int32 interval = 1;
-  string unit = 2;
-}
-
-message Map {
-  string key = 1;
-  string value = 2;
-}
-*/

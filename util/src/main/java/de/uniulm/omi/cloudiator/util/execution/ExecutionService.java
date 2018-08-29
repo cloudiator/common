@@ -19,6 +19,8 @@
  */
 package de.uniulm.omi.cloudiator.util.execution;
 
+import java.util.concurrent.TimeUnit;
+
 public interface ExecutionService {
 
   void schedule(Schedulable schedulable);
@@ -26,4 +28,6 @@ public interface ExecutionService {
   void execute(Runnable runnable);
 
   void shutdown();
+
+  void delayShutdownHook(long terminationTimeout, TimeUnit timeUnit);
 }

@@ -16,6 +16,7 @@
 
 package org.cloudiator.messaging.kafka;
 
+import com.google.common.base.MoreObjects;
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 import org.cloudiator.messaging.MessageInterface;
@@ -42,7 +43,14 @@ public class KafkaMessagingModule extends AbstractModule {
     bind(KafkaConsumerFactory.class).to(BaseKafkaConsumerFactory.class);
     bind(KafkaProducerFactory.class).to(SingletonKafkaProducerFactory.class);
 
+    LOGGER.info(String
+        .format("%s is using the following kafka properties: %s", this,
+            kafkaContext.getProperties()));
     Names.bindProperties(binder(), kafkaContext.getProperties());
   }
 
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this).add("kafkaContext", kafkaContext).toString();
+  }
 }

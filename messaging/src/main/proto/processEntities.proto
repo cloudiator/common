@@ -9,22 +9,21 @@ import "jobEntities.proto";
 import "nodeEntities.proto";
 
 message ProcessNew {
-  Schedule schedule = 1;
-  string task = 2;
+  string schedule = 1;
+  string job = 2;
+  string task = 3;
+  string node = 4;
 }
 
 message Process {
   string id = 1;
   string job = 2;
   string task = 3;
-}
-
-message ProcessGroup {
-  repeated Process processes = 1;
+  string node = 4;
 }
 
 message LanceProcess {
-  Schedule schedule = 1;
+  string schedule = 1;
   Job job = 2;
   string task = 3;
   iaas.Node node = 4;
@@ -39,6 +38,7 @@ message Schedule {
   string id = 1;
   string Job = 2;
   Instantiation instantiaton = 3;
+  repeated Process processes = 4;
 }
 
 enum Instantiation {
