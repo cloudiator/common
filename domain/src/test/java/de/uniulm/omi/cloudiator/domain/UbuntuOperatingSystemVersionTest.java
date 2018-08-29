@@ -16,19 +16,24 @@
 
 package de.uniulm.omi.cloudiator.domain;
 
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.Test;
 
 /**
  * Created by daniel on 25.07.16.
  */
-public class UbuntuOperatingSystemVersionSupplierTest {
-
-  public static void main(String[] args) {
-    System.out.println(new UbuntuOperatingSystemVersionSupplier().get());
-  }
+public class UbuntuOperatingSystemVersionTest {
 
   @Test
   public void test() {
-
+    System.out.println(new UbuntuOperatingSystemVersionSupplier().get());
+    OperatingSystemFamily operatingSystemFamily = OperatingSystemFamily.UBUNTU;
+    OperatingSystemArchitecture operatingSystemArchitecture = OperatingSystemArchitecture.AMD64;
+    Set<String> altNames = new HashSet<>();
+    altNames.add("16.04");
+    OperatingSystemVersion version = new OperatingSystemVersionImpl(16, "16.04", altNames);
+    OperatingSystemImpl impl = new OperatingSystemImpl(operatingSystemFamily, operatingSystemArchitecture, version);
+    System.out.println(impl.getDockerHubImagePath());
   }
 }
