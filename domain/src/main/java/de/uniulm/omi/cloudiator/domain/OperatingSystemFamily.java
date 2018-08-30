@@ -39,7 +39,7 @@ public enum OperatingSystemFamily implements RemotePortProvider, LoginNameSuppli
    * Centos
    */
   CENTOS(OperatingSystemType.LINUX, OperatingSystemVersionFormats.set(2, 3, 4, 5, 6, 7),
-          LoginNameSuppliers.staticSupplier("centos"), null, null), /**
+          LoginNameSuppliers.staticSupplier("centos"), null, new DockerHubCentosImagePath()), /**
    * Darwin OS
    */
   DARWIN, DEBIAN, /**
