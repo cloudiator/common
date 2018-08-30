@@ -91,6 +91,11 @@ public class OperatingSystem extends Model
   }
 
   @Override
+  public String getDockerHubImagePath() {
+    return null;
+  }
+
+  @Override
   public OperatingSystemVersion operatingSystemVersion() {
     if (version == null) {
       return OperatingSystemVersions.unknown();

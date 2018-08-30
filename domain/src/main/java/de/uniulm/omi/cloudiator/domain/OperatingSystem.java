@@ -21,6 +21,8 @@ package de.uniulm.omi.cloudiator.domain;
  */
 public interface OperatingSystem {
 
+  String getDockerHubImagePath();
+
   OperatingSystemFamily operatingSystemFamily();
 
   OperatingSystemArchitecture operatingSystemArchitecture();

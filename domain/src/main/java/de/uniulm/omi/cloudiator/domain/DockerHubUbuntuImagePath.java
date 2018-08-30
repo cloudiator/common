@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 University of Ulm
+ * Copyright 2018 University of Ulm
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-package org.cloudiator.messaging;
+package de.uniulm.omi.cloudiator.domain;
 
-/**
- * Created by daniel on 24.05.17.
- */
-public class ResponseException extends Exception {
+import static com.google.common.base.Preconditions.checkState;
 
-  private final int code;
+public class DockerHubUbuntuImagePath implements DockerHubImagePath {
 
-  public ResponseException(int code, String message) {
-    super(message);
-    this.code = code;
-  }
+  private final static String UBUNTU_DOCKERHUB_REPO = "ubuntu";
 
-  public int code() {
-    return code;
+  @Override
+  public String generateImagePath(OperatingSystemVersion operatingSystemVersion) {
+
+    checkState(operatingSystemVersion.name().isPresent(), "Name of the version is not present.");
+    return(UBUNTU_DOCKERHUB_REPO + ":" + operatingSystemVersion.name().get());
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 University of Ulm
+ * Copyright 2018 University of Ulm
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,9 @@
  * limitations under the License.
  */
 
-package org.cloudiator.messaging;
+package de.uniulm.omi.cloudiator.domain;
 
-/**
- * Created by daniel on 24.05.17.
- */
-public class ResponseException extends Exception {
+public interface DockerHubImagePath {
 
-  private final int code;
-
-  public ResponseException(int code, String message) {
-    super(message);
-    this.code = code;
-  }
-
-  public int code() {
-    return code;
-  }
+  public String generateImagePath(OperatingSystemVersion operatingSystemVersion);
 }
