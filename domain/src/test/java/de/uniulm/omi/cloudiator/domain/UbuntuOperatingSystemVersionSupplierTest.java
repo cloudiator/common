@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 University of Ulm
+ * Copyright 2018 University of Ulm
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,24 +16,15 @@
 
 package de.uniulm.omi.cloudiator.domain;
 
-import java.util.HashSet;
-import java.util.Set;
 import org.junit.Test;
 
 /**
- * Created by daniel on 25.07.16.
+ * Created by daniel on 25.07.16., modified 29.08.18
  */
-public class UbuntuOperatingSystemVersionTest {
+public class UbuntuOperatingSystemVersionSupplierTest {
 
   @Test
   public void test() {
     System.out.println(new UbuntuOperatingSystemVersionSupplier().get());
-    OperatingSystemFamily operatingSystemFamily = OperatingSystemFamily.UBUNTU;
-    OperatingSystemArchitecture operatingSystemArchitecture = OperatingSystemArchitecture.AMD64;
-    Set<String> altNames = new HashSet<>();
-    altNames.add("16.04");
-    OperatingSystemVersion version = new OperatingSystemVersionImpl(16, "16.04", altNames);
-    OperatingSystemImpl impl = new OperatingSystemImpl(operatingSystemFamily, operatingSystemArchitecture, version);
-    System.out.println(impl.getDockerHubImagePath());
   }
 }
