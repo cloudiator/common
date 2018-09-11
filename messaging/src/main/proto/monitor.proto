@@ -18,7 +18,7 @@ message MonitorQueryResponse {
 
 message CreateMonitorRequest {
   string userId = 1;
-  NewMonitor newmonitor = 2;
+  Monitor newmonitor = 2;
 
 }
 
