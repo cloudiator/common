@@ -24,6 +24,7 @@ message TaskInterface {
   oneof taskInterface {
     DockerInterface dockerInterface = 1;
     LanceInterface lanceInterface = 2;
+    SparkInterface sparkInterface = 3;
   }
 }
 
@@ -71,4 +72,12 @@ message PortRequired {
   string name = 1;
   string updateAction = 2;
   bool isMandatory = 3;
+}
+
+message SparkInterface {
+  string file = 1;
+  string className = 2;
+  repeated string arguments = 3;
+  map<string, string> sparkArguments = 4;
+  map<string, string> sparkConfiguration = 5;
 }
