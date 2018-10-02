@@ -14,12 +14,21 @@ message SecureStoreResponse {
   string encryptedValue = 1;
 }
 
-message SecureRetrieveRequest {
+message SecureStoreRetrieveRequest {
   string userId = 1;
   string key = 2;
 }
 
-message SecureRetrieveResponse {
+message SecureStoreRetrieveResponse {
   string value = 1;
+}
+
+message SecureStoreDeleteRequest {
+  string userId = 1;
+  string key = 2;
+}
+
+message SecureStoreDeleteResponse {
+
 }
 
