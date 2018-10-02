@@ -37,7 +37,7 @@ message Port {
 
 message DockerInterface {
   string dockerImage = 1;
-  repeated common.Param params = 2;
+  map<string,string> environment = 2;
 }
 
 enum ContainerType {
