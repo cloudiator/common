@@ -10,14 +10,13 @@ import "nodeEntities.proto";
 
 message ProcessNew {
   string schedule = 1;
-  string job = 2;
-  string task = 3;
-  string node = 4;
+  string task = 2;
+  string node = 3;
 }
 
 message Process {
   string id = 1;
-  string job = 2;
+  string schedule = 2;
   string task = 3;
   string node = 4;
 }
@@ -31,13 +30,13 @@ message LanceProcess {
 
 message ScheduleNew {
   string job = 1;
-  Instantiation instantiaton = 2;
+  Instantiation instantiation = 2;
 }
 
 message Schedule {
   string id = 1;
   string Job = 2;
-  Instantiation instantiaton = 3;
+  Instantiation instantiation = 3;
   repeated Process processes = 4;
 }
 
