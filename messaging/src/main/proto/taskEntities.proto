@@ -24,7 +24,8 @@ message TaskInterface {
   oneof taskInterface {
     DockerInterface dockerInterface = 1;
     LanceInterface lanceInterface = 2;
-    FaasInterface faasInterface = 3;
+    SparkInterface sparkInterface = 3;
+    FaasInterface faasInterface = 4;
   }
 }
 
@@ -37,7 +38,7 @@ message Port {
 
 message DockerInterface {
   string dockerImage = 1;
-  repeated common.Param params = 2;
+  map<string,string> environment = 2;
 }
 
 enum ContainerType {
@@ -93,4 +94,12 @@ message PortRequired {
   string name = 1;
   string updateAction = 2;
   bool isMandatory = 3;
+}
+
+message SparkInterface {
+  string file = 1;
+  string className = 2;
+  repeated string arguments = 3;
+  map<string, string> sparkArguments = 4;
+  map<string, string> sparkConfiguration = 5;
 }

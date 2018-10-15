@@ -15,6 +15,15 @@ message ProcessQueryResponse {
   repeated Process processes = 1;
 }
 
+message ScheduleQueryRequest {
+  string userId = 1;
+  string scheduleId = 2;
+}
+
+message ScheduleQueryResponse {
+  repeated Schedule schedules = 1;
+}
+
 message CreateProcessRequest {
   string userId = 1;
   ProcessNew process = 2;

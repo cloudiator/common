@@ -6,11 +6,18 @@ import org.cloudiator.messages.Process.CreateScheduleRequest;
 import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
 import org.cloudiator.messages.Process.ScheduleCreatedResponse;
+import org.cloudiator.messages.Process.ScheduleQueryRequest;
+import org.cloudiator.messages.Process.ScheduleQueryResponse;
 import org.cloudiator.messaging.MessageCallback;
 import org.cloudiator.messaging.ResponseCallback;
 import org.cloudiator.messaging.ResponseException;
 
 public interface ProcessService {
+
+  ScheduleQueryResponse querySchedules(ScheduleQueryRequest scheduleQueryRequest)
+      throws ResponseException;
+
+  void subscribeScheduleQueryRequest(MessageCallback<ScheduleQueryRequest> callback);
 
   ScheduleCreatedResponse createSchedule(CreateScheduleRequest createScheduleRequest)
       throws ResponseException;

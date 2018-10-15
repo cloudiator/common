@@ -40,13 +40,8 @@ message Credential {
 }
 
 message Configuration {
-  repeated Property property = 1;
+  map<string, string> properties = 1;
   string nodeGroup = 2;
-}
-
-message Property {
-  string key = 1;
-  string value = 2;
 }
 
 message HardwareFlavor {

@@ -20,12 +20,12 @@ import com.google.inject.Inject;
 import javax.inject.Named;
 import org.cloudiator.messages.Monitor.CreateMonitorRequest;
 import org.cloudiator.messages.Monitor.DeleteMonitorRequest;
-import org.cloudiator.messages.Monitor.MonitorCreatedResponse;
-import org.cloudiator.messages.Monitor.MonitorDeletedResponse;
+import org.cloudiator.messages.Monitor.CreateMonitorResponse;
+import org.cloudiator.messages.Monitor.DeleteMonitorResponse;
 import org.cloudiator.messages.Monitor.MonitorQueryRequest;
 import org.cloudiator.messages.Monitor.MonitorQueryResponse;
-import org.cloudiator.messages.Monitor.MonitorUpdatedResponse;
 import org.cloudiator.messages.Monitor.UpdateMonitorRequest;
+import org.cloudiator.messages.Monitor.UpdateMonitorResponse;
 import org.cloudiator.messaging.MessageInterface;
 import org.cloudiator.messaging.ResponseException;
 
@@ -52,20 +52,20 @@ public class MonitorServiceImpl implements MonitorService {
   }
 
   @Override
-  public MonitorCreatedResponse addMonitor(CreateMonitorRequest createMonitorRequest)
+  public CreateMonitorResponse addMonitor(CreateMonitorRequest createMonitorRequest)
       throws ResponseException {
-    return messageInterface.call(createMonitorRequest, MonitorCreatedResponse.class, timeout);
+    return messageInterface.call(createMonitorRequest, CreateMonitorResponse.class, timeout);
   }
 
   @Override
-  public MonitorUpdatedResponse getMonitor(UpdateMonitorRequest updateMonitorRequest)
+  public UpdateMonitorResponse getMonitor(UpdateMonitorRequest updateMonitorRequest)
       throws ResponseException {
-    return messageInterface.call(updateMonitorRequest, MonitorUpdatedResponse.class, timeout);
+    return messageInterface.call(updateMonitorRequest, UpdateMonitorResponse.class, timeout);
   }
 
   @Override
-  public MonitorDeletedResponse deleteMonitor(DeleteMonitorRequest deleteMonitorRequest)
+  public DeleteMonitorResponse deleteMonitor(DeleteMonitorRequest deleteMonitorRequest)
       throws ResponseException {
-    return messageInterface.call(deleteMonitorRequest, MonitorDeletedResponse.class);
+    return messageInterface.call(deleteMonitorRequest, DeleteMonitorResponse.class);
   }
 }
