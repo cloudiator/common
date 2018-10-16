@@ -12,6 +12,7 @@ enum Tool {
   LANCE = 2;
   KAIROSDB = 3;
   DOCKER = 4;
+  SPARK_WORKER= 5;
 }
 
 message Installation {
