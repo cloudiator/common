@@ -30,8 +30,6 @@ public class OperatingSystemImpl implements OperatingSystem {
   private OperatingSystemArchitecture operatingSystemArchitecture;
   private OperatingSystemVersion version;
 
-  //hier String Rückgabe-Funktion mit DockerContainerName einbauen
-
   public OperatingSystemImpl(OperatingSystemFamily operatingSystemFamily,
       OperatingSystemArchitecture operatingSystemArchitecture, OperatingSystemVersion version) {
 
