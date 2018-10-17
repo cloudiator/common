@@ -9,6 +9,8 @@ import "processEntities.proto";
 
 message ProcessQueryRequest {
   string userId = 1;
+  string processId = 2;
+  string scheduleId = 3;
 }
 
 message ProcessQueryResponse {
