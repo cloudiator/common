@@ -13,7 +13,6 @@ message Task {
   repeated common.Requirement requirements = 4;
   common.Optimization optimization = 5;
   TaskType taskType = 6;
-  ExecutionEnvironment executionEnvironment = 7;
 }
 
 enum TaskType {
@@ -21,17 +20,11 @@ enum TaskType {
   SERVICE = 1;
 }
 
-enum ExecutionEnvironment {
-  SPARK = 0;
-  NATIVE = 1;
-  CONTAINER = 2;
-  LANCE = 3;
-}
-
 message TaskInterface {
   oneof taskInterface {
     DockerInterface dockerInterface = 1;
     LanceInterface lanceInterface = 2;
+    SparkInterface sparkInterface = 3;
   }
 }
 
@@ -44,7 +37,13 @@ message Port {
 
 message DockerInterface {
   string dockerImage = 1;
-  repeated common.Param params = 2;
+  map<string,string> environment = 2;
+}
+
+enum ContainerType {
+  NATIVE = 0;
+  DOCKER = 1;
+  BOTH = 2;
 }
 
 message LanceInterface {
@@ -61,6 +60,7 @@ message LanceInterface {
   string stop = 11;
   string postStop = 12;
   string shutdown = 13;
+  ContainerType containerType = 14;
 }
 
 message PortProvided {
@@ -72,4 +72,12 @@ message PortRequired {
   string name = 1;
   string updateAction = 2;
   bool isMandatory = 3;
+}
+
+message SparkInterface {
+  string file = 1;
+  string className = 2;
+  repeated string arguments = 3;
+  map<string, string> sparkArguments = 4;
+  map<string, string> sparkConfiguration = 5;
 }

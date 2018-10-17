@@ -5,8 +5,13 @@ import javax.inject.Named;
 import org.cloudiator.messages.Process.CreateLanceProcessRequest;
 import org.cloudiator.messages.Process.CreateProcessRequest;
 import org.cloudiator.messages.Process.CreateScheduleRequest;
+import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
+import org.cloudiator.messages.Process.ProcessQueryRequest;
+import org.cloudiator.messages.Process.ProcessQueryResponse;
 import org.cloudiator.messages.Process.ScheduleCreatedResponse;
+import org.cloudiator.messages.Process.ScheduleQueryRequest;
+import org.cloudiator.messages.Process.ScheduleQueryResponse;
 import org.cloudiator.messaging.MessageCallback;
 import org.cloudiator.messaging.MessageInterface;
 import org.cloudiator.messaging.ResponseCallback;
@@ -26,9 +31,39 @@ public class ProcessServiceImpl implements ProcessService {
   }
 
   @Override
+  public ScheduleQueryResponse querySchedules(ScheduleQueryRequest scheduleQueryRequest)
+      throws ResponseException {
+    return this.messageInterface
+        .call(scheduleQueryRequest, ScheduleQueryResponse.class, timeout);
+  }
+
+  @Override
+  public ProcessQueryResponse queryProcesses(ProcessQueryRequest processQueryRequest)
+      throws ResponseException {
+    return this.messageInterface.call(processQueryRequest, ProcessQueryResponse.class, timeout);
+  }
+
+  @Override
+  public void subscribeScheduleQueryRequest(MessageCallback<ScheduleQueryRequest> callback) {
+    this.messageInterface
+        .subscribe(ScheduleQueryRequest.class, ScheduleQueryRequest.parser(), callback);
+  }
+
+  @Override
+  public void subscribeProcessQueryRequest(MessageCallback<ProcessQueryRequest> callback) {
+    messageInterface.subscribe(ProcessQueryRequest.class, ProcessQueryRequest.parser(), callback);
+  }
+
+  @Override
   public ScheduleCreatedResponse createSchedule(CreateScheduleRequest createScheduleRequest)
       throws ResponseException {
     return messageInterface.call(createScheduleRequest, ScheduleCreatedResponse.class, timeout);
+  }
+
+  @Override
+  public void createScheduleAsync(CreateScheduleRequest createScheduleRequest,
+      ResponseCallback<ScheduleCreatedResponse> callback) {
+    messageInterface.callAsync(createScheduleRequest, ScheduleCreatedResponse.class, callback);
   }
 
   @Override
@@ -49,15 +84,17 @@ public class ProcessServiceImpl implements ProcessService {
   }
 
   @Override
-  public ProcessCreatedResponse createLanceProcess(
+  public LanceProcessCreatedResponse createLanceProcess(
       CreateLanceProcessRequest createLanceProcessRequest) throws ResponseException {
-    return messageInterface.call(createLanceProcessRequest, ProcessCreatedResponse.class, timeout);
+    return messageInterface
+        .call(createLanceProcessRequest, LanceProcessCreatedResponse.class, timeout);
   }
 
   @Override
   public void createLanceProcessAsync(CreateLanceProcessRequest createLanceProcessRequest,
-      ResponseCallback<ProcessCreatedResponse> callback) {
-    messageInterface.callAsync(createLanceProcessRequest, ProcessCreatedResponse.class, callback);
+      ResponseCallback<LanceProcessCreatedResponse> callback) {
+    messageInterface
+        .callAsync(createLanceProcessRequest, LanceProcessCreatedResponse.class, callback);
   }
 
   @Override
