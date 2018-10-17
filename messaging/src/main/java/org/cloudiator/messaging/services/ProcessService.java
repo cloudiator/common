@@ -24,6 +24,8 @@ public interface ProcessService {
 
   void subscribeScheduleQueryRequest(MessageCallback<ScheduleQueryRequest> callback);
 
+  void subscribeProcessQueryRequest(MessageCallback<ProcessQueryRequest> callback);
+
   ScheduleCreatedResponse createSchedule(CreateScheduleRequest createScheduleRequest)
       throws ResponseException;
 

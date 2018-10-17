@@ -50,6 +50,11 @@ public class ProcessServiceImpl implements ProcessService {
   }
 
   @Override
+  public void subscribeProcessQueryRequest(MessageCallback<ProcessQueryRequest> callback) {
+    messageInterface.subscribe(ProcessQueryRequest.class, ProcessQueryRequest.parser(), callback);
+  }
+
+  @Override
   public ScheduleCreatedResponse createSchedule(CreateScheduleRequest createScheduleRequest)
       throws ResponseException {
     return messageInterface.call(createScheduleRequest, ScheduleCreatedResponse.class, timeout);
