@@ -32,36 +32,46 @@ public enum OperatingSystemFamily implements RemotePortProvider, LoginNameSuppli
   /**
    * IBM AIX
    */
-  AIX, /**
+  AIX,
+  /**
    * Arch Linux
    */
-  ARCH, /**
+  ARCH,
+  /**
    * Centos
    */
   CENTOS(OperatingSystemType.LINUX, OperatingSystemVersionFormats.set(2, 3, 4, 5, 6, 7),
-          LoginNameSuppliers.staticSupplier("centos"), null, new DockerHubCentosImagePath()), /**
+      LoginNameSuppliers.staticSupplier("centos"), null,
+      new GenericNameBasedDockerImageFunction("centos")),
+  /**
    * Darwin OS
    */
-  DARWIN, DEBIAN, /**
+  DARWIN, DEBIAN,
+  /**
    * VMWare ESX
    */
-  ESX, FEDORA, FREEBSD, GENTOO, /**
+  ESX, FEDORA, FREEBSD, GENTOO,
+  /**
    * Hewlett Packard Unix
    */
-  HPUX, COREOS, /**
+  HPUX, COREOS,
+  /**
    * Amazon Linux
    */
-  AMZN_LINUX, MANDRIVA, NETBSD, /**
+  AMZN_LINUX, MANDRIVA, NETBSD,
+  /**
    * Oracle Linux OS
    */
-  OEL, OPENBSD, /**
+  OEL, OPENBSD,
+  /**
    * Red Hat Enterprise Linux
    */
   RHEL, SCIENTIFIC, CEL, SLACKWARE, SOLARIS, SUSE, TURBOLINUX, CLOUD_LINUX,
   UBUNTU(
       OperatingSystemType.LINUX,
       OperatingSystemVersionFormats.supplier(new UbuntuOperatingSystemVersionSupplier()),
-      LoginNameSuppliers.staticSupplier("ubuntu"), new UbuntuUrlDownloadFunction(), new DockerHubUbuntuImagePath()),
+      LoginNameSuppliers.staticSupplier("ubuntu"), new UbuntuUrlDownloadFunction(),
+      new GenericNameBasedDockerImageFunction("ubuntu")),
   WINDOWS(
       OperatingSystemType.WINDOWS, OperatingSystemVersionFormats.unknown(),
       LoginNameSuppliers.staticSupplier("administrator"), null, null);
@@ -73,16 +83,17 @@ public enum OperatingSystemFamily implements RemotePortProvider, LoginNameSuppli
   @Nullable
   private final DownloadUrlFunction downloadUrlFunction;
   @Nullable
-  private final DockerHubImagePath dockerHubImagePath;
+  private final DockerImageFunction dockerImageFunction;
 
   OperatingSystemFamily(OperatingSystemType operatingSystemType,
       OperatingSystemVersionFormat operatingSystemVersionFormat,
-      LoginNameSupplier loginNameSupplier, @Nullable DownloadUrlFunction downloadUrlFunction, @Nullable DockerHubImagePath dockerHubImagePath) {
+      LoginNameSupplier loginNameSupplier, @Nullable DownloadUrlFunction downloadUrlFunction,
+      @Nullable DockerImageFunction dockerImageFunction) {
     this.operatingSystemType = operatingSystemType;
     this.operatingSystemVersionFormat = operatingSystemVersionFormat;
     this.loginNameSupplier = loginNameSupplier;
     this.downloadUrlFunction = downloadUrlFunction;
-    this.dockerHubImagePath = dockerHubImagePath;
+    this.dockerImageFunction = dockerImageFunction;
   }
 
   OperatingSystemFamily() {
@@ -90,7 +101,7 @@ public enum OperatingSystemFamily implements RemotePortProvider, LoginNameSuppli
     this.operatingSystemVersionFormat = OperatingSystemVersionFormats.unknown();
     this.loginNameSupplier = LoginNameSuppliers.nullSupplier();
     this.downloadUrlFunction = null;
-    this.dockerHubImagePath = null;
+    this.dockerImageFunction = null;
   }
 
   public static OperatingSystemFamily fromValue(String operatingSystemFamily) {
@@ -124,8 +135,8 @@ public enum OperatingSystemFamily implements RemotePortProvider, LoginNameSuppli
     return Optional.ofNullable(downloadUrlFunction);
   }
 
-  public Optional<DockerHubImagePath> dockerHubImagePath() {
-    return Optional.ofNullable(dockerHubImagePath);
+  public Optional<DockerImageFunction> dockerImageFunction() {
+    return Optional.ofNullable(dockerImageFunction);
   }
 
   @Override

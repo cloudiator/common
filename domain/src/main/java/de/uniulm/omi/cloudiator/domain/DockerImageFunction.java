@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 University of Ulm
+ * Copyright 2018 University of Ulm
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,27 +14,10 @@
  * limitations under the License.
  */
 
-package de.uniulm.omi.cloudiator.persistance.entities.deprecated;
+package de.uniulm.omi.cloudiator.domain;
 
-/**
- * Created by Frank on 02.08.2015.
- */
-@Deprecated
-public enum SubscriptionType {
+import java.util.function.Function;
 
-  CDO("CDO"),
-  CDO_EVENT("CDO_EVENT"),
-  JSON_CS("JSON_CS"),
-  SCALING("SCALING");
-
-  private final String text;
-
-  private SubscriptionType(final String text) {
-    this.text = text;
-  }
-
-  @Override
-  public String toString() {
-    return text;
-  }
+public interface DockerImageFunction extends Function<OperatingSystemVersion, String> {
+  
 }

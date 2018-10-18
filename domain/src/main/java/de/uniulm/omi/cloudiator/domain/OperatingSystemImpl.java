@@ -41,17 +41,7 @@ public class OperatingSystemImpl implements OperatingSystem {
     this.operatingSystemArchitecture = operatingSystemArchitecture;
     this.version = version;
   }
-
-  @Override
-  public String getDockerHubImagePath() {
-    checkNotNull(operatingSystemFamily.dockerHubImagePath(), "dockerHubImagePath is null");
-    checkState(version.name().isPresent(),
-        "Name of the version is not present.");
-    DockerHubImagePath path = operatingSystemFamily.dockerHubImagePath().get();
-
-    return(path.generateImagePath(version));
-  }
-
+  
   @Override
   public OperatingSystemFamily operatingSystemFamily() {
     return operatingSystemFamily;
