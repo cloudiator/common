@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 University of Ulm
+ * Copyright 2018 University of Ulm
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,16 +16,16 @@
 
 package de.uniulm.omi.cloudiator.domain;
 
-/**
- * Created by daniel on 09.03.16.
- */
-public interface OperatingSystem {
+import static com.google.common.base.Preconditions.checkState;
 
-  String getDockerHubImagePath();
+public class DockerHubCentosImagePath  implements DockerHubImagePath {
 
-  OperatingSystemFamily operatingSystemFamily();
+  private final static String CENTOS_DOCKERHUB_REPO = "centos";
 
-  OperatingSystemArchitecture operatingSystemArchitecture();
+  @Override
+  public String generateImagePath(OperatingSystemVersion operatingSystemVersion) {
 
-  OperatingSystemVersion operatingSystemVersion();
+    checkState(operatingSystemVersion.name().isPresent(), "Name of the version is not present.");
+    return(CENTOS_DOCKERHUB_REPO + ":" + operatingSystemVersion.name().get());
+  }
 }

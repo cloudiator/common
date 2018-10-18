@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 University of Ulm
+ * Copyright 2018 University of Ulm
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,16 +16,7 @@
 
 package de.uniulm.omi.cloudiator.domain;
 
-/**
- * Created by daniel on 09.03.16.
- */
-public interface OperatingSystem {
+public interface DockerHubImagePath {
 
-  String getDockerHubImagePath();
-
-  OperatingSystemFamily operatingSystemFamily();
-
-  OperatingSystemArchitecture operatingSystemArchitecture();
-
-  OperatingSystemVersion operatingSystemVersion();
+  public String generateImagePath(OperatingSystemVersion operatingSystemVersion);
 }
