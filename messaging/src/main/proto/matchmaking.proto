@@ -7,10 +7,11 @@ option java_package = "org.cloudiator.messages.entities";
 import "matchmakingEntities.proto";
 import "iaasEntities.proto";
 import "nodeEntities.proto";
+import "commonEntities.proto";
 
 message NodeCandidateRequestMessage {
   string userId = 1;
-  NodeRequirements requirements = 2;
+  repeated common.Requirement requirements = 2;
 }
 
 message NodeCandidateRequestResponse {
@@ -19,9 +20,10 @@ message NodeCandidateRequestResponse {
 
 message MatchmakingRequest {
   string userId = 1;
-  NodeRequirements requirements = 2;
+  NodeRequirements nodeRequirements = 2;
+
 }
 
 message MatchmakingResponse {
-  repeated iaas.VirtualMachineRequest nodes = 1;
+  repeated NodeCandidate candidates = 1;
 }

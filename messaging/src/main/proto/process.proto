@@ -9,17 +9,46 @@ import "processEntities.proto";
 
 message ProcessQueryRequest {
   string userId = 1;
+  string processId = 2;
+  string scheduleId = 3;
 }
 
 message ProcessQueryResponse {
   repeated Process processes = 1;
 }
 
+message ScheduleQueryRequest {
+  string userId = 1;
+  string scheduleId = 2;
+}
+
+message ScheduleQueryResponse {
+  repeated Schedule schedules = 1;
+}
+
 message CreateProcessRequest {
   string userId = 1;
-  Task task = 2;
+  ProcessNew process = 2;
 }
 
 message ProcessCreatedResponse {
   Process process = 1;
+}
+
+message CreateLanceProcessRequest {
+  string userId = 1;
+  LanceProcess lance = 2;
+}
+
+message LanceProcessCreatedResponse {
+  Process process = 2;
+}
+
+message CreateScheduleRequest {
+  string userId = 1;
+  ScheduleNew schedule = 2;
+}
+
+message ScheduleCreatedResponse {
+  Schedule schedule = 1;
 }

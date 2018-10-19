@@ -48,4 +48,5 @@ enum NodeStatus {
 
 message NodeRequirements {
   repeated common.Requirement requirements = 1;
+  common.Optimization optimization = 2;
 }

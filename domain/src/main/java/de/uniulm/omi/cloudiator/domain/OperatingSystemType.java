@@ -26,10 +26,12 @@ import javax.annotation.Nullable;
  */
 public enum OperatingSystemType implements RemotePortProvider, HomeDirFunctionProvider {
 
-  UNKNOWN(null, HomeDirFunctions.unknown(), RemoteType.UNKNOWN), UNIX(22, HomeDirFunctions.unix(),
-      RemoteType.SSH), LINUX(22, HomeDirFunctions.unix(), RemoteType.SSH), WINDOWS(5985,
-      HomeDirFunctions.windows(), RemoteType.WINRM), BSD(null, HomeDirFunctions.unknown(),
-      RemoteType.SSH), MAC(null, HomeDirFunctions.unknown(), RemoteType.SSH);
+  UNKNOWN(null, HomeDirFunctions.unknown(), RemoteType.UNKNOWN, false), UNIX(22,
+      HomeDirFunctions.unix(),
+      RemoteType.SSH, false), LINUX(22, HomeDirFunctions.unix(), RemoteType.SSH, true), WINDOWS(
+      5985,
+      HomeDirFunctions.windows(), RemoteType.WINRM, false), BSD(null, HomeDirFunctions.unknown(),
+      RemoteType.SSH, false), MAC(null, HomeDirFunctions.unknown(), RemoteType.SSH, false);
 
   public static final OperatingSystemType DEFAULT = UNKNOWN;
 
@@ -37,14 +39,16 @@ public enum OperatingSystemType implements RemotePortProvider, HomeDirFunctionPr
   private final Integer defaultRemotePort;
   private final HomeDirFunction homeDirFunction;
   private final RemoteType remoteType;
+  private final boolean supportsDocker;
 
   OperatingSystemType(@Nullable Integer defaultRemotePort, HomeDirFunction homeDirFunction,
-      RemoteType remoteType) {
+      RemoteType remoteType, boolean supportsDocker) {
     this.defaultRemotePort = defaultRemotePort;
     checkNotNull(homeDirFunction);
     this.homeDirFunction = homeDirFunction;
     checkNotNull(remoteType);
     this.remoteType = remoteType;
+    this.supportsDocker = supportsDocker;
   }
 
   @Override
@@ -69,5 +73,9 @@ public enum OperatingSystemType implements RemotePortProvider, HomeDirFunctionPr
 
   public RemoteType remoteType() {
     return remoteType;
+  }
+
+  public boolean supportsDocker() {
+    return supportsDocker;
   }
 }

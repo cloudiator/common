@@ -15,3 +15,13 @@ message VirtualMachineCreatedResponse {
   VirtualMachine virtualMachine = 1;
 }
 
+message VirtualMachineQueryMessage {
+  string userId = 1;
+  string vmId = 2;
+  string cloudId = 3;
+}
+
+message VirtualMachineQueryResponse {
+  repeated VirtualMachine virtualMachines = 1;
+}
+

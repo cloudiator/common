@@ -8,19 +8,23 @@ import "monitorEntities.proto";
 
 message MonitorQueryRequest {
   string userId = 1;
+
 }
 
 message MonitorQueryResponse {
   repeated Monitor monitor = 1;
+
 }
 
 message CreateMonitorRequest {
   string userId = 1;
-  NewMonitor newmonitor = 2;
+  Monitor newmonitor = 2;
+
 }
 
-message MonitorCreatedResponse {
+message CreateMonitorResponse {
   Monitor monitor = 1;
+
 }
 
 message UpdateMonitorRequest {
@@ -28,7 +32,7 @@ message UpdateMonitorRequest {
   Monitor monitor = 2;
 }
 
-message MonitorUpdatedResponse {
+message UpdateMonitorResponse {
   Monitor monitor = 1;
 }
 
@@ -37,5 +41,5 @@ message DeleteMonitorRequest {
   Monitor monitor = 2;
 }
 
-message MonitorDeletedResponse {
+message DeleteMonitorResponse {
 }

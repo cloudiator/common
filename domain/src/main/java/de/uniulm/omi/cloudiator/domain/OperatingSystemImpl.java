@@ -17,6 +17,7 @@
 package de.uniulm.omi.cloudiator.domain;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 import com.google.common.base.MoreObjects;
 
@@ -29,7 +30,6 @@ public class OperatingSystemImpl implements OperatingSystem {
   private OperatingSystemArchitecture operatingSystemArchitecture;
   private OperatingSystemVersion version;
 
-
   public OperatingSystemImpl(OperatingSystemFamily operatingSystemFamily,
       OperatingSystemArchitecture operatingSystemArchitecture, OperatingSystemVersion version) {
 
@@ -41,7 +41,7 @@ public class OperatingSystemImpl implements OperatingSystem {
     this.operatingSystemArchitecture = operatingSystemArchitecture;
     this.version = version;
   }
-
+  
   @Override
   public OperatingSystemFamily operatingSystemFamily() {
     return operatingSystemFamily;
