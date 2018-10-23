@@ -9,10 +9,11 @@ import "commonEntities.proto";
 
 message Node {
   string id = 1;
-  LoginCredential loginCredential = 2;
-  NodeType nodeType = 3;
-  repeated IpAddress ipAddresses = 4;
-  NodeProperties nodeProperties = 5;
+  string name = 2;
+  LoginCredential loginCredential = 3;
+  NodeType nodeType = 4;
+  repeated IpAddress ipAddresses = 5;
+  NodeProperties nodeProperties = 6;
 }
 
 message NodeGroup {
