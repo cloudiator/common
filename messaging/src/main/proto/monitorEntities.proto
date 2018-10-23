@@ -59,7 +59,7 @@ message Interval {
 
 message PullSensor {
   string className = 1;
-  map<string,string> configuration = 2;
+  map<string, string> configuration = 2;
   Interval interval = 3;
 }
 
@@ -74,7 +74,7 @@ enum SinkType {
 
 message Sink {
   SinkType type = 1;
-  map<string,string> configuration = 2;
+  map<string, string> configuration = 2;
 }
 
 message MonitoringTag {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 University of Ulm
+ * Copyright 2018 University of Ulm
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,16 +19,12 @@ package de.uniulm.omi.cloudiator.domain;
 import org.junit.Test;
 
 /**
- * Created by daniel on 25.07.16.
+ * Created by daniel on 25.07.16., modified 29.08.18
  */
 public class UbuntuOperatingSystemVersionSupplierTest {
 
-  public static void main(String[] args) {
-    System.out.println(new UbuntuOperatingSystemVersionSupplier().get());
-  }
-
   @Test
   public void test() {
-
+    System.out.println(new UbuntuOperatingSystemVersionSupplier().get());
   }
 }

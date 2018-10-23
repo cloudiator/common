@@ -7,6 +7,8 @@ import org.cloudiator.messages.Process.CreateProcessRequest;
 import org.cloudiator.messages.Process.CreateScheduleRequest;
 import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
+import org.cloudiator.messages.Process.ProcessQueryRequest;
+import org.cloudiator.messages.Process.ProcessQueryResponse;
 import org.cloudiator.messages.Process.ScheduleCreatedResponse;
 import org.cloudiator.messages.Process.ScheduleQueryRequest;
 import org.cloudiator.messages.Process.ScheduleQueryResponse;
@@ -36,9 +38,20 @@ public class ProcessServiceImpl implements ProcessService {
   }
 
   @Override
+  public ProcessQueryResponse queryProcesses(ProcessQueryRequest processQueryRequest)
+      throws ResponseException {
+    return this.messageInterface.call(processQueryRequest, ProcessQueryResponse.class, timeout);
+  }
+
+  @Override
   public void subscribeScheduleQueryRequest(MessageCallback<ScheduleQueryRequest> callback) {
     this.messageInterface
         .subscribe(ScheduleQueryRequest.class, ScheduleQueryRequest.parser(), callback);
+  }
+
+  @Override
+  public void subscribeProcessQueryRequest(MessageCallback<ProcessQueryRequest> callback) {
+    messageInterface.subscribe(ProcessQueryRequest.class, ProcessQueryRequest.parser(), callback);
   }
 
   @Override
