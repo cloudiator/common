@@ -8,6 +8,15 @@ import "iaasEntities.proto";
 import "nodeEntities.proto";
 import "matchmakingEntities.proto";
 
+message NodeDeleteMessage {
+  string userId = 1;
+  string nodeId = 2;
+}
+
+message NodeDeleteResponseMessage {
+
+}
+
 message NodeRequestMessage {
   string userId = 1;
   string groupName = 2;

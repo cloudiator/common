@@ -3,7 +3,9 @@ package org.cloudiator.messaging.services;
 import com.google.inject.Inject;
 import javax.inject.Named;
 import org.cloudiator.messages.Vm.CreateVirtualMachineRequestMessage;
+import org.cloudiator.messages.Vm.DeleteVirtualMachineRequestMessage;
 import org.cloudiator.messages.Vm.VirtualMachineCreatedResponse;
+import org.cloudiator.messages.Vm.VirtualMachineDeletedResponse;
 import org.cloudiator.messaging.MessageInterface;
 import org.cloudiator.messaging.ResponseCallback;
 import org.cloudiator.messaging.ResponseException;
@@ -37,5 +39,13 @@ public class VirtualMachineServiceImpl implements VirtualMachineService {
       ResponseCallback<VirtualMachineCreatedResponse> callback) {
     messageInterface
         .callAsync(virtualMachineRequestMessage, VirtualMachineCreatedResponse.class, callback);
+  }
+
+  @Override
+  public void deleteVirtualMachineAsync(
+      DeleteVirtualMachineRequestMessage virtualMachineRequestMessage,
+      ResponseCallback<VirtualMachineDeletedResponse> callback) {
+    messageInterface
+        .callAsync(virtualMachineRequestMessage, VirtualMachineDeletedResponse.class, callback);
   }
 }
