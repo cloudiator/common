@@ -6,11 +6,24 @@ option java_package = "org.cloudiator.messages";
 
 import "iaasEntities.proto";
 import "nodeEntities.proto";
+import "matchmakingEntities.proto";
+
+message NodeDeleteMessage {
+  string userId = 1;
+  string nodeId = 2;
+}
+
+message NodeDeleteResponseMessage {
+
+}
 
 message NodeRequestMessage {
   string userId = 1;
-  NodeRequirements nodeRequest = 2;
-  string groupName = 3;
+  string groupName = 2;
+  oneof request {
+    NodeRequirements requirements = 3;
+    NodeCandidate nodeCandidate = 4;
+  }
 }
 
 message NodeRequestResponse {

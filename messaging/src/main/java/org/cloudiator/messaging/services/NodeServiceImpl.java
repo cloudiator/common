@@ -18,6 +18,8 @@ package org.cloudiator.messaging.services;
 
 import com.google.inject.Inject;
 import javax.inject.Named;
+import org.cloudiator.messages.Node.NodeDeleteMessage;
+import org.cloudiator.messages.Node.NodeDeleteResponseMessage;
 import org.cloudiator.messages.Node.NodeGroupQueryMessage;
 import org.cloudiator.messages.Node.NodeGroupQueryResponse;
 import org.cloudiator.messages.Node.NodeQueryMessage;
@@ -50,6 +52,12 @@ public class NodeServiceImpl implements NodeService {
   @Override
   public NodeQueryResponse queryNodes(NodeQueryMessage nodeQueryMessage) throws ResponseException {
     return messageInterface.call(nodeQueryMessage, NodeQueryResponse.class, timeout);
+  }
+
+  @Override
+  public void deleteNodeAsync(NodeDeleteMessage nodeDeleteMessage,
+      ResponseCallback<NodeDeleteResponseMessage> callback) {
+    messageInterface.callAsync(nodeDeleteMessage, NodeDeleteResponseMessage.class, callback);
   }
 
   @Override
