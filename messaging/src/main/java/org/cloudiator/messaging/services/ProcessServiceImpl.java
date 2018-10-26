@@ -1,21 +1,14 @@
 package org.cloudiator.messaging.services;
 
 import com.google.inject.Inject;
-import javax.inject.Named;
-import org.cloudiator.messages.Process.CreateLanceProcessRequest;
-import org.cloudiator.messages.Process.CreateProcessRequest;
-import org.cloudiator.messages.Process.CreateScheduleRequest;
-import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
-import org.cloudiator.messages.Process.ProcessCreatedResponse;
-import org.cloudiator.messages.Process.ProcessQueryRequest;
-import org.cloudiator.messages.Process.ProcessQueryResponse;
-import org.cloudiator.messages.Process.ScheduleCreatedResponse;
-import org.cloudiator.messages.Process.ScheduleQueryRequest;
-import org.cloudiator.messages.Process.ScheduleQueryResponse;
+import org.cloudiator.messages.Process;
+import org.cloudiator.messages.Process.*;
 import org.cloudiator.messaging.MessageCallback;
 import org.cloudiator.messaging.MessageInterface;
 import org.cloudiator.messaging.ResponseCallback;
 import org.cloudiator.messaging.ResponseException;
+
+import javax.inject.Named;
 
 public class ProcessServiceImpl implements ProcessService {
 
@@ -102,6 +95,21 @@ public class ProcessServiceImpl implements ProcessService {
       MessageCallback<CreateLanceProcessRequest> callback) {
     messageInterface
         .subscribe(CreateLanceProcessRequest.class, CreateLanceProcessRequest.parser(), callback);
+  }
+
+  @Override
+  public FaasProcessCreatedResponse createFaasProcess(Process.CreateFaasProcessRequest createFaasProcessRequest) throws ResponseException {
+    return messageInterface.call(createFaasProcessRequest, FaasProcessCreatedResponse.class, timeout);
+  }
+
+  @Override
+  public void createFaasProcessAsync(Process.CreateFaasProcessRequest createFaasProcessRequest, ResponseCallback<Process.FaasProcessCreatedResponse> callback) {
+    messageInterface.callAsync(createFaasProcessRequest, FaasProcessCreatedResponse.class, callback);
+  }
+
+  @Override
+  public void subscribeCreateFaasProcessRequest(MessageCallback<Process.CreateFaasProcessRequest> callback) {
+    messageInterface.subscribe(CreateFaasProcessRequest.class, CreateFaasProcessRequest.parser(), callback);
   }
 
   @Override

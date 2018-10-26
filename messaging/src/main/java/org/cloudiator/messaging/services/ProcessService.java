@@ -1,6 +1,9 @@
 package org.cloudiator.messaging.services;
 
+import org.cloudiator.messages.Process;
 import org.cloudiator.messages.Process.CreateLanceProcessRequest;
+import org.cloudiator.messages.Process.CreateFaasProcessRequest;
+import org.cloudiator.messages.Process.FaasProcessCreatedResponse;
 import org.cloudiator.messages.Process.CreateProcessRequest;
 import org.cloudiator.messages.Process.CreateScheduleRequest;
 import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
@@ -48,6 +51,14 @@ public interface ProcessService {
       ResponseCallback<LanceProcessCreatedResponse> callback);
 
   void subscribeCreateLanceProcessRequest(MessageCallback<CreateLanceProcessRequest> callback);
+
+  FaasProcessCreatedResponse createFaasProcess(CreateFaasProcessRequest createFaasProcessRequest)
+      throws ResponseException;
+
+  void createFaasProcessAsync(CreateFaasProcessRequest createFaasProcessRequest,
+      ResponseCallback<FaasProcessCreatedResponse> callback);
+
+  void subscribeCreateFaasProcessRequest(MessageCallback<CreateFaasProcessRequest> callback);
 
   void subscribeSchedule(MessageCallback<CreateScheduleRequest> callback);
 }
