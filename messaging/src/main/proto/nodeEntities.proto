@@ -34,6 +34,7 @@ enum NodeType {
   VM = 1;
   BYON = 2;
   CONTAINER = 3;
+  FAAS = 4;
 }
 
 message NodeEvent {
