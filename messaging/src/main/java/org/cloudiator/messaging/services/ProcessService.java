@@ -3,8 +3,10 @@ package org.cloudiator.messaging.services;
 import org.cloudiator.messages.Process.CreateLanceProcessRequest;
 import org.cloudiator.messages.Process.CreateProcessRequest;
 import org.cloudiator.messages.Process.CreateScheduleRequest;
+import org.cloudiator.messages.Process.DeleteProcessRequest;
 import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
+import org.cloudiator.messages.Process.ProcessDeletedResponse;
 import org.cloudiator.messages.Process.ProcessQueryRequest;
 import org.cloudiator.messages.Process.ProcessQueryResponse;
 import org.cloudiator.messages.Process.ScheduleCreatedResponse;
@@ -35,10 +37,18 @@ public interface ProcessService {
   ProcessCreatedResponse createProcess(CreateProcessRequest createProcessRequest)
       throws ResponseException;
 
+  ProcessDeletedResponse deleteProcess(DeleteProcessRequest deleteProcessRequest)
+      throws ResponseException;
+
   void createProcessAsync(CreateProcessRequest createProcessRequest,
       ResponseCallback<ProcessCreatedResponse> callback);
 
+  void deleteProcessAsync(DeleteProcessRequest deleteProcessRequest,
+      ResponseCallback<ProcessDeletedResponse> callback);
+
   void subscribeCreateProcessRequest(MessageCallback<CreateProcessRequest> callback);
+
+  void subscribeDeleteProcessRequest(MessageCallback<DeleteProcessRequest> callback);
 
   LanceProcessCreatedResponse createLanceProcess(
       CreateLanceProcessRequest createLanceProcessRequest)

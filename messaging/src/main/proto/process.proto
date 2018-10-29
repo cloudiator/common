@@ -35,6 +35,15 @@ message ProcessCreatedResponse {
   Process process = 1;
 }
 
+message DeleteProcessRequest {
+  string userId = 1;
+  string processId = 2;
+}
+
+message ProcessDeletedResponse {
+
+}
+
 message CreateLanceProcessRequest {
   string userId = 1;
   LanceProcess lance = 2;

@@ -5,8 +5,10 @@ import javax.inject.Named;
 import org.cloudiator.messages.Process.CreateLanceProcessRequest;
 import org.cloudiator.messages.Process.CreateProcessRequest;
 import org.cloudiator.messages.Process.CreateScheduleRequest;
+import org.cloudiator.messages.Process.DeleteProcessRequest;
 import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
+import org.cloudiator.messages.Process.ProcessDeletedResponse;
 import org.cloudiator.messages.Process.ProcessQueryRequest;
 import org.cloudiator.messages.Process.ProcessQueryResponse;
 import org.cloudiator.messages.Process.ScheduleCreatedResponse;
@@ -73,14 +75,31 @@ public class ProcessServiceImpl implements ProcessService {
   }
 
   @Override
+  public ProcessDeletedResponse deleteProcess(DeleteProcessRequest deleteProcessRequest)
+      throws ResponseException {
+    return messageInterface.call(deleteProcessRequest, ProcessDeletedResponse.class, timeout);
+  }
+
+  @Override
   public void createProcessAsync(CreateProcessRequest createProcessRequest,
       ResponseCallback<ProcessCreatedResponse> callback) {
     messageInterface.callAsync(createProcessRequest, ProcessCreatedResponse.class, callback);
   }
 
   @Override
+  public void deleteProcessAsync(DeleteProcessRequest deleteProcessRequest,
+      ResponseCallback<ProcessDeletedResponse> callback) {
+    messageInterface.callAsync(deleteProcessRequest, ProcessDeletedResponse.class, callback);
+  }
+
+  @Override
   public void subscribeCreateProcessRequest(MessageCallback<CreateProcessRequest> callback) {
     messageInterface.subscribe(CreateProcessRequest.class, CreateProcessRequest.parser(), callback);
+  }
+
+  @Override
+  public void subscribeDeleteProcessRequest(MessageCallback<DeleteProcessRequest> callback) {
+    messageInterface.subscribe(DeleteProcessRequest.class, DeleteProcessRequest.parser(), callback);
   }
 
   @Override
