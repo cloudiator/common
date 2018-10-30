@@ -5,6 +5,7 @@ package application;
 option java_package = "org.cloudiator.messages";
 
 import "jobEntities.proto";
+import "processEntities.proto";
 
 message JobQueryRequest {
   string userId = 1;
@@ -39,4 +40,13 @@ message DeleteJobRequest {
 }
 
 message JobDeletedResponse {
+}
+
+message YAMLRequest {
+  string userId = 1;
+  string yaml = 2;
+}
+
+message YAMLResponse {
+  Schedule schedule = 1;
 }

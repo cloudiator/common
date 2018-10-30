@@ -26,8 +26,11 @@ import org.cloudiator.messages.Job.JobQueryRequest;
 import org.cloudiator.messages.Job.JobQueryResponse;
 import org.cloudiator.messages.Job.JobUpdatedResponse;
 import org.cloudiator.messages.Job.UpdateJobRequest;
+import org.cloudiator.messages.Job.YAMLRequest;
+import org.cloudiator.messages.Job.YAMLResponse;
 import org.cloudiator.messaging.MessageCallback;
 import org.cloudiator.messaging.MessageInterface;
+import org.cloudiator.messaging.ResponseCallback;
 import org.cloudiator.messaging.ResponseException;
 
 /**
@@ -75,4 +78,10 @@ public class JobServiceImpl implements JobService {
   public JobDeletedResponse deleteJob(DeleteJobRequest deleteJobRequest) throws ResponseException {
     return messageInterface.call(deleteJobRequest, JobDeletedResponse.class, timeout);
   }
+
+  @Override
+  public void yamlAsync(YAMLRequest yamlRequest, ResponseCallback<YAMLResponse> callback) {
+    messageInterface.callAsync(yamlRequest, YAMLResponse.class, callback);
+  }
+
 }
