@@ -72,6 +72,7 @@ message FaasInterface {
   repeated Trigger triggers = 5;
   int32 timeout = 6;
   int32 memory = 7;
+  map<string, string> functionEnvironment = 8;
 }
 
 message Trigger {
