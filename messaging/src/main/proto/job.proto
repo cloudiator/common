@@ -50,3 +50,12 @@ message YAMLRequest {
 message YAMLResponse {
   Job job = 1;
 }
+
+message JobGraphRequest {
+  string userId = 1;
+  string jobId = 2;
+}
+
+message JobGraphResponse {
+  string json = 1;
+}

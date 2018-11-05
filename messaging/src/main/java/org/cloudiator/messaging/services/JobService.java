@@ -21,6 +21,8 @@ import org.cloudiator.messages.Job.CreateJobRequest;
 import org.cloudiator.messages.Job.DeleteJobRequest;
 import org.cloudiator.messages.Job.JobCreatedResponse;
 import org.cloudiator.messages.Job.JobDeletedResponse;
+import org.cloudiator.messages.Job.JobGraphRequest;
+import org.cloudiator.messages.Job.JobGraphResponse;
 import org.cloudiator.messages.Job.JobQueryRequest;
 import org.cloudiator.messages.Job.JobQueryResponse;
 import org.cloudiator.messages.Job.JobUpdatedResponse;
@@ -53,5 +55,6 @@ public interface JobService {
 
   YAMLResponse yaml(YAMLRequest yamlRequest) throws ResponseException;
 
+  JobGraphResponse graph(JobGraphRequest jobGraphRequest) throws ResponseException;
 
 }
