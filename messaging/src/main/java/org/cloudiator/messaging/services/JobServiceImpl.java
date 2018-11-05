@@ -30,7 +30,6 @@ import org.cloudiator.messages.Job.YAMLRequest;
 import org.cloudiator.messages.Job.YAMLResponse;
 import org.cloudiator.messaging.MessageCallback;
 import org.cloudiator.messaging.MessageInterface;
-import org.cloudiator.messaging.ResponseCallback;
 import org.cloudiator.messaging.ResponseException;
 
 /**
@@ -80,8 +79,8 @@ public class JobServiceImpl implements JobService {
   }
 
   @Override
-  public void yamlAsync(YAMLRequest yamlRequest, ResponseCallback<YAMLResponse> callback) {
-    messageInterface.callAsync(yamlRequest, YAMLResponse.class, callback);
+  public YAMLResponse yaml(YAMLRequest yamlRequest) throws ResponseException {
+    return messageInterface.call(yamlRequest, YAMLResponse.class, timeout);
   }
 
 }

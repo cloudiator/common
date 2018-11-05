@@ -48,5 +48,5 @@ message YAMLRequest {
 }
 
 message YAMLResponse {
-  Schedule schedule = 1;
+  Job job = 1;
 }

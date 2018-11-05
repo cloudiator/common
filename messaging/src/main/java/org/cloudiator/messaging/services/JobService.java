@@ -28,7 +28,6 @@ import org.cloudiator.messages.Job.UpdateJobRequest;
 import org.cloudiator.messages.Job.YAMLRequest;
 import org.cloudiator.messages.Job.YAMLResponse;
 import org.cloudiator.messaging.MessageCallback;
-import org.cloudiator.messaging.ResponseCallback;
 import org.cloudiator.messaging.ResponseException;
 
 /**
@@ -52,7 +51,7 @@ public interface JobService {
   JobDeletedResponse deleteJob(DeleteJobRequest deleteJobRequest)
       throws ResponseException;
 
-  void yamlAsync(YAMLRequest yamlRequest, ResponseCallback<YAMLResponse> callback);
+  YAMLResponse yaml(YAMLRequest yamlRequest) throws ResponseException;
 
 
 }
