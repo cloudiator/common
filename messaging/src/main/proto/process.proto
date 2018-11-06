@@ -53,10 +53,21 @@ message LanceProcessCreatedResponse {
   Process process = 2;
 }
 
+
+message CreateSparkProcessRequest {
+  string userId = 1;
+  SparkProcess spark = 2;
+}
+
+message SparkProcessCreatedResponse {
+  Process process = 2;
+}
+
 message CreateScheduleRequest {
   string userId = 1;
   ScheduleNew schedule = 2;
 }
+
 
 message ScheduleCreatedResponse {
   Schedule schedule = 1;

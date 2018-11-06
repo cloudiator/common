@@ -5,6 +5,7 @@ import javax.inject.Named;
 import org.cloudiator.messages.Process.CreateLanceProcessRequest;
 import org.cloudiator.messages.Process.CreateProcessRequest;
 import org.cloudiator.messages.Process.CreateScheduleRequest;
+import org.cloudiator.messages.Process.CreateSparkProcessRequest;
 import org.cloudiator.messages.Process.DeleteProcessRequest;
 import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
@@ -14,6 +15,7 @@ import org.cloudiator.messages.Process.ProcessQueryResponse;
 import org.cloudiator.messages.Process.ScheduleCreatedResponse;
 import org.cloudiator.messages.Process.ScheduleQueryRequest;
 import org.cloudiator.messages.Process.ScheduleQueryResponse;
+import org.cloudiator.messages.Process.SparkProcessCreatedResponse;
 import org.cloudiator.messaging.MessageCallback;
 import org.cloudiator.messaging.MessageInterface;
 import org.cloudiator.messaging.ResponseCallback;
@@ -121,6 +123,28 @@ public class ProcessServiceImpl implements ProcessService {
       MessageCallback<CreateLanceProcessRequest> callback) {
     messageInterface
         .subscribe(CreateLanceProcessRequest.class, CreateLanceProcessRequest.parser(), callback);
+  }
+
+  @Override
+  public SparkProcessCreatedResponse createSparkProcess(
+      CreateSparkProcessRequest createSparkProcessRequest) throws ResponseException {
+    return messageInterface
+        .call(createSparkProcessRequest, SparkProcessCreatedResponse.class, timeout);
+  }
+
+  @Override
+  public void createSparkProcessAsync(CreateSparkProcessRequest createSparkProcessRequest,
+      ResponseCallback<SparkProcessCreatedResponse> callback) {
+    messageInterface
+        .callAsync(createSparkProcessRequest, SparkProcessCreatedResponse.class, callback);
+
+  }
+
+  @Override
+  public void subscribeCreateSparkProcessRequest(
+      MessageCallback<CreateSparkProcessRequest> callback) {
+    messageInterface
+        .subscribe(CreateSparkProcessRequest.class, CreateSparkProcessRequest.parser(), callback);
   }
 
   @Override
