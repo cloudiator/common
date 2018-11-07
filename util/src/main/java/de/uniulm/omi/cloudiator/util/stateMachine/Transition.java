@@ -1,5 +1,6 @@
 package de.uniulm.omi.cloudiator.util.stateMachine;
 
+import com.google.common.base.MoreObjects;
 import de.uniulm.omi.cloudiator.util.function.ThrowingFunction;
 import java.util.concurrent.ExecutionException;
 
@@ -31,5 +32,10 @@ public class Transition<O extends Stateful> implements ThrowingFunction<O, O> {
     } catch (Exception e) {
       throw new ExecutionException(e);
     }
+  }
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this).add("from", from).add("to", to).toString();
   }
 }
