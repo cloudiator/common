@@ -7,22 +7,29 @@ option java_package = "org.cloudiator.messages.entities";
 import "commonEntities.proto";
 
 message NewCloud {
-  string name = 2;
-  string endpoint = 3;
-  Api api = 4;
-  Credential credential = 5;
-  Configuration configuration = 6;
-  CloudType cloudType = 7;
+  string endpoint = 1;
+  Api api = 2;
+  Credential credential = 3;
+  Configuration configuration = 4;
+  CloudType cloudType = 5;
 }
 
 message Cloud {
   string id = 1;
-  //string name = 2; Removed
-  string endpoint = 3;
-  Api api = 4;
-  Credential credential = 5;
-  Configuration configuration = 6;
-  CloudType cloudType = 7;
+  string endpoint = 2;
+  Api api = 3;
+  Credential credential = 4;
+  Configuration configuration = 5;
+  CloudType cloudType = 6;
+  CloudState state = 7;
+  string diagnostic = 8;
+}
+
+enum CloudState {
+  CLOUD_STATE_NEW = 0;
+  CLOUD_STATE_OK = 1;
+  CLOUD_STATE_ERROR = 2;
+  CLOUD_STATE_DELETED = 3;
 }
 
 enum CloudType {
