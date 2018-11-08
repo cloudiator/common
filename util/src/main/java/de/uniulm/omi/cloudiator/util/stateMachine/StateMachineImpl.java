@@ -66,7 +66,9 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O> {
     }
 
     LOGGER
-        .debug("Calculated the path %s from state %s to state %s.", path.get(), object.state(), to);
+        .debug(String
+            .format("Calculated the path %s from state %s to state %s.", path.get(), object.state(),
+                to));
 
     for (Transition<O> transition : path.get().getEdgeList()) {
       try {
