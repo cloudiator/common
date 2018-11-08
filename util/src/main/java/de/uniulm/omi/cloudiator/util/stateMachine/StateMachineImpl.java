@@ -45,7 +45,7 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O> {
   }
 
   @Override
-  public StateMachineImpl<O> apply(O object, State to) throws ExecutionException {
+  public O apply(O object, State to) throws ExecutionException {
 
     LOGGER.info(String.format("State transition of object %s to state %s", object, to));
 
@@ -87,7 +87,7 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O> {
       }
     }
 
-    return this;
+    return object;
 
   }
 
