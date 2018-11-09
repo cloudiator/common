@@ -47,6 +47,12 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O> {
   @Override
   public O apply(O object, State to) throws ExecutionException {
 
+    if (object.state().equals(to)) {
+      LOGGER.info(
+          String.format("Object %s is already in the to state %s. Doing nothing.", object, to));
+      return object;
+    }
+
     LOGGER.info(String.format("State transition of object %s to state %s", object, to));
 
     //call hooks
@@ -107,7 +113,8 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O> {
 
     //call hooks
     LOGGER.debug(
-        String.format("Calling post Transition hooks for object %s from state %s.", changedObject, previousState));
+        String.format("Calling post Transition hooks for object %s from state %s.", changedObject,
+            previousState));
     postStateTransition(object, previousState);
 
     return changedObject;
