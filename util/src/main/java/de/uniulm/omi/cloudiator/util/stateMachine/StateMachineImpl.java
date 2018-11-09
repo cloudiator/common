@@ -45,13 +45,13 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O> {
   }
 
   @Override
-  public StateMachineImpl<O> apply(O object, State to) throws ExecutionException {
+  public O apply(O object, State to) throws ExecutionException {
 
     LOGGER.info(String.format("State transition of object %s to state %s", object, to));
 
     //call hooks
     LOGGER.debug(
-        String.format("Calling pre Transition hooks for object %s for state %s.", object, to));
+        String.format("Calling pre Transition hooks for object %s to state %s.", object, to));
     preStateTransition(object, to);
 
     //calculate the shortest path
@@ -66,7 +66,9 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O> {
     }
 
     LOGGER
-        .debug("Calculated the path %s from state %s to state %s.", path.get(), object.state(), to);
+        .debug(String
+            .format("Calculated the path %s from state %s to state %s.", path.get(), object.state(),
+                to));
 
     for (Transition<O> transition : path.get().getEdgeList()) {
       try {
@@ -85,7 +87,7 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O> {
       }
     }
 
-    return this;
+    return object;
 
   }
 
@@ -103,6 +105,9 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O> {
         "Transition expected object to be in state %s after execution. It is however in state %s.",
         apply.state(), transition.to()));
 
+    //call hooks
+    LOGGER.debug(
+        String.format("Calling post Transition hooks for object %s from state %s.", object, previousState));
     postStateTransition(object, previousState);
 
     return apply;
