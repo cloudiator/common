@@ -99,18 +99,18 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O> {
         .format("Transition expects object to be in state %s but object is in state %s.",
             transition.from(), object.state()));
 
-    final O apply = transition.apply(object);
+    final O changedObject = transition.apply(object);
 
-    checkState(apply.state().equals(transition.to()), String.format(
+    checkState(changedObject.state().equals(transition.to()), String.format(
         "Transition expected object to be in state %s after execution. It is however in state %s.",
-        apply.state(), transition.to()));
+        changedObject.state(), transition.to()));
 
     //call hooks
     LOGGER.debug(
-        String.format("Calling post Transition hooks for object %s from state %s.", object, previousState));
+        String.format("Calling post Transition hooks for object %s from state %s.", changedObject, previousState));
     postStateTransition(object, previousState);
 
-    return apply;
+    return changedObject;
   }
 
 
