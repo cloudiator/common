@@ -115,7 +115,7 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O> {
     LOGGER.debug(
         String.format("Calling post Transition hooks for object %s from state %s.", changedObject,
             previousState));
-    postStateTransition(object, previousState);
+    postStateTransition(changedObject, previousState);
 
     return changedObject;
   }
