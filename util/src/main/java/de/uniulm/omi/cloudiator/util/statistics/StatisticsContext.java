@@ -34,7 +34,7 @@ public class StatisticsContext {
   }
 
   public Boolean enabled() {
-    return config.getBoolean("statistics.influx.enabled");
+    return config.getBoolean("statistics.enabled");
   }
 
   public String url() {
