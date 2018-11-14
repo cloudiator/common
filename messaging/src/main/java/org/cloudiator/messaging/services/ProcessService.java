@@ -3,6 +3,7 @@ package org.cloudiator.messaging.services;
 import org.cloudiator.messages.Process.CreateLanceProcessRequest;
 import org.cloudiator.messages.Process.CreateProcessRequest;
 import org.cloudiator.messages.Process.CreateScheduleRequest;
+import org.cloudiator.messages.Process.CreateSparkProcessRequest;
 import org.cloudiator.messages.Process.DeleteProcessRequest;
 import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
@@ -12,6 +13,7 @@ import org.cloudiator.messages.Process.ProcessQueryResponse;
 import org.cloudiator.messages.Process.ScheduleCreatedResponse;
 import org.cloudiator.messages.Process.ScheduleQueryRequest;
 import org.cloudiator.messages.Process.ScheduleQueryResponse;
+import org.cloudiator.messages.Process.SparkProcessCreatedResponse;
 import org.cloudiator.messaging.MessageCallback;
 import org.cloudiator.messaging.ResponseCallback;
 import org.cloudiator.messaging.ResponseException;
@@ -58,6 +60,15 @@ public interface ProcessService {
       ResponseCallback<LanceProcessCreatedResponse> callback);
 
   void subscribeCreateLanceProcessRequest(MessageCallback<CreateLanceProcessRequest> callback);
+
+  SparkProcessCreatedResponse createSparkProcess(
+      CreateSparkProcessRequest createSparkProcessRequest)
+      throws ResponseException;
+
+  void createSparkProcessAsync(CreateSparkProcessRequest createSparkProcessRequest,
+      ResponseCallback<SparkProcessCreatedResponse> callback);
+
+  void subscribeCreateSparkProcessRequest(MessageCallback<CreateSparkProcessRequest> callback);
 
   void subscribeSchedule(MessageCallback<CreateScheduleRequest> callback);
 }
