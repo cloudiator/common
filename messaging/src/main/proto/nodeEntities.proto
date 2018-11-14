@@ -22,11 +22,12 @@ message NodeGroup {
 }
 
 message NodeProperties {
-  int32 numberOfCores = 1;
-  int64 memory = 2;
-  double disk = 3;
-  common.OperatingSystem operationSystem = 4;
-  GeoLocation geoLocation = 5;
+  string providerId = 1;
+  int32 numberOfCores = 2;
+  int64 memory = 3;
+  double disk = 4;
+  common.OperatingSystem operationSystem = 5;
+  GeoLocation geoLocation = 6;
 }
 
 enum NodeType {
