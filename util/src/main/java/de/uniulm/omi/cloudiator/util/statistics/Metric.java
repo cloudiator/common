@@ -3,6 +3,7 @@ package de.uniulm.omi.cloudiator.util.statistics;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.common.base.MoreObjects;
 import java.util.Map;
 
 public class Metric {
@@ -43,5 +44,11 @@ public class Metric {
 
   public Map<String, String> tags() {
     return tags;
+  }
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this).add("name", name).add("value", value)
+        .add("timestamp", timestamp).add("tags", tags).toString();
   }
 }

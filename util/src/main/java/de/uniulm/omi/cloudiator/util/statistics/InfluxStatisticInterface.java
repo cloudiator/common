@@ -8,8 +8,13 @@ import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.Point;
 import org.influxdb.dto.Point.Builder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class InfluxStatisticInterface implements StatisticInterface {
+
+  private static final Logger LOGGER =
+      LoggerFactory.getLogger(InfluxStatisticInterface.class);
 
   private final InfluxDB influxDB;
   private static final String DB_NAME = "cloudiator";
@@ -18,13 +23,18 @@ public class InfluxStatisticInterface implements StatisticInterface {
   public InfluxStatisticInterface(@Named("influx.url") String url,
       @Named("influx.user") String user,
       @Named("influx.password") String password) {
+
+    LOGGER.info(String
+        .format("Connecting to influx server: %s with user: %s and password: %s.", url, user,
+            password));
+
     this.influxDB = InfluxDBFactory.connect(url, user, password);
 
     if (!influxDB.databaseExists(DB_NAME)) {
+      LOGGER.debug(String.format("Database with the name %s does not exist. Creating.", DB_NAME));
       influxDB.createDatabase(DB_NAME);
     }
     influxDB.setDatabase(DB_NAME);
-
   }
 
   @Override
@@ -38,6 +48,10 @@ public class InfluxStatisticInterface implements StatisticInterface {
       builder.tag(entry.getKey(), entry.getValue());
     }
 
-    influxDB.write(builder.build());
+    final Point point = builder.build();
+
+    LOGGER.trace(String.format("Writing point %s to influx %s.", point, influxDB));
+
+    influxDB.write(point);
   }
 }
