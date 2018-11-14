@@ -41,7 +41,7 @@ public class InfluxStatisticInterface implements StatisticInterface {
   public void reportMetric(Metric metric) {
 
     final Builder builder = Point.measurement(metric.name())
-        .addField("value", metric.value().toString())
+        .addField("value", metric.value())
         .time(metric.timestamp(), TimeUnit.MILLISECONDS);
 
     for (Map.Entry<String, String> entry : metric.tags().entrySet()) {
