@@ -6,8 +6,10 @@ import org.cloudiator.messages.Process.CreateLanceProcessRequest;
 import org.cloudiator.messages.Process.CreateProcessRequest;
 import org.cloudiator.messages.Process.CreateScheduleRequest;
 import org.cloudiator.messages.Process.CreateSparkProcessRequest;
+import org.cloudiator.messages.Process.DeleteLanceProcessRequest;
 import org.cloudiator.messages.Process.DeleteProcessRequest;
 import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
+import org.cloudiator.messages.Process.LanceProcessDeletedResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
 import org.cloudiator.messages.Process.ProcessDeletedResponse;
 import org.cloudiator.messages.Process.ProcessQueryRequest;
@@ -123,6 +125,20 @@ public class ProcessServiceImpl implements ProcessService {
       MessageCallback<CreateLanceProcessRequest> callback) {
     messageInterface
         .subscribe(CreateLanceProcessRequest.class, CreateLanceProcessRequest.parser(), callback);
+  }
+
+  @Override
+  public void deleteLanceProcessAsync(DeleteLanceProcessRequest deleteLanceProcessRequest,
+      ResponseCallback<LanceProcessDeletedResponse> callback) {
+    messageInterface
+        .callAsync(deleteLanceProcessRequest, LanceProcessDeletedResponse.class, callback);
+  }
+
+  @Override
+  public void subscribeDeleteLanceProcessRequest(
+      MessageCallback<DeleteLanceProcessRequest> callback) {
+    messageInterface
+        .subscribe(DeleteLanceProcessRequest.class, DeleteLanceProcessRequest.parser(), callback);
   }
 
   @Override

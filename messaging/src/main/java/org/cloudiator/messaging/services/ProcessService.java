@@ -4,8 +4,10 @@ import org.cloudiator.messages.Process.CreateLanceProcessRequest;
 import org.cloudiator.messages.Process.CreateProcessRequest;
 import org.cloudiator.messages.Process.CreateScheduleRequest;
 import org.cloudiator.messages.Process.CreateSparkProcessRequest;
+import org.cloudiator.messages.Process.DeleteLanceProcessRequest;
 import org.cloudiator.messages.Process.DeleteProcessRequest;
 import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
+import org.cloudiator.messages.Process.LanceProcessDeletedResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
 import org.cloudiator.messages.Process.ProcessDeletedResponse;
 import org.cloudiator.messages.Process.ProcessQueryRequest;
@@ -60,6 +62,11 @@ public interface ProcessService {
       ResponseCallback<LanceProcessCreatedResponse> callback);
 
   void subscribeCreateLanceProcessRequest(MessageCallback<CreateLanceProcessRequest> callback);
+
+  void deleteLanceProcessAsync(DeleteLanceProcessRequest deleteLanceProcessRequest,
+      ResponseCallback<LanceProcessDeletedResponse> callback);
+
+  void subscribeDeleteLanceProcessRequest(MessageCallback<DeleteLanceProcessRequest> callback);
 
   SparkProcessCreatedResponse createSparkProcess(
       CreateSparkProcessRequest createSparkProcessRequest)

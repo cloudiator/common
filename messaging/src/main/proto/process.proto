@@ -53,6 +53,15 @@ message LanceProcessCreatedResponse {
   Process process = 2;
 }
 
+message DeleteLanceProcessRequest {
+  string userId = 1;
+  string processId = 2;
+}
+
+message LanceProcessDeletedResponse {
+  
+}
+
 
 message CreateSparkProcessRequest {
   string userId = 1;
