@@ -6,6 +6,7 @@ option java_package = "org.cloudiator.messages";
 
 import "taskEntities.proto";
 import "processEntities.proto";
+import "nodeEntities.proto";
 
 message ProcessQueryRequest {
   string userId = 1;
@@ -56,10 +57,11 @@ message LanceProcessCreatedResponse {
 message DeleteLanceProcessRequest {
   string userId = 1;
   string processId = 2;
+  iaas.Node node = 3;
 }
 
 message LanceProcessDeletedResponse {
-  
+
 }
 
 
