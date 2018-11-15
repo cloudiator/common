@@ -83,3 +83,12 @@ message CreateScheduleRequest {
 message ScheduleCreatedResponse {
   Schedule schedule = 1;
 }
+
+message DeleteScheduleRequest {
+  string userId = 1;
+  string scheduleId = 2;
+}
+
+message ScheduleDeleteResponse {
+  
+}

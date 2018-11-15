@@ -8,6 +8,7 @@ import org.cloudiator.messages.Process.CreateScheduleRequest;
 import org.cloudiator.messages.Process.CreateSparkProcessRequest;
 import org.cloudiator.messages.Process.DeleteLanceProcessRequest;
 import org.cloudiator.messages.Process.DeleteProcessRequest;
+import org.cloudiator.messages.Process.DeleteScheduleRequest;
 import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
 import org.cloudiator.messages.Process.LanceProcessDeletedResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
@@ -15,6 +16,7 @@ import org.cloudiator.messages.Process.ProcessDeletedResponse;
 import org.cloudiator.messages.Process.ProcessQueryRequest;
 import org.cloudiator.messages.Process.ProcessQueryResponse;
 import org.cloudiator.messages.Process.ScheduleCreatedResponse;
+import org.cloudiator.messages.Process.ScheduleDeleteResponse;
 import org.cloudiator.messages.Process.ScheduleQueryRequest;
 import org.cloudiator.messages.Process.ScheduleQueryResponse;
 import org.cloudiator.messages.Process.SparkProcessCreatedResponse;
@@ -56,6 +58,12 @@ public class ProcessServiceImpl implements ProcessService {
   }
 
   @Override
+  public void subscribeScheduleDeleteRequest(MessageCallback<DeleteScheduleRequest> callback) {
+    this.messageInterface
+        .subscribe(DeleteScheduleRequest.class, DeleteScheduleRequest.parser(), callback);
+  }
+
+  @Override
   public void subscribeProcessQueryRequest(MessageCallback<ProcessQueryRequest> callback) {
     messageInterface.subscribe(ProcessQueryRequest.class, ProcessQueryRequest.parser(), callback);
   }
@@ -70,6 +78,12 @@ public class ProcessServiceImpl implements ProcessService {
   public void createScheduleAsync(CreateScheduleRequest createScheduleRequest,
       ResponseCallback<ScheduleCreatedResponse> callback) {
     messageInterface.callAsync(createScheduleRequest, ScheduleCreatedResponse.class, callback);
+  }
+
+  @Override
+  public void deleteScheduleAsync(DeleteScheduleRequest deleteScheduleRequest,
+      ResponseCallback<ScheduleDeleteResponse> callback) {
+    messageInterface.callAsync(deleteScheduleRequest, ScheduleDeleteResponse.class, callback);
   }
 
   @Override

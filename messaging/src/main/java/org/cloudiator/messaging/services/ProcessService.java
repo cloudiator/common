@@ -6,6 +6,7 @@ import org.cloudiator.messages.Process.CreateScheduleRequest;
 import org.cloudiator.messages.Process.CreateSparkProcessRequest;
 import org.cloudiator.messages.Process.DeleteLanceProcessRequest;
 import org.cloudiator.messages.Process.DeleteProcessRequest;
+import org.cloudiator.messages.Process.DeleteScheduleRequest;
 import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
 import org.cloudiator.messages.Process.LanceProcessDeletedResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
@@ -13,6 +14,7 @@ import org.cloudiator.messages.Process.ProcessDeletedResponse;
 import org.cloudiator.messages.Process.ProcessQueryRequest;
 import org.cloudiator.messages.Process.ProcessQueryResponse;
 import org.cloudiator.messages.Process.ScheduleCreatedResponse;
+import org.cloudiator.messages.Process.ScheduleDeleteResponse;
 import org.cloudiator.messages.Process.ScheduleQueryRequest;
 import org.cloudiator.messages.Process.ScheduleQueryResponse;
 import org.cloudiator.messages.Process.SparkProcessCreatedResponse;
@@ -30,6 +32,8 @@ public interface ProcessService {
 
   void subscribeScheduleQueryRequest(MessageCallback<ScheduleQueryRequest> callback);
 
+  void subscribeScheduleDeleteRequest(MessageCallback<DeleteScheduleRequest> callback);
+
   void subscribeProcessQueryRequest(MessageCallback<ProcessQueryRequest> callback);
 
   ScheduleCreatedResponse createSchedule(CreateScheduleRequest createScheduleRequest)
@@ -37,6 +41,9 @@ public interface ProcessService {
 
   void createScheduleAsync(CreateScheduleRequest createScheduleRequest,
       ResponseCallback<ScheduleCreatedResponse> callback);
+
+  void deleteScheduleAsync(DeleteScheduleRequest deleteScheduleRequest,
+      ResponseCallback<ScheduleDeleteResponse> callback);
 
   ProcessCreatedResponse createProcess(CreateProcessRequest createProcessRequest)
       throws ResponseException;
