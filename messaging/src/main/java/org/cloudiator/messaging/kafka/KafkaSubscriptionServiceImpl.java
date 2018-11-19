@@ -31,7 +31,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -115,7 +114,8 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
 
   private static class Subscriber<T> implements Runnable {
 
-    private static final ExecutorService CALLBACK_EXECUTION = Executors.newCachedThreadPool();
+    private static final ExecutorService CALLBACK_EXECUTION = new LoggingThreadPoolExecutor(0,
+        2147483647, 60L, TimeUnit.SECONDS, new SynchronousQueue());
     private final Consumer<String, T> consumer;
     private final List<MessageCallback<T>> callbacks;
     private final String topic;
