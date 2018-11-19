@@ -9,10 +9,11 @@ import "commonEntities.proto";
 
 message Node {
   string id = 1;
-  LoginCredential loginCredential = 2;
-  NodeType nodeType = 3;
-  repeated IpAddress ipAddresses = 4;
-  NodeProperties nodeProperties = 5;
+  string name = 2;
+  LoginCredential loginCredential = 3;
+  NodeType nodeType = 4;
+  repeated IpAddress ipAddresses = 5;
+  NodeProperties nodeProperties = 6;
 }
 
 message NodeGroup {
@@ -21,11 +22,12 @@ message NodeGroup {
 }
 
 message NodeProperties {
-  int32 numberOfCores = 1;
-  int64 memory = 2;
-  double disk = 3;
-  common.OperatingSystem operationSystem = 4;
-  GeoLocation geoLocation = 5;
+  string providerId = 1;
+  int32 numberOfCores = 2;
+  int64 memory = 3;
+  double disk = 4;
+  common.OperatingSystem operationSystem = 5;
+  GeoLocation geoLocation = 6;
 }
 
 enum NodeType {

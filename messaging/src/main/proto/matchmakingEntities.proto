@@ -8,9 +8,10 @@ import "commonEntities.proto";
 import "iaasEntities.proto";
 
 message NodeCandidate {
-  iaas.Cloud cloud = 1;
-  Location location = 2;
-  Image image = 3;
-  HardwareFlavor hardwareFlavor = 4;
-  double price = 5;
+  string id = 1;
+  iaas.Cloud cloud = 2;
+  Location location = 3;
+  Image image = 4;
+  HardwareFlavor hardwareFlavor = 5;
+  double price = 6;
 }

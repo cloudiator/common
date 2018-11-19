@@ -13,6 +13,8 @@ enum Tool {
   KAIROSDB = 3;
   DOCKER = 4;
   SPARK_WORKER= 5;
+  DLMS_AGENT = 6;
+  ALLUXIO_CLIENT = 7;
 }
 
 message Installation {

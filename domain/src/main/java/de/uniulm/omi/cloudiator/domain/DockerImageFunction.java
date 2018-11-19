@@ -16,15 +16,8 @@
 
 package de.uniulm.omi.cloudiator.domain;
 
-import org.junit.Test;
+import java.util.function.Function;
 
-/**
- * Created by daniel on 25.07.16., modified 29.08.18
- */
-public class UbuntuOperatingSystemVersionSupplierTest {
-
-  @Test
-  public void test() {
-    System.out.println(new UbuntuOperatingSystemVersionSupplier().get());
-  }
+public interface DockerImageFunction extends Function<OperatingSystemVersion, String> {
+  
 }

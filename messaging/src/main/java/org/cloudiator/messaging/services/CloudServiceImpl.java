@@ -20,10 +20,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.inject.Inject;
 import javax.inject.Named;
-import org.cloudiator.messages.Cloud.CloudCreatedEvent;
 import org.cloudiator.messages.Cloud.CloudCreatedResponse;
-import org.cloudiator.messages.Cloud.CloudDeletedEvent;
 import org.cloudiator.messages.Cloud.CloudDeletedResponse;
+import org.cloudiator.messages.Cloud.CloudEvent;
 import org.cloudiator.messages.Cloud.CloudQueryRequest;
 import org.cloudiator.messages.Cloud.CloudQueryResponse;
 import org.cloudiator.messages.Cloud.CloudUpdatedResponse;
@@ -78,12 +77,7 @@ public class CloudServiceImpl implements CloudService {
   }
 
   @Override
-  public void cloudCreatedEvent(CloudCreatedEvent cloudCreatedEvent) {
-    messageInterface.publish(cloudCreatedEvent);
-  }
-
-  @Override
-  public void cloudDeletedEvent(CloudDeletedEvent cloudDeletedEvent) {
-    messageInterface.publish(cloudDeletedEvent);
+  public void announceEvent(CloudEvent cloudEvent) {
+    messageInterface.publish(cloudEvent);
   }
 }

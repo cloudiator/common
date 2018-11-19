@@ -11,6 +11,15 @@ message CreateVirtualMachineRequestMessage {
   VirtualMachineRequest virtualMachineRequest = 2;
 }
 
+message DeleteVirtualMachineRequestMessage {
+  string userId = 1;
+  string vmId = 2;
+}
+
+message VirtualMachineDeletedResponse {
+
+}
+
 message VirtualMachineCreatedResponse {
   VirtualMachine virtualMachine = 1;
 }

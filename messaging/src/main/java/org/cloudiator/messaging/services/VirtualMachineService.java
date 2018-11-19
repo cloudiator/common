@@ -1,7 +1,9 @@
 package org.cloudiator.messaging.services;
 
 import org.cloudiator.messages.Vm.CreateVirtualMachineRequestMessage;
+import org.cloudiator.messages.Vm.DeleteVirtualMachineRequestMessage;
 import org.cloudiator.messages.Vm.VirtualMachineCreatedResponse;
+import org.cloudiator.messages.Vm.VirtualMachineDeletedResponse;
 import org.cloudiator.messaging.ResponseCallback;
 import org.cloudiator.messaging.ResponseException;
 
@@ -16,4 +18,7 @@ public interface VirtualMachineService {
 
   void createVirtualMachineAsync(CreateVirtualMachineRequestMessage virtualMachineRequestMessage,
       ResponseCallback<VirtualMachineCreatedResponse> callback);
+
+  void deleteVirtualMachineAsync(DeleteVirtualMachineRequestMessage virtualMachineRequestMessage,
+      ResponseCallback<VirtualMachineDeletedResponse> callback);
 }

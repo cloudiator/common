@@ -83,10 +83,15 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
 
     Subscriber subscriber = subscriberRegistry.getSubscriberForTopic(topic);
     if (subscriber == null) {
+
+      LOGGER.debug(String.format("Creating new subscriber for topic %s.", topic));
+
       subscriber = new Subscriber(kafkaConsumerFactory.createKafkaConsumer(parser), topic);
       subscriber.init();
       subscriberRegistry.registerSubscriber(topic, subscriber);
 
+    } else {
+      LOGGER.debug(String.format("Reusing old subscriber for topic %s: %s", topic, subscriber));
     }
 
     return subscriber.addCallback(messageCallback);
@@ -130,6 +135,10 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
     }
 
     private synchronized void removeCallback(MessageCallback<T> callback) {
+
+      LOGGER.debug(
+          String.format("Removing callback %s from subscription of topic %s.", callback, topic));
+
       callbacks.remove(callback);
     }
 

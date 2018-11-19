@@ -20,6 +20,9 @@ import com.google.inject.Inject;
 import javax.inject.Named;
 import org.cloudiator.messages.Monitor.CreateMonitorRequest;
 import org.cloudiator.messages.Monitor.DeleteMonitorRequest;
+import org.cloudiator.messages.Monitor.MonitorQueryRequest;
+import org.cloudiator.messages.Monitor.MonitorQueryResponse;
+import org.cloudiator.messages.Monitor.UpdateMonitorRequest;
 import org.cloudiator.messages.Monitor.CreateMonitorResponse;
 import org.cloudiator.messages.Monitor.DeleteMonitorResponse;
 import org.cloudiator.messages.Monitor.MonitorQueryRequest;
@@ -67,5 +70,6 @@ public class MonitorServiceImpl implements MonitorService {
   public DeleteMonitorResponse deleteMonitor(DeleteMonitorRequest deleteMonitorRequest)
       throws ResponseException {
     return messageInterface.call(deleteMonitorRequest, DeleteMonitorResponse.class);
+
   }
 }

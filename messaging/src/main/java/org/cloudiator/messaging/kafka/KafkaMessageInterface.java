@@ -279,8 +279,8 @@ class KafkaMessageInterface implements MessageInterface {
                 waitingCallbacks.get(response.getCorrelation());
             if (waitingCallback == null) {
               LOGGER.warn(String.format(
-                  "Could not find callback for correlation id %s. Ignoring response %s",
-                  response.getCorrelation(), response));
+                  "Could not find callback for correlation id %s for a message on requestTopic %s and responseTopic %s. Initial request was %s. Ignoring response %s",
+                  response.getCorrelation(), requestTopic, responseTopic, request, response));
               return;
             }
             //we remove the callback before we start execution, to ensure

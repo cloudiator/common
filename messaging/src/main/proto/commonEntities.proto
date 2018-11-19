@@ -76,10 +76,9 @@ enum LocationScope {
 }
 
 message OperatingSystem {
-  OperatingSystemType operatingSystemType = 1;
-  OperatingSystemFamily operatingSystemFamily = 2; // Typ verändert
-  OperatingSystemArchitecture operatingSystemArchitecture = 3; // Typ verändert
-  string operatingSystemVersion = 4;
+  OperatingSystemFamily operatingSystemFamily = 1;
+  OperatingSystemArchitecture operatingSystemArchitecture = 2;
+  string operatingSystemVersion = 3;
 }
 
 enum OperatingSystemArchitecture {
