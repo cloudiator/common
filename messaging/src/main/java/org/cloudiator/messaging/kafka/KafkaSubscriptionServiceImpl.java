@@ -84,7 +84,7 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
     Subscriber subscriber = subscriberRegistry.getSubscriberForTopic(topic);
     if (subscriber == null) {
 
-      LOGGER.debug(String.format("Creating new subscriber for topic %s.", this));
+      LOGGER.debug(String.format("Creating new subscriber for topic %s.", topic));
 
       subscriber = new Subscriber(kafkaConsumerFactory.createKafkaConsumer(parser), topic);
       subscriber.init();
