@@ -22,9 +22,10 @@ import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import com.google.protobuf.Parser;
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nullable;
@@ -247,15 +248,17 @@ class KafkaMessageInterface implements MessageInterface {
 
     private Map<String, ResponseCallback> waitingCallbacks = new ConcurrentHashMap<>();
     private Map<String, Subscription> pendingSubscriptions = new ConcurrentHashMap<>();
+    private List<String> markedForDeletion = Collections.synchronizedList(new ArrayList<>());
 
     private void cleanup() {
+
       //todo remove very long waiting callbacks
-      for (Iterator<Entry<String, Subscription>> it =
-          pendingSubscriptions.entrySet().iterator(); it.hasNext(); ) {
-        Map.Entry<String, Subscription> entry = it.next();
-        if (!waitingCallbacks.containsKey(entry.getKey())) {
-          entry.getValue().cancel();
-          it.remove();
+
+      for (String delete : markedForDeletion) {
+        final Subscription subscription = pendingSubscriptions.get(delete);
+        if (subscription != null) {
+          subscription.cancel();
+          pendingSubscriptions.remove(delete);
         }
       }
     }
@@ -286,8 +289,6 @@ class KafkaMessageInterface implements MessageInterface {
             //we remove the callback before we start execution, to ensure
             //that this is only executed once
             waitingCallbacks.remove(response.getCorrelation());
-            //we cleanup old subscriptions and long pending callbacks
-            cleanup();
             try {
               switch (response.getResponseCase()) {
                 case CONTENT:
@@ -309,6 +310,9 @@ class KafkaMessageInterface implements MessageInterface {
             } catch (InvalidProtocolBufferException e) {
               throw new IllegalStateException(
                   String.format("Error parsing message %s.", e.getMessage()), e);
+            } finally {
+              markedForDeletion.add(messageId);
+              cleanup();
             }
           });
       pendingSubscriptions.put(messageId, subscription);

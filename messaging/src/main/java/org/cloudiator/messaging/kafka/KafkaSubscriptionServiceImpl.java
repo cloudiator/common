@@ -180,7 +180,7 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
             if (callbacks.isEmpty()) {
               LOGGER.warn(String
                   .format(
-                      "Receiving message %s with key %s but could not find any attached callbacks. Callbacks are: %s",
+                      "Receiving message %s with key %s but could not find any attached callbacks. Callbacks are: %s. Ignoring the message.",
                       record.value(), record.key(), callbacks));
             }
             for (MessageCallback<T> callback : callbacks) {
