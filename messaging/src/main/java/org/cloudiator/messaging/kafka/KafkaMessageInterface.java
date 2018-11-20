@@ -24,6 +24,7 @@ import com.google.protobuf.Message;
 import com.google.protobuf.Parser;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -254,12 +255,12 @@ class KafkaMessageInterface implements MessageInterface {
 
       //todo remove very long waiting callbacks
 
-      for (String delete : markedForDeletion) {
-        final Subscription subscription = pendingSubscriptions.get(delete);
-        if (subscription != null) {
-          subscription.cancel();
-          pendingSubscriptions.remove(delete);
-        }
+      Iterator<String> iterator = markedForDeletion.iterator();
+
+      while (iterator.hasNext()) {
+        final Subscription subscription = pendingSubscriptions.get(iterator.next());
+        subscription.cancel();
+        iterator.remove();
       }
     }
 
@@ -282,8 +283,8 @@ class KafkaMessageInterface implements MessageInterface {
                 waitingCallbacks.get(response.getCorrelation());
             if (waitingCallback == null) {
               LOGGER.warn(String.format(
-                  "Could not find callback for correlation id %s for a message on requestTopic %s and responseTopic %s. Initial request was %s. Ignoring response %s",
-                  response.getCorrelation(), requestTopic, responseTopic, request, response));
+                  "Could not find callback for correlation id %s for a message on requestTopic %s and responseTopic %s.",
+                  response.getCorrelation(), requestTopic, responseTopic));
               return;
             }
             //we remove the callback before we start execution, to ensure
