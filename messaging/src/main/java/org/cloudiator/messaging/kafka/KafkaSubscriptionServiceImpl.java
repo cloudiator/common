@@ -124,17 +124,17 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
     private Subscriber(Consumer<String, T> consumer,
         String topic) {
       this.consumer = consumer;
-      this.callbacks = Lists.newArrayList();
+      this.callbacks = Lists.newCopyOnWriteArrayList(Lists.newArrayList());
       this.topic = topic;
     }
 
 
-    private synchronized Subscription addCallback(MessageCallback<T> callback) {
+    private Subscription addCallback(MessageCallback<T> callback) {
       callbacks.add(callback);
       return new SubscriptionImpl(() -> removeCallback(callback));
     }
 
-    private synchronized void removeCallback(MessageCallback<T> callback) {
+    private void removeCallback(MessageCallback<T> callback) {
       LOGGER.debug(
           String.format("Removing callback %s from subscription of topic %s.", callback, topic));
       callbacks.remove(callback);
