@@ -160,7 +160,8 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
             initialized.wait();
           }
         } catch (InterruptedException e) {
-          throw new IllegalStateException(e);
+          LOGGER.warn(String.format("Execution of %s got interrupted. Exiting.", this));
+          Thread.currentThread().interrupt();
         }
       }
       LOGGER.debug(String.format("Finished initializing subscriber %s.", this));
