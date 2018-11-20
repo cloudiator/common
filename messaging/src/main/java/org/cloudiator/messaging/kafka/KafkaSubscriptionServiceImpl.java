@@ -135,10 +135,8 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
     }
 
     private synchronized void removeCallback(MessageCallback<T> callback) {
-
       LOGGER.debug(
           String.format("Removing callback %s from subscription of topic %s.", callback, topic));
-
       callbacks.remove(callback);
     }
 
@@ -181,12 +179,13 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
           for (ConsumerRecord<String, T> record : poll) {
             if (callbacks.isEmpty()) {
               LOGGER.warn(String
-                  .format("Receiving message with id %s but could not find any attached callbacks.",
-                      callbacks));
+                  .format(
+                      "Receiving message %s with key %s but could not find any attached callbacks. Callbacks are: %s",
+                      record.value(), record.key(), callbacks));
             }
             for (MessageCallback<T> callback : callbacks) {
               LOGGER.trace(String.format(
-                  "Receiving message with id %s and content %s on topic %s. Scheduling callback %s for Execution",
+                  "Receiving message with id %s and content %s on topic %s. Scheduling callback %s for execution",
                   record.key(), record.value(), topic, callback));
               Runnable runnable = RunnableMessageCallback
                   .of(callback, record.key(), record.value());
