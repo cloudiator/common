@@ -129,9 +129,10 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
     }
 
 
-    private Subscription addCallback(MessageCallback<T> callback) {
+    private synchronized Subscription addCallback(MessageCallback<T> callback) {
       callbacks.add(callback);
       return new SubscriptionImpl(() -> removeCallback(callback));
+
     }
 
     private void removeCallback(MessageCallback<T> callback) {
@@ -183,13 +184,15 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
                       "Receiving message %s with key %s on topic %s but no callbacks are currently registered to this topic.",
                       record.value(), record.key(), topic));
             }
-            for (MessageCallback<T> callback : callbacks) {
-              LOGGER.trace(String.format(
-                  "Receiving message with id %s and content %s on topic %s. Scheduling callback %s for execution",
-                  record.key(), record.value(), topic, callback));
-              Runnable runnable = RunnableMessageCallback
-                  .of(callback, record.key(), record.value());
-              CALLBACK_EXECUTION.execute(runnable);
+            synchronized (this) {
+              for (MessageCallback<T> callback : callbacks) {
+                LOGGER.trace(String.format(
+                    "Receiving message with id %s and content %s on topic %s. Scheduling callback %s for execution",
+                    record.key(), record.value(), topic, callback));
+                Runnable runnable = RunnableMessageCallback
+                    .of(callback, record.key(), record.value());
+                CALLBACK_EXECUTION.execute(runnable);
+              }
             }
           }
         }
