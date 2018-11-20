@@ -124,7 +124,7 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
     private Subscriber(Consumer<String, T> consumer,
         String topic) {
       this.consumer = consumer;
-      this.callbacks = Lists.newCopyOnWriteArrayList(Lists.newArrayList());
+      this.callbacks = Lists.newArrayList();
       this.topic = topic;
     }
 
@@ -180,8 +180,8 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
             if (callbacks.isEmpty()) {
               LOGGER.warn(String
                   .format(
-                      "Receiving message %s with key %s but could not find any attached callbacks. Callbacks are: %s. Ignoring the message.",
-                      record.value(), record.key(), callbacks));
+                      "Receiving message %s with key %s on topic %s but no callbacks are currently registered to this topic.",
+                      record.value(), record.key(), topic));
             }
             for (MessageCallback<T> callback : callbacks) {
               LOGGER.trace(String.format(
