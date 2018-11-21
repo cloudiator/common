@@ -276,25 +276,32 @@ class KafkaMessageInterface implements MessageInterface {
       //generate message ID
       String messageId = UUID.randomUUID().toString();
 
-      //add waiting callback
-      waitingCallbacks.put(messageId, responseConsumer);
+      synchronized (this) {
+        //add waiting callback
+        waitingCallbacks.put(messageId, responseConsumer);
+      }
 
       //subscribeEncryption to responseTopic
       final Subscription subscription = KafkaMessageInterface.this
           .subscribe(responseTopic, Response.parser(), (id, response) -> {
             //suppressing warning, as we can be sure that the callback is always of the corresponding
             //type. Not using generics on the class, allows us to provide a more versatile implementation
-            @SuppressWarnings("unchecked") final ResponseCallback<S> waitingCallback =
-                waitingCallbacks.get(response.getCorrelation());
-            if (waitingCallback == null) {
-              LOGGER.trace(String.format(
-                  "Could not find callback for correlation id %s for a message on requestTopic %s and responseTopic %s. Ignoring",
-                  response.getCorrelation(), requestTopic, responseTopic));
-              return;
+            ResponseCallback<S> waitingCallback;
+            synchronized (KafkaRequestResponseHandler.this) {
+              //noinspection unchecked
+              waitingCallback =
+                  waitingCallbacks.get(response.getCorrelation());
+              if (waitingCallback == null) {
+                LOGGER.trace(String.format(
+                    "Could not find callback for correlation id %s for a message on requestTopic %s and responseTopic %s. Ignoring",
+                    response.getCorrelation(), requestTopic, responseTopic));
+                return;
+              }
+              //we remove the callback before we start execution, to ensure
+              //that this is only executed once
+              waitingCallbacks.remove(response.getCorrelation());
             }
-            //we remove the callback before we start execution, to ensure
-            //that this is only executed once
-            waitingCallbacks.remove(response.getCorrelation());
+
             try {
               switch (response.getResponseCase()) {
                 case CONTENT:
