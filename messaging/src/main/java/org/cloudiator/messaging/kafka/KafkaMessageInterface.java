@@ -23,7 +23,7 @@ import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import com.google.protobuf.Parser;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -247,19 +247,20 @@ class KafkaMessageInterface implements MessageInterface {
   private class KafkaRequestResponseHandler {
 
     private Map<String, ResponseCallback> waitingCallbacks = new ConcurrentHashMap<>();
-    private Map<String, Subscription> pendingSubscriptions = new ConcurrentHashMap<>();
-    private List<String> markedForDeletion = Lists.newCopyOnWriteArrayList(Lists.newArrayList());
+    private Map<String, Subscription> pendingSubscriptions = new HashMap<>();
+    private List<String> markedForDeletion = Lists.newArrayList();
 
     private void cleanup() {
 
       //todo remove very long waiting callbacks
 
-      Iterator<String> iterator = markedForDeletion.iterator();
-
-      while (iterator.hasNext()) {
-        final Subscription subscription = pendingSubscriptions.get(iterator.next());
-        subscription.cancel();
-        iterator.remove();
+      synchronized (KafkaRequestResponseHandler.this) {
+        for (String toDelete : markedForDeletion) {
+          final Subscription subscription = pendingSubscriptions.get(toDelete);
+          subscription.cancel();
+          pendingSubscriptions.remove(toDelete);
+        }
+        markedForDeletion.clear();
       }
     }
 
@@ -311,11 +312,15 @@ class KafkaMessageInterface implements MessageInterface {
               throw new IllegalStateException(
                   String.format("Error parsing message %s.", e.getMessage()), e);
             } finally {
-              markedForDeletion.add(messageId);
+              synchronized (KafkaRequestResponseHandler.this) {
+                markedForDeletion.add(messageId);
+              }
               cleanup();
             }
           });
-      pendingSubscriptions.put(messageId, subscription);
+      synchronized (KafkaRequestResponseHandler.this) {
+        pendingSubscriptions.put(messageId, subscription);
+      }
 
       //send the message
       KafkaMessageInterface.this.publish(requestTopic, messageId, request);
