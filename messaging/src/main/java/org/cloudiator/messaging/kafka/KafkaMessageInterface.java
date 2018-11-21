@@ -16,14 +16,13 @@
 
 package org.cloudiator.messaging.kafka;
 
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import com.google.protobuf.Parser;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -249,7 +248,7 @@ class KafkaMessageInterface implements MessageInterface {
 
     private Map<String, ResponseCallback> waitingCallbacks = new ConcurrentHashMap<>();
     private Map<String, Subscription> pendingSubscriptions = new ConcurrentHashMap<>();
-    private List<String> markedForDeletion = Collections.synchronizedList(new ArrayList<>());
+    private List<String> markedForDeletion = Lists.newCopyOnWriteArrayList(Lists.newArrayList());
 
     private void cleanup() {
 
