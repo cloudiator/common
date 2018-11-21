@@ -23,6 +23,7 @@ import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import com.google.protobuf.Parser;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -255,14 +256,16 @@ class KafkaMessageInterface implements MessageInterface {
       //todo remove very long waiting callbacks
 
       synchronized (KafkaRequestResponseHandler.this) {
+        ArrayList<String> deleted = new ArrayList<>();
         for (String toDelete : markedForDeletion) {
           final Subscription subscription = pendingSubscriptions.get(toDelete);
           if (subscription != null) {
             subscription.cancel();
+            deleted.add(toDelete);
           }
           pendingSubscriptions.remove(toDelete);
         }
-        markedForDeletion.clear();
+        markedForDeletion.removeAll(deleted);
       }
     }
 
