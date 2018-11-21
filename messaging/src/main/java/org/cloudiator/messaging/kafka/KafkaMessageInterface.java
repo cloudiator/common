@@ -257,7 +257,9 @@ class KafkaMessageInterface implements MessageInterface {
       synchronized (KafkaRequestResponseHandler.this) {
         for (String toDelete : markedForDeletion) {
           final Subscription subscription = pendingSubscriptions.get(toDelete);
-          subscription.cancel();
+          if (subscription != null) {
+            subscription.cancel();
+          }
           pendingSubscriptions.remove(toDelete);
         }
         markedForDeletion.clear();
