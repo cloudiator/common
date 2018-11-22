@@ -33,8 +33,10 @@ message CreateProcessRequest {
 }
 
 message ProcessCreatedResponse {
-  Process process = 1;
+  ProcessGroup processGroup = 1;
 }
+
+
 
 message DeleteProcessRequest {
   string userId = 1;
@@ -91,4 +93,13 @@ message DeleteScheduleRequest {
 
 message ScheduleDeleteResponse {
   
+}
+
+message ProcessGroupQueryMessage {
+  string userId = 1;
+  string processGroupId = 2;
+}
+
+message ProcessGroupQueryResponse {
+  repeated ProcessGroup processGroups = 1;
 }
