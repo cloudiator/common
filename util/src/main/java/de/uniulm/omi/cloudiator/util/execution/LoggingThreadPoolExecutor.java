@@ -16,6 +16,7 @@
 
 package de.uniulm.omi.cloudiator.util.execution;
 
+import com.google.common.base.MoreObjects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -58,6 +59,16 @@ public class LoggingThreadPoolExecutor extends ThreadPoolExecutor {
       ThreadFactory threadFactory,
       RejectedExecutionHandler rejectedExecutionHandler) {
     super(i, i1, l, timeUnit, blockingQueue, threadFactory, rejectedExecutionHandler);
+  }
+
+  public int waitingJobs() {
+    return this.getQueue().size();
+  }
+
+  public String printStatistics() {
+    return MoreObjects.toStringHelper(this).add("waiting jobs", waitingJobs())
+        .add("active threads", this.getActiveCount()).add("pool size", this.getPoolSize())
+        .toString();
   }
 
   @Override

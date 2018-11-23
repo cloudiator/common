@@ -6,6 +6,7 @@ option java_package = "org.cloudiator.messages";
 
 import "taskEntities.proto";
 import "processEntities.proto";
+import "nodeEntities.proto";
 
 message ProcessQueryRequest {
   string userId = 1;
@@ -35,6 +36,15 @@ message ProcessCreatedResponse {
   Process process = 1;
 }
 
+message DeleteProcessRequest {
+  string userId = 1;
+  string processId = 2;
+}
+
+message ProcessDeletedResponse {
+
+}
+
 message CreateLanceProcessRequest {
   string userId = 1;
   LanceProcess lance = 2;
@@ -49,6 +59,25 @@ message LanceProcessCreatedResponse {
   Process process = 2;
 }
 
+message DeleteLanceProcessRequest {
+  string userId = 1;
+  string processId = 2;
+  iaas.Node node = 3;
+}
+
+message LanceProcessDeletedResponse {
+
+}
+
+message CreateSparkProcessRequest {
+  string userId = 1;
+  SparkProcess spark = 2;
+}
+
+message SparkProcessCreatedResponse {
+  Process process = 2;
+}
+
 message FaasProcessCreatedResponse {
   Process process = 1;
 }
@@ -60,4 +89,13 @@ message CreateScheduleRequest {
 
 message ScheduleCreatedResponse {
   Schedule schedule = 1;
+}
+
+message DeleteScheduleRequest {
+  string userId = 1;
+  string scheduleId = 2;
+}
+
+message ScheduleDeleteResponse {
+
 }

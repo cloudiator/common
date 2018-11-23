@@ -16,10 +16,9 @@
 
 package org.cloudiator.messaging.services;
 
-import org.cloudiator.messages.Cloud.CloudCreatedEvent;
 import org.cloudiator.messages.Cloud.CloudCreatedResponse;
-import org.cloudiator.messages.Cloud.CloudDeletedEvent;
 import org.cloudiator.messages.Cloud.CloudDeletedResponse;
+import org.cloudiator.messages.Cloud.CloudEvent;
 import org.cloudiator.messages.Cloud.CloudQueryRequest;
 import org.cloudiator.messages.Cloud.CloudQueryResponse;
 import org.cloudiator.messages.Cloud.CloudUpdatedResponse;
@@ -41,9 +40,6 @@ public interface CloudService {
 
   CloudDeletedResponse deleteCloud(DeleteCloudRequest deleteCloudRequest) throws ResponseException;
 
-  void cloudCreatedEvent(CloudCreatedEvent cloudCreatedEvent);
-
-  void cloudDeletedEvent(CloudDeletedEvent cloudDeletedEvent);
-
-
+  void announceEvent(CloudEvent cloudEvent);
+  
 }

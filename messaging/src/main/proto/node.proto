@@ -8,6 +8,13 @@ import "iaasEntities.proto";
 import "nodeEntities.proto";
 import "matchmakingEntities.proto";
 
+message NodeEvent {
+  string userId = 1;
+  NodeState from = 2;
+  NodeState to = 3;
+  Node node = 4;
+}
+
 message NodeDeleteMessage {
   string userId = 1;
   string nodeId = 2;

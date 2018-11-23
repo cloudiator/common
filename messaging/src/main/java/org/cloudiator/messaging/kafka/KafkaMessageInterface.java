@@ -16,15 +16,17 @@
 
 package org.cloudiator.messaging.kafka;
 
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import com.google.protobuf.Parser;
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.Nullable;
@@ -246,17 +248,24 @@ class KafkaMessageInterface implements MessageInterface {
   private class KafkaRequestResponseHandler {
 
     private Map<String, ResponseCallback> waitingCallbacks = new ConcurrentHashMap<>();
-    private Map<String, Subscription> pendingSubscriptions = new ConcurrentHashMap<>();
+    private Map<String, Subscription> pendingSubscriptions = new HashMap<>();
+    private List<String> markedForDeletion = Lists.newArrayList();
 
     private void cleanup() {
+
       //todo remove very long waiting callbacks
-      for (Iterator<Entry<String, Subscription>> it =
-          pendingSubscriptions.entrySet().iterator(); it.hasNext(); ) {
-        Map.Entry<String, Subscription> entry = it.next();
-        if (!waitingCallbacks.containsKey(entry.getKey())) {
-          entry.getValue().cancel();
-          it.remove();
+
+      synchronized (KafkaRequestResponseHandler.this) {
+        ArrayList<String> deleted = new ArrayList<>();
+        for (String toDelete : markedForDeletion) {
+          final Subscription subscription = pendingSubscriptions.get(toDelete);
+          if (subscription != null) {
+            subscription.cancel();
+            deleted.add(toDelete);
+          }
+          pendingSubscriptions.remove(toDelete);
         }
+        markedForDeletion.removeAll(deleted);
       }
     }
 
@@ -267,27 +276,32 @@ class KafkaMessageInterface implements MessageInterface {
       //generate message ID
       String messageId = UUID.randomUUID().toString();
 
-      //add waiting callback
-      waitingCallbacks.put(messageId, responseConsumer);
+      synchronized (this) {
+        //add waiting callback
+        waitingCallbacks.put(messageId, responseConsumer);
+      }
 
       //subscribeEncryption to responseTopic
       final Subscription subscription = KafkaMessageInterface.this
           .subscribe(responseTopic, Response.parser(), (id, response) -> {
             //suppressing warning, as we can be sure that the callback is always of the corresponding
             //type. Not using generics on the class, allows us to provide a more versatile implementation
-            @SuppressWarnings("unchecked") final ResponseCallback<S> waitingCallback =
-                waitingCallbacks.get(response.getCorrelation());
-            if (waitingCallback == null) {
-              LOGGER.warn(String.format(
-                  "Could not find callback for correlation id %s. Ignoring response %s",
-                  response.getCorrelation(), response));
-              return;
+            ResponseCallback<S> waitingCallback;
+            synchronized (KafkaRequestResponseHandler.this) {
+              //noinspection unchecked
+              waitingCallback =
+                  waitingCallbacks.get(response.getCorrelation());
+              if (waitingCallback == null) {
+                LOGGER.trace(String.format(
+                    "Could not find callback for correlation id %s for a message on requestTopic %s and responseTopic %s. Ignoring",
+                    response.getCorrelation(), requestTopic, responseTopic));
+                return;
+              }
+              //we remove the callback before we start execution, to ensure
+              //that this is only executed once
+              waitingCallbacks.remove(response.getCorrelation());
             }
-            //we remove the callback before we start execution, to ensure
-            //that this is only executed once
-            waitingCallbacks.remove(response.getCorrelation());
-            //we cleanup old subscriptions and long pending callbacks
-            cleanup();
+
             try {
               switch (response.getResponseCase()) {
                 case CONTENT:
@@ -309,9 +323,16 @@ class KafkaMessageInterface implements MessageInterface {
             } catch (InvalidProtocolBufferException e) {
               throw new IllegalStateException(
                   String.format("Error parsing message %s.", e.getMessage()), e);
+            } finally {
+              synchronized (KafkaRequestResponseHandler.this) {
+                markedForDeletion.add(messageId);
+              }
+              cleanup();
             }
           });
-      pendingSubscriptions.put(messageId, subscription);
+      synchronized (KafkaRequestResponseHandler.this) {
+        pendingSubscriptions.put(messageId, subscription);
+      }
 
       //send the message
       KafkaMessageInterface.this.publish(requestTopic, messageId, request);

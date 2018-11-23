@@ -14,6 +14,7 @@ message Node {
   NodeType nodeType = 4;
   repeated IpAddress ipAddresses = 5;
   NodeProperties nodeProperties = 6;
+  NodeState state = 7;
 }
 
 message NodeGroup {
@@ -22,11 +23,12 @@ message NodeGroup {
 }
 
 message NodeProperties {
-  int32 numberOfCores = 1;
-  int64 memory = 2;
-  double disk = 3;
-  common.OperatingSystem operationSystem = 4;
-  GeoLocation geoLocation = 5;
+  string providerId = 1;
+  int32 numberOfCores = 2;
+  int64 memory = 3;
+  double disk = 4;
+  common.OperatingSystem operationSystem = 5;
+  GeoLocation geoLocation = 6;
 }
 
 enum NodeType {
@@ -37,15 +39,11 @@ enum NodeType {
   FAAS = 4;
 }
 
-message NodeEvent {
-  Node node = 1;
-  NodeStatus nodeStatus = 2;
-}
-
-enum NodeStatus {
-  UNKNOWN_STATUS = 0;
-  CREATED = 1;
-  DELETED = 2;
+enum NodeState {
+  NODE_STATE_NEW = 0;
+  NODE_STATE_OK = 1;
+  NODE_STATE_ERROR = 2;
+  NODE_STATE_DELETED = 3;
 }
 
 message NodeRequirements {

@@ -19,9 +19,17 @@ message Process {
   string schedule = 2;
   string task = 3;
   string node = 4;
+  ProcessType type = 5;
 }
 
 message LanceProcess {
+  string schedule = 1;
+  Job job = 2;
+  string task = 3;
+  iaas.Node node = 4;
+}
+
+message SparkProcess {
   string schedule = 1;
   Job job = 2;
   string task = 3;
@@ -50,4 +58,10 @@ message Schedule {
 enum Instantiation {
   MANUAL = 0;
   AUTOMATIC = 1;
+}
+
+enum ProcessType {
+  LANCE = 0;
+  SPARK = 1;
+  FAAS = 2;
 }
