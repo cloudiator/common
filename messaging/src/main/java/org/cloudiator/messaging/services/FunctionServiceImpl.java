@@ -1,10 +1,7 @@
 package org.cloudiator.messaging.services;
 
 import com.google.inject.Inject;
-import org.cloudiator.messages.Function.CreateFunctionRequestMessage;
-import org.cloudiator.messages.Function.DeleteFunctionRequestMessage;
-import org.cloudiator.messages.Function.FunctionCreatedResponse;
-import org.cloudiator.messages.Function.FunctionDeletedResponse;
+import org.cloudiator.messages.Function.*;
 import org.cloudiator.messaging.MessageInterface;
 import org.cloudiator.messaging.ResponseCallback;
 import org.cloudiator.messaging.ResponseException;
@@ -45,5 +42,11 @@ public class FunctionServiceImpl implements FunctionService {
     messageInterface
         .callAsync(deleteFunctionRequestMessage, FunctionDeletedResponse.class, callback);
 
+  }
+
+  @Override
+  public FunctionQueryResponse getFunctions(FunctionQueryMessage functionQueryMessage)
+      throws ResponseException {
+    return messageInterface.call(functionQueryMessage, FunctionQueryResponse.class, timeout);
   }
 }

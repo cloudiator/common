@@ -17,4 +17,5 @@ message Function {
   string cloudId = 2;
   string locationId = 3;
   int32 memory = 4;
+  string stackId = 5;
 }

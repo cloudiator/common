@@ -16,4 +16,7 @@ public interface FunctionService {
   void deleteFuntionAsync(DeleteFunctionRequestMessage deleteFunctionRequestMessage,
       ResponseCallback<FunctionDeletedResponse> callback);
 
+  FunctionQueryResponse getFunctions(FunctionQueryMessage functionQueryMessage)
+      throws ResponseException;
+
 }
