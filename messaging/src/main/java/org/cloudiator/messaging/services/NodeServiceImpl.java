@@ -20,12 +20,14 @@ import com.google.inject.Inject;
 import javax.inject.Named;
 import org.cloudiator.messages.Node.NodeDeleteMessage;
 import org.cloudiator.messages.Node.NodeDeleteResponseMessage;
+import org.cloudiator.messages.Node.NodeEvent;
 import org.cloudiator.messages.Node.NodeGroupQueryMessage;
 import org.cloudiator.messages.Node.NodeGroupQueryResponse;
 import org.cloudiator.messages.Node.NodeQueryMessage;
 import org.cloudiator.messages.Node.NodeQueryResponse;
 import org.cloudiator.messages.Node.NodeRequestMessage;
 import org.cloudiator.messages.Node.NodeRequestResponse;
+import org.cloudiator.messaging.MessageCallback;
 import org.cloudiator.messaging.MessageInterface;
 import org.cloudiator.messaging.ResponseCallback;
 import org.cloudiator.messaging.ResponseException;
@@ -70,6 +72,16 @@ public class NodeServiceImpl implements NodeService {
   public NodeGroupQueryResponse queryNodeGroups(NodeGroupQueryMessage nodeGroupQueryMessage)
       throws ResponseException {
     return messageInterface.call(nodeGroupQueryMessage, NodeGroupQueryResponse.class, timeout);
+  }
+
+  @Override
+  public void subscribeNodeEvents(MessageCallback<NodeEvent> callback) {
+    messageInterface.subscribe(NodeEvent.class, NodeEvent.parser(), callback);
+  }
+
+  @Override
+  public void announceNodeEvent(NodeEvent nodeEvent) {
+    messageInterface.publish(nodeEvent);
   }
 
 
