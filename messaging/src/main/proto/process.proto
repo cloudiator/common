@@ -50,6 +50,11 @@ message CreateLanceProcessRequest {
   LanceProcess lance = 2;
 }
 
+message CreateFaasProcessRequest {
+  string userId = 1;
+  FaasProcess faas = 2;
+}
+
 message LanceProcessCreatedResponse {
   Process process = 2;
 }
@@ -64,7 +69,6 @@ message LanceProcessDeletedResponse {
 
 }
 
-
 message CreateSparkProcessRequest {
   string userId = 1;
   SparkProcess spark = 2;
@@ -74,11 +78,14 @@ message SparkProcessCreatedResponse {
   Process process = 2;
 }
 
+message FaasProcessCreatedResponse {
+  Process process = 1;
+}
+
 message CreateScheduleRequest {
   string userId = 1;
   ScheduleNew schedule = 2;
 }
-
 
 message ScheduleCreatedResponse {
   Schedule schedule = 1;
@@ -90,5 +97,5 @@ message DeleteScheduleRequest {
 }
 
 message ScheduleDeleteResponse {
-  
+
 }

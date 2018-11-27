@@ -36,6 +36,13 @@ message SparkProcess {
   iaas.Node node = 4;
 }
 
+message FaasProcess {
+  string schedule = 1;
+  Job job = 2;
+  string task = 3;
+  iaas.Node node = 4;
+}
+
 message ScheduleNew {
   string job = 1;
   Instantiation instantiation = 2;
@@ -56,4 +63,5 @@ enum Instantiation {
 enum ProcessType {
   LANCE = 0;
   SPARK = 1;
+  FAAS = 2;
 }
