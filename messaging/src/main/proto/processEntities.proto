@@ -11,14 +11,14 @@ import "nodeEntities.proto";
 message ProcessNew {
   string schedule = 1;
   string task = 2;
-  iaas.NodeGroup nodeGroup = 3;
+  string nodeGroup = 3;
 }
 
 message Process {
   string id = 1;
   string schedule = 2;
   string task = 3;
-  iaas.NodeGroup nodeGroup = 4;
+  string nodeGroup = 4;
   ProcessType type = 5;
 }
 
@@ -31,14 +31,14 @@ message LanceProcess {
   string schedule = 1;
   Job job = 2;
   string task = 3;
-  iaas.Node node = 4;
+  iaas.NodeGroup nodeGroup = 4;
 }
 
 message SparkProcess {
   string schedule = 1;
   Job job = 2;
   string task = 3;
-  repeated iaas.Node node = 4;
+  iaas.NodeGroup nodeGroup = 4;
 }
 
 message ScheduleNew {
