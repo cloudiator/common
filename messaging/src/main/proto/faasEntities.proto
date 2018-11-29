@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package faas;
+
+option java_package = "org.cloudiator.messages.entities";
+
+import "iaasEntities.proto";
+
+message FunctionRequest {
+  string cloudId = 1;
+  string locationId = 2;
+  int32 memory = 3;
+}
+
+message Function {
+  string id = 1;
+  string cloudId = 2;
+  string locationId = 3;
+  int32 memory = 4;
+  string stackId = 5;
+}
