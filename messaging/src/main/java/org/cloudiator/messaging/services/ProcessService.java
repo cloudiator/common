@@ -14,6 +14,8 @@ import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
 import org.cloudiator.messages.Process.LanceProcessDeletedResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
 import org.cloudiator.messages.Process.ProcessDeletedResponse;
+import org.cloudiator.messages.Process.ProcessGroupQueryMessage;
+import org.cloudiator.messages.Process.ProcessGroupQueryResponse;
 import org.cloudiator.messages.Process.ProcessQueryRequest;
 import org.cloudiator.messages.Process.ProcessQueryResponse;
 import org.cloudiator.messages.Process.ScheduleCreatedResponse;
@@ -96,4 +98,7 @@ public interface ProcessService {
   void subscribeCreateFaasProcessRequest(MessageCallback<CreateFaasProcessRequest> callback);
 
   void subscribeSchedule(MessageCallback<CreateScheduleRequest> callback);
+
+  ProcessGroupQueryResponse queryProcessGroups(ProcessGroupQueryMessage processGroupQueryMessage)
+      throws ResponseException;
 }
