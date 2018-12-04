@@ -38,7 +38,7 @@ message UpdateMonitorResponse {
 
 message DeleteMonitorRequest {
   string userId = 1;
-  Monitor monitor = 2;
+  string monitormetric = 2;
 }
 
 message DeleteMonitorResponse {
