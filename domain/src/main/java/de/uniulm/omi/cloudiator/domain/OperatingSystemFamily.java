@@ -58,7 +58,13 @@ public enum OperatingSystemFamily implements RemotePortProvider, LoginNameSuppli
   /**
    * Amazon Linux
    */
-  AMZN_LINUX, MANDRIVA, NETBSD,
+  AMZN_LINUX(
+      OperatingSystemType.LINUX,
+      OperatingSystemVersionFormats.supplier(new AmazonLinuxOperatingSystemVersionSupplier()),
+      LoginNameSuppliers.staticSupplier("ec2-user"),
+      null, new GenericNameBasedDockerImageFunction("ec2-user")
+  ),
+  MANDRIVA, NETBSD,
   /**
    * Oracle Linux OS
    */
