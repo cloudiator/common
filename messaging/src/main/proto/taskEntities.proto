@@ -68,11 +68,9 @@ message FaasInterface {
   string functionName = 1;
   string sourceCodeUrl = 2;
   string handler = 3;
-  string runtime = 4;
-  repeated Trigger triggers = 5;
-  int32 timeout = 6;
-  int32 memory = 7;
-  map<string, string> functionEnvironment = 8;
+  repeated Trigger triggers = 4;
+  int32 timeout = 5;
+  map<string, string> functionEnvironment = 6;
 }
 
 message Trigger {
