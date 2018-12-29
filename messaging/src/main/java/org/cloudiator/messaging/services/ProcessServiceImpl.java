@@ -1,9 +1,9 @@
 package org.cloudiator.messaging.services;
 
 import com.google.inject.Inject;
-import org.cloudiator.messages.Process;
-import org.cloudiator.messages.Process.*;
 import javax.inject.Named;
+import org.cloudiator.messages.Process;
+import org.cloudiator.messages.Process.CreateFaasProcessRequest;
 import org.cloudiator.messages.Process.CreateLanceProcessRequest;
 import org.cloudiator.messages.Process.CreateProcessRequest;
 import org.cloudiator.messages.Process.CreateScheduleRequest;
@@ -11,6 +11,7 @@ import org.cloudiator.messages.Process.CreateSparkProcessRequest;
 import org.cloudiator.messages.Process.DeleteLanceProcessRequest;
 import org.cloudiator.messages.Process.DeleteProcessRequest;
 import org.cloudiator.messages.Process.DeleteScheduleRequest;
+import org.cloudiator.messages.Process.FaasProcessCreatedResponse;
 import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
 import org.cloudiator.messages.Process.LanceProcessDeletedResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
@@ -28,8 +29,6 @@ import org.cloudiator.messaging.MessageCallback;
 import org.cloudiator.messaging.MessageInterface;
 import org.cloudiator.messaging.ResponseCallback;
 import org.cloudiator.messaging.ResponseException;
-
-import javax.inject.Named;
 
 public class ProcessServiceImpl implements ProcessService {
 
@@ -209,5 +208,11 @@ public class ProcessServiceImpl implements ProcessService {
       ProcessGroupQueryMessage processGroupQueryMessage) throws ResponseException {
     return messageInterface.call(processGroupQueryMessage, ProcessGroupQueryResponse.class, timeout);
   }
+
+  @Override
+  public void subscribeProcessGroupQueryRequest(MessageCallback<ProcessGroupQueryMessage> callback) {
+    messageInterface.subscribe(ProcessGroupQueryMessage.class, ProcessGroupQueryMessage.parser(), callback);
+  }
+
 
 }

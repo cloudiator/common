@@ -1,15 +1,14 @@
 package org.cloudiator.messaging.services;
 
-import org.cloudiator.messages.Process;
-import org.cloudiator.messages.Process.CreateLanceProcessRequest;
 import org.cloudiator.messages.Process.CreateFaasProcessRequest;
-import org.cloudiator.messages.Process.FaasProcessCreatedResponse;
+import org.cloudiator.messages.Process.CreateLanceProcessRequest;
 import org.cloudiator.messages.Process.CreateProcessRequest;
 import org.cloudiator.messages.Process.CreateScheduleRequest;
 import org.cloudiator.messages.Process.CreateSparkProcessRequest;
 import org.cloudiator.messages.Process.DeleteLanceProcessRequest;
 import org.cloudiator.messages.Process.DeleteProcessRequest;
 import org.cloudiator.messages.Process.DeleteScheduleRequest;
+import org.cloudiator.messages.Process.FaasProcessCreatedResponse;
 import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
 import org.cloudiator.messages.Process.LanceProcessDeletedResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
@@ -101,4 +100,6 @@ public interface ProcessService {
 
   ProcessGroupQueryResponse queryProcessGroups(ProcessGroupQueryMessage processGroupQueryMessage)
       throws ResponseException;
+
+  void subscribeProcessGroupQueryRequest(MessageCallback<ProcessGroupQueryMessage> callback);
 }
