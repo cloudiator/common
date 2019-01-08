@@ -15,11 +15,15 @@ message Node {
   repeated IpAddress ipAddresses = 5;
   NodeProperties nodeProperties = 6;
   NodeState state = 7;
+  string userId = 8;
+  string reason = 9;
+  string diagnostic = 10;
 }
 
 message NodeGroup {
   string id = 1;
   repeated Node nodes = 2;
+  string userId = 3;
 }
 
 message NodeProperties {
