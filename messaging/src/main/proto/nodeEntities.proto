@@ -18,6 +18,7 @@ message Node {
   string userId = 8;
   string reason = 9;
   string diagnostic = 10;
+  string nodeCandidate = 11;
 }
 
 message NodeGroup {
