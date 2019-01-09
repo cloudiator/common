@@ -9,9 +9,32 @@ import "iaasEntities.proto";
 
 message NodeCandidate {
   string id = 1;
-  iaas.Cloud cloud = 2;
-  Location location = 3;
-  Image image = 4;
-  HardwareFlavor hardwareFlavor = 5;
-  double price = 6;
+  NodeCandidateType type = 2;
+  iaas.Cloud cloud = 3;
+  Location location = 4;
+  Image image = 5;
+  HardwareFlavor hardwareFlavor = 6;
+  double price = 7;
+  double pricePerInvocation = 8;
+  double memoryPrice = 9;
+  Environment environment = 10;
+}
+
+message Environment {
+  Runtime runtime = 1;
+}
+
+enum NodeCandidateType {
+  NC_IAAS = 0;
+  NC_PAAS = 1;
+  NC_FAAS = 2;
+  NC_BYON = 3;
+}
+
+enum Runtime {
+  NODEJS = 0;
+  PYTHON = 1;
+  JAVA = 2;
+  DOTNET = 3;
+  GO = 4;
 }

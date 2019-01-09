@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package faas;
+
+option java_package = "org.cloudiator.messages";
+
+import "faasEntities.proto";
+
+message CreateFunctionRequestMessage {
+    string userId = 1;
+    FunctionRequest functionRequest = 2;
+}
+
+message DeleteFunctionRequestMessage {
+    string userId = 1;
+    string functionId = 2;
+}
+
+message FunctionDeletedResponse {
+
+}
+
+message FunctionCreatedResponse {
+    Function function = 1;
+}
+
+message FunctionQueryMessage {
+    string userId = 1;
+    string functionId = 2;
+    string cloudId = 3;
+}
+
+message FunctionQueryResponse {
+    repeated Function functions = 1;
+}
+

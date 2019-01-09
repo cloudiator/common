@@ -14,11 +14,16 @@ message Node {
   NodeType nodeType = 4;
   repeated IpAddress ipAddresses = 5;
   NodeProperties nodeProperties = 6;
+  NodeState state = 7;
+  string userId = 8;
+  string reason = 9;
+  string diagnostic = 10;
 }
 
 message NodeGroup {
   string id = 1;
   repeated Node nodes = 2;
+  string userId = 3;
 }
 
 message NodeProperties {
@@ -35,17 +40,14 @@ enum NodeType {
   VM = 1;
   BYON = 2;
   CONTAINER = 3;
+  FAAS = 4;
 }
 
-message NodeEvent {
-  Node node = 1;
-  NodeStatus nodeStatus = 2;
-}
-
-enum NodeStatus {
-  UNKNOWN_STATUS = 0;
-  CREATED = 1;
-  DELETED = 2;
+enum NodeState {
+  NODE_STATE_NEW = 0;
+  NODE_STATE_OK = 1;
+  NODE_STATE_ERROR = 2;
+  NODE_STATE_DELETED = 3;
 }
 
 message NodeRequirements {

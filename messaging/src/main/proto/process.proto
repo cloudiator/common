@@ -8,6 +8,13 @@ import "taskEntities.proto";
 import "processEntities.proto";
 import "nodeEntities.proto";
 
+message ProcessEvent {
+  string userId = 1;
+  ProcessState from = 2;
+  ProcessState to = 3;
+  Process process = 4;
+}
+
 message ProcessQueryRequest {
   string userId = 1;
   string processId = 2;
@@ -33,8 +40,10 @@ message CreateProcessRequest {
 }
 
 message ProcessCreatedResponse {
-  Process process = 1;
+  ProcessGroup processGroup = 1;
 }
+
+
 
 message DeleteProcessRequest {
   string userId = 1;
@@ -48,6 +57,11 @@ message ProcessDeletedResponse {
 message CreateLanceProcessRequest {
   string userId = 1;
   LanceProcess lance = 2;
+}
+
+message CreateFaasProcessRequest {
+  string userId = 1;
+  FaasProcess faas = 2;
 }
 
 message LanceProcessCreatedResponse {
@@ -64,7 +78,6 @@ message LanceProcessDeletedResponse {
 
 }
 
-
 message CreateSparkProcessRequest {
   string userId = 1;
   SparkProcess spark = 2;
@@ -74,11 +87,14 @@ message SparkProcessCreatedResponse {
   Process process = 2;
 }
 
+message FaasProcessCreatedResponse {
+  Process process = 1;
+}
+
 message CreateScheduleRequest {
   string userId = 1;
   ScheduleNew schedule = 2;
 }
-
 
 message ScheduleCreatedResponse {
   Schedule schedule = 1;
@@ -90,5 +106,14 @@ message DeleteScheduleRequest {
 }
 
 message ScheduleDeleteResponse {
-  
+
+}
+
+message ProcessGroupQueryMessage {
+  string userId = 1;
+  string processGroupId = 2;
+}
+
+message ProcessGroupQueryResponse {
+  repeated ProcessGroup processGroups = 1;
 }

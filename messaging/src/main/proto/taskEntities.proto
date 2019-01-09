@@ -25,6 +25,7 @@ message TaskInterface {
     DockerInterface dockerInterface = 1;
     LanceInterface lanceInterface = 2;
     SparkInterface sparkInterface = 3;
+    FaasInterface faasInterface = 4;
   }
 }
 
@@ -61,6 +62,26 @@ message LanceInterface {
   string postStop = 12;
   string shutdown = 13;
   ContainerType containerType = 14;
+}
+
+message FaasInterface {
+  string functionName = 1;
+  string sourceCodeUrl = 2;
+  string handler = 3;
+  repeated Trigger triggers = 4;
+  int32 timeout = 5;
+  map<string, string> functionEnvironment = 6;
+}
+
+message Trigger {
+  oneof trigger {
+    HttpTrigger httpTrigger = 1;
+  }
+}
+
+message HttpTrigger {
+  string httpPath = 1;
+  string httpMethod = 2;
 }
 
 message PortProvided {

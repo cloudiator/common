@@ -1,5 +1,6 @@
 package org.cloudiator.messaging.services;
 
+import org.cloudiator.messages.Process.CreateFaasProcessRequest;
 import org.cloudiator.messages.Process.CreateLanceProcessRequest;
 import org.cloudiator.messages.Process.CreateProcessRequest;
 import org.cloudiator.messages.Process.CreateScheduleRequest;
@@ -7,10 +8,13 @@ import org.cloudiator.messages.Process.CreateSparkProcessRequest;
 import org.cloudiator.messages.Process.DeleteLanceProcessRequest;
 import org.cloudiator.messages.Process.DeleteProcessRequest;
 import org.cloudiator.messages.Process.DeleteScheduleRequest;
+import org.cloudiator.messages.Process.FaasProcessCreatedResponse;
 import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
 import org.cloudiator.messages.Process.LanceProcessDeletedResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
 import org.cloudiator.messages.Process.ProcessDeletedResponse;
+import org.cloudiator.messages.Process.ProcessGroupQueryMessage;
+import org.cloudiator.messages.Process.ProcessGroupQueryResponse;
 import org.cloudiator.messages.Process.ProcessQueryRequest;
 import org.cloudiator.messages.Process.ProcessQueryResponse;
 import org.cloudiator.messages.Process.ScheduleCreatedResponse;
@@ -84,5 +88,18 @@ public interface ProcessService {
 
   void subscribeCreateSparkProcessRequest(MessageCallback<CreateSparkProcessRequest> callback);
 
+  FaasProcessCreatedResponse createFaasProcess(CreateFaasProcessRequest createFaasProcessRequest)
+      throws ResponseException;
+
+  void createFaasProcessAsync(CreateFaasProcessRequest createFaasProcessRequest,
+      ResponseCallback<FaasProcessCreatedResponse> callback);
+
+  void subscribeCreateFaasProcessRequest(MessageCallback<CreateFaasProcessRequest> callback);
+
   void subscribeSchedule(MessageCallback<CreateScheduleRequest> callback);
+
+  ProcessGroupQueryResponse queryProcessGroups(ProcessGroupQueryMessage processGroupQueryMessage)
+      throws ResponseException;
+
+  void subscribeProcessGroupQueryRequest(MessageCallback<ProcessGroupQueryMessage> callback);
 }

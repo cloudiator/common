@@ -31,7 +31,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -115,7 +114,8 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
 
   private static class Subscriber<T> implements Runnable {
 
-    private static final ExecutorService CALLBACK_EXECUTION = Executors.newCachedThreadPool();
+    private static final ExecutorService CALLBACK_EXECUTION = new LoggingThreadPoolExecutor(0,
+        2147483647, 60L, TimeUnit.SECONDS, new SynchronousQueue());
     private final Consumer<String, T> consumer;
     private final List<MessageCallback<T>> callbacks;
     private final String topic;
@@ -132,13 +132,12 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
     private synchronized Subscription addCallback(MessageCallback<T> callback) {
       callbacks.add(callback);
       return new SubscriptionImpl(() -> removeCallback(callback));
+
     }
 
-    private synchronized void removeCallback(MessageCallback<T> callback) {
-
+    private void removeCallback(MessageCallback<T> callback) {
       LOGGER.debug(
           String.format("Removing callback %s from subscription of topic %s.", callback, topic));
-
       callbacks.remove(callback);
     }
 
@@ -160,7 +159,8 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
             initialized.wait();
           }
         } catch (InterruptedException e) {
-          throw new IllegalStateException(e);
+          LOGGER.warn(String.format("Execution of %s got interrupted. Exiting.", this));
+          Thread.currentThread().interrupt();
         }
       }
       LOGGER.debug(String.format("Finished initializing subscriber %s.", this));
@@ -180,16 +180,19 @@ class KafkaSubscriptionServiceImpl implements KafkaSubscriptionService {
           for (ConsumerRecord<String, T> record : poll) {
             if (callbacks.isEmpty()) {
               LOGGER.warn(String
-                  .format("Receiving message with id %s but could not find any attached callbacks.",
-                      callbacks));
+                  .format(
+                      "Receiving message %s with key %s on topic %s but no callbacks are currently registered to this topic.",
+                      record.value(), record.key(), topic));
             }
-            for (MessageCallback<T> callback : callbacks) {
-              LOGGER.trace(String.format(
-                  "Receiving message with id %s and content %s on topic %s. Scheduling callback %s for Execution",
-                  record.key(), record.value(), topic, callback));
-              Runnable runnable = RunnableMessageCallback
-                  .of(callback, record.key(), record.value());
-              CALLBACK_EXECUTION.execute(runnable);
+            synchronized (this) {
+              for (MessageCallback<T> callback : callbacks) {
+                LOGGER.trace(String.format(
+                    "Receiving message with id %s and content %s on topic %s. Scheduling callback %s for execution",
+                    record.key(), record.value(), topic, callback));
+                Runnable runnable = RunnableMessageCallback
+                    .of(callback, record.key(), record.value());
+                CALLBACK_EXECUTION.execute(runnable);
+              }
             }
           }
         }

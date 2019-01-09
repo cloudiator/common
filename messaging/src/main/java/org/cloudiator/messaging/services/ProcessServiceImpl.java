@@ -2,6 +2,8 @@ package org.cloudiator.messaging.services;
 
 import com.google.inject.Inject;
 import javax.inject.Named;
+import org.cloudiator.messages.Process;
+import org.cloudiator.messages.Process.CreateFaasProcessRequest;
 import org.cloudiator.messages.Process.CreateLanceProcessRequest;
 import org.cloudiator.messages.Process.CreateProcessRequest;
 import org.cloudiator.messages.Process.CreateScheduleRequest;
@@ -9,10 +11,13 @@ import org.cloudiator.messages.Process.CreateSparkProcessRequest;
 import org.cloudiator.messages.Process.DeleteLanceProcessRequest;
 import org.cloudiator.messages.Process.DeleteProcessRequest;
 import org.cloudiator.messages.Process.DeleteScheduleRequest;
+import org.cloudiator.messages.Process.FaasProcessCreatedResponse;
 import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
 import org.cloudiator.messages.Process.LanceProcessDeletedResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
 import org.cloudiator.messages.Process.ProcessDeletedResponse;
+import org.cloudiator.messages.Process.ProcessGroupQueryMessage;
+import org.cloudiator.messages.Process.ProcessGroupQueryResponse;
 import org.cloudiator.messages.Process.ProcessQueryRequest;
 import org.cloudiator.messages.Process.ProcessQueryResponse;
 import org.cloudiator.messages.Process.ScheduleCreatedResponse;
@@ -178,9 +183,36 @@ public class ProcessServiceImpl implements ProcessService {
   }
 
   @Override
+  public FaasProcessCreatedResponse createFaasProcess(Process.CreateFaasProcessRequest createFaasProcessRequest) throws ResponseException {
+    return messageInterface.call(createFaasProcessRequest, FaasProcessCreatedResponse.class, timeout);
+  }
+
+  @Override
+  public void createFaasProcessAsync(Process.CreateFaasProcessRequest createFaasProcessRequest, ResponseCallback<Process.FaasProcessCreatedResponse> callback) {
+    messageInterface.callAsync(createFaasProcessRequest, FaasProcessCreatedResponse.class, callback);
+  }
+
+  @Override
+  public void subscribeCreateFaasProcessRequest(MessageCallback<Process.CreateFaasProcessRequest> callback) {
+    messageInterface.subscribe(CreateFaasProcessRequest.class, CreateFaasProcessRequest.parser(), callback);
+  }
+
+  @Override
   public void subscribeSchedule(MessageCallback<CreateScheduleRequest> callback) {
     messageInterface
         .subscribe(CreateScheduleRequest.class, CreateScheduleRequest.parser(), callback);
   }
+
+  @Override
+  public ProcessGroupQueryResponse queryProcessGroups(
+      ProcessGroupQueryMessage processGroupQueryMessage) throws ResponseException {
+    return messageInterface.call(processGroupQueryMessage, ProcessGroupQueryResponse.class, timeout);
+  }
+
+  @Override
+  public void subscribeProcessGroupQueryRequest(MessageCallback<ProcessGroupQueryMessage> callback) {
+    messageInterface.subscribe(ProcessGroupQueryMessage.class, ProcessGroupQueryMessage.parser(), callback);
+  }
+
 
 }
