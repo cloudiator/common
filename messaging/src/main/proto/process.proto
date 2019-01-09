@@ -8,6 +8,13 @@ import "taskEntities.proto";
 import "processEntities.proto";
 import "nodeEntities.proto";
 
+message ProcessEvent {
+  string userId = 1;
+  ProcessState from = 2;
+  ProcessState to = 3;
+  Process process = 4;
+}
+
 message ProcessQueryRequest {
   string userId = 1;
   string processId = 2;

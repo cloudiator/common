@@ -74,3 +74,10 @@ enum ProcessType {
   SPARK = 1;
   FAAS = 2;
 }
+
+enum ProcessState {
+  PROCESS_STATE_NEW = 0;
+  PROCESS_STATE_OK = 1;
+  PROCESS_STATE_ERROR = 2;
+  PROCESS_STATE_DELETED = 3;
+}
