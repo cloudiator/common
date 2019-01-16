@@ -57,9 +57,18 @@ public class SupplierBasedOperatingSystemFormat implements OperatingSystemVersio
         operatingSystemVersion -> operatingSystemVersion.name().isPresent()
             && operatingSystemVersion.name().get().equals(version))
         .collect(Collectors.toList());
-    if (collect.size() != 1) {
-      throw new IllegalArgumentException();
+
+    if (collect.size() == 0) {
+      throw new IllegalArgumentException(String
+          .format("Version %s is not known. Possible values are %s.", version, possibleValues));
     }
+
+    if (collect.size() > 1) {
+      throw new IllegalStateException(String
+          .format("Multiple versions match the version %s. Possible values are: %s.", version,
+              possibleValues));
+    }
+    
     return collect.get(0);
   }
 }
