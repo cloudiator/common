@@ -45,7 +45,7 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O> {
   }
 
   @Override
-  public O apply(O object, State to) throws ExecutionException {
+  public O apply(O object, State to, Object[] arguments) throws ExecutionException {
 
     if (object.state().equals(to)) {
       LOGGER.info(
@@ -78,13 +78,13 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O> {
 
     for (Transition<O> transition : path.get().getEdgeList()) {
       try {
-        object = traverse(object, transition);
+        object = traverse(object, arguments, transition);
       } catch (ExecutionException e) {
         if (errorState != null) {
           LOGGER.warn(String.format(
               "Error while traversing from state %s to state %s for object %s. Starting transition to error state %s.",
               object.state(), to, object, errorState));
-          apply(object, errorState);
+          apply(object, errorState, arguments);
         } else {
           throw new ExecutionException(String
               .format("Error while traversing from state %s to state %s for object %s.",
@@ -97,7 +97,8 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O> {
 
   }
 
-  private O traverse(O object, Transition<O> transition) throws ExecutionException {
+  private O traverse(O object, Object[] arguments, Transition<O> transition)
+      throws ExecutionException {
 
     final State previousState = object.state();
 
@@ -105,7 +106,7 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O> {
         .format("Transition expects object to be in state %s but object is in state %s.",
             transition.from(), object.state()));
 
-    final O changedObject = transition.apply(object);
+    final O changedObject = transition.apply(object, arguments);
 
     checkState(changedObject.state().equals(transition.to()), String.format(
         "Transition expected object to be in state %s after execution. It is however in state %s.",

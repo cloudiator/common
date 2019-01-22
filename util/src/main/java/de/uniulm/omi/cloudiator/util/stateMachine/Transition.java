@@ -4,7 +4,7 @@ import com.google.common.base.MoreObjects;
 import de.uniulm.omi.cloudiator.util.function.ThrowingFunction;
 import java.util.concurrent.ExecutionException;
 
-public class Transition<O extends Stateful> implements ThrowingFunction<O, O> {
+public class Transition<O extends Stateful> {
 
   private final State from;
   private final State to;
@@ -24,9 +24,8 @@ public class Transition<O extends Stateful> implements ThrowingFunction<O, O> {
   public State to() {
     return to;
   }
-
-  @Override
-  public O apply(O o) throws ExecutionException {
+  
+  public O apply(O o, Object[] arguments) throws ExecutionException {
     try {
       return action.apply(o);
     } catch (Exception e) {
