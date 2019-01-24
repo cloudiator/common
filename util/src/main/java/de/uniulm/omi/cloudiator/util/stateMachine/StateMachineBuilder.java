@@ -6,7 +6,7 @@ public class StateMachineBuilder<O extends Stateful> {
 
   private HashSet<Transition<O>> transitions;
   private HashSet<StateMachineHook<O>> hooks;
-  private State errorState;
+  private ErrorTransition<O> errorTransition;
 
   public static <O extends Stateful> StateMachineBuilder builder() {
     return new StateMachineBuilder<O>();
@@ -27,13 +27,13 @@ public class StateMachineBuilder<O extends Stateful> {
     return this;
   }
 
-  public StateMachineBuilder<O> errorState(State errorState) {
-    this.errorState = errorState;
+  public StateMachineBuilder<O> errorTransition(ErrorTransition<O> errorTransition) {
+    this.errorTransition = errorTransition;
     return this;
   }
 
-  public StateMachineImpl<O> build() {
-    return new StateMachineImpl<>(transitions, hooks, errorState);
+  public ErrorAwareStateMachine<O> build() {
+    return new StateMachineImpl<>(transitions, hooks, errorTransition);
   }
 
 

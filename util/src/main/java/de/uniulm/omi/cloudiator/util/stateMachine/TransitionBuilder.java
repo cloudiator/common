@@ -8,11 +8,7 @@ public class TransitionBuilder<O extends Stateful> {
   private State to;
   private TransitionAction<O> action;
 
-  public static <O extends Stateful> TransitionBuilder<O> newBuilder() {
-    return new TransitionBuilder<>();
-  }
-
-  private TransitionBuilder() {
+  TransitionBuilder() {
   }
 
   public TransitionBuilder<O> from(State from) {

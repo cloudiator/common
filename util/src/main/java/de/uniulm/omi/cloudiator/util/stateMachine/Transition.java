@@ -15,7 +15,7 @@ public class Transition<O extends Stateful> {
   private final State to;
   private final TransitionAction<O> action;
 
-  protected Transition(State from, State to,
+  Transition(State from, State to,
       TransitionAction<O> action) {
     this.from = from;
     this.to = to;
@@ -30,7 +30,7 @@ public class Transition<O extends Stateful> {
     return to;
   }
 
-  public O apply(O o, Object[] arguments) throws ExecutionException {
+  O apply(O o, Object[] arguments) throws ExecutionException {
     try {
       return action.apply(o, arguments);
     } catch (Exception e) {
