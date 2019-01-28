@@ -14,15 +14,16 @@ message ProcessNew {
   string nodeGroup = 3;
 }
 
-message Process{
+message Process {
   string id = 1;
   string schedule = 2;
   string task = 3;
-  oneof runsOn{
+  oneof runsOn {
     string node = 4;
     string nodeGroup = 5;
   }
   ProcessType type = 6;
+  ProcessState state = 7;
 }
 
 
@@ -76,8 +77,9 @@ enum ProcessType {
 }
 
 enum ProcessState {
-  PROCESS_STATE_NEW = 0;
-  PROCESS_STATE_OK = 1;
-  PROCESS_STATE_ERROR = 2;
-  PROCESS_STATE_DELETED = 3;
+  PROCESS_STATE_CREATED = 0;
+  PROCESS_STATE_FAILED = 1;
+  PROCESS_STATE_RUNNING = 2;
+  PROCESS_STATE_ERROR = 3;
+  PROCESS_STATE_DELETED = 4;
 }

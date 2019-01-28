@@ -1,18 +1,14 @@
 package de.uniulm.omi.cloudiator.util.stateMachine;
 
-import de.uniulm.omi.cloudiator.util.function.ThrowingFunction;
+import de.uniulm.omi.cloudiator.util.stateMachine.Transition.TransitionAction;
 
 public class TransitionBuilder<O extends Stateful> {
 
   private State from;
   private State to;
-  private ThrowingFunction<O, O> action;
+  private TransitionAction<O> action;
 
-  public static <O extends Stateful> TransitionBuilder<O> newBuilder() {
-    return new TransitionBuilder<>();
-  }
-
-  private TransitionBuilder() {
+  TransitionBuilder() {
   }
 
   public TransitionBuilder<O> from(State from) {
@@ -25,7 +21,7 @@ public class TransitionBuilder<O extends Stateful> {
     return this;
   }
 
-  public TransitionBuilder<O> action(ThrowingFunction<O, O> action) {
+  public TransitionBuilder<O> action(TransitionAction<O> action) {
     this.action = action;
     return this;
   }
