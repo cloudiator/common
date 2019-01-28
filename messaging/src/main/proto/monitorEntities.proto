@@ -70,6 +70,8 @@ message PushSensor {
 enum SinkType {
   KAIROS_DB = 0;
   INFLUX = 1;
+  CLI = 2;
+  JMS =3;
 }
 
 message Sink {
