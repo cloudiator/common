@@ -13,6 +13,7 @@ import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
 import org.cloudiator.messages.Process.LanceProcessDeletedResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
 import org.cloudiator.messages.Process.ProcessDeletedResponse;
+import org.cloudiator.messages.Process.ProcessEvent;
 import org.cloudiator.messages.Process.ProcessGroupQueryMessage;
 import org.cloudiator.messages.Process.ProcessGroupQueryResponse;
 import org.cloudiator.messages.Process.ProcessQueryRequest;
@@ -102,4 +103,6 @@ public interface ProcessService {
       throws ResponseException;
 
   void subscribeProcessGroupQueryRequest(MessageCallback<ProcessGroupQueryMessage> callback);
+
+  void announceProcessEvent(ProcessEvent processEvent);
 }
