@@ -24,6 +24,7 @@ message Process {
   }
   ProcessType type = 6;
   ProcessState state = 7;
+  string userId = 8;
 }
 
 
@@ -82,4 +83,5 @@ enum ProcessState {
   PROCESS_STATE_RUNNING = 2;
   PROCESS_STATE_ERROR = 3;
   PROCESS_STATE_DELETED = 4;
+  PROCESS_STATE_FINISHED = 5;
 }
