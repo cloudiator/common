@@ -25,12 +25,16 @@ message Process {
   ProcessType type = 6;
   ProcessState state = 7;
   string userId = 8;
+  string diagnostic = 9;
+  string reason = 10;
 }
 
 
 message ProcessGroup {
   string id = 1;
-  repeated Process process = 2;
+  string scheduleId = 2;
+  string userId = 3;
+  repeated Process process = 4;
 }
 
 message LanceProcess {
