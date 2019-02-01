@@ -44,7 +44,6 @@ message ProcessCreatedResponse {
 }
 
 
-
 message DeleteProcessRequest {
   string userId = 1;
   string processId = 2;
@@ -116,4 +115,13 @@ message ProcessGroupQueryMessage {
 
 message ProcessGroupQueryResponse {
   repeated ProcessGroup processGroups = 1;
+}
+
+message ScheduleGraphRequest {
+  string userId = 1;
+  string scheduleId = 2;
+}
+
+message ScheduleGraphResponse {
+  string json = 1;
 }

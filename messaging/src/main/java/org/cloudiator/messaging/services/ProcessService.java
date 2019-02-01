@@ -20,6 +20,8 @@ import org.cloudiator.messages.Process.ProcessQueryRequest;
 import org.cloudiator.messages.Process.ProcessQueryResponse;
 import org.cloudiator.messages.Process.ScheduleCreatedResponse;
 import org.cloudiator.messages.Process.ScheduleDeleteResponse;
+import org.cloudiator.messages.Process.ScheduleGraphRequest;
+import org.cloudiator.messages.Process.ScheduleGraphResponse;
 import org.cloudiator.messages.Process.ScheduleQueryRequest;
 import org.cloudiator.messages.Process.ScheduleQueryResponse;
 import org.cloudiator.messages.Process.SparkProcessCreatedResponse;
@@ -105,4 +107,6 @@ public interface ProcessService {
   void subscribeProcessGroupQueryRequest(MessageCallback<ProcessGroupQueryMessage> callback);
 
   void announceProcessEvent(ProcessEvent processEvent);
+
+  ScheduleGraphResponse graph(ScheduleGraphRequest scheduleGraphRequest) throws ResponseException;
 }
