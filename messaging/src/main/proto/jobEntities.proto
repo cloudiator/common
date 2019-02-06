@@ -21,8 +21,9 @@ message JobNew {
 
 message Job {
   string id = 1;
-  string name = 2;
-  repeated Task tasks = 3;
-  repeated Communication communications = 4;
-  repeated common.Requirement requirements = 5;
+  string userId = 2;
+  string name = 3;
+  repeated Task tasks = 4;
+  repeated Communication communications = 5;
+  repeated common.Requirement requirements = 6;
 }

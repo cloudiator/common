@@ -65,9 +65,10 @@ message ScheduleNew {
 
 message Schedule {
   string id = 1;
-  string Job = 2;
-  Instantiation instantiation = 3;
-  repeated Process processes = 4;
+  string userId = 2;
+  string Job = 3;
+  Instantiation instantiation = 4;
+  repeated Process processes = 5;
 }
 
 enum Instantiation {
