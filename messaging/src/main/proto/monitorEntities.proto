@@ -11,7 +11,7 @@ message Monitor {
   repeated MonitoringTarget target = 3;
   Sensor sensor = 4;
   repeated Sink datasink = 5;
-  repeated MonitoringTag tags = 6;
+  map<string, string> tags = 6;
 }
 
 
@@ -20,7 +20,7 @@ message NewMonitor {
   repeated MonitoringTarget target = 2;
   Sensor sensor = 3;
   repeated Sink datasink = 4;
-  repeated MonitoringTag tags = 5;
+  map<string, string> tags = 5;
 }
 
 enum TargetType {
@@ -71,7 +71,7 @@ enum SinkType {
   KAIROS_DB = 0;
   INFLUX = 1;
   CLI = 2;
-  JMS =3;
+  JMS = 3;
 }
 
 message Sink {
