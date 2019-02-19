@@ -137,7 +137,7 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O>,
         .format("Transition expected object %s to be in error state %s. But object is in state %s.",
             object, errorTransition.errorState(), object.state()));
 
-    postStateTransition(object, previousState);
+    postStateTransition(changedObject, previousState);
 
     return changedObject;
   }
