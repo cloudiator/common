@@ -13,6 +13,7 @@ message Solution {
   double costs = 3;
   bool isOptimal = 4;
   float time = 5;
+  bool isValid = 6;
 }
 
 message NodeCandidate {
