@@ -13,4 +13,6 @@ message DiscoveryEvent {
     Image image = 3;
     Location location = 4;
   }
+  DiscoveryItemState from = 5;
+  DiscoveryItemState to = 6;
 }
