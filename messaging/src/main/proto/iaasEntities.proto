@@ -137,6 +137,7 @@ message VirtualMachine {
   repeated IpAddress ipAddresses = 7;
   LoginCredential loginCredential = 8;
   string userId = 9;
+  VirtualMachineState state = 10;
 }
 
 enum VirtualMachineState {
