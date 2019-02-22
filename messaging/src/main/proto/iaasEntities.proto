@@ -139,6 +139,14 @@ message VirtualMachine {
   string userId = 9;
 }
 
+enum VirtualMachineState {
+  VM_STATE_CREATED = 0;
+  VM_STATE_FAILED = 1;
+  VM_STATE_RUNNING = 2;
+  VM_STATE_ERROR = 3;
+  VM_STATE_DELETED = 4;
+}
+
 enum DiscoveryItemState {
   DISCOVERY_NEW = 0;
   DISCOVERY_OK = 1;

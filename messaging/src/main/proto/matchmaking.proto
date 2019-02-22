@@ -22,6 +22,7 @@ message NodeCandidateRequestResponse {
 message MatchmakingRequest {
   string userId = 1;
   NodeRequirements nodeRequirements = 2;
+  repeated Node existingNodes = 3;
 }
 
 message SolutionRequest {
