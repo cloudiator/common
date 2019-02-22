@@ -60,6 +60,7 @@ message HardwareFlavor {
   double disk = 6;
   Location location = 7;
   DiscoveryItemState state = 8;
+  string userId = 9;
 }
 
 message Image {
@@ -69,6 +70,7 @@ message Image {
   common.OperatingSystem operationSystem = 4;
   Location location = 5;
   DiscoveryItemState state = 6;
+  string userId = 7;
 }
 
 message Location {
@@ -80,6 +82,7 @@ message Location {
   Location parent = 6;
   GeoLocation geoLocation = 7;
   DiscoveryItemState state = 8;
+  string userId = 9;
 }
 
 message GeoLocation {
@@ -132,6 +135,7 @@ message VirtualMachine {
   HardwareFlavor hardware = 6;
   repeated IpAddress ipAddresses = 7;
   LoginCredential loginCredential = 8;
+  string userId = 9;
 }
 
 enum DiscoveryItemState {

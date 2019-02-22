@@ -8,8 +8,8 @@ public class StateMachineBuilder<O extends Stateful> {
   private HashSet<StateMachineHook<O>> hooks;
   private ErrorTransition<O> errorTransition;
 
-  public static <O extends Stateful> StateMachineBuilder builder() {
-    return new StateMachineBuilder<O>();
+  public static <T extends Stateful> StateMachineBuilder builder() {
+    return new StateMachineBuilder<T>();
   }
 
   private StateMachineBuilder() {
