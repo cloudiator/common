@@ -23,6 +23,7 @@ message Cloud {
   CloudType cloudType = 6;
   CloudState state = 7;
   string diagnostic = 8;
+  string userId = 9;
 }
 
 enum CloudState {
