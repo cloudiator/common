@@ -56,7 +56,7 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O>,
   }
 
   @Override
-  public O apply(O object, State to, Object[] arguments) throws ExecutionException {
+  public O apply(O object, State to, Object[] arguments) {
 
     if (object.state().equals(to)) {
       LOGGER.info(
@@ -74,8 +74,7 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O>,
 
   }
 
-  private GraphPath<State, Transition<O>> calculatePath(State from, State to)
-      throws ExecutionException {
+  private GraphPath<State, Transition<O>> calculatePath(State from, State to) {
 
     //calculate the shortest path
     final Optional<GraphPath<State, Transition<O>>> path = transitionGraph
@@ -85,7 +84,7 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O>,
       final String errorMessage = String.format(
           TRANSITION_NOT_FOUND,
           from, to);
-      throw new ExecutionException(new IllegalStateException(errorMessage));
+      throw new IllegalStateException(errorMessage);
     }
 
     LOGGER
@@ -142,7 +141,7 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O>,
     return changedObject;
   }
 
-  private O normal(O object, State to, Object[] arguments) throws ExecutionException {
+  private O normal(O object, State to, Object[] arguments) {
 
     final GraphPath<State, Transition<O>> graphPath = calculatePath(object.state(),
         to);
@@ -158,7 +157,7 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O>,
               object.state(), to, object, errorTransition.errorState()));
           fail(object, arguments, e);
         } else {
-          throw new ExecutionException(String
+          throw new IllegalStateException(String
               .format("Error while traversing from state %s to state %s for object %s.",
                   object.state(), to, object), e.getCause());
         }
