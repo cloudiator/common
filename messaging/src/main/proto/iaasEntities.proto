@@ -141,11 +141,8 @@ message VirtualMachine {
 }
 
 enum VirtualMachineState {
-  VM_STATE_CREATED = 0;
-  VM_STATE_FAILED = 1;
-  VM_STATE_RUNNING = 2;
-  VM_STATE_ERROR = 3;
-  VM_STATE_DELETED = 4;
+  VM_STATE_RUNNING = 0;
+  VM_STATE_ERROR = 1;
 }
 
 enum DiscoveryItemState {
