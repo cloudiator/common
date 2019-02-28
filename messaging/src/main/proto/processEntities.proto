@@ -11,7 +11,7 @@ import "nodeEntities.proto";
 message ProcessNew {
   string schedule = 1;
   string task = 2;
-  string nodeGroup = 3;
+  repeated string nodes = 3;
 }
 
 message Process {
