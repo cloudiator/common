@@ -20,13 +20,17 @@ message Process {
   string task = 3;
   oneof runsOn {
     string node = 4;
-    string nodeGroup = 5;
+    NodeGroup nodes = 5;
   }
   ProcessType type = 6;
   ProcessState state = 7;
   string userId = 8;
   string diagnostic = 9;
   string reason = 10;
+}
+
+message NodeGroup {
+  repeated string nodes = 1;
 }
 
 
@@ -48,7 +52,7 @@ message SparkProcess {
   string schedule = 1;
   Job job = 2;
   string task = 3;
-  iaas.NodeGroup nodeGroup = 4;
+  repeated string nodes = 4;
 }
 
 message FaasProcess {
