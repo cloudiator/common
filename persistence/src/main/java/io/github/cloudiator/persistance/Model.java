@@ -46,7 +46,7 @@ abstract class Model implements Serializable {
           ),
           @org.hibernate.annotations.Parameter(
               name = "increment_size",
-              value = "6"
+              value = "5"
           )
       }
   )
