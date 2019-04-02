@@ -43,8 +43,6 @@ public class BaseModelRepositoryJpa<T extends Model> implements ModelRepository<
   }
 
   protected EntityManager em() {
-    //todo: replace with correct call to jpaAPI
-    //todo: currently blocked by https://github.com/playframework/playframework/issues/4890
     return entityManager.get();
   }
 
