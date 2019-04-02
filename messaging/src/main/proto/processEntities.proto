@@ -52,7 +52,7 @@ message SparkProcess {
   string schedule = 1;
   Job job = 2;
   string task = 3;
-  repeated string nodes = 4;
+  repeated iaas.Node nodes = 4;
 }
 
 message FaasProcess {
