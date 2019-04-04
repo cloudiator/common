@@ -155,3 +155,7 @@ enum DiscoveryItemState {
   DISCOVERY_UNKNOWN = 6;
 }
 
+message DiscoveryStatus {
+  map<string, int32> status = 1;
+}
+

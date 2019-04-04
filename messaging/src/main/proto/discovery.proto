@@ -16,3 +16,11 @@ message DiscoveryEvent {
   DiscoveryItemState from = 5;
   DiscoveryItemState to = 6;
 }
+
+message DiscoveryStatusRequest {
+
+}
+
+message DiscoverStatusResponse {
+  DiscoveryStatus discoveryStatus = 1;
+}
