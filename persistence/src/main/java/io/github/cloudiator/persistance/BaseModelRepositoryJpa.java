@@ -58,7 +58,7 @@ public class BaseModelRepositoryJpa<T extends Model> implements ModelRepository<
   }
 
   @Override
-  public void save(final T t) {
+  public T save(final T t) {
     checkNotNull(t);
     if (t.getId() == null) {
       this.persist(t);
@@ -67,6 +67,7 @@ public class BaseModelRepositoryJpa<T extends Model> implements ModelRepository<
     }
     this.flush();
     this.refresh(t);
+    return t;
   }
 
   protected T update(final T t) {
