@@ -4,6 +4,8 @@ package application;
 
 option java_package = "org.cloudiator.messages.entities";
 
+import "commonEntities.proto";
+
 
 message Monitor {
   string id = 1;
@@ -43,24 +45,10 @@ message Sensor {
   }
 }
 
-enum Unit {
-  DAYS = 0;
-  HOURS = 1;
-  MINUTES = 2;
-  SECONDS = 3;
-  MILLISECONDS = 4;
-  MICROSECONDS = 5;
-  NANOSECONDS = 6;
-}
-message Interval {
-  Unit unit = 1;
-  int64 period = 2;
-}
-
 message PullSensor {
   string className = 1;
   map<string, string> configuration = 2;
-  Interval interval = 3;
+  common.Interval interval = 3;
 }
 
 message PushSensor {

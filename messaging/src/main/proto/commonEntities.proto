@@ -129,3 +129,17 @@ enum OperatingSystemFamily {
   UBUNTU = 25;
   WINDOWS = 26;
 }
+
+enum Unit {
+  DAYS = 0;
+  HOURS = 1;
+  MINUTES = 2;
+  SECONDS = 3;
+  MILLISECONDS = 4;
+  MICROSECONDS = 5;
+  NANOSECONDS = 6;
+}
+message Interval {
+  Unit unit = 1;
+  int64 period = 2;
+}

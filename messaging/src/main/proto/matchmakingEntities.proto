@@ -19,7 +19,7 @@ message Solution {
 message NodeCandidate {
   string id = 1;
   NodeCandidateType type = 2;
-  iaas.Cloud cloud = 3;
+  Cloud cloud = 3;
   Location location = 4;
   Image image = 5;
   HardwareFlavor hardwareFlavor = 6;

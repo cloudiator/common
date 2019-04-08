@@ -11,7 +11,11 @@ import "nodeEntities.proto";
 message ProcessNew {
   string schedule = 1;
   string task = 2;
-  repeated string nodes = 3;
+  string lifecycleInterface = 3;
+  oneof runsOn {
+    string node = 4;
+    NodeCluster cluster = 5;
+  }
 }
 
 message Process {
@@ -20,7 +24,7 @@ message Process {
   string task = 3;
   oneof runsOn {
     string node = 4;
-    NodeGroup nodes = 5;
+    NodeCluster cluster = 5;
   }
   ProcessType type = 6;
   ProcessState state = 7;
@@ -29,7 +33,7 @@ message Process {
   string reason = 10;
 }
 
-message NodeGroup {
+message NodeCluster {
   repeated string nodes = 1;
 }
 
