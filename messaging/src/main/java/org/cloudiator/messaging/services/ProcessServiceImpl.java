@@ -17,8 +17,6 @@ import org.cloudiator.messages.Process.LanceProcessDeletedResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
 import org.cloudiator.messages.Process.ProcessDeletedResponse;
 import org.cloudiator.messages.Process.ProcessEvent;
-import org.cloudiator.messages.Process.ProcessGroupQueryMessage;
-import org.cloudiator.messages.Process.ProcessGroupQueryResponse;
 import org.cloudiator.messages.Process.ProcessQueryRequest;
 import org.cloudiator.messages.Process.ProcessQueryResponse;
 import org.cloudiator.messages.Process.ScheduleCreatedResponse;
@@ -210,20 +208,6 @@ public class ProcessServiceImpl implements ProcessService {
   public void subscribeSchedule(MessageCallback<CreateScheduleRequest> callback) {
     messageInterface
         .subscribe(CreateScheduleRequest.class, CreateScheduleRequest.parser(), callback);
-  }
-
-  @Override
-  public ProcessGroupQueryResponse queryProcessGroups(
-      ProcessGroupQueryMessage processGroupQueryMessage) throws ResponseException {
-    return messageInterface
-        .call(processGroupQueryMessage, ProcessGroupQueryResponse.class, timeout);
-  }
-
-  @Override
-  public void subscribeProcessGroupQueryRequest(
-      MessageCallback<ProcessGroupQueryMessage> callback) {
-    messageInterface
-        .subscribe(ProcessGroupQueryMessage.class, ProcessGroupQueryMessage.parser(), callback);
   }
 
   @Override

@@ -13,16 +13,16 @@ message Task {
   repeated common.Requirement requirements = 4;
   common.Optimization optimization = 5;
   oneof behaviour {
-    Service service = 6;
-    Periodic periodic = 7;
+    ServiceBehaviour service = 6;
+    PeriodicBehaviour periodic = 7;
   }
 }
 
-message Service {
+message ServiceBehaviour {
   bool restart = 1;
 }
 
-message Periodic {
+message PeriodicBehaviour {
   common.Interval interval = 1;
   CollisionHandling collisionHandling = 2;
 }

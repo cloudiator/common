@@ -11,7 +11,7 @@ import "nodeEntities.proto";
 message ProcessNew {
   string schedule = 1;
   string task = 2;
-  string lifecycleInterface = 3;
+  string taskInterface = 3;
   oneof runsOn {
     string node = 4;
     NodeCluster cluster = 5;
@@ -20,43 +20,49 @@ message ProcessNew {
 
 message Process {
   string id = 1;
-  string schedule = 2;
-  string task = 3;
+  string originId = 2;
+  string schedule = 3;
+  string task = 4;
+  string taskInterface = 5;
   oneof runsOn {
-    string node = 4;
-    NodeCluster cluster = 5;
+    string node = 6;
+    NodeCluster cluster = 7;
   }
-  ProcessType type = 6;
-  ProcessState state = 7;
-  string userId = 8;
-  string diagnostic = 9;
-  string reason = 10;
+  ProcessType type = 8;
+  ProcessState state = 9;
+  string userId = 10;
+  string diagnostic = 11;
+  string reason = 12;
 }
 
 message NodeCluster {
   repeated string nodes = 1;
 }
 
-
-message ProcessGroup {
-  string id = 1;
-  string scheduleId = 2;
-  string userId = 3;
-  repeated Process process = 4;
-}
-
 message LanceProcess {
   string schedule = 1;
   Job job = 2;
   string task = 3;
-  iaas.Node node = 4;
+  oneof taskInterface {
+    LanceInterface lanceInterface = 4;
+    DockerInterface dockerInterface = 5;
+  }
+  iaas.Node node = 6;
 }
 
 message SparkProcess {
   string schedule = 1;
   Job job = 2;
   string task = 3;
-  repeated iaas.Node nodes = 4;
+  oneof runsOn {
+    iaas.Node node = 4;
+    Nodes nodes = 5;
+  }
+  SparkInterface sparkInterface = 6;
+}
+
+message Nodes {
+  repeated iaas.Node nodes = 1;
 }
 
 message FaasProcess {
@@ -64,6 +70,7 @@ message FaasProcess {
   Job job = 2;
   string task = 3;
   iaas.Node node = 4;
+  FaasInterface faasInterface = 5;
 }
 
 message ScheduleNew {
@@ -88,6 +95,7 @@ enum ProcessType {
   LANCE = 0;
   SPARK = 1;
   FAAS = 2;
+  UNKNOWN = 3;
 }
 
 enum ProcessState {
