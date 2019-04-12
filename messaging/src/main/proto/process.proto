@@ -17,7 +17,10 @@ message ProcessEvent {
 
 message ProcessStatusQuery {
   Process process = 1;
-  iaas.Node node = 2;
+  oneof runsOn {
+    iaas.Node node = 4;
+    Nodes nodes = 5;
+  }
 }
 
 message ProcessStatusResponse {
