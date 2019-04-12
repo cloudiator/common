@@ -16,7 +16,8 @@ message ProcessEvent {
 }
 
 message ProcessStatusQuery {
-  string processId = 1;
+  Process process = 1;
+  iaas.Node node = 2;
 }
 
 message ProcessStatusResponse {
