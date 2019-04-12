@@ -130,7 +130,14 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O>,
 
     preStateTransition(object, errorTransition.errorState());
 
-    final O changedObject = errorTransition.apply(object, arguments, t);
+    O changedObject;
+    try {
+      changedObject = errorTransition.apply(object, arguments, t);
+    } catch (Exception e) {
+      LOGGER.error(
+          "Could not execute error transition to state %s for object %s. Object will remain in illegal state.");
+      throw new IllegalStateException(e.getMessage(), e);
+    }
 
     checkState(changedObject.state().equals(errorTransition.errorState()), String
         .format("Transition expected object %s to be in error state %s. But object is in state %s.",
@@ -154,13 +161,19 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O>,
         if (errorTransition != null) {
           LOGGER.warn(String.format(
               "Error while traversing from state %s to state %s for object %s. Starting transition to error state %s.",
-              object.state(), to, object, errorTransition.errorState()),e);
+              object.state(), to, object, errorTransition.errorState()), e);
           fail(object, arguments, e.getCause());
         } else {
           throw new IllegalStateException(String
               .format("Error while traversing from state %s to state %s for object %s.",
                   object.state(), to, object), e.getCause());
         }
+      } catch (Exception e) {
+        LOGGER.error(String.format(
+            "Unexpected exception while traversing from state %s to state %s for object %s. Object will remain in illegal state.",
+            object.state(), to
+            , object), e);
+        throw new IllegalStateException(e.getMessage(), e);
       }
     }
 

@@ -221,5 +221,11 @@ public class ProcessServiceImpl implements ProcessService {
     return messageInterface.call(scheduleGraphRequest, ScheduleGraphResponse.class, timeout);
   }
 
+  @Override
+  public ProcessQueryResponse queryProcessStatus(ProcessQueryRequest processQueryRequest)
+      throws ResponseException {
+    return messageInterface.call(processQueryRequest, ProcessQueryResponse.class, timeout);
+  }
+
 
 }

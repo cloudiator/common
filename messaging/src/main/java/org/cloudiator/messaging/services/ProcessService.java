@@ -102,4 +102,7 @@ public interface ProcessService {
   void announceProcessEvent(ProcessEvent processEvent);
 
   ScheduleGraphResponse graph(ScheduleGraphRequest scheduleGraphRequest) throws ResponseException;
+
+  ProcessQueryResponse queryProcessStatus(ProcessQueryRequest processQueryRequest)
+      throws ResponseException;
 }

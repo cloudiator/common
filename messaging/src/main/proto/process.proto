@@ -15,6 +15,14 @@ message ProcessEvent {
   Process process = 4;
 }
 
+message ProcessStatusQuery {
+  string processId = 1;
+}
+
+message ProcessStatusResponse {
+  ProcessState state = 2;
+}
+
 message ProcessQueryRequest {
   string userId = 1;
   string processId = 2;
