@@ -22,6 +22,7 @@ message ProcessStatusQuery {
 
 message ProcessStatusResponse {
   ProcessState state = 2;
+  string information = 3;
 }
 
 message ProcessQueryRequest {
