@@ -216,6 +216,11 @@ public class ProcessServiceImpl implements ProcessService {
   }
 
   @Override
+  public void subscribeProcesEvent(MessageCallback<ProcessEvent> callback) {
+    messageInterface.subscribe(ProcessEvent.class, ProcessEvent.parser(), callback);
+  }
+
+  @Override
   public ScheduleGraphResponse graph(ScheduleGraphRequest scheduleGraphRequest)
       throws ResponseException {
     return messageInterface.call(scheduleGraphRequest, ScheduleGraphResponse.class, timeout);

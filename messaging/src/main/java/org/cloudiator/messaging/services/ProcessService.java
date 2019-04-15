@@ -101,6 +101,8 @@ public interface ProcessService {
 
   void announceProcessEvent(ProcessEvent processEvent);
 
+  void subscribeProcesEvent(MessageCallback<ProcessEvent> callback);
+
   ScheduleGraphResponse graph(ScheduleGraphRequest scheduleGraphRequest) throws ResponseException;
 
   ProcessQueryResponse queryProcessStatus(ProcessQueryRequest processQueryRequest)
