@@ -216,7 +216,7 @@ public class ProcessServiceImpl implements ProcessService {
   }
 
   @Override
-  public void subscribeProcesEvent(MessageCallback<ProcessEvent> callback) {
+  public void subscribeProcessEvent(MessageCallback<ProcessEvent> callback) {
     messageInterface.subscribe(ProcessEvent.class, ProcessEvent.parser(), callback);
   }
 
