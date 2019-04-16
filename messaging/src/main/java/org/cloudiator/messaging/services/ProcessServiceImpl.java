@@ -1,6 +1,7 @@
 package org.cloudiator.messaging.services;
 
 import com.google.inject.Inject;
+import javax.annotation.Nullable;
 import javax.inject.Named;
 import org.cloudiator.messages.Process;
 import org.cloudiator.messages.Process.CreateFaasProcessRequest;
@@ -229,8 +230,14 @@ public class ProcessServiceImpl implements ProcessService {
   }
 
   @Override
-  public ProcessStatusResponse queryProcessStatus(ProcessStatusQuery processStatusQuery)
+  public ProcessStatusResponse queryProcessStatus(ProcessStatusQuery processStatusQuery,
+      @Nullable Long timeout)
       throws ResponseException {
+
+    if (timeout == null) {
+      timeout = this.timeout;
+    }
+
     return messageInterface.call(processStatusQuery, ProcessStatusResponse.class, timeout);
   }
 

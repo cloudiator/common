@@ -1,5 +1,6 @@
 package org.cloudiator.messaging.services;
 
+import javax.annotation.Nullable;
 import org.cloudiator.messages.Process.CreateFaasProcessRequest;
 import org.cloudiator.messages.Process.CreateLanceProcessRequest;
 import org.cloudiator.messages.Process.CreateProcessRequest;
@@ -107,6 +108,7 @@ public interface ProcessService {
 
   ScheduleGraphResponse graph(ScheduleGraphRequest scheduleGraphRequest) throws ResponseException;
 
-  ProcessStatusResponse queryProcessStatus(ProcessStatusQuery processStatusQuery)
+  ProcessStatusResponse queryProcessStatus(ProcessStatusQuery processStatusQuery,
+      @Nullable Long timeout)
       throws ResponseException;
 }
