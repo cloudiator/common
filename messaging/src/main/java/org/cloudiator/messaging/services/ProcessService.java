@@ -17,6 +17,7 @@ import org.cloudiator.messages.Process.ProcessEvent;
 import org.cloudiator.messages.Process.ProcessQueryRequest;
 import org.cloudiator.messages.Process.ProcessQueryResponse;
 import org.cloudiator.messages.Process.ProcessStatusQuery;
+import org.cloudiator.messages.Process.ProcessStatusResponse;
 import org.cloudiator.messages.Process.ScheduleCreatedResponse;
 import org.cloudiator.messages.Process.ScheduleDeleteResponse;
 import org.cloudiator.messages.Process.ScheduleGraphRequest;
@@ -106,6 +107,6 @@ public interface ProcessService {
 
   ScheduleGraphResponse graph(ScheduleGraphRequest scheduleGraphRequest) throws ResponseException;
 
-  ProcessQueryResponse queryProcessStatus(ProcessStatusQuery processStatusQuery)
+  ProcessStatusResponse queryProcessStatus(ProcessStatusQuery processStatusQuery)
       throws ResponseException;
 }
