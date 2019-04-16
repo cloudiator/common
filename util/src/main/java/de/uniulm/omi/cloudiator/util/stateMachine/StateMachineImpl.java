@@ -10,8 +10,8 @@ import org.jgrapht.GraphPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class StateMachineImpl<O extends Stateful> implements StateMachine<O>,
-    ErrorAwareStateMachine<O> {
+public class StateMachineImpl<O extends Stateful<S>, S extends State> implements StateMachine<O, S>,
+    ErrorAwareStateMachine<O, S> {
 
   private static final String TRANSITION_NOT_FOUND = "Fatal error. Could not find transition from state %s to state %s.";
 
@@ -19,44 +19,44 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O>,
   private static final Logger LOGGER =
       LoggerFactory.getLogger(StateMachineImpl.class);
 
-  private final Set<StateMachineHook<O>> hooks;
-  private final TransitionGraph<O> transitionGraph;
+  private final Set<StateMachineHook<O, S>> hooks;
+  private final TransitionGraph<O, S> transitionGraph;
   @Nullable
-  private final ErrorTransition<O> errorTransition;
+  private final ErrorTransition<O, S> errorTransition;
 
 
   public StateMachineImpl(
-      Set<Transition<O>> transitions,
-      Set<StateMachineHook<O>> hooks,
-      @Nullable ErrorTransition<O> errorTransition) {
+      Set<Transition<O, S>> transitions,
+      Set<StateMachineHook<O, S>> hooks,
+      @Nullable ErrorTransition<O, S> errorTransition) {
     this.hooks = hooks;
     transitionGraph = TransitionGraph.of(transitions);
     this.errorTransition = errorTransition;
   }
 
-  private void preStateTransition(O object, State to) {
+  private void preStateTransition(O object, S to) {
 
     LOGGER.debug(
         String.format("Calling pre Transition hooks for object %s to state %s.", object, to));
 
-    for (StateMachineHook<O> hook : hooks) {
+    for (StateMachineHook<O, S> hook : hooks) {
       hook.pre(object, to);
     }
   }
 
-  private void postStateTransition(O object, State from) {
+  private void postStateTransition(O object, S from) {
 
     LOGGER.debug(
         String.format("Calling post Transition hooks for object %s from state %s.", object,
             from));
 
-    for (StateMachineHook<O> hook : hooks) {
+    for (StateMachineHook<O, S> hook : hooks) {
       hook.post(from, object);
     }
   }
 
   @Override
-  public O apply(O object, State to, Object[] arguments) {
+  public O apply(O object, S to, Object[] arguments) {
 
     if (object.state().equals(to)) {
       LOGGER.info(
@@ -74,10 +74,10 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O>,
 
   }
 
-  private GraphPath<State, Transition<O>> calculatePath(State from, State to) {
+  private GraphPath<S, Transition<O, S>> calculatePath(S from, S to) {
 
     //calculate the shortest path
-    final Optional<GraphPath<State, Transition<O>>> path = transitionGraph
+    final Optional<GraphPath<S, Transition<O, S>>> path = transitionGraph
         .shortestPath(from, to);
 
     if (!path.isPresent()) {
@@ -97,10 +97,10 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O>,
   }
 
 
-  private O traverse(O object, Object[] arguments, Transition<O> transition)
+  private O traverse(O object, Object[] arguments, Transition<O, S> transition)
       throws ExecutionException {
 
-    final State previousState = object.state();
+    final S previousState = object.state();
 
     //call pre hooks
     preStateTransition(object, transition.to());
@@ -124,7 +124,7 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O>,
 
   private O error(O object, Object[] arguments, @Nullable Throwable t) {
 
-    final State previousState = object.state();
+    final S previousState = object.state();
 
     checkState(errorTransition != null, "Can not fail as no error transition is set.");
 
@@ -148,12 +148,12 @@ public class StateMachineImpl<O extends Stateful> implements StateMachine<O>,
     return changedObject;
   }
 
-  private O normal(O object, State to, Object[] arguments) {
+  private O normal(O object, S to, Object[] arguments) {
 
-    final GraphPath<State, Transition<O>> graphPath = calculatePath(object.state(),
+    final GraphPath<S, Transition<O, S>> graphPath = calculatePath(object.state(),
         to);
 
-    for (Transition<O> transition : graphPath.getEdgeList()) {
+    for (Transition<O, S> transition : graphPath.getEdgeList()) {
 
       try {
         object = traverse(object, arguments, transition);
