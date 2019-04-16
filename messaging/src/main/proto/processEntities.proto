@@ -84,6 +84,7 @@ message Schedule {
   string Job = 3;
   Instantiation instantiation = 4;
   repeated Process processes = 5;
+  ScheduleState state = 6;
 }
 
 enum Instantiation {
