@@ -50,6 +50,7 @@ message ScheduleQueryResponse {
 message CreateProcessRequest {
   string userId = 1;
   ProcessNew process = 2;
+  string reason = 3;
 }
 
 message ProcessCreatedResponse {
