@@ -33,6 +33,8 @@ public class Transition<O extends Stateful<S>, S extends State> {
   O apply(O o, Object[] arguments) throws ExecutionException {
     try {
       return action.apply(o, arguments);
+    } catch (ExecutionException e) {
+      throw new ExecutionException(e.getCause());
     } catch (Exception e) {
       throw new ExecutionException(e);
     }
