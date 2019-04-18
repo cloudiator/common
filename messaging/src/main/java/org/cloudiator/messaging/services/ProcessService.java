@@ -21,6 +21,7 @@ import org.cloudiator.messages.Process.ProcessStatusQuery;
 import org.cloudiator.messages.Process.ProcessStatusResponse;
 import org.cloudiator.messages.Process.ScheduleCreatedResponse;
 import org.cloudiator.messages.Process.ScheduleDeleteResponse;
+import org.cloudiator.messages.Process.ScheduleEvent;
 import org.cloudiator.messages.Process.ScheduleGraphRequest;
 import org.cloudiator.messages.Process.ScheduleGraphResponse;
 import org.cloudiator.messages.Process.ScheduleQueryRequest;
@@ -111,4 +112,6 @@ public interface ProcessService {
   ProcessStatusResponse queryProcessStatus(ProcessStatusQuery processStatusQuery,
       @Nullable Long timeout)
       throws ResponseException;
+
+  void announceScheduleEvent(ScheduleEvent scheduleEvent);
 }

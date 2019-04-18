@@ -15,6 +15,13 @@ message ProcessEvent {
   Process process = 4;
 }
 
+message ScheduleEvent {
+  string userId = 1;
+  ScheduleState from = 2;
+  ScheduleState to = 3;
+  Schedule schedule = 4;
+}
+
 message ProcessStatusQuery {
   Process process = 1;
   oneof runsOn {

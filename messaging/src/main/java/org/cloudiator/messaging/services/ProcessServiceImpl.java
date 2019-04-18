@@ -24,6 +24,7 @@ import org.cloudiator.messages.Process.ProcessStatusQuery;
 import org.cloudiator.messages.Process.ProcessStatusResponse;
 import org.cloudiator.messages.Process.ScheduleCreatedResponse;
 import org.cloudiator.messages.Process.ScheduleDeleteResponse;
+import org.cloudiator.messages.Process.ScheduleEvent;
 import org.cloudiator.messages.Process.ScheduleGraphRequest;
 import org.cloudiator.messages.Process.ScheduleGraphResponse;
 import org.cloudiator.messages.Process.ScheduleQueryRequest;
@@ -239,6 +240,11 @@ public class ProcessServiceImpl implements ProcessService {
     }
 
     return messageInterface.call(processStatusQuery, ProcessStatusResponse.class, timeout);
+  }
+
+  @Override
+  public void announceScheduleEvent(ScheduleEvent scheduleEvent) {
+    messageInterface.publish(scheduleEvent);
   }
 
 
