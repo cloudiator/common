@@ -90,7 +90,10 @@ message LanceProcessCreatedResponse {
 message DeleteLanceProcessRequest {
   string userId = 1;
   string processId = 2;
-  iaas.Node node = 3;
+  string scheduleId = 3;
+  string jobId = 4;
+  string taskId = 5;
+  iaas.Node node = 6;
 }
 
 message LanceProcessDeletedResponse {
