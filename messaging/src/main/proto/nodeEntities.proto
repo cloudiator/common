@@ -19,12 +19,7 @@ message Node {
   string reason = 9;
   string diagnostic = 10;
   string nodeCandidate = 11;
-}
-
-message NodeGroup {
-  string id = 1;
-  repeated Node nodes = 2;
-  string userId = 3;
+  string originId = 12;
 }
 
 message NodeProperties {
@@ -45,8 +40,8 @@ enum NodeType {
 }
 
 enum NodeState {
-  NODE_STATE_NEW = 0;
-  NODE_STATE_OK = 1;
+  NODE_STATE_PENDING = 0;
+  NODE_STATE_RUNNING = 1;
   NODE_STATE_ERROR = 2;
   NODE_STATE_DELETED = 3;
 }

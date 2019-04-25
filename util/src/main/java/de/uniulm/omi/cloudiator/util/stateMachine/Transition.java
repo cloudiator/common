@@ -1,34 +1,40 @@
 package de.uniulm.omi.cloudiator.util.stateMachine;
 
 import com.google.common.base.MoreObjects;
-import de.uniulm.omi.cloudiator.util.function.ThrowingFunction;
 import java.util.concurrent.ExecutionException;
 
-public class Transition<O extends Stateful> implements ThrowingFunction<O, O> {
+public class Transition<O extends Stateful<S>, S extends State> {
 
-  private final State from;
-  private final State to;
-  private final ThrowingFunction<O, O> action;
+  public interface TransitionAction<O> {
 
-  protected Transition(State from, State to,
-      ThrowingFunction<O, O> action) {
+    O apply(O o, Object[] arguments) throws ExecutionException;
+
+  }
+
+  private final S from;
+  private final S to;
+  private final TransitionAction<O> action;
+
+  Transition(S from, S to,
+      TransitionAction<O> action) {
     this.from = from;
     this.to = to;
     this.action = action;
   }
 
-  public State from() {
+  public S from() {
     return from;
   }
 
-  public State to() {
+  public S to() {
     return to;
   }
 
-  @Override
-  public O apply(O o) throws ExecutionException {
+  O apply(O o, Object[] arguments) throws ExecutionException {
     try {
-      return action.apply(o);
+      return action.apply(o, arguments);
+    } catch (ExecutionException e) {
+      throw new ExecutionException(e.getCause());
     } catch (Exception e) {
       throw new ExecutionException(e);
     }
