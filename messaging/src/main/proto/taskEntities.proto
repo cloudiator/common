@@ -74,7 +74,8 @@ message LanceInterface {
   string stop = 11;
   string postStop = 12;
   string shutdown = 13;
-  ContainerType containerType = 14;
+  string portUpdateAction = 14;
+  ContainerType containerType = 15;
 }
 
 message FaasInterface {
@@ -104,8 +105,7 @@ message PortProvided {
 
 message PortRequired {
   string name = 1;
-  string updateAction = 2;
-  bool isMandatory = 3;
+  bool isMandatory = 2;
 }
 
 message SparkInterface {
