@@ -61,6 +61,17 @@ message SparkProcess {
   SparkInterface sparkInterface = 6;
 }
 
+message HdfsProcess {
+  string schedule = 1;
+  Job job = 2;
+  string task = 3;
+  oneof runsOn {
+    iaas.Node node = 4;
+    Nodes nodes = 5;
+  }
+  HdfsInterface hdfsInterface = 6;
+}
+
 message Nodes {
   repeated iaas.Node nodes = 1;
 }
