@@ -39,6 +39,7 @@ message TaskInterface {
     LanceInterface lanceInterface = 2;
     SparkInterface sparkInterface = 3;
     FaasInterface faasInterface = 4;
+    HdfsInterface hdfsInterface = 5;
   }
 }
 
@@ -115,6 +116,10 @@ message SparkInterface {
   map<string, string> sparkArguments = 4;
   map<string, string> sparkConfiguration = 5;
   ProcessMapping processMapping = 6;
+}
+
+message HdfsInterface {
+  ProcessMapping processMapping = 1;
 }
 
 enum ProcessMapping {
