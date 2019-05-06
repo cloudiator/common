@@ -39,6 +39,7 @@ message TaskInterface {
     LanceInterface lanceInterface = 2;
     SparkInterface sparkInterface = 3;
     FaasInterface faasInterface = 4;
+    HdfsInterface hdfsInterface = 5;
   }
 }
 
