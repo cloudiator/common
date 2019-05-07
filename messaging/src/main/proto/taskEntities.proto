@@ -52,6 +52,7 @@ message Port {
 message DockerInterface {
   string dockerImage = 1;
   map<string, string> environment = 2;
+  string portUpdateAction = 3;
 }
 
 enum ContainerType {
