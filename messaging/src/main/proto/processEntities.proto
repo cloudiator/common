@@ -7,6 +7,7 @@ option java_package = "org.cloudiator.messages.entities";
 import "taskEntities.proto";
 import "jobEntities.proto";
 import "nodeEntities.proto";
+import "iaasEntities.proto";
 
 message ProcessNew {
   string schedule = 1;
@@ -33,6 +34,8 @@ message Process {
   string userId = 10;
   string diagnostic = 11;
   string reason = 12;
+  string endpoint = 13;
+  repeated iaas.IpAddress ipAddresses = 14;
 }
 
 message NodeCluster {
@@ -59,6 +62,17 @@ message SparkProcess {
     Nodes nodes = 5;
   }
   SparkInterface sparkInterface = 6;
+}
+
+message HdfsProcess {
+  string schedule = 1;
+  Job job = 2;
+  string task = 3;
+  oneof runsOn {
+    iaas.Node node = 4;
+    Nodes nodes = 5;
+  }
+  HdfsInterface hdfsInterface = 6;
 }
 
 message Nodes {
