@@ -7,16 +7,16 @@ option java_package = "org.cloudiator.messages";
 import "iaasEntities.proto";
 import "nodeEntities.proto";
 
-message AddByoNodeRequest {
+message AddByonNodeRequest {
   string userId = 1;
   ByonData byonRequest = 2;
 }
 
-message ByoNodeAddedResponse {
-  ByoNode byoNode = 1;
+message ByonNodeAddedResponse {
+  ByonNode byonNode = 1;
 }
 
-message ByoNode {
+message ByonNode {
   string id = 1;
   ByonData nodeData = 2;
 }
