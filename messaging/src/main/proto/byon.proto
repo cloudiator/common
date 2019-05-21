@@ -15,6 +15,35 @@ message ByonNodeAddedResponse {
   ByonNode byonNode = 1;
 }
 
+message RemoveByonNodeRequest {
+  string id =1;
+}
+
+message ByonNodeRemovedResponse {
+}
+
+message ByonNodeAllocateRequestMessage {
+  ByonNode byonNode = 1;
+}
+
+message ByonNodeAllocatedResponse {
+}
+
+message ByonNodeDeleteRequestMessage {
+  ByonNode byonNode = 1;
+}
+
+message ByonNodeDeletedResponse {
+}
+
+message ByonNodeQueryRequest {
+  string id = 1;
+}
+
+message ByonNodeQueryResponse {
+  ByonNode byonNode = 1;
+}
+
 message ByonNode {
   string id = 1;
   ByonData nodeData = 2;
@@ -28,4 +57,5 @@ message ByonData {
   string diagnostic = 6;
   string name = 7;
   string reason = 8;
+  bool allocated = 9;
 }
