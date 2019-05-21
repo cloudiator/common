@@ -8,8 +8,7 @@ import "iaasEntities.proto";
 import "nodeEntities.proto";
 
 message AddByonNodeRequest {
-  string userId = 1;
-  ByonData byonRequest = 2;
+  ByonData byonRequest = 1;
 }
 
 message ByonNodeAddedResponse {
@@ -25,4 +24,8 @@ message ByonData {
   repeated IpAddress ipAddress = 2;
   LoginCredential loginCredentials = 3;
   NodeProperties properties = 4;
+  string nodeCandidate = 5;
+  string diagnostic = 6;
+  string name = 7;
+  string reason = 8;
 }
