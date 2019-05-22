@@ -1,10 +1,14 @@
 package org.cloudiator.messaging.services;
 
 import com.google.inject.Inject;
+import org.cloudiator.messages.Byon.AddByonNodeRequest;
+import org.cloudiator.messages.Byon.ByonNodeAddedResponse;
 import org.cloudiator.messages.Byon.ByonNodeAllocateRequestMessage;
 import org.cloudiator.messages.Byon.ByonNodeAllocatedResponse;
 import org.cloudiator.messages.Byon.ByonNodeDeleteRequestMessage;
 import org.cloudiator.messages.Byon.ByonNodeDeletedResponse;
+import org.cloudiator.messages.Byon.ByonNodeRemovedResponse;
+import org.cloudiator.messages.Byon.RemoveByonNodeRequest;
 import org.cloudiator.messaging.MessageInterface;
 import org.cloudiator.messaging.ResponseCallback;
 
@@ -30,5 +34,19 @@ public class ByonServiceImpl  implements ByonService {
       ResponseCallback<ByonNodeDeletedResponse> callback) {
     messageInterface
         .callAsync(byonNodeDeleteRequestMessage, ByonNodeDeletedResponse.class, callback);
+  }
+
+  @Override
+  public void addByonNodeAsync(AddByonNodeRequest addByonNodeRequest,
+      ResponseCallback<ByonNodeAddedResponse> callback) {
+    messageInterface
+        .callAsync(addByonNodeRequest, ByonNodeAddedResponse.class, callback);
+  }
+
+  @Override
+  public void removeByonNodeAsync(RemoveByonNodeRequest removeByonNodeRequest,
+      ResponseCallback<ByonNodeRemovedResponse> callback) {
+    messageInterface
+        .callAsync(removeByonNodeRequest, ByonNodeRemovedResponse.class, callback);
   }
 }
