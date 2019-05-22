@@ -38,11 +38,11 @@ message ByonNodeDeletedResponse {
 }
 
 message ByonNodeQueryRequest {
-  string id = 1;
+  QueryFilter filter = 1;
 }
 
 message ByonNodeQueryResponse {
-  ByonNode byonNode = 1;
+  repeated ByonNode byonNode = 1;
 }
 
 message ByonNode {
