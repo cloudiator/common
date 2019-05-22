@@ -109,7 +109,7 @@ message SparkProcessCreatedResponse {
   Process process = 2;
 }
 
-message CreateSparkCluster {
+message CreateSparkClusterRequest {
   string userId = 1;
   Nodes nodes = 2;
 }
