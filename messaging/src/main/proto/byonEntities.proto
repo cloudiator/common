@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package iaas;
+
+option java_package = "org.cloudiator.messages.entities";
+
+message QueryFilter {
+  Filter filter = 1;
+}
+
+enum Filter {
+  ALL = 0;
+  ALLOCATED = 1;
+  UNALLOCATED = 2;
+}

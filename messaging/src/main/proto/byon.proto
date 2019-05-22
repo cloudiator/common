@@ -6,6 +6,7 @@ option java_package = "org.cloudiator.messages";
 
 import "iaasEntities.proto";
 import "nodeEntities.proto";
+import "byonEntities.proto";
 
 message AddByonNodeRequest {
   ByonData byonRequest = 1;
