@@ -109,6 +109,15 @@ message SparkProcessCreatedResponse {
   Process process = 2;
 }
 
+message CreateSparkCluster {
+  string userId = 1;
+  Nodes nodes = 2;
+}
+
+message SparkClusterCreatedResponse {
+  
+}
+
 message FaasProcessCreatedResponse {
   Process process = 1;
 }
