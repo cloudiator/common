@@ -5,6 +5,7 @@ import org.cloudiator.messages.Process.CreateFaasProcessRequest;
 import org.cloudiator.messages.Process.CreateLanceProcessRequest;
 import org.cloudiator.messages.Process.CreateProcessRequest;
 import org.cloudiator.messages.Process.CreateScheduleRequest;
+import org.cloudiator.messages.Process.CreateSparkClusterRequest;
 import org.cloudiator.messages.Process.CreateSparkProcessRequest;
 import org.cloudiator.messages.Process.DeleteLanceProcessRequest;
 import org.cloudiator.messages.Process.DeleteProcessRequest;
@@ -26,6 +27,7 @@ import org.cloudiator.messages.Process.ScheduleGraphRequest;
 import org.cloudiator.messages.Process.ScheduleGraphResponse;
 import org.cloudiator.messages.Process.ScheduleQueryRequest;
 import org.cloudiator.messages.Process.ScheduleQueryResponse;
+import org.cloudiator.messages.Process.SparkClusterCreatedResponse;
 import org.cloudiator.messages.Process.SparkProcessCreatedResponse;
 import org.cloudiator.messaging.MessageCallback;
 import org.cloudiator.messaging.ResponseCallback;
@@ -92,6 +94,16 @@ public interface ProcessService {
       ResponseCallback<SparkProcessCreatedResponse> callback);
 
   void subscribeCreateSparkProcessRequest(MessageCallback<CreateSparkProcessRequest> callback);
+
+
+  SparkClusterCreatedResponse createSparkCluster(CreateSparkClusterRequest createSparkClusterRequest)
+      throws ResponseException;
+
+  void createCreateSparkClusterRequestAsync(CreateSparkClusterRequest createSparkClusterRequest,
+      ResponseCallback<SparkClusterCreatedResponse> callback);
+
+  void subscribeCreateSparkClusterRequest(MessageCallback<CreateSparkClusterRequest> callback);
+
 
   FaasProcessCreatedResponse createFaasProcess(CreateFaasProcessRequest createFaasProcessRequest)
       throws ResponseException;
