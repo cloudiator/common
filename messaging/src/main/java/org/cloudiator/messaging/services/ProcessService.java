@@ -20,6 +20,8 @@ import org.cloudiator.messages.Process.ProcessQueryRequest;
 import org.cloudiator.messages.Process.ProcessQueryResponse;
 import org.cloudiator.messages.Process.ProcessStatusQuery;
 import org.cloudiator.messages.Process.ProcessStatusResponse;
+import org.cloudiator.messages.Process.ScaleRequest;
+import org.cloudiator.messages.Process.ScaleResponse;
 import org.cloudiator.messages.Process.ScheduleCreatedResponse;
 import org.cloudiator.messages.Process.ScheduleDeleteResponse;
 import org.cloudiator.messages.Process.ScheduleEvent;
@@ -126,4 +128,12 @@ public interface ProcessService {
       throws ResponseException;
 
   void announceScheduleEvent(ScheduleEvent scheduleEvent);
+
+  ScaleResponse createScale(ScaleRequest scaleRequest)
+      throws ResponseException;
+
+  void createScaleRequestAsync(ScaleRequest scaleRequest,
+      ResponseCallback<ScaleResponse> callback);
+
+  void subscribeScaleRequest(MessageCallback<ScaleRequest> callback);
 }
