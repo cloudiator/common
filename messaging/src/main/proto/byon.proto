@@ -6,7 +6,6 @@ option java_package = "org.cloudiator.messages";
 
 import "iaasEntities.proto";
 import "nodeEntities.proto";
-import "byonEntities.proto";
 
 message AddByonNodeRequest {
   ByonData byonRequest = 1;
@@ -37,12 +36,8 @@ message ByonNodeDeleteRequestMessage {
 message ByonNodeDeletedResponse {
 }
 
-message ByonNodeQueryRequest {
-  QueryFilter filter = 1;
-}
-
-message ByonNodeQueryResponse {
-  repeated ByonNode byonNode = 1;
+message ByonNodeEvent {
+  ByonNode byonNode = 1;
 }
 
 message ByonNode {
