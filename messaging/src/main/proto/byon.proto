@@ -45,6 +45,10 @@ message ByonNodeQueryResponse {
   repeated ByonNode byonNode = 1;
 }
 
+message ByonNodeEvent {
+  ByonNode byonNode = 1;
+}
+
 message ByonNode {
   string id = 1;
   ByonData nodeData = 2;
