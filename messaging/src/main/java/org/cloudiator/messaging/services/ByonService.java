@@ -6,6 +6,8 @@ import org.cloudiator.messages.Byon.ByonNodeAllocateRequestMessage;
 import org.cloudiator.messages.Byon.ByonNodeAllocatedResponse;
 import org.cloudiator.messages.Byon.ByonNodeDeleteRequestMessage;
 import org.cloudiator.messages.Byon.ByonNodeDeletedResponse;
+import org.cloudiator.messages.Byon.ByonNodeQueryRequest;
+import org.cloudiator.messages.Byon.ByonNodeQueryResponse;
 import org.cloudiator.messages.Byon.ByonNodeRemovedResponse;
 import org.cloudiator.messages.Byon.RemoveByonNodeRequest;
 import org.cloudiator.messaging.ResponseCallback;
@@ -20,4 +22,6 @@ public interface ByonService {
       ResponseCallback<ByonNodeAddedResponse> callback);
   void removeByonNodeAsync(RemoveByonNodeRequest removeByonNodeRequest,
       ResponseCallback<ByonNodeRemovedResponse> callback);
+  ByonNodeQueryResponse findByonNodes(ByonNodeQueryRequest byonQueryRequest)
+      throws ResponseException;
 }
