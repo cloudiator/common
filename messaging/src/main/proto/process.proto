@@ -148,3 +148,14 @@ message ScheduleGraphRequest {
 message ScheduleGraphResponse {
   string json = 1;
 }
+
+message ScaleRequest {
+  string userId = 1;
+  string scheduleId = 2;
+  string taskId = 3;
+  Nodes nodes = 4;
+}
+
+message ScaleResponse {
+
+}

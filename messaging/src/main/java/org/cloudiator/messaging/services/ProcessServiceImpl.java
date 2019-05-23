@@ -23,6 +23,8 @@ import org.cloudiator.messages.Process.ProcessQueryRequest;
 import org.cloudiator.messages.Process.ProcessQueryResponse;
 import org.cloudiator.messages.Process.ProcessStatusQuery;
 import org.cloudiator.messages.Process.ProcessStatusResponse;
+import org.cloudiator.messages.Process.ScaleRequest;
+import org.cloudiator.messages.Process.ScaleResponse;
 import org.cloudiator.messages.Process.ScheduleCreatedResponse;
 import org.cloudiator.messages.Process.ScheduleDeleteResponse;
 import org.cloudiator.messages.Process.ScheduleEvent;
@@ -270,6 +272,24 @@ public class ProcessServiceImpl implements ProcessService {
   @Override
   public void announceScheduleEvent(ScheduleEvent scheduleEvent) {
     messageInterface.publish(scheduleEvent);
+  }
+
+  @Override
+  public ScaleResponse createScale(ScaleRequest scaleRequest) throws ResponseException {
+    return messageInterface.call(scaleRequest, ScaleResponse.class, timeout);
+  }
+
+  @Override
+  public void createScaleRequestAsync(ScaleRequest scaleRequest,
+      ResponseCallback<ScaleResponse> callback) {
+
+    messageInterface.callAsync(scaleRequest, ScaleResponse.class, callback);
+
+  }
+
+  @Override
+  public void subscribeScaleRequest(MessageCallback<ScaleRequest> callback) {
+    messageInterface.subscribe(ScaleRequest.class, ScaleRequest.parser(), callback);
   }
 
 
