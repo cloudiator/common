@@ -11,6 +11,6 @@ enum QueryFilter {
 }
 
 enum CacheOperation {
-  INSERT = 0;
+  ADD = 0;
   REMOVE = 1;
 }
