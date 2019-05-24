@@ -47,6 +47,7 @@ message ByonNodeQueryResponse {
 
 message ByonNodeEvent {
   ByonNode byonNode = 1;
+  CacheOperation operation = 2;
 }
 
 message ByonNode {

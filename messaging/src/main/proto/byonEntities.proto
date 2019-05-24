@@ -9,3 +9,8 @@ enum QueryFilter {
   ALLOCATED = 1;
   UNALLOCATED = 2;
 }
+
+enum CacheOperation {
+  INSERT = 0;
+  REMOVE = 1;
+}
