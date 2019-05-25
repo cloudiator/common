@@ -12,5 +12,6 @@ enum QueryFilter {
 
 enum CacheOperation {
   ADD = 0;
-  REMOVE = 1;
+  EVICT = 1;
+  UPDATE = 2;
 }
