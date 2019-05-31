@@ -115,7 +115,7 @@ message CreateSparkClusterRequest {
 }
 
 message SparkClusterCreatedResponse {
-  
+
 }
 
 message FaasProcessCreatedResponse {
@@ -153,7 +153,7 @@ message ScaleRequest {
   string userId = 1;
   string scheduleId = 2;
   string taskId = 3;
-  Nodes nodes = 4;
+  NodeCluster nodeCluster = 4;
 }
 
 message ScaleResponse {
