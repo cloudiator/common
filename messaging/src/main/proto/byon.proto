@@ -13,32 +13,38 @@ message AddByonNodeRequest {
 }
 
 message ByonNodeAddedResponse {
-  ByonNode byonNode = 1;
+  string userId = 1;
+  ByonNode byonNode = 2;
 }
 
 message RemoveByonNodeRequest {
-  string id =1;
+  string userId = 1;
+  string id = 2;
 }
 
 message ByonNodeRemovedResponse {
 }
 
 message ByonNodeAllocateRequestMessage {
-  ByonNode byonNode = 1;
+  string userId = 1;
+  ByonNode byonNode = 2;
 }
 
 message ByonNodeAllocatedResponse {
 }
 
 message ByonNodeDeleteRequestMessage {
-  ByonNode byonNode = 1;
+  string userId = 1;
+  ByonNode byonNode = 2;
 }
 
 message ByonNodeDeletedResponse {
 }
 
 message ByonNodeQueryRequest {
-  QueryFilter filter = 1;
+  string userId = 1;
+  string id = 2;
+  QueryFilter filter = 3;
 }
 
 message ByonNodeQueryResponse {
@@ -46,8 +52,9 @@ message ByonNodeQueryResponse {
 }
 
 message ByonNodeEvent {
-  ByonNode byonNode = 1;
-  CacheOperation operation = 2;
+  string userId = 1;
+  ByonNode byonNode = 2;
+  CacheOperation operation = 3;
 }
 
 message ByonNode {
