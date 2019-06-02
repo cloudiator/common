@@ -9,7 +9,8 @@ import "nodeEntities.proto";
 import "byonEntities.proto";
 
 message AddByonNodeRequest {
-  ByonData byonRequest = 1;
+  string userId = 1;
+  ByonData byonRequest = 2;
 }
 
 message ByonNodeAddedResponse {
