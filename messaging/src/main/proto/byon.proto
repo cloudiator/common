@@ -26,14 +26,14 @@ message ByonNodeRemovedResponse {
 }
 
 message ByonNodeAllocateRequestMessage {
-  ByonNode byonNode = 2;
+  ByonNode byonNode = 1;
 }
 
 message ByonNodeAllocatedResponse {
 }
 
 message ByonNodeDeleteRequestMessage {
-  ByonNode byonNode = 2;
+  ByonNode byonNode = 1;
 }
 
 message ByonNodeDeletedResponse {
