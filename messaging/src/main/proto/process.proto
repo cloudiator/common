@@ -153,9 +153,9 @@ message ScaleRequest {
   string userId = 1;
   string scheduleId = 2;
   string taskId = 3;
-  NodeCluster nodeCluster = 4;
+  ScaleDirection scaleDirection = 4;
+  NodeCluster nodeCluster = 5;
 }
 
 message ScaleResponse {
-
 }
