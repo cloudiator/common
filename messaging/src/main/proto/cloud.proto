@@ -49,3 +49,12 @@ message DeleteCloudRequest {
 
 message CloudDeletedResponse {
 }
+
+message QuotaQueryRequest {
+  string userId = 1;
+  string cloudId = 2;
+}
+
+message QuotaQueryResponse {
+  repeated Quota quotas = 1;
+}

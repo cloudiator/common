@@ -143,3 +143,4 @@ message Interval {
   Unit unit = 1;
   int64 period = 2;
 }
+

@@ -38,6 +38,35 @@ enum CloudType {
   PRIVATE_CLOUD = 1;
 }
 
+message Quota {
+  string remaining = 1;
+  oneof quota {
+    AttributeQuota attributeQuota = 2;
+    OfferQuota offerQuota = 3;
+  }
+}
+
+message AttributeQuota {
+  Attribute attribute = 1;
+}
+
+message OfferQuota {
+  OfferType offerType = 1;
+  string id = 2;
+}
+
+enum OfferType {
+  HARDWARE = 0;
+  LOCATION = 1;
+  IMAGE = 2;
+}
+
+enum Attribute {
+  HARDWARE_CORES = 0;
+  HARDWARE_RAM = 1;
+  NODES_SIZE = 2;
+}
+
 message Api {
   string providerName = 1;
 }
