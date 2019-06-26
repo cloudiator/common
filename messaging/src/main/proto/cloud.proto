@@ -52,7 +52,6 @@ message CloudDeletedResponse {
 
 message QuotaQueryRequest {
   string userId = 1;
-  string cloudId = 2;
 }
 
 message QuotaQueryResponse {

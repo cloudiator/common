@@ -40,9 +40,10 @@ enum CloudType {
 
 message Quota {
   string remaining = 1;
+  string locationId = 2;
   oneof quota {
-    AttributeQuota attributeQuota = 2;
-    OfferQuota offerQuota = 3;
+    AttributeQuota attributeQuota = 3;
+    OfferQuota offerQuota = 4;
   }
 }
 
