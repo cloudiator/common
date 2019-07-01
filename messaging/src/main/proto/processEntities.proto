@@ -133,3 +133,8 @@ enum ScheduleState {
   SCHEDULE_STATE_DELETED = 4;
   SCHEDULE_STATE_MANUAL = 5;
 }
+
+enum ScaleDirection {
+  SCALE_OUT = 0;
+  SCALE_IN = 1;
+}
