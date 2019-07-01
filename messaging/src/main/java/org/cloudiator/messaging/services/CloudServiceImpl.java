@@ -28,6 +28,8 @@ import org.cloudiator.messages.Cloud.CloudQueryResponse;
 import org.cloudiator.messages.Cloud.CloudUpdatedResponse;
 import org.cloudiator.messages.Cloud.CreateCloudRequest;
 import org.cloudiator.messages.Cloud.DeleteCloudRequest;
+import org.cloudiator.messages.Cloud.QuotaQueryRequest;
+import org.cloudiator.messages.Cloud.QuotaQueryResponse;
 import org.cloudiator.messages.Cloud.UpdateCloudRequest;
 import org.cloudiator.messages.Discovery.DiscoverStatusResponse;
 import org.cloudiator.messages.Discovery.DiscoveryEvent;
@@ -93,5 +95,11 @@ public class CloudServiceImpl implements CloudService {
   public DiscoverStatusResponse discoveryStatus() throws ResponseException {
     return messageInterface
         .call(DiscoveryStatusRequest.newBuilder().build(), DiscoverStatusResponse.class, timeout);
+  }
+
+  @Override
+  public QuotaQueryResponse queryQuota(QuotaQueryRequest quotaQueryRequest)
+      throws ResponseException {
+    return messageInterface.call(quotaQueryRequest, QuotaQueryResponse.class, timeout);
   }
 }
