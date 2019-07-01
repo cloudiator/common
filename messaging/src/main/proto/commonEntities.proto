@@ -89,6 +89,7 @@ enum OperatingSystemArchitecture {
   UNKOWN_OS_ARCH = 0;
   AMD64 = 1;
   I386 = 2;
+  ARM = 3;
 }
 
 enum OperatingSystemType {
