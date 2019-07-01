@@ -58,8 +58,6 @@ message OfferQuota {
 
 enum OfferType {
   HARDWARE = 0;
-  LOCATION = 1;
-  IMAGE = 2;
 }
 
 enum Attribute {
