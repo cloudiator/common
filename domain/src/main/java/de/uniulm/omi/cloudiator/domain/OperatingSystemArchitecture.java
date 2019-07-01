@@ -23,6 +23,7 @@ public enum OperatingSystemArchitecture {
 
   UNKNOWN,
   AMD64,
-  I368
+  I368,
+  ARM
 
 }
