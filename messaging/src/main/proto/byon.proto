@@ -32,6 +32,7 @@ message ByonNodeAllocateRequestMessage {
 }
 
 message ByonNodeAllocatedResponse {
+  ByonNode node = 1;
 }
 
 message ByonNodeDeleteRequestMessage {
@@ -41,6 +42,7 @@ message ByonNodeDeleteRequestMessage {
 }
 
 message ByonNodeDeletedResponse {
+  ByonNode node = 1;
 }
 
 message ByonNodeQueryRequest {
