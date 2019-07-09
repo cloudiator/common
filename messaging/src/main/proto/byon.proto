@@ -6,23 +6,67 @@ option java_package = "org.cloudiator.messages";
 
 import "iaasEntities.proto";
 import "nodeEntities.proto";
+import "byonEntities.proto";
 
-message AddByoNodeRequest {
+message AddByonNodeRequest {
   string userId = 1;
   ByonData byonRequest = 2;
 }
 
-message ByoNodeAddedResponse {
-  ByoNode byoNode = 1;
+message ByonNodeAddedResponse {
+  ByonNode byonNode = 2;
 }
 
-message ByoNode {
+message RemoveByonNodeRequest {
+  string userId = 1;
+  string id = 2;
+}
+
+message ByonNodeRemovedResponse {
+}
+
+message ByonNodeAllocateRequestMessage {
+  ByonNode byonNode = 1;
+}
+
+message ByonNodeAllocatedResponse {
+}
+
+message ByonNodeDeleteRequestMessage {
+  ByonNode byonNode = 1;
+}
+
+message ByonNodeDeletedResponse {
+}
+
+message ByonNodeQueryRequest {
+  string userId = 1;
+  string id = 2;
+  QueryFilter filter = 3;
+}
+
+message ByonNodeQueryResponse {
+  repeated ByonNode byonNode = 1;
+}
+
+message ByonNodeEvent {
+  ByonNode byonNode = 1;
+  CacheOperation operation = 2;
+}
+
+message ByonNode {
   string id = 1;
-  ByonData nodeData = 2;
+  string userId = 2;
+  ByonData nodeData = 3;
 }
 
 message ByonData {
   repeated IpAddress ipAddress = 2;
   LoginCredential loginCredentials = 3;
   NodeProperties properties = 4;
+  string nodeCandidate = 5;
+  string diagnostic = 6;
+  string name = 7;
+  string reason = 8;
+  bool allocated = 9;
 }

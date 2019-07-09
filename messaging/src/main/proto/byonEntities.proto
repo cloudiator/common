@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package iaas;
+
+option java_package = "org.cloudiator.messages.entities";
+
+enum QueryFilter {
+  ALL = 0;
+  ALLOCATED = 1;
+  UNALLOCATED = 2;
+}
+
+enum CacheOperation {
+  ADD = 0;
+  EVICT = 1;
+  UPDATE = 2;
+}

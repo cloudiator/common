@@ -24,6 +24,8 @@ public class InfluxStatisticInterface implements StatisticInterface {
       @Named("influx.user") String user,
       @Named("influx.password") String password) {
 
+    //todo: lazy connect?
+
     LOGGER.info(String
         .format("Connecting to influx server: %s with user: %s and password: %s.", url, user,
             password));

@@ -45,18 +45,34 @@ public class OperatingSystemBuilder {
     return new OperatingSystemBuilder(operatingSystem);
   }
 
-  public OperatingSystemBuilder merge(OperatingSystem operatingSystem) {
-    if (operatingSystemArchitecture == null || operatingSystemArchitecture
-        .equals(OperatingSystemArchitecture.UNKNOWN)) {
-      operatingSystemArchitecture = operatingSystem.operatingSystemArchitecture();
-    }
-    if (operatingSystemFamily == null || operatingSystemFamily
-        .equals(OperatingSystemFamily.UNKNOWN)) {
-      operatingSystemFamily = operatingSystem.operatingSystemFamily();
-    }
-    if (operatingSystemVersion == null || operatingSystemVersion
-        .equals(OperatingSystemVersions.unknown())) {
-      operatingSystemVersion = operatingSystem.operatingSystemVersion();
+  public OperatingSystemBuilder merge(OperatingSystem operatingSystem, boolean preferThis) {
+
+    checkNotNull(operatingSystem, "operating system is null");
+
+    if (preferThis) {
+      if (operatingSystemArchitecture == null || operatingSystemArchitecture
+          .equals(OperatingSystemArchitecture.UNKNOWN)) {
+        operatingSystemArchitecture = operatingSystem.operatingSystemArchitecture();
+      }
+      if (operatingSystemFamily == null || operatingSystemFamily
+          .equals(OperatingSystemFamily.UNKNOWN)) {
+        operatingSystemFamily = operatingSystem.operatingSystemFamily();
+      }
+      if (operatingSystemVersion == null || operatingSystemVersion
+          .equals(OperatingSystemVersions.unknown())) {
+        operatingSystemVersion = operatingSystem.operatingSystemVersion();
+      }
+    } else {
+      if (!operatingSystem.operatingSystemArchitecture()
+          .equals(OperatingSystemArchitecture.UNKNOWN)) {
+        this.operatingSystemArchitecture = operatingSystem.operatingSystemArchitecture();
+      }
+      if (!operatingSystem.operatingSystemVersion().equals(OperatingSystemVersions.unknown())) {
+        this.operatingSystemVersion = operatingSystem.operatingSystemVersion();
+      }
+      if (!operatingSystem.operatingSystemFamily().equals(OperatingSystemFamily.UNKNOWN)) {
+        this.operatingSystemFamily = operatingSystem.operatingSystemFamily();
+      }
     }
     return this;
   }
