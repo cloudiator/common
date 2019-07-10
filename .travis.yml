@@ -6,10 +6,10 @@ before_install:
 - wget https://github.com/protocolbuffers/protobuf/releases/download/v3.8.0/protoc-3.8.0-linux-x86_64.zip
 - unzip protoc-3.8.0-linux-x86_64.zip
 - export PATH=$PATH:$PWD/bin/
-install: mvn install -U -DskipTests=true
+install: mvn -q install -U -DskipTests=true
 before_script:
 - export PATH=$PATH:$PWD/bin/
-script: mvn install -Dmaven.javadoc.skip=true
+script: mvn -q install -Dmaven.javadoc.skip=true
 env:
   global:
   - secure: BLrgOI/+7cvhvKTNkxWnHrp8XKKb4FHZ2ftKLa6pLeItLE4krQlUPph5xYS3ve6ZMtOKq9koVXjtlCssQLN701r0x5KdPxRZVT2wOqU8uSOxWZsqQ89jbCqKoNukz1jkUzEVsX4ajFm7oUdBmj9d/S6lIHAC85R77D9YQ7s8zd+1p8oleiaSg/4TcOc36oGor38p23UFtGATi5J2mzLQzeKaTZDamuWinpfN71R2332tUXAG1VLCAhEQa8SCmfANdav9CLGhR4Acz+u51h/4oDFVNxjdt5fi3u3Ig+Q3f5xjnyqQqC8+8I/Gocv3y4MFhRWvh/u5b4LjNQ20eb7DzqKPwhGJEVN6NekLYOC3a9HfjsUfZluS4Q4Ip/X864QgqN3ZTxRaZUSTT+h52wEH2jPUNZvJzasLnTCdLTvlmhYJbGbItuFPSfRg6WJCG9lQ7d4wvf7DPTytg2CsWfUzvclICup4v4ymf6j/JzyMYrbAWGy4sPRrEqocv6zYw+r4T6ximS7mguKPApSwFTSBwcM0nWH5YUeq+QeD0kHmvEv5HTiIiqkSQdl8Q3pTgf7BPSaCazC7Rym91eNm5om+NT2G8CfSSYo5OSKi+CpqudRCnCYyrBhqHZy/zDFZIEkL5zcRCS+JVcVNWF50Fly56Tv6aCR+7SSSWBOilh8bBVk=
