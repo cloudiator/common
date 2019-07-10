@@ -26,17 +26,23 @@ message ByonNodeRemovedResponse {
 }
 
 message ByonNodeAllocateRequestMessage {
-  ByonNode byonNode = 1;
+  string userId = 1;
+  NodeProperties properties = 2;
+  bool allocated = 3;
 }
 
 message ByonNodeAllocatedResponse {
+  ByonNode node = 1;
 }
 
 message ByonNodeDeleteRequestMessage {
-  ByonNode byonNode = 1;
+  string userId = 1;
+  NodeProperties properties = 2;
+  bool allocated = 3;
 }
 
 message ByonNodeDeletedResponse {
+  ByonNode node = 1;
 }
 
 message ByonNodeQueryRequest {
