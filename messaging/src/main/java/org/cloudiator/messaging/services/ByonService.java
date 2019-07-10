@@ -20,8 +20,8 @@ public interface ByonService {
       ResponseCallback<ByonNodeAllocatedResponse> callback);
   void createByonPersistDelAsync(ByonNodeDeleteRequestMessage byonNodeDeleteRequestMessage,
       ResponseCallback<ByonNodeDeletedResponse> callback);
-  void addByonNodeAsync(AddByonNodeRequest addByonNodeRequest,
-      ResponseCallback<ByonNodeAddedResponse> callback);
+  ByonNodeAddedResponse addByonNode(AddByonNodeRequest addByonNodeRequest)
+      throws ResponseException;
   void removeByonNodeAsync(RemoveByonNodeRequest removeByonNodeRequest,
       ResponseCallback<ByonNodeRemovedResponse> callback);
   ByonNodeQueryResponse findByonNodes(ByonNodeQueryRequest byonQueryRequest)

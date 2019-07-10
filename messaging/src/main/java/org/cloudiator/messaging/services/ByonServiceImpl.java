@@ -47,10 +47,10 @@ public class ByonServiceImpl  implements ByonService {
   }
 
   @Override
-  public void addByonNodeAsync(AddByonNodeRequest addByonNodeRequest,
-      ResponseCallback<ByonNodeAddedResponse> callback) {
-    messageInterface
-        .callAsync(addByonNodeRequest, ByonNodeAddedResponse.class, callback);
+  public ByonNodeAddedResponse addByonNode(AddByonNodeRequest addByonNodeRequest)
+      throws ResponseException {
+    return messageInterface
+        .call(addByonNodeRequest, ByonNodeAddedResponse.class, timeout);
   }
 
   @Override
