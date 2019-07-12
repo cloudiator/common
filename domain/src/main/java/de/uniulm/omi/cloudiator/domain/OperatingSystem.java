@@ -16,8 +16,6 @@
 
 package de.uniulm.omi.cloudiator.domain;
 
-import java.io.Serializable;
-
 /**
  * Created by daniel on 09.03.16.
  */
