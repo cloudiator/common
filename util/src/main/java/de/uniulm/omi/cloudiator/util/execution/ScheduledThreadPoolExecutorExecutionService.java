@@ -17,6 +17,8 @@
 package de.uniulm.omi.cloudiator.util.execution;
 
 import com.google.common.util.concurrent.MoreExecutors;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
@@ -51,6 +53,11 @@ public class ScheduledThreadPoolExecutorExecutionService implements ExecutionSer
   public void execute(Runnable runnable) {
     LOGGER.info(String.format("%s is executing %s", this, runnable));
     this.scheduledExecutorService.execute(runnable);
+  }
+
+  @Override
+  public <T> Future<T> submit(Callable<T> task) {
+    return scheduledExecutorService.submit(task);
   }
 
   @Override
