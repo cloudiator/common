@@ -28,9 +28,11 @@ import java.util.Optional;
  */
 public class OperatingSystemImpl implements OperatingSystem, Serializable {
 
+  private static final long serialVersionUID = 6899219972636493921L;
   private OperatingSystemFamily operatingSystemFamily;
   private OperatingSystemArchitecture operatingSystemArchitecture;
   private OperatingSystemVersion version;
+
 
   public OperatingSystemImpl(OperatingSystemFamily operatingSystemFamily,
       OperatingSystemArchitecture operatingSystemArchitecture, OperatingSystemVersion version) {
