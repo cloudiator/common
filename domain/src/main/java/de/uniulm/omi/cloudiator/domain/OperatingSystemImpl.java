@@ -19,13 +19,14 @@ package de.uniulm.omi.cloudiator.domain;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.base.MoreObjects;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.Optional;
 
 /**
  * Created by daniel on 08.03.16.
  */
-public class OperatingSystemImpl implements OperatingSystem {
+public class OperatingSystemImpl implements OperatingSystem, Serializable {
 
   private OperatingSystemFamily operatingSystemFamily;
   private OperatingSystemArchitecture operatingSystemArchitecture;
