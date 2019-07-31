@@ -5,6 +5,8 @@ import javax.annotation.Nullable;
 import javax.inject.Named;
 import org.cloudiator.messages.Process;
 import org.cloudiator.messages.Process.CreateFaasProcessRequest;
+import org.cloudiator.messages.Process.CreateHdfsClusterRequest;
+import org.cloudiator.messages.Process.CreateHdfsProcessRequest;
 import org.cloudiator.messages.Process.CreateLanceProcessRequest;
 import org.cloudiator.messages.Process.CreateProcessRequest;
 import org.cloudiator.messages.Process.CreateScheduleRequest;
@@ -14,6 +16,8 @@ import org.cloudiator.messages.Process.DeleteLanceProcessRequest;
 import org.cloudiator.messages.Process.DeleteProcessRequest;
 import org.cloudiator.messages.Process.DeleteScheduleRequest;
 import org.cloudiator.messages.Process.FaasProcessCreatedResponse;
+import org.cloudiator.messages.Process.HdfsClusterCreatedResponse;
+import org.cloudiator.messages.Process.HdfsProcessCreatedResponse;
 import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
 import org.cloudiator.messages.Process.LanceProcessDeletedResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
@@ -216,6 +220,59 @@ public class ProcessServiceImpl implements ProcessService {
         .subscribe(CreateSparkClusterRequest.class, CreateSparkClusterRequest.parser(), callback);
 
   }
+
+
+  //HDFS
+
+  @Override
+  public HdfsProcessCreatedResponse createHdfsProcess(
+      CreateHdfsProcessRequest createHdfsProcessRequest) throws ResponseException {
+    return messageInterface
+        .call(createHdfsProcessRequest, HdfsProcessCreatedResponse.class, timeout);
+  }
+
+
+  @Override
+  public void createHdfsProcessAsync(CreateHdfsProcessRequest createHdfsProcessRequest,
+      ResponseCallback<HdfsProcessCreatedResponse> callback) {
+    messageInterface
+        .callAsync(createHdfsProcessRequest, HdfsProcessCreatedResponse.class, callback);
+
+  }
+
+  @Override
+  public void subscribeCreateHdfsProcessRequest(
+      MessageCallback<CreateHdfsProcessRequest> callback) {
+    messageInterface
+        .subscribe(CreateHdfsProcessRequest.class, CreateHdfsProcessRequest.parser(), callback);
+  }
+
+  @Override
+  public HdfsClusterCreatedResponse createHdfsCluster(
+      CreateHdfsClusterRequest createHdfsClusterRequest) throws ResponseException {
+    return messageInterface
+        .call(createHdfsClusterRequest, HdfsClusterCreatedResponse.class, timeout);
+  }
+
+  @Override
+  public void createHdfsClusterAsync(
+      CreateHdfsClusterRequest createHdfsClusterRequest,
+      ResponseCallback<HdfsClusterCreatedResponse> callback) {
+
+    messageInterface
+        .callAsync(createHdfsClusterRequest, HdfsClusterCreatedResponse.class, callback);
+
+  }
+
+  @Override
+  public void subscribeCreateHdfsClusterRequest(
+      MessageCallback<CreateHdfsClusterRequest> callback) {
+
+    messageInterface
+        .subscribe(CreateHdfsClusterRequest.class, CreateHdfsClusterRequest.parser(), callback);
+
+  }
+
 
   @Override
   public FaasProcessCreatedResponse createFaasProcess(
