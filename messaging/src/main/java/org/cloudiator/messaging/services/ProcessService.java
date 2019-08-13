@@ -2,6 +2,8 @@ package org.cloudiator.messaging.services;
 
 import javax.annotation.Nullable;
 import org.cloudiator.messages.Process.CreateFaasProcessRequest;
+import org.cloudiator.messages.Process.CreateHdfsClusterRequest;
+import org.cloudiator.messages.Process.CreateHdfsProcessRequest;
 import org.cloudiator.messages.Process.CreateLanceProcessRequest;
 import org.cloudiator.messages.Process.CreateProcessRequest;
 import org.cloudiator.messages.Process.CreateScheduleRequest;
@@ -11,6 +13,8 @@ import org.cloudiator.messages.Process.DeleteLanceProcessRequest;
 import org.cloudiator.messages.Process.DeleteProcessRequest;
 import org.cloudiator.messages.Process.DeleteScheduleRequest;
 import org.cloudiator.messages.Process.FaasProcessCreatedResponse;
+import org.cloudiator.messages.Process.HdfsClusterCreatedResponse;
+import org.cloudiator.messages.Process.HdfsProcessCreatedResponse;
 import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
 import org.cloudiator.messages.Process.LanceProcessDeletedResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
@@ -88,6 +92,8 @@ public interface ProcessService {
 
   void subscribeDeleteLanceProcessRequest(MessageCallback<DeleteLanceProcessRequest> callback);
 
+  // Spark
+
   SparkProcessCreatedResponse createSparkProcess(
       CreateSparkProcessRequest createSparkProcessRequest)
       throws ResponseException;
@@ -106,6 +112,25 @@ public interface ProcessService {
 
   void subscribeCreateSparkClusterRequest(MessageCallback<CreateSparkClusterRequest> callback);
 
+  // Hdfs
+
+  HdfsProcessCreatedResponse createHdfsProcess(
+      CreateHdfsProcessRequest createHdfsProcessRequest)
+      throws ResponseException;
+
+  void createHdfsProcessAsync(CreateHdfsProcessRequest createHdfsProcessRequest,
+      ResponseCallback<HdfsProcessCreatedResponse> callback);
+
+  void subscribeCreateHdfsProcessRequest(MessageCallback<CreateHdfsProcessRequest> callback);
+
+
+  HdfsClusterCreatedResponse createHdfsCluster(CreateHdfsClusterRequest createHdfsClusterRequest)
+      throws ResponseException;
+
+  void createHdfsClusterAsync(CreateHdfsClusterRequest createHdfsClusterRequest,
+      ResponseCallback<HdfsClusterCreatedResponse> callback);
+
+  void subscribeCreateHdfsClusterRequest(MessageCallback<CreateHdfsClusterRequest> callback);
 
   FaasProcessCreatedResponse createFaasProcess(CreateFaasProcessRequest createFaasProcessRequest)
       throws ResponseException;

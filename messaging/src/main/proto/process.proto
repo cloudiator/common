@@ -118,6 +118,24 @@ message SparkClusterCreatedResponse {
 
 }
 
+message CreateHdfsProcessRequest {
+  string userId = 1;
+  HdfsProcess hdfs = 2;
+}
+
+message HdfsProcessCreatedResponse {
+  Process process = 2;
+}
+
+message CreateHdfsClusterRequest {
+  string userId = 1;
+  Nodes nodes = 2;
+}
+
+message HdfsClusterCreatedResponse {
+
+}
+
 message FaasProcessCreatedResponse {
   Process process = 1;
 }
