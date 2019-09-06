@@ -45,6 +45,11 @@ message NodeCluster {
   repeated string nodes = 1;
 }
 
+message LanceUpdate {
+  Process toBeUpdated = 1;
+  Process spawned = 2;
+}
+
 message LanceProcess {
   string schedule = 1;
   Job job = 2;

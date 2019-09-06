@@ -177,3 +177,12 @@ message ScaleRequest {
 
 message ScaleResponse {
 }
+
+message LanceUpdateRequest {
+  string userId = 1;
+  LanceUpdate lanceUpdate = 2;
+}
+
+message LanceUpdateResponse {
+  
+}
