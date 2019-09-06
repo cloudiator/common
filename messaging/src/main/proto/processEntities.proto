@@ -46,8 +46,11 @@ message NodeCluster {
 }
 
 message LanceUpdate {
-  Process toBeUpdated = 1;
-  Process spawned = 2;
+  Job job = 1;
+  string scheduleId = 2;
+  Task taskToBeUpdated = 3;
+  Process processSpawned = 4;
+  Task taskSpawned = 5;
 }
 
 message LanceProcess {

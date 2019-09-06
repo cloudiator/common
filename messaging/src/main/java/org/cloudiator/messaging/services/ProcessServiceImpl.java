@@ -20,6 +20,8 @@ import org.cloudiator.messages.Process.HdfsClusterCreatedResponse;
 import org.cloudiator.messages.Process.HdfsProcessCreatedResponse;
 import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
 import org.cloudiator.messages.Process.LanceProcessDeletedResponse;
+import org.cloudiator.messages.Process.LanceUpdateRequest;
+import org.cloudiator.messages.Process.LanceUpdateResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
 import org.cloudiator.messages.Process.ProcessDeletedResponse;
 import org.cloudiator.messages.Process.ProcessEvent;
@@ -221,7 +223,6 @@ public class ProcessServiceImpl implements ProcessService {
 
   }
 
-
   //HDFS
 
   @Override
@@ -352,5 +353,9 @@ public class ProcessServiceImpl implements ProcessService {
     messageInterface.subscribe(ScaleRequest.class, ScaleRequest.parser(), callback);
   }
 
-
+  @Override
+  public LanceUpdateResponse updateLanceEnvironment(LanceUpdateRequest lanceUpdateRequest)
+      throws ResponseException {
+    return messageInterface.call(lanceUpdateRequest, LanceUpdateResponse.class, timeout);
+  }
 }

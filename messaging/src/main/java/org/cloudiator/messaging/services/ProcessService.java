@@ -17,6 +17,8 @@ import org.cloudiator.messages.Process.HdfsClusterCreatedResponse;
 import org.cloudiator.messages.Process.HdfsProcessCreatedResponse;
 import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
 import org.cloudiator.messages.Process.LanceProcessDeletedResponse;
+import org.cloudiator.messages.Process.LanceUpdateRequest;
+import org.cloudiator.messages.Process.LanceUpdateResponse;
 import org.cloudiator.messages.Process.ProcessCreatedResponse;
 import org.cloudiator.messages.Process.ProcessDeletedResponse;
 import org.cloudiator.messages.Process.ProcessEvent;
@@ -161,4 +163,7 @@ public interface ProcessService {
       ResponseCallback<ScaleResponse> callback);
 
   void subscribeScaleRequest(MessageCallback<ScaleRequest> callback);
+
+  LanceUpdateResponse updateLanceEnvironment(LanceUpdateRequest lanceUpdateRequest)
+      throws ResponseException;
 }
