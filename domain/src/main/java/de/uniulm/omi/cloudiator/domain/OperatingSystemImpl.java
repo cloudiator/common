@@ -17,18 +17,22 @@
 package de.uniulm.omi.cloudiator.domain;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static com.google.common.base.Preconditions.checkState;
 
 import com.google.common.base.MoreObjects;
+import java.io.Serializable;
+import java.net.URL;
+import java.util.Optional;
 
 /**
  * Created by daniel on 08.03.16.
  */
-public class OperatingSystemImpl implements OperatingSystem {
+public class OperatingSystemImpl implements OperatingSystem, Serializable {
 
+  private static final long serialVersionUID = 6899219972636493921L;
   private OperatingSystemFamily operatingSystemFamily;
   private OperatingSystemArchitecture operatingSystemArchitecture;
   private OperatingSystemVersion version;
+
 
   public OperatingSystemImpl(OperatingSystemFamily operatingSystemFamily,
       OperatingSystemArchitecture operatingSystemArchitecture, OperatingSystemVersion version) {
@@ -41,7 +45,7 @@ public class OperatingSystemImpl implements OperatingSystem {
     this.operatingSystemArchitecture = operatingSystemArchitecture;
     this.version = version;
   }
-  
+
   @Override
   public OperatingSystemFamily operatingSystemFamily() {
     return operatingSystemFamily;
@@ -55,6 +59,26 @@ public class OperatingSystemImpl implements OperatingSystem {
   @Override
   public OperatingSystemVersion operatingSystemVersion() {
     return version;
+  }
+
+  @Override
+  public Optional<String> dockerImage() {
+    if (!operatingSystemFamily.dockerImageFunction().isPresent()) {
+      return Optional.empty();
+    }
+
+    return Optional.ofNullable(operatingSystemFamily.dockerImageFunction().get().apply(version));
+  }
+
+  @Override
+  public Optional<URL> downloadUrl(ImageFormat imageFormat) {
+
+    if (!operatingSystemFamily.downloadUrlFunction().isPresent()) {
+      return Optional.empty();
+    }
+
+    return Optional.ofNullable(operatingSystemFamily.downloadUrlFunction().get()
+        .generateURL(operatingSystemArchitecture, version, imageFormat));
   }
 
   @Override
@@ -90,5 +114,15 @@ public class OperatingSystemImpl implements OperatingSystem {
   public String toString() {
     return MoreObjects.toStringHelper(this).add("family", operatingSystemFamily)
         .add("arch", operatingSystemArchitecture).add("version", version).toString();
+  }
+
+  @Override
+  public String loginName() {
+    return operatingSystemFamily.loginName();
+  }
+
+  @Override
+  public int remotePort() {
+    return operatingSystemFamily.remotePort();
   }
 }

@@ -111,9 +111,11 @@ public class StateMachineImpl<O extends Stateful<S>, S extends State> implements
 
     final O changedObject = transition.apply(object, arguments);
 
-    checkState(changedObject.state().equals(transition.to()), String.format(
-        "Transition expected object to be in state %s after execution. It is however in state %s.",
-        changedObject.state(), transition.to()));
+    if (!changedObject.state().equals(transition.to())) {
+      throw new ExecutionException(new IllegalStateException(String.format(
+          "Transition expected object to be in state %s after execution. It is however in state %s.",
+          changedObject.state(), transition.to())));
+    }
 
     //call hooks
     postStateTransition(changedObject, previousState);

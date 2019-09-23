@@ -20,6 +20,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.common.base.MoreObjects;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -29,9 +30,10 @@ import javax.annotation.Nullable;
  * Created by daniel on 08.03.16.
  */
 public class OperatingSystemVersionImpl
-    implements Comparable<OperatingSystemVersion>, OperatingSystemVersion {
+    implements Comparable<OperatingSystemVersion>, OperatingSystemVersion, Serializable {
 
   private static final int NULL_VERSION = -1;
+  private static final long serialVersionUID = 5470346015598994288L;
 
   @Nullable
   private final Integer version;
@@ -39,7 +41,8 @@ public class OperatingSystemVersionImpl
   private final String name;
   private final Set<String> alternativeNames;
 
-  OperatingSystemVersionImpl(@Nullable Integer version, @Nullable String name, Set<String> alternativeNames) {
+  OperatingSystemVersionImpl(@Nullable Integer version, @Nullable String name,
+      Set<String> alternativeNames) {
     checkArgument(version == null || version > 0,
         "Version must be greater than 0 or null");
     this.version = version;

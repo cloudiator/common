@@ -16,14 +16,23 @@
 
 package de.uniulm.omi.cloudiator.domain;
 
+import java.net.URL;
+import java.util.Optional;
+
 /**
  * Created by daniel on 09.03.16.
  */
-public interface OperatingSystem {
+public interface OperatingSystem extends RemotePortProvider, LoginNameSupplier {
 
   OperatingSystemFamily operatingSystemFamily();
 
   OperatingSystemArchitecture operatingSystemArchitecture();
 
   OperatingSystemVersion operatingSystemVersion();
+
+  Optional<String> dockerImage();
+
+  Optional<URL> downloadUrl(ImageFormat imageFormat);
+
+
 }
