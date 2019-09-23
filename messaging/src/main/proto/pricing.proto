@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package iaas;
+
+option java_package = "org.cloudiator.messages";
+
+import "iaasEntities.proto";
+
+message PricingQueryRequest {
+    string userId = 1;
+    string cloudAPIProviderName = 2;
+}
+
+message PricingQueryResponse {
+    repeated Price prices = 1;
+}

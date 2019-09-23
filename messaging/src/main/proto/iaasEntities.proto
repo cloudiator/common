@@ -187,3 +187,13 @@ message DiscoveryStatus {
   map<string, int32> status = 1;
 }
 
+message Price {
+  string id = 1;
+  string cloudAPIProviderName = 2;
+  string locationProviderId = 3;
+  string hardwareProviderId = 4;
+  string osArchitecture = 5;
+  string osFamily = 6;
+  double price = 7;
+  string currency = 8;
+}
