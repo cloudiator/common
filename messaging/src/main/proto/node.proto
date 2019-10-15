@@ -27,7 +27,7 @@ message NodeDeleteResponseMessage {
 message NodeRequestMessage {
   string userId = 1;
   string groupName = 2;
-  NodeCandidate nodeCandidate = 3;
+  string nodeCandidate = 3;
   string reason = 4;
 }
 
