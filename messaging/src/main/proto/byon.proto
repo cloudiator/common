@@ -27,8 +27,7 @@ message ByonNodeRemovedResponse {
 
 message ByonNodeAllocateRequestMessage {
   string userId = 1;
-  NodeProperties properties = 2;
-  bool allocated = 3;
+  string byonId = 2;
 }
 
 message ByonNodeAllocatedResponse {
@@ -37,8 +36,7 @@ message ByonNodeAllocatedResponse {
 
 message ByonNodeDeleteRequestMessage {
   string userId = 1;
-  NodeProperties properties = 2;
-  bool allocated = 3;
+  string byonId = 2;
 }
 
 message ByonNodeDeletedResponse {
