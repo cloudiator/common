@@ -44,6 +44,7 @@ public class MessageServiceModule extends AbstractModule {
     bind(MonitorService.class).to(MonitorServiceImpl.class).in(Singleton.class);
     bind(FunctionService.class).to(FunctionServiceImpl.class).in(Singleton.class);
     bind(ByonService.class).to(ByonServiceImpl.class).in(Singleton.class);
+    bind(PricingService.class).to(PricingServiceImpl.class).in(Singleton.class);
   }
 
 }
