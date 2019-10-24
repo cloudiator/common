@@ -32,7 +32,7 @@ public interface Prioritized extends Comparable<Prioritized> {
   @Override
   default int compareTo(@Nonnull Prioritized o) {
     checkNotNull(o);
-    return Integer.compare(getPriority(), o.getPriority());
+    return Integer.compare(o.getPriority(), getPriority());
   }
 
   class Priority {
