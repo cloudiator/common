@@ -181,7 +181,7 @@ public class StateMachineImpl<O extends Stateful<S>, S extends State> implements
           LOGGER.warn(String.format(
               "Error while traversing from state %s to state %s for object %s. Starting transition to error state %s.",
               object.state(), to, object, errorTransition.errorState()), e);
-          fail(object, arguments, e.getCause());
+          error(object, arguments, e.getCause());
         } else {
           throw new IllegalStateException(String
               .format("Error while traversing from state %s to state %s for object %s.",
