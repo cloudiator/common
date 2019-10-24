@@ -37,8 +37,6 @@ public class StateMachineImpl<O extends Stateful<S>, S extends State> implements
 
   private void preStateTransition(O object, S to) {
 
-    stateLock.startTransition(object);
-
     LOGGER.debug(
         String.format("Calling pre Transition hooks for object %s to state %s.", object, to));
 
@@ -63,6 +61,8 @@ public class StateMachineImpl<O extends Stateful<S>, S extends State> implements
   @Override
   public O apply(O object, S to, Object[] arguments) {
 
+    stateLock.startTransition(object);
+
     if (object.state().equals(to)) {
       LOGGER.info(
           String.format("Object %s is already in the to state %s. Doing nothing.", object, to));
@@ -73,9 +73,19 @@ public class StateMachineImpl<O extends Stateful<S>, S extends State> implements
 
     //check if we are executing to the error state
     if (errorTransition != null && to.equals(errorTransition.errorState())) {
-      return error(object, arguments, null);
+      try {
+        return error(object, arguments, null);
+      } finally {
+        stateLock.stopTransition(object);
+      }
+
     }
-    return normal(object, to, arguments);
+    try {
+      return normal(object, to, arguments);
+    } finally {
+      stateLock.stopTransition(object);
+    }
+
 
   }
 
@@ -192,6 +202,13 @@ public class StateMachineImpl<O extends Stateful<S>, S extends State> implements
 
   @Override
   public O fail(O object, Object[] arguments, Throwable t) {
-    return error(object, arguments, t);
+
+    stateLock.startTransition(object);
+
+    try {
+      return error(object, arguments, t);
+    } finally {
+      stateLock.stopTransition(object);
+    }
   }
 }
