@@ -1,6 +1,8 @@
 package de.uniulm.omi.cloudiator.util.stateMachine;
 
-public interface Stateful<S extends State> {
+import de.uniulm.omi.cloudiator.domain.Identifiable;
+
+public interface Stateful<S extends State> extends Identifiable {
 
   S state();
   

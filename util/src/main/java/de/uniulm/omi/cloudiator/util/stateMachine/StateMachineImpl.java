@@ -23,6 +23,7 @@ public class StateMachineImpl<O extends Stateful<S>, S extends State> implements
   private final TransitionGraph<O, S> transitionGraph;
   @Nullable
   private final ErrorTransition<O, S> errorTransition;
+  private static final StateLock stateLock = new StateLock();
 
 
   public StateMachineImpl(
@@ -35,6 +36,8 @@ public class StateMachineImpl<O extends Stateful<S>, S extends State> implements
   }
 
   private void preStateTransition(O object, S to) {
+
+    stateLock.startTransition(object);
 
     LOGGER.debug(
         String.format("Calling pre Transition hooks for object %s to state %s.", object, to));
@@ -53,6 +56,8 @@ public class StateMachineImpl<O extends Stateful<S>, S extends State> implements
     for (StateMachineHook<O, S> hook : hooks) {
       hook.post(from, object);
     }
+
+    stateLock.stopTransition(object);
   }
 
   @Override
