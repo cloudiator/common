@@ -354,8 +354,8 @@ public class ProcessServiceImpl implements ProcessService {
   }
 
   @Override
-  public LanceUpdateResponse updateLanceEnvironment(LanceUpdateRequest lanceUpdateRequest)
-      throws ResponseException {
-    return messageInterface.call(lanceUpdateRequest, LanceUpdateResponse.class, timeout);
+  public void updateLanceEnvironmentAsync(LanceUpdateRequest lanceUpdateRequest,
+      ResponseCallback<LanceUpdateResponse> callback) {
+    messageInterface.callAsync(lanceUpdateRequest, LanceUpdateResponse.class, callback);
   }
 }

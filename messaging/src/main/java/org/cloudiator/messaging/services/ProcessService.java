@@ -164,6 +164,6 @@ public interface ProcessService {
 
   void subscribeScaleRequest(MessageCallback<ScaleRequest> callback);
 
-  LanceUpdateResponse updateLanceEnvironment(LanceUpdateRequest lanceUpdateRequest)
-      throws ResponseException;
+  void updateLanceEnvironmentAsync(LanceUpdateRequest lanceUpdateRequest,
+      ResponseCallback<LanceUpdateResponse> callback);
 }
