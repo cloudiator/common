@@ -51,6 +51,7 @@ message LanceUpdate {
   Task taskToBeUpdated = 3;
   Process processSpawned = 4;
   Task taskSpawned = 5;
+  LanceUpdateType updateType = 6;
 }
 
 message LanceProcess {
@@ -115,6 +116,11 @@ message Schedule {
 enum Instantiation {
   MANUAL = 0;
   AUTOMATIC = 1;
+}
+
+enum LanceUpdateType {
+  INJECT = 0;
+  REMOVE = 1;
 }
 
 enum ProcessType {
