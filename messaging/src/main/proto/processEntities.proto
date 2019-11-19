@@ -49,8 +49,8 @@ message LanceUpdate {
   Job job = 1;
   string scheduleId = 2;
   Task taskToBeUpdated = 3;
-  Process processSpawned = 4;
-  Task taskSpawned = 5;
+  Process processSpawnedorDeleted = 4;
+  Task taskSpawnedorDeleted  = 5;
   LanceUpdateType updateType = 6;
 }
 
