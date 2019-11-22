@@ -93,6 +93,13 @@ public class Password {
   }
 
   /**
+   * Returns a random string generator
+   */
+  public RandomString randomString(int length) {
+    return new RandomString(length, random);
+  }
+
+  /**
    * Generates a token.
    *
    * @return the generated token.
