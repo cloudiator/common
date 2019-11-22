@@ -69,6 +69,14 @@ message DeleteProcessRequest {
   string processId = 2;
 }
 
+message FinishProcessRequest {
+  string processId = 1;
+  string secret = 2;
+}
+
+message FinishProcessResponse {
+}
+
 message ProcessDeletedResponse {
 
 }
@@ -184,5 +192,5 @@ message LanceUpdateRequest {
 }
 
 message LanceUpdateResponse {
-  
+
 }

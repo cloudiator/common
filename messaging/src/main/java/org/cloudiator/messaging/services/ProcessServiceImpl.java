@@ -16,6 +16,8 @@ import org.cloudiator.messages.Process.DeleteLanceProcessRequest;
 import org.cloudiator.messages.Process.DeleteProcessRequest;
 import org.cloudiator.messages.Process.DeleteScheduleRequest;
 import org.cloudiator.messages.Process.FaasProcessCreatedResponse;
+import org.cloudiator.messages.Process.FinishProcessRequest;
+import org.cloudiator.messages.Process.FinishProcessResponse;
 import org.cloudiator.messages.Process.HdfsClusterCreatedResponse;
 import org.cloudiator.messages.Process.HdfsProcessCreatedResponse;
 import org.cloudiator.messages.Process.LanceProcessCreatedResponse;
@@ -357,5 +359,11 @@ public class ProcessServiceImpl implements ProcessService {
   public void updateLanceEnvironmentAsync(LanceUpdateRequest lanceUpdateRequest,
       ResponseCallback<LanceUpdateResponse> callback) {
     messageInterface.callAsync(lanceUpdateRequest, LanceUpdateResponse.class, callback);
+  }
+
+  @Override
+  public FinishProcessResponse finishProcess(FinishProcessRequest finishProcessRequest)
+      throws ResponseException {
+    return messageInterface.call(finishProcessRequest, FinishProcessResponse.class, timeout);
   }
 }
