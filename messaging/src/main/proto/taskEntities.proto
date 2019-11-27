@@ -79,6 +79,7 @@ message LanceInterface {
   string shutdown = 13;
   string portUpdateAction = 14;
   ContainerType containerType = 15;
+  common.OperatingSystem operatingSystem = 16;
 }
 
 message FaasInterface {
