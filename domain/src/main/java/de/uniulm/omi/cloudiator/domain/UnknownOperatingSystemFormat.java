@@ -42,7 +42,12 @@ public class UnknownOperatingSystemFormat implements OperatingSystemVersionForma
 
   @Deprecated
   @Override
-  public OperatingSystemVersion parse(int version) {
+  public OperatingSystemVersion parseVersion(int version) {
+    return OperatingSystemVersions.unknown();
+  }
+
+  @Override
+  public OperatingSystemVersion parseName(String name) {
     return OperatingSystemVersions.unknown();
   }
 }

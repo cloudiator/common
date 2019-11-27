@@ -29,6 +29,8 @@ public interface OperatingSystemVersionFormat {
 
   Set<OperatingSystemVersion> allVersions();
 
-  OperatingSystemVersion parse(int version);
+  OperatingSystemVersion parseVersion(int version);
+
+  OperatingSystemVersion parseName(String name);
 
 }

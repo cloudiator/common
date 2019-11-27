@@ -37,6 +37,11 @@ public class OperatingSystemVersions {
 
   public static OperatingSystemVersion of(int version,
       OperatingSystemVersionFormat operatingSystemVersionFormat) {
-    return operatingSystemVersionFormat.parse(version);
+    return operatingSystemVersionFormat.parseVersion(version);
+  }
+
+  public static OperatingSystemVersion of(String name,
+      OperatingSystemVersionFormat operatingSystemVersionFormat) {
+    return operatingSystemVersionFormat.parseName(name);
   }
 }

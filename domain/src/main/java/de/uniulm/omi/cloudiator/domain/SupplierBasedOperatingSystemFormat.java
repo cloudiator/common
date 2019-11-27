@@ -52,7 +52,7 @@ public class SupplierBasedOperatingSystemFormat implements OperatingSystemVersio
   }
 
   @Override
-  public OperatingSystemVersion parse(int version) {
+  public OperatingSystemVersion parseVersion(int version) {
     final List<OperatingSystemVersion> collect = possibleValues.stream().filter(
         operatingSystemVersion -> operatingSystemVersion.version().equals(version))
         .collect(Collectors.toList());
@@ -65,6 +65,27 @@ public class SupplierBasedOperatingSystemFormat implements OperatingSystemVersio
     if (collect.size() > 1) {
       throw new IllegalStateException(String
           .format("Multiple versions match the version %s. Possible values are: %s.", version,
+              possibleValues));
+    }
+
+    return collect.get(0);
+  }
+
+  @Override
+  public OperatingSystemVersion parseName(String name) {
+    final List<OperatingSystemVersion> collect = possibleValues.stream().filter(
+        operatingSystemVersion -> operatingSystemVersion.name().isPresent()
+            && operatingSystemVersion.name().get().equals(name))
+        .collect(Collectors.toList());
+
+    if (collect.size() == 0) {
+      throw new IllegalArgumentException(String
+          .format("Name %s is not known. Possible values are %s.", name, possibleValues));
+    }
+
+    if (collect.size() > 1) {
+      throw new IllegalStateException(String
+          .format("Multiple versions match the name %s. Possible values are: %s.", name,
               possibleValues));
     }
 
