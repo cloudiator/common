@@ -41,10 +41,10 @@ public class UbuntuOperatingSystemVersionSupplier implements Supplier<Set<Operat
   private static OperatingSystemVersion of(Year year, Month month) {
 
     int parseInt =
-    Integer.parseInt(String.format("%s%02d", year.getValue() - 2000, month.getValue()));
+        Integer.parseInt(String.format("%s%02d", year.getValue() - 2000, month.getValue()));
     String parseString = String.format("%s.%02d", year.getValue() - 2000, month.getValue());
 
-    return OperatingSystemVersions.of(parseInt, parseString);
+    return OperatingSystemVersions.ofNameAndVersion(parseInt, parseString);
   }
 
   @Override

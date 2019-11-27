@@ -1,7 +1,6 @@
 package de.uniulm.omi.cloudiator.domain;
 
 import com.google.common.collect.Lists;
-
 import java.time.Month;
 import java.time.Year;
 import java.time.temporal.ChronoUnit;
@@ -10,7 +9,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
 
-public class AmazonLinuxOperatingSystemVersionSupplier implements Supplier<Set<OperatingSystemVersion>> {
+public class AmazonLinuxOperatingSystemVersionSupplier implements
+    Supplier<Set<OperatingSystemVersion>> {
 
   private final static Year FIRST_YEAR = Year.of(2011);
   private final List<Month> releaseMonths;
@@ -26,7 +26,7 @@ public class AmazonLinuxOperatingSystemVersionSupplier implements Supplier<Set<O
         Integer.parseInt(String.format("%s%02d", year.getValue(), month.getValue()));
     String parseString = String.format("%s.%02d", year.getValue(), month.getValue());
 
-    return OperatingSystemVersions.of(parseInt, parseString);
+    return OperatingSystemVersions.ofNameAndVersion(parseInt, parseString);
   }
 
   @Override
@@ -34,7 +34,7 @@ public class AmazonLinuxOperatingSystemVersionSupplier implements Supplier<Set<O
     Set<OperatingSystemVersion> operatingSystemVersions = new HashSet<>();
 
     for (Year year = FIRST_YEAR;
-         year.compareTo(Year.now()) < 1; year = year.plus(1, ChronoUnit.YEARS)) {
+        year.compareTo(Year.now()) < 1; year = year.plus(1, ChronoUnit.YEARS)) {
       for (final Month month : releaseMonths) {
         if (year.equals(FIRST_YEAR) && month.compareTo(FIRST_MONTH) < 0) {
           continue;

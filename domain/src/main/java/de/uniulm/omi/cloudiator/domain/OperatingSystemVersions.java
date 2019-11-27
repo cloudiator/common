@@ -31,16 +31,16 @@ public class OperatingSystemVersions {
         Collections.emptySet());
   }
 
-  public static OperatingSystemVersion of(int version, String name) {
+  public static OperatingSystemVersion ofNameAndVersion(int version, String name) {
     return new OperatingSystemVersionImpl(version, name, Collections.emptySet());
   }
 
-  public static OperatingSystemVersion of(int version,
+  public static OperatingSystemVersion ofVersionAndFormat(int version,
       OperatingSystemVersionFormat operatingSystemVersionFormat) {
     return operatingSystemVersionFormat.parseVersion(version);
   }
 
-  public static OperatingSystemVersion of(String name,
+  public static OperatingSystemVersion ofNameAndFormat(String name,
       OperatingSystemVersionFormat operatingSystemVersionFormat) {
     return operatingSystemVersionFormat.parseName(name);
   }
