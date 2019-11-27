@@ -35,9 +35,8 @@ public class OperatingSystemVersions {
     return new OperatingSystemVersionImpl(version, name, Collections.emptySet());
   }
 
-  public static OperatingSystemVersion of(String name,
+  public static OperatingSystemVersion of(int version,
       OperatingSystemVersionFormat operatingSystemVersionFormat) {
-    return operatingSystemVersionFormat.parse(name);
+    return operatingSystemVersionFormat.parse(version);
   }
-
 }

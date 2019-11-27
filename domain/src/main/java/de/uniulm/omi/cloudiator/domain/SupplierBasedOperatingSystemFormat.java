@@ -52,10 +52,9 @@ public class SupplierBasedOperatingSystemFormat implements OperatingSystemVersio
   }
 
   @Override
-  public OperatingSystemVersion parse(String version) {
+  public OperatingSystemVersion parse(int version) {
     final List<OperatingSystemVersion> collect = possibleValues.stream().filter(
-        operatingSystemVersion -> operatingSystemVersion.name().isPresent()
-            && operatingSystemVersion.name().get().equals(version))
+        operatingSystemVersion -> operatingSystemVersion.version().equals(version))
         .collect(Collectors.toList());
 
     if (collect.size() == 0) {
@@ -68,7 +67,7 @@ public class SupplierBasedOperatingSystemFormat implements OperatingSystemVersio
           .format("Multiple versions match the version %s. Possible values are: %s.", version,
               possibleValues));
     }
-    
+
     return collect.get(0);
   }
 }

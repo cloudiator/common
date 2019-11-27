@@ -16,13 +16,14 @@
 
 package de.uniulm.omi.cloudiator.domain;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.util.Optional;
 
 /**
  * Created by daniel on 09.03.16.
  */
-public interface OperatingSystem extends RemotePortProvider, LoginNameSupplier {
+public interface OperatingSystem extends RemotePortProvider, LoginNameSupplier, Serializable {
 
   OperatingSystemFamily operatingSystemFamily();
 

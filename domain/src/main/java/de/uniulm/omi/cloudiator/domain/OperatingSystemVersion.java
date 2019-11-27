@@ -16,13 +16,14 @@
 
 package de.uniulm.omi.cloudiator.domain;
 
+import java.io.Serializable;
 import java.util.Optional;
 import java.util.Set;
 
 /**
  * Created by daniel on 08.02.17.
  */
-public interface OperatingSystemVersion {
+public interface OperatingSystemVersion extends Serializable {
 
   Optional<String> name();
 
