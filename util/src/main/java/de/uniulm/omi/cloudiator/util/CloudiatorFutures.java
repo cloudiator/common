@@ -32,6 +32,7 @@ public class CloudiatorFutures {
           .format("Waiting for future %s of %s. Number of completed futures: %s", i, size,
               results.size()));
       final T t = future.get();
+      i++;
       results.add(t);
     }
 
