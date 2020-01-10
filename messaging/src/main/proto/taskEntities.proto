@@ -135,12 +135,22 @@ message NormalDistribution {
   double stdDev = 2;
 }
 
+message FixedDistribution {
+  double value = 1;
+}
+
 message Distribution {
   oneof distribution {
     NormalDistribution normalDistribution = 1;
+    FixedDistribution fixedDistribution = 2;
   }
 }
 
+message StartTime {
+  Distribution distribution = 1;
+  common.Unit timeUnit = 2;
+}
+
 message SimulationInterface {
-  Distribution startTime = 1;
+  StartTime startTime = 1;
 }
