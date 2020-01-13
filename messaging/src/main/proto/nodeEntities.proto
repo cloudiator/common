@@ -37,6 +37,7 @@ enum NodeType {
   BYON = 2;
   CONTAINER = 3;
   FAAS = 4;
+  SIMULATION = 5;
 }
 
 enum NodeState {
