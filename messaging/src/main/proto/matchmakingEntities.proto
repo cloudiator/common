@@ -38,6 +38,7 @@ enum NodeCandidateType {
   NC_PAAS = 1;
   NC_FAAS = 2;
   NC_BYON = 3;
+  NC_SIMULATION = 4;
 }
 
 enum Runtime {
