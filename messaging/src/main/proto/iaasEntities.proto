@@ -36,6 +36,7 @@ enum CloudState {
 enum CloudType {
   PUBLIC_CLOUD = 0;
   PRIVATE_CLOUD = 1;
+  SIMULATION_CLOUD = 2;
 }
 
 message Quota {

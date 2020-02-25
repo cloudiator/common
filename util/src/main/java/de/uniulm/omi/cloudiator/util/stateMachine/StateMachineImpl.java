@@ -129,7 +129,7 @@ public class StateMachineImpl<O extends Stateful<S>, S extends State> implements
     if (!changedObject.state().equals(transition.to())) {
       throw new ExecutionException(new IllegalStateException(String.format(
           "Transition expected object to be in state %s after execution. It is however in state %s.",
-          changedObject.state(), transition.to())));
+          transition.to(), changedObject.state())));
     }
 
     //call hooks

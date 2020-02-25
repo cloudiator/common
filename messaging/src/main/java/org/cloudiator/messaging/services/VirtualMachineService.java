@@ -5,6 +5,8 @@ import org.cloudiator.messages.Vm.DeleteVirtualMachineRequestMessage;
 import org.cloudiator.messages.Vm.VirtualMachineCreatedResponse;
 import org.cloudiator.messages.Vm.VirtualMachineDeletedResponse;
 import org.cloudiator.messages.Vm.VirtualMachineEvent;
+import org.cloudiator.messages.Vm.VirtualMachineQueryMessage;
+import org.cloudiator.messages.Vm.VirtualMachineQueryResponse;
 import org.cloudiator.messaging.ResponseCallback;
 import org.cloudiator.messaging.ResponseException;
 
@@ -24,4 +26,7 @@ public interface VirtualMachineService {
       ResponseCallback<VirtualMachineDeletedResponse> callback);
 
   void announceEvent(VirtualMachineEvent virtualMachineEvent);
+
+  VirtualMachineQueryResponse queryVirtualMachines(
+      VirtualMachineQueryMessage virtualMachineQueryMessage) throws ResponseException;
 }
