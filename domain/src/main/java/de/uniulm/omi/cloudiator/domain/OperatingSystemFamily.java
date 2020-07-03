@@ -16,11 +16,12 @@
 
 package de.uniulm.omi.cloudiator.domain;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 import com.google.common.base.CaseFormat;
-import java.util.Optional;
+
 import javax.annotation.Nullable;
+import java.util.Optional;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by daniel on 08.03.16.
@@ -40,7 +41,7 @@ public enum OperatingSystemFamily implements RemotePortProvider, LoginNameSuppli
   /**
    * Centos
    */
-  CENTOS(OperatingSystemType.LINUX, OperatingSystemVersionFormats.set(2, 3, 4, 5, 6, 7),
+  CENTOS(OperatingSystemType.LINUX, OperatingSystemVersionFormats.set(2, 3, 4, 5, 6, 7, 8),
       LoginNameSuppliers.staticSupplier("centos"), null,
       new GenericNameBasedDockerImageFunction("centos")),
   /**
