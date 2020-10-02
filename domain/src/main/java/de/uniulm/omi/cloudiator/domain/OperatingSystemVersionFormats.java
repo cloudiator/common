@@ -38,9 +38,9 @@ public class OperatingSystemVersionFormats {
     return new SupplierBasedOperatingSystemFormat(() -> set);
   }
 
-  public static OperatingSystemVersionFormat set(int... versions) {
+  public static OperatingSystemVersionFormat set(String... versions) {
     return new SupplierBasedOperatingSystemFormat(() -> Arrays.stream(versions)
-        .mapToObj(i -> OperatingSystemVersions.ofNameAndVersion(i, String.valueOf(i)))
+        .map(i -> OperatingSystemVersions.ofNameAndVersion(Integer.parseInt(i.replace(".", "")), i))
         .collect(Collectors.toSet()));
   }
 

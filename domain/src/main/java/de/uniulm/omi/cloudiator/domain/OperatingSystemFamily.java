@@ -40,7 +40,7 @@ public enum OperatingSystemFamily implements RemotePortProvider, LoginNameSuppli
   /**
    * Centos
    */
-  CENTOS(OperatingSystemType.LINUX, OperatingSystemVersionFormats.set(2, 3, 4, 5, 6, 7),
+  CENTOS(OperatingSystemType.LINUX, OperatingSystemVersionFormats.set("2", "3", "3.42","4", "5", "6", "7"),
       LoginNameSuppliers.staticSupplier("centos"), null,
       new GenericNameBasedDockerImageFunction("centos")),
   /**
@@ -72,7 +72,7 @@ public enum OperatingSystemFamily implements RemotePortProvider, LoginNameSuppli
   /**
    * Red Hat Enterprise Linux
    */
-  RHEL, SCIENTIFIC, CEL, SLACKWARE, SOLARIS, SUSE, TURBOLINUX, CLOUD_LINUX,
+  RHEL, SCIENTIFIC, CEL, SLACKWARE, SOLARIS, SUSE, OPENSUSE, TURBOLINUX, CLOUD_LINUX,
   UBUNTU(
       OperatingSystemType.LINUX,
       OperatingSystemVersionFormats.supplier(new UbuntuOperatingSystemVersionSupplier()),
